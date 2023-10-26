@@ -134,6 +134,7 @@
     <ClInclude Include="LoginScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Config.ixx" />
     <ClCompile Include="ConsoleManager.cpp" />
     <ClCompile Include="LoginScene.cpp" />
     <ClCompile Include="Main.cpp" />
