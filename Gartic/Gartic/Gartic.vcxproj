@@ -133,6 +133,7 @@
     <ClInclude Include="ConsoleManager.h" />
     <ClInclude Include="FileHandler.h" />
     <ClInclude Include="LoginScene.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="Vocabulary.h" />
   </ItemGroup>
@@ -142,6 +143,7 @@
     <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="LoginScene.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="Vocabulary.cpp" />
   </ItemGroup>
