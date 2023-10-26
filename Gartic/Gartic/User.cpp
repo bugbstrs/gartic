@@ -3,13 +3,17 @@
 User::User() :
 	m_username(std::string()),
 	m_credits(0),
-	m_isPlaying(false)
+	m_isPlaying(false),
+	averagePoints(0),
+	matchesPoints(std::vector <uint16_t>())
 {}
 
 User::User(const std::string& username, uint64_t credits, bool isPlaying) :
 	m_username(username),
 	m_credits(credits),
-	m_isPlaying(isPlaying)
+	m_isPlaying(isPlaying),
+	averagePoints(0),
+	matchesPoints(std::vector <uint16_t>())
 {}
 
 void User::SetUsername(const std::string& username)
@@ -41,4 +45,9 @@ bool User::IsPlaying() const
 void User::SetPlayingState(bool isPlaying)
 {
 	m_isPlaying = isPlaying;
+}
+
+void User::AddMatchPoints(uint16_t matchPoint)
+{
+	matchesPoints.emplace_back(matchPoint);
 }

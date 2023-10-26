@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 class User
 {
 public:
@@ -11,8 +12,11 @@ public:
 	uint64_t GetCredits() const;
 	bool IsPlaying() const;
 	void SetPlayingState(bool isPlaying);
+	void AddMatchPoints(uint16_t matchPoint);
 private:
 	std::string m_username;
+	uint16_t averagePoints;
+	std::vector <uint16_t> matchesPoints;
 	uint64_t m_credits;
 	bool m_isPlaying;
 };
