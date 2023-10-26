@@ -9,8 +9,8 @@ import Config;
 using Thread = std::thread;
 using Mutex = std::mutex;
 using ConditionVariable = std::condition_variable;
-using AtomicBool = std::atomic<bool>;
 using Milliseconds = std::chrono::milliseconds;
+using TimePoint = std::chrono::steady_clock::time_point;
 
 using namespace std::chrono_literals;
 
@@ -35,8 +35,27 @@ public:
 	Milliseconds GetRemainingTime() const;
 	Milliseconds GetTimerResolution() const;
 
+	// Flow of the timer
+	void StartTimer();
+	void StopTimer();
+	void ResetTimer();
+
+	// Functionality
+	bool IsTimeExpired() const;
+
+	void Run();
+
 private:
+	Thread m_thread;
+
+	Mutex m_mutex;
+
+	ConditionVariable m_conditionalVariable;
+
+	bool m_isSuspended;
+
 	Milliseconds m_initialTime;
 	Milliseconds m_remainingTime;
 	Milliseconds m_timerResolution;
+	Milliseconds m_timeToDecrease;
 };
