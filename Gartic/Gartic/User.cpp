@@ -35,10 +35,10 @@ uint64_t User::GetCredits() const
 
 bool User::IsPlaying() const
 {
-	return IsPlaying;
+	return m_isPlaying;
 }
 
 void User::SetPlayingState(bool isPlaying)
 {
-	m_isPlaying = IsPlaying;
+	m_isPlaying = isPlaying;
 }
