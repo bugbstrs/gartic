@@ -13,12 +13,33 @@ User::User(const std::string& username, uint64_t credits, bool isPlaying) :
 	m_isPlaying(isPlaying)
 {}
 
+void User::SetUsername(const std::string& username)
+{
+	m_username = username;
+}
+
+void User::SetCredits(int credits)
+{
+	m_credits = credits;
+}
+
 std::string User::GetUsername() const
 {
 	return std::string();
 }
 
-void User::SetUsername(const std::string& username)
+
+uint64_t User::GetCredits() const
 {
-	m_username = username;
+	return m_credits;
+}
+
+bool User::IsPlaying() const
+{
+	return IsPlaying;
+}
+
+void User::SetPlayingState(bool isPlaying)
+{
+	m_isPlaying = IsPlaying;
 }
