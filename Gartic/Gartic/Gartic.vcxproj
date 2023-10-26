@@ -131,11 +131,13 @@
   <ItemGroup>
     <ClInclude Include="ColorType.h" />
     <ClInclude Include="ConsoleManager.h" />
+    <ClInclude Include="FileHandler.h" />
     <ClInclude Include="LoginScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Config.ixx" />
     <ClCompile Include="ConsoleManager.cpp" />
+    <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="LoginScene.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
