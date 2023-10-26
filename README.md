@@ -40,3 +40,6 @@
 - 🕥 Buying clues using points obtained during the game, the cost of each being stored in the database with the cost being related to each word
 - 🕥 Handling more than 2 games at once on the server
 - 🕥 Handling exceptions and implementing unit tests (coverage 50%)
+
+# UML Diagram
+![UML Diagram](uml.jpg)
