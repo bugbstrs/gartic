@@ -131,14 +131,17 @@
   <ItemGroup>
     <ClInclude Include="ColorType.h" />
     <ClInclude Include="ConsoleManager.h" />
+    <ClInclude Include="FileHandler.h" />
     <ClInclude Include="LoginScene.h" />
-    <ClInclude Include="User.h" />
+    <ClInclude Include="Vocabulary.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Config.ixx" />
     <ClCompile Include="ConsoleManager.cpp" />
+    <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="LoginScene.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="User.cpp" />
+    <ClCompile Include="Vocabulary.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
