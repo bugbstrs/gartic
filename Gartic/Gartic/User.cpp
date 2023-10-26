@@ -1,11 +1,10 @@
 #include "User.h"
 
-User::User()
-{
-	m_username = std::string();
-	m_credits = 0;
-	m_isPlaying = false;
-}
+User::User() :
+	m_username(std::string()),
+	m_credits(0),
+	m_isPlaying(false)
+{}
 
 User::User(const std::string& username, uint64_t credits, bool isPlaying) :
 	m_username(username),
