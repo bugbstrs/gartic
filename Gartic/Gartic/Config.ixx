@@ -1,6 +1,6 @@
-import <string>;
-
 export module Config;
+
+import <string>;
 
 namespace Config {
 	// File related
