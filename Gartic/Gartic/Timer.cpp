@@ -11,32 +11,29 @@ static Milliseconds CurrentTimeInMillis(const TimePoint& initialTime)
 	return std::chrono::duration_cast<Milliseconds>(currentTime - initialTime);
 }
 
-Timer::Timer()
-	: m_initialTime(ConvertToMilliseconds(Config::defaultMinutes, true))
-	, m_remainingTime(m_initialTime)
-	, m_timerResolution(ConvertToMilliseconds(Config::defaultResolution, true))
-	, m_timeToDecrease(0ms)
-	, m_isSuspended(false)
-{
-}
+Timer::Timer():
+	m_initialTime(ConvertToMilliseconds(Config::defaultMinutes, true)),
+	m_remainingTime(m_initialTime),
+	m_timerResolution(ConvertToMilliseconds(Config::defaultResolution, true)),
+	m_timeToDecrease(0ms),
+	m_isSuspended(false)
+{}
 
-Timer::Timer(int totalMinutes, Milliseconds timerResolution)
-	: m_initialTime(ConvertToMilliseconds(totalMinutes, true))
-	, m_remainingTime(m_initialTime)
-	, m_timerResolution(timerResolution)
-	, m_timeToDecrease(0ms)
-	, m_isSuspended(false)
-{
-}
+Timer::Timer(int totalMinutes, Milliseconds timerResolution):
+	m_initialTime(ConvertToMilliseconds(totalMinutes, true)),
+	m_remainingTime(m_initialTime),
+	m_timerResolution(timerResolution),
+	m_timeToDecrease(0ms),
+	m_isSuspended(false)
+{}
 
-Timer::Timer(const Timer& newTimer)
-	: m_initialTime(newTimer.m_initialTime)
-	, m_remainingTime(newTimer.m_remainingTime)
-	, m_timerResolution(newTimer.m_timerResolution)
-	, m_timeToDecrease(0ms)
-	, m_isSuspended(newTimer.m_isSuspended)
-{
-}
+Timer::Timer(const Timer& newTimer):
+	m_initialTime(newTimer.m_initialTime),
+	m_remainingTime(newTimer.m_remainingTime),
+	m_timerResolution(newTimer.m_timerResolution),
+	m_timeToDecrease(0ms),
+	m_isSuspended(newTimer.m_isSuspended)
+{}
 
 Timer::~Timer()
 {
