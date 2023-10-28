@@ -19,4 +19,3 @@ public:
 	static std::string read(FileType fileType);
 	FileHandler() = delete;
 };
-

@@ -31,7 +31,6 @@ std::string User::GetUsername() const
 	return std::string();
 }
 
-
 uint64_t User::GetCredits() const
 {
 	return m_credits;

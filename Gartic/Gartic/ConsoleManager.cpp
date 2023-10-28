@@ -49,7 +49,7 @@ void ConsoleManager::SetColor(ColorType background, ColorType text)
 	SetConsoleTextAttribute(m_h, m_color);
 }
 
-void ConsoleManager::WriteVertical(const std::string &sentence, int x, int y)
+void ConsoleManager::WriteVertical(const std::string& sentence, int x, int y)
 {
 	for (int index = y - sentence.length() / 2; index <= y + (sentence.length() + 1) / 2; index++)
 	{
@@ -58,7 +58,7 @@ void ConsoleManager::WriteVertical(const std::string &sentence, int x, int y)
 	}
 }
 
-void ConsoleManager::WriteHorizontal(const std::string &sentence, int x, int y)
+void ConsoleManager::WriteHorizontal(const std::string& sentence, int x, int y)
 {
 	SetCursor(x - sentence.length() / 2, y);
 	std::cout << sentence;

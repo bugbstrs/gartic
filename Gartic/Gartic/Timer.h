@@ -1,5 +1,4 @@
 #pragma once
-
 import <thread>;
 import <mutex>;
 import <chrono>;

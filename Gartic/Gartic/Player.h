@@ -1,5 +1,6 @@
 #pragma once
 #include "User.h"
+
 class Player
 {
 public:
@@ -11,4 +12,3 @@ private:
 	User m_user;
 	uint16_t m_points;
 };
-

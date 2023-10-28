@@ -5,7 +5,7 @@ Player::Player() :
 	m_points(0)
 {}
 
-Player::Player(const User &user) : 
+Player::Player(const User& user) : 
 	m_user(user), 
 	m_points(0)
 {}

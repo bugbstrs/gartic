@@ -21,4 +21,3 @@ private:
 	uint64_t m_credits;
 	bool m_isPlaying;
 };
-
