@@ -1,4 +1,4 @@
-export module Config;
+export module config;
 
 import <string>;
 

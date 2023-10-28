@@ -4,7 +4,7 @@
 #include<mutex>
 #include<chrono>
 
-import Config;
+import config;
 
 using Thread = std::thread;
 using Mutex = std::mutex;

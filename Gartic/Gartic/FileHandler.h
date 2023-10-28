@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string>
 #include <random>
-import Config;
+import config;
 
 class FileHandler
 {
