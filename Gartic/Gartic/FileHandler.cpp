@@ -1,6 +1,6 @@
 #include "FileHandler.h"
 
-void FileHandler::write(FileType fileType, const std::string& data)
+void FileHandler::Write(FileType fileType, const std::string& data)
 {
 	if (fileType == FileType::Dictionary)
 	{
@@ -17,7 +17,7 @@ void FileHandler::write(FileType fileType, const std::string& data)
 	throw std::exception("Invalid FileType provided on FileHandler::write");
 }
 
-std::string FileHandler::read(FileType fileType)
+std::string FileHandler::Read(FileType fileType)
 {
 	if (fileType == FileType::Dictionary)
 	{

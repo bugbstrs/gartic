@@ -15,7 +15,7 @@ public:
 		LogFile
 	};
 
-	static void write(FileType fileType, const std::string& data);
-	static std::string read(FileType fileType);
+	static void Write(FileType fileType, const std::string& data);
+	static std::string Read(FileType fileType);
 	FileHandler() = delete;
 };

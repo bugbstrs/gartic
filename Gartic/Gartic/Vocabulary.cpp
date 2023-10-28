@@ -11,11 +11,11 @@ std::tuple<std::string, std::string, std::string> Vocabulary::fetchWords()
 	
 	for (int i = 0; i < 3; i++)
 	{
-		std::string word = FileHandler::read(FileHandler::FileType::Dictionary);
+		std::string word = FileHandler::Read(FileHandler::FileType::Dictionary);
 		
 		while (std::find(m_words.begin(), m_words.end(), word) == m_words.end())
 		{
-			word = FileHandler::read(FileHandler::FileType::Dictionary);
+			word = FileHandler::Read(FileHandler::FileType::Dictionary);
 		}
 
 		words[i] = word;

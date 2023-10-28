@@ -7,7 +7,7 @@ public:
 	Player();
 	Player(const User& user);
 	uint16_t GetPoints() const;
-	void AddPoints(int nrOfPointsToBeAdded);
+	void AddPoints(int noOfPointsToBeAdded);
 private:
 	User m_user;
 	uint16_t m_points;

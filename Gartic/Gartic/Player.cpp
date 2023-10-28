@@ -15,7 +15,7 @@ uint16_t Player::GetPoints() const
 	return m_points;
 }
 
-void Player::AddPoints(int nrOfPointsToBeAdded)
+void Player::AddPoints(int noOfPointsToBeAdded)
 {
-	m_points += nrOfPointsToBeAdded;
+	m_points += noOfPointsToBeAdded;
 }

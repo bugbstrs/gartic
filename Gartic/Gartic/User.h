@@ -17,7 +17,7 @@ public:
 private:
 	std::string m_username;
 	uint16_t averagePoints;
-	std::vector <uint16_t> matchesPoints;
+	std::vector <uint16_t> m_matchesPoints;
 	uint64_t m_credits;
 	bool m_isPlaying;
 };
