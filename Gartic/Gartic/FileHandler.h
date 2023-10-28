@@ -1,8 +1,8 @@
 #pragma once
-#include <vector>
-#include <fstream>
-#include <string>
-#include <random>
+import <vector>;
+import <fstream>;
+import <string>;
+import <random>;
 import config;
 
 class FileHandler

@@ -1,6 +1,7 @@
 #pragma once
-#include <string>
-#include <vector>
+import <string>;
+import <vector>;
+
 class User
 {
 public:

@@ -53,7 +53,7 @@
     <ClCompile Include="FileHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Config.ixx">
+    <ClCompile Include="config.cppm">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Vocabulary.cpp">

@@ -1,6 +1,9 @@
 #include "Vocabulary.h"
 #include "FileHandler.h"
-#include <array>
+
+import <array>;
+import <tuple>;
+import <string>;
 
 std::tuple<std::string, std::string, std::string> Vocabulary::fetchWords()
 {

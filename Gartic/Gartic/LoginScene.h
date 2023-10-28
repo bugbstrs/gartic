@@ -1,8 +1,8 @@
-#include <string>
+#pragma once
+import <string>;
 
 #include "ConsoleManager.h"
 
-#pragma once
 class LoginScene
 {
 public:

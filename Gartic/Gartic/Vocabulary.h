@@ -1,7 +1,7 @@
 #pragma once
-#include <tuple>
-#include <string>
-#include <vector>
+import <tuple>;
+import <string>;
+import <vector>;
 
 class Vocabulary
 {

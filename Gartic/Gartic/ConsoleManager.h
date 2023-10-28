@@ -1,10 +1,10 @@
-#include <string>
-#include <iostream>
-#include <Windows.h>
+#pragma once
+import <string>;
+import <iostream>;
+import <Windows.h>;
 
 #include "ColorType.h"
 
-#pragma once
 class ConsoleManager
 {
 public:

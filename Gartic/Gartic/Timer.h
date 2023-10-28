@@ -1,8 +1,8 @@
 #pragma once
 
-#include<thread>
-#include<mutex>
-#include<chrono>
+import <thread>;
+import <mutex>;
+import <chrono>;
 
 import config;
 
