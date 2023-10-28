@@ -1,7 +1,10 @@
-#pragma once
-#include "User.h"
+export module Player;
 
-class Player
+import <cstdint>;
+
+export import User;
+
+export class Player
 {
 public:
 	Player();

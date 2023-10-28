@@ -1,8 +1,9 @@
-#pragma once
+export module User;
+
 import <string>;
 import <vector>;
 
-class User
+export class User
 {
 public:
 	User();

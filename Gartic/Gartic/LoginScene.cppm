@@ -1,9 +1,10 @@
-#pragma once
+export module LoginScene;
+
 import <string>;
 
-#include "ConsoleManager.h"
+export import ConsoleManager;
 
-class LoginScene
+export class LoginScene
 {
 public:
 	static void SetActive();

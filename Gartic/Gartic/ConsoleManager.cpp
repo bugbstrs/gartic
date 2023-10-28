@@ -1,4 +1,8 @@
-#include "ConsoleManager.h"
+module ConsoleManager;
+
+import <string>;
+import <iostream>;
+import <Windows.h>;
 
 HANDLE ConsoleManager::m_h;
 int ConsoleManager::m_color;

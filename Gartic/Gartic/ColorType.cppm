@@ -1,5 +1,6 @@
-#pragma once
-enum ColorType
+export module ColorType;
+
+export enum ColorType
 {
 	Black,
 	DarkBlue,

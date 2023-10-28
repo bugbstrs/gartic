@@ -1,11 +1,12 @@
-#pragma once
+export module ConsoleManager;
+
 import <string>;
 import <iostream>;
 import <Windows.h>;
 
-#include "ColorType.h"
+export import ColorType;
 
-class ConsoleManager
+export class ConsoleManager
 {
 public:
 	static void Initialize();

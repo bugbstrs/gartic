@@ -1,4 +1,4 @@
-#include "Timer.h"
+module Timer;
 
 static Milliseconds ConvertToMilliseconds(int time, bool isInMinutes)
 {

@@ -1,9 +1,10 @@
-#pragma once
+export module Vocabulary;
+
 import <tuple>;
 import <string>;
 import <vector>;
 
-class Vocabulary
+export class Vocabulary
 {
 public:
 	std::tuple<std::string, std::string, std::string> fetchWords();

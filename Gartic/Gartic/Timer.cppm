@@ -1,9 +1,10 @@
-#pragma once
+export module Timer;
+
 import <thread>;
 import <mutex>;
 import <chrono>;
 
-import config;
+export import config;
 
 using Thread = std::thread;
 using Mutex = std::mutex;
@@ -13,7 +14,7 @@ using TimePoint = std::chrono::steady_clock::time_point;
 
 using namespace std::chrono_literals;
 
-class Timer
+export class Timer
 {
 public:
 	// Constructors

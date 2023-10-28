@@ -1,4 +1,6 @@
-#include "Player.h"
+module Player;
+
+import <cstdint>;
 
 Player::Player(): 
 	m_user(User()), 
