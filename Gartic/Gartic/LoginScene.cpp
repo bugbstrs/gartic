@@ -41,22 +41,34 @@ void LoginScene::Display()
 	//Username Field
 	ConsoleManager::SetColor(Black, White);
 	ConsoleManager::WriteHorizontal("User:", 20, 5);
-	ConsoleManager::SetColor(Gray, Black);
+	if (m_option == USER)
+		ConsoleManager::SetColor(Blue, White);
+	else
+		ConsoleManager::SetColor(Gray, Black);
 	std::cout << "                  ";
 	ConsoleManager::SetCursor(23, 5);
 	std::cout << m_username;
 	//Password Field
 	ConsoleManager::SetColor(Black, White);
 	ConsoleManager::WriteHorizontal("Password:", 18, 6);
-	ConsoleManager::SetColor(Gray, Black);
+	if (m_option == PASSWORD)
+		ConsoleManager::SetColor(Blue, White);
+	else
+		ConsoleManager::SetColor(Gray, Black);
 	std::cout << "                  ";
 	ConsoleManager::SetCursor(23, 6);
 	std::cout << m_password;
 	//Login Button
-	ConsoleManager::SetColor(DarkGray, Green);
+	if (m_option == LOGIN)
+		ConsoleManager::SetColor(Blue, White);
+	else
+		ConsoleManager::SetColor(DarkGray, Green);
 	ConsoleManager::WriteHorizontal("Login", 25, 10);
 	//Register Button
-	ConsoleManager::SetColor(DarkGray, Cyan);
+	if (m_option == REGISTER)
+		ConsoleManager::SetColor(Blue, White);
+	else
+		ConsoleManager::SetColor(DarkGray, Cyan);
 	ConsoleManager::WriteHorizontal("Register", 36, 10);
 	//Controls
 	ConsoleManager::SetColor(Black, Gray);

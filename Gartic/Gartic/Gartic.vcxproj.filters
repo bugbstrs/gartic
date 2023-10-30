@@ -87,5 +87,8 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Modules\Implementation Units</Filter>
     </ClCompile>
+    <ClCompile Include="InputManager.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

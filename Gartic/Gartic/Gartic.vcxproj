@@ -146,6 +146,7 @@
     <ClCompile Include="ConsoleManager.cppm" />
     <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="FileHandler.cppm" />
+    <ClCompile Include="InputManager.cppm" />
     <ClCompile Include="LoginScene.cpp" />
     <ClCompile Include="LoginScene.cppm" />
     <ClCompile Include="Main.cpp" />
