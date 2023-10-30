@@ -1,9 +1,11 @@
-#include "Vocabulary.h"
-#include "FileHandler.h"
+module Vocabulary;
 
 import <array>;
 import <tuple>;
 import <string>;
+import <vector>;
+
+import FileHandler;
 
 std::tuple<std::string, std::string, std::string> Vocabulary::fetchWords()
 {

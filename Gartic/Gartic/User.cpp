@@ -1,4 +1,7 @@
-#include "User.h"
+module User;
+
+import <string>;
+import <vector>;
 
 User::User():
 	m_username(std::string()),

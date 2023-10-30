@@ -1,4 +1,11 @@
-#include "FileHandler.h"
+module FileHandler;
+
+import <vector>;
+import <fstream>;
+import <string>;
+import <random>;
+
+import config;
 
 void FileHandler::Write(FileType fileType, const std::string& data)
 {

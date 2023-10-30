@@ -1,4 +1,6 @@
-#include "LoginScene.h"
+module LoginScene;
+
+import <string>;
 
 std::string LoginScene::m_username = "";
 std::string LoginScene::m_password = "";

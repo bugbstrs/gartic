@@ -13,60 +13,70 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{42c09d78-7f93-4ef1-985f-f4ecbd8ae6bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Interfaces">
+      <UniqueIdentifier>{a166cdd0-72d0-4131-83f6-55a213e9fe92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Implementation Units">
+      <UniqueIdentifier>{b7a9956d-1049-4f2e-9bce-42b4fe45f952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Standalone">
+      <UniqueIdentifier>{d28b766b-01f4-4f62-8645-2e943177187a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LoginScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ConsoleManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ColorType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FileHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vocabulary.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="User.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="LoginScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ConsoleManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="config.cppm">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Standalone</Filter>
     </ClCompile>
-    <ClCompile Include="Vocabulary.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="ConsoleManager.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorType.cppm">
+      <Filter>Modules\Standalone</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleManager.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="FileHandler.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="FileHandler.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginScene.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginScene.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cppm">
+      <Filter>Modules\Interfaces</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="User.cppm">
+      <Filter>Modules\Interfaces</Filter>
     </ClCompile>
     <ClCompile Include="User.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cppm">
+      <Filter>Modules\Interfaces</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Vocabulary.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Vocabulary.cppm">
+      <Filter>Modules\Interfaces</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,11 +1,13 @@
-#pragma once
+export module FileHandler;
+
 import <vector>;
 import <fstream>;
 import <string>;
 import <random>;
+
 import config;
 
-class FileHandler
+export class FileHandler
 {
 public:
 	enum FileType
