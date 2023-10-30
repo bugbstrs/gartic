@@ -18,6 +18,7 @@ void LoginScene::Start()
 {
 	m_username = "";
 	m_password = "";
+	m_option = USER;
 	m_nextScene = NOT_A_SCENE;
 	ConsoleManager::SetConsoleScale(60, 15);
 	Display();
@@ -42,17 +43,25 @@ void LoginScene::Display()
 	ConsoleManager::WriteHorizontal("User:", 20, 5);
 	ConsoleManager::SetColor(Gray, Black);
 	std::cout << "                  ";
+	ConsoleManager::SetCursor(23, 5);
+	std::cout << m_username;
 	//Password Field
 	ConsoleManager::SetColor(Black, White);
 	ConsoleManager::WriteHorizontal("Password:", 18, 6);
 	ConsoleManager::SetColor(Gray, Black);
 	std::cout << "                  ";
+	ConsoleManager::SetCursor(23, 6);
+	std::cout << m_password;
 	//Login Button
 	ConsoleManager::SetColor(DarkGray, Green);
 	ConsoleManager::WriteHorizontal("Login", 25, 10);
 	//Register Button
 	ConsoleManager::SetColor(DarkGray, Cyan);
 	ConsoleManager::WriteHorizontal("Register", 36, 10);
+	//Controls
+	ConsoleManager::SetColor(Black, Gray);
+	ConsoleManager::WriteHorizontal("Use arrow keys to select options", 30, 12);
+	ConsoleManager::WriteHorizontal("And Enter to confirm", 30, 13);
 }
 
 bool LoginScene::Login()

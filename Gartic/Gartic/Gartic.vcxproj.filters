@@ -84,5 +84,8 @@
     <ClCompile Include="SceneManager.cppm">
       <Filter>Modules\Interfaces</Filter>
     </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
