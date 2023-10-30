@@ -96,5 +96,8 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>Modules\Implementation Units</Filter>
     </ClCompile>
+    <ClCompile Include="MenuScene.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

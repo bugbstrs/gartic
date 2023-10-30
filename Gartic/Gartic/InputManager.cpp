@@ -60,7 +60,7 @@ COORD InputManager::GetCurrentCursorPosition()
 
 void InputManager::ReadInput()
 {
-	if (true)//IsCursorInConsole()
+	if (IsCursorInConsole())
 	{
 		m_cursorPosition = CursorPositionInConsole();
 		m_rightClickPressed = GetAsyncKeyState(VK_RBUTTON);
@@ -82,6 +82,21 @@ void InputManager::ReadInput()
 		m_isArrowKey = true;
 		m_lastKeyPressed = _getch();
 	}
+}
+
+bool InputManager::IsCursorInConsole()
+{
+	HWND foregroundWindow = GetForegroundWindow();
+	HWND consoleWindow = GetConsoleWindow();
+	RECT consoleRect;
+	GetClientRect(consoleWindow, &consoleRect);
+	POINT cursorPos;
+	GetCursorPos(&cursorPos);
+	ScreenToClient(consoleWindow, &cursorPos);
+	if (PtInRect(&consoleRect, cursorPos))
+		if (foregroundWindow == consoleWindow)
+			return true;
+	return false;
 }
 
 COORD InputManager::CursorPositionInConsole()

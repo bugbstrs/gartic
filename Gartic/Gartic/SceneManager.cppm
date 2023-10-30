@@ -1,6 +1,7 @@
 export module SceneManager;
 
 import LoginScene;
+import MenuScene;
 
 export class SceneManager
 {
