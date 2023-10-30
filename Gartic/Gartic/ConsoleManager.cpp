@@ -5,7 +5,7 @@ import <iostream>;
 import <Windows.h>;
 
 HANDLE ConsoleManager::m_h;
-int ConsoleManager::m_color;
+uint16_t ConsoleManager::m_color;
 
 void ConsoleManager::Initialize()
 {
@@ -19,13 +19,13 @@ void ConsoleManager::ClearScreen()
 	system("cls");
 }
 
-void ConsoleManager::SetConsoleScale(int x, int y)
+void ConsoleManager::SetConsoleScale(uint16_t x, uint16_t y)
 {
 	std::string command = "mode " + std::to_string(x) + ',' + std::to_string(y);
 	system(command.c_str());
 }
 
-void ConsoleManager::SetCursor(int x, int y)
+void ConsoleManager::SetCursor(uint16_t x, uint16_t y)
 {
 	COORD coord;
 	coord.X = x;
@@ -53,7 +53,7 @@ void ConsoleManager::SetColor(ColorType background, ColorType text)
 	SetConsoleTextAttribute(m_h, m_color);
 }
 
-void ConsoleManager::WriteVertical(const std::string& sentence, int x, int y)
+void ConsoleManager::WriteVertical(const std::string& sentence, uint16_t x, uint16_t y)
 {
 	for (int index = y - sentence.length() / 2; index <= y + (sentence.length() + 1) / 2; index++)
 	{
@@ -62,7 +62,7 @@ void ConsoleManager::WriteVertical(const std::string& sentence, int x, int y)
 	}
 }
 
-void ConsoleManager::WriteHorizontal(const std::string& sentence, int x, int y)
+void ConsoleManager::WriteHorizontal(const std::string& sentence, uint16_t x, uint16_t y)
 {
 	SetCursor(x - sentence.length() / 2, y);
 	std::cout << sentence;

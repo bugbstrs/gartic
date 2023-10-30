@@ -151,6 +151,8 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Player.cppm" />
+    <ClCompile Include="SceneManager.cppm" />
+    <ClCompile Include="SceneType.cppm" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Timer.cppm" />
     <ClCompile Include="User.cpp" />

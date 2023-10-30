@@ -5,24 +5,30 @@ import <string>;
 std::string LoginScene::m_username = "";
 std::string LoginScene::m_password = "";
 LoginScene::Options LoginScene::m_option;
+SceneType LoginScene::m_nextScene;
 
-void LoginScene::SetActive()
+SceneType LoginScene::SetActive()
 {
 	Start();
 	Update();
+	return m_nextScene;
 }
 
 void LoginScene::Start()
 {
 	m_username = "";
 	m_password = "";
+	m_nextScene = NOT_A_SCENE;
 	ConsoleManager::SetConsoleScale(60, 15);
 	Display();
 }
 
 void LoginScene::Update()
 {
-	Display();
+	while (m_nextScene == NOT_A_SCENE)
+	{
+		Display();
+	}
 }
 
 void LoginScene::Display()
