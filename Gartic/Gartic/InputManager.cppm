@@ -3,10 +3,13 @@ export module InputManager;
 import <Windows.h>;
 import <string>;
 
+export import ControlKeys;
+
 export class InputManager
 {
 public:
 	static void UpdateString(std::string& text, int maxLenght = -1);
+	static ControlKeys ControlKey();
 	static char GetCurrentKeyboardInput();
 	static bool ClickPressed();
 	static COORD GetCurrentCursorPosition();

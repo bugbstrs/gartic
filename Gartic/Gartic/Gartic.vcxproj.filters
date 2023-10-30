@@ -90,5 +90,11 @@
     <ClCompile Include="InputManager.cppm">
       <Filter>Modules\Interfaces</Filter>
     </ClCompile>
+    <ClCompile Include="ControlKeys.cppm">
+      <Filter>Modules\Standalone</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
