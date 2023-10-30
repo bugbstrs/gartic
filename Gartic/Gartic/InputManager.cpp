@@ -1,5 +1,9 @@
 module InputManager;
 
+import <winuser.rh>;
+import <conio.h>;
+import <cctype>;
+
 char InputManager::m_lastKeyPressed;
 bool InputManager::m_isArrowKey;
 bool InputManager::m_rightClickPressed;
@@ -37,4 +41,57 @@ ControlKeys InputManager::ControlKey()
 	default:
 		return NotControl;
 	};
+}
+
+char InputManager::GetCurrentKeyboardInput()
+{
+	return m_lastKeyPressed;
+}
+
+bool InputManager::ClickPressed()
+{
+	return m_rightClickPressed;
+}
+
+COORD InputManager::GetCurrentCursorPosition()
+{
+	return m_cursorPosition;
+}
+
+void InputManager::ReadInput()
+{
+	if (true)//IsCursorInConsole()
+	{
+		m_cursorPosition = CursorPositionInConsole();
+		m_rightClickPressed = GetAsyncKeyState(VK_RBUTTON);
+	}
+	else
+	{
+		m_cursorPosition = { -1, -1 };
+		m_rightClickPressed = false;
+	}
+	m_isArrowKey = false;
+	if (!_kbhit())
+	{
+		m_lastKeyPressed = 0;
+		return;
+	}
+	m_lastKeyPressed = _getch();
+	if (m_lastKeyPressed == 224 || m_lastKeyPressed == -32)//224/-32 is right before arrow keys keycode
+	{
+		m_isArrowKey = true;
+		m_lastKeyPressed = _getch();
+	}
+}
+
+COORD InputManager::CursorPositionInConsole()
+{
+	HWND consoleWindow = GetConsoleWindow();
+	POINT cursorPos;
+	GetCursorPos(&cursorPos);
+	ScreenToClient(consoleWindow, &cursorPos);
+	COORD coord;
+	coord.X = cursorPos.x / 8;
+	coord.Y = cursorPos.y / 16;
+	return coord;
 }
