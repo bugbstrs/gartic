@@ -4,10 +4,15 @@ import <tuple>;
 import <string>;
 import <vector>;
 
+using String = std::string;
+using StringVector = std::vector<std::string>;
+using StringTuple = std::tuple<std::string, std::string, std::string>;
+
 export class Vocabulary
 {
 public:
-	std::tuple<std::string, std::string, std::string> fetchWords();
+	StringTuple fetchWords();
+
 private:
-	std::vector<std::string> m_words;
+	StringVector m_words;
 };
