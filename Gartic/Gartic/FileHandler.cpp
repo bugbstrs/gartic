@@ -7,7 +7,7 @@ import <random>;
 
 import config;
 
-void FileHandler::Write(FileType fileType, const std::string& data)
+void FileHandler::Write(FileType fileType, const String& data)
 {
 	if (fileType == FileType::Dictionary)
 	{
@@ -24,7 +24,7 @@ void FileHandler::Write(FileType fileType, const std::string& data)
 	throw std::exception("Invalid FileType provided on FileHandler::write");
 }
 
-std::string FileHandler::Read(FileType fileType)
+String FileHandler::Read(FileType fileType)
 {
 	if (fileType == FileType::Dictionary)
 	{

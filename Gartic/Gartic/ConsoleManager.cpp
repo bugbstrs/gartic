@@ -3,6 +3,7 @@ module ConsoleManager;
 import <string>;
 import <iostream>;
 import <Windows.h>;
+import ColorType;
 
 HANDLE ConsoleManager::m_h;
 uint16_t ConsoleManager::m_color;
@@ -15,7 +16,7 @@ void ConsoleManager::Initialize()
 
 void ConsoleManager::ClearScreen()
 {
-	SetColor(Black, White);
+	SetColor(ColorType::Black, ColorType::White);
 	system("cls");
 }
 
@@ -36,24 +37,24 @@ void ConsoleManager::SetCursor(uint16_t x, uint16_t y)
 void ConsoleManager::SetBackgroundColor(ColorType color)
 {
 	m_color %= 16;
-	m_color += 16 * color;
+	m_color += 16 * (int)color;
 	SetConsoleTextAttribute(m_h, m_color);
 }
 
 void ConsoleManager::SetTextColor(ColorType color)
 {
 	m_color = m_color / 16 * 16;
-	m_color += color;
+	m_color += (int)color;
 	SetConsoleTextAttribute(m_h, m_color);
 }
 
 void ConsoleManager::SetColor(ColorType background, ColorType text)
 {
-	m_color = 16 * background + text;
+	m_color = 16 * (int)background + (int)text;
 	SetConsoleTextAttribute(m_h, m_color);
 }
 
-void ConsoleManager::WriteVertical(const std::string& sentence, uint16_t x, uint16_t y)
+void ConsoleManager::WriteVertical(const String& sentence, uint16_t x, uint16_t y)
 {
 	for (int index = y - sentence.length() / 2; index <= y + (sentence.length() + 1) / 2; index++)
 	{
@@ -62,7 +63,7 @@ void ConsoleManager::WriteVertical(const std::string& sentence, uint16_t x, uint
 	}
 }
 
-void ConsoleManager::WriteHorizontal(const std::string& sentence, uint16_t x, uint16_t y)
+void ConsoleManager::WriteHorizontal(const String& sentence, uint16_t x, uint16_t y)
 {
 	SetCursor(x - sentence.length() / 2, y);
 	std::cout << sentence;

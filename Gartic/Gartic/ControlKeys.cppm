@@ -1,6 +1,6 @@
 export module ControlKeys;
 
-export enum ControlKeys
+export enum class ControlKeys
 {
 	NotControl,
 	Enter = 13,

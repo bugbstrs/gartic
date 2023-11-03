@@ -1,6 +1,6 @@
 export module SceneType;
 
-export enum SceneType
+export enum class SceneType
 {
 	NOT_A_SCENE,
 	LOGIN,

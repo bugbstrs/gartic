@@ -1,6 +1,6 @@
 export module ColorType;
 
-export enum ColorType
+export enum class ColorType
 {
 	Black,
 	DarkBlue,

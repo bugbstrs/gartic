@@ -1,6 +1,6 @@
 export module GameStatus;
 
-export enum GameStatus
+export enum class GameStatus
 {
 	Drawing,
 	ChoosingWord,

@@ -1,31 +1,32 @@
 module SceneManager;
 
 import ConsoleManager;
+import SceneType;
 
 SceneType SceneManager::m_activeScene;
 
 void SceneManager::Start()
 {
 	ConsoleManager::Initialize();
-	m_activeScene = LOGIN;
+	m_activeScene = SceneType::LOGIN;
 	Update();
 }
 
 void SceneManager::Update()
 {
-	while (m_activeScene != NOT_A_SCENE)
+	while (m_activeScene != SceneType::NOT_A_SCENE)
 	{
-		SceneType nextScene = NOT_A_SCENE;
+		SceneType nextScene = SceneType::NOT_A_SCENE;
 		switch (m_activeScene)
 		{
-		case LOGIN:
+		case SceneType::LOGIN:
 			nextScene = LoginScene::SetActive();
 			break;
-		case MENU:
+		case SceneType::MENU:
 			break;
-		case STATS:
+		case SceneType::STATS:
 			break;
-		case GAME:
+		case SceneType::GAME:
 			break;
 		default:
 			//Scene not found

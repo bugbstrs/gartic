@@ -7,6 +7,8 @@ import <random>;
 
 import config;
 
+using String = std::string;
+
 export class FileHandler
 {
 public:
@@ -17,7 +19,8 @@ public:
 		LogFile
 	};
 
-	static void Write(FileType fileType, const std::string& data);
-	static std::string Read(FileType fileType);
+	static void Write(FileType fileType, const String& data);
+	static String Read(FileType fileType);
+	
 	FileHandler() = delete;
 };
