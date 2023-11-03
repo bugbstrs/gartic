@@ -3,6 +3,7 @@ export module Timer;
 import <thread>;
 import <mutex>;
 import <chrono>;
+import <cstdint>;
 
 export import config;
 
@@ -19,16 +20,16 @@ export class Timer
 public:
 	// Constructors
 	Timer();
-	Timer(int totalMinutes, Milliseconds timerResolution = 1ms);
+	Timer(uint16_t totalMinutes, Milliseconds timerResolution = 1ms);
 	Timer(const Timer& newTimer);
 
 	// Destructor
 	~Timer();
 
 	// Setters
-	void SetInitialTime(int minutes);
-	void SetRemainingTime(int minutes);
-	void SetTimerResolution(int milliseconds);
+	void SetInitialTime(uint16_t minutes);
+	void SetRemainingTime(uint16_t minutes);
+	void SetTimerResolution(uint32_t milliseconds);
 
 	// Getters
 	Milliseconds GetInitialTime() const;

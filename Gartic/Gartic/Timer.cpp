@@ -1,6 +1,6 @@
 module Timer;
 
-static Milliseconds ConvertToMilliseconds(int time, bool isInMinutes)
+static Milliseconds ConvertToMilliseconds(uint16_t time, bool isInMinutes)
 {
 	return isInMinutes ? Milliseconds(time * 60000) : Milliseconds(time * 1000);
 }
@@ -19,7 +19,7 @@ Timer::Timer():
 	m_isSuspended(false)
 {}
 
-Timer::Timer(int totalMinutes, Milliseconds timerResolution):
+Timer::Timer(uint16_t totalMinutes, Milliseconds timerResolution):
 	m_initialTime(ConvertToMilliseconds(totalMinutes, true)),
 	m_remainingTime(m_initialTime),
 	m_timerResolution(timerResolution),
@@ -45,17 +45,17 @@ Timer::~Timer()
 	}
 }
 
-void Timer::SetInitialTime(int minutes)
+void Timer::SetInitialTime(uint16_t minutes)
 {
 	m_initialTime = ConvertToMilliseconds(minutes, true);
 }
 
-void Timer::SetRemainingTime(int minutes)
+void Timer::SetRemainingTime(uint16_t minutes)
 {
 	m_remainingTime = ConvertToMilliseconds(minutes, true);
 }
 
-void Timer::SetTimerResolution(int milliseconds)
+void Timer::SetTimerResolution(uint32_t milliseconds)
 {
 	m_timerResolution = Milliseconds(milliseconds);
 }

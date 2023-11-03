@@ -147,6 +147,8 @@
     <ClCompile Include="ControlKeys.cppm" />
     <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="FileHandler.cppm" />
+    <ClCompile Include="GameScene.cppm" />
+    <ClCompile Include="GameStatus.cppm" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="InputManager.cppm" />
     <ClCompile Include="LoginScene.cpp" />
