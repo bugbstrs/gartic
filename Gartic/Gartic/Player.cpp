@@ -21,3 +21,8 @@ void Player::AddPoints(int noOfPointsToBeAdded)
 {
 	m_points += noOfPointsToBeAdded;
 }
+
+bool Player::operator==(const Player& secondPlayer)
+{
+	return this->m_points == secondPlayer.m_points && this->m_user == secondPlayer.m_user;
+}

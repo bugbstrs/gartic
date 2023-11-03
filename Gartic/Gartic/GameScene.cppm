@@ -16,7 +16,6 @@ export class GameScene
 public:
 	// Constructors
 	GameScene();
-	GameScene();
 	GameScene(const GameScene& newGameScene);
 
 	// Destructor

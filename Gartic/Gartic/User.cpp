@@ -2,6 +2,7 @@ module User;
 
 import <string>;
 import <vector>;
+import <algorithm>;
 
 User::User():
 	m_username(std::string()),
@@ -52,4 +53,9 @@ void User::SetPlayingState(bool isPlaying)
 void User::AddMatchPoints(uint16_t matchPoint)
 {
 	m_matchesPoints.emplace_back(matchPoint);
+}
+
+bool User::operator==(const User& secondUser)
+{
+	return this->m_username == secondUser.m_username && this->m_credits == secondUser.m_credits && this->averagePoints == secondUser.averagePoints && this->m_isPlaying == secondUser.m_isPlaying && std::equal(this->m_matchesPoints.begin(), this->m_matchesPoints.end(), secondUser.m_matchesPoints.begin());
 }

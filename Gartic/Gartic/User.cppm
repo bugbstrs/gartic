@@ -15,6 +15,8 @@ public:
 	bool IsPlaying() const;
 	void SetPlayingState(bool isPlaying);
 	void AddMatchPoints(uint16_t matchPoint);
+
+	bool operator==(const User& secondUser);
 private:
 	std::string m_username;
 	uint16_t averagePoints;
