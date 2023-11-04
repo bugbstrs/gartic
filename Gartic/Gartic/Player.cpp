@@ -7,7 +7,7 @@ Player::Player():
 	m_points(0)
 {}
 
-Player::Player(const User &user, uint16_t points) :
+Player::Player(const User& user, uint16_t points) :
 	m_user(user),
 	m_points(points)
 {}

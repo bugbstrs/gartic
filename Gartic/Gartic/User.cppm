@@ -12,6 +12,8 @@ public:
 	// Constructors
 	User();
 	User(const String& username, uint64_t credits, bool isPlaying);
+	User(const User& otherUser);
+	~User();
 	
 	// Setters
 	void SetUsername(const String& username);

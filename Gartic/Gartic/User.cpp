@@ -20,6 +20,18 @@ User::User(const String& username, uint64_t credits, bool isPlaying):
 	m_matchesPoints(Int16Vector())
 {}
 
+User::User(const User& otherUser) :
+	m_username(otherUser.m_username),
+	m_credits(otherUser.m_credits),
+	m_isPlaying(otherUser.m_isPlaying),
+	m_averagePoints(otherUser.m_averagePoints),
+	m_matchesPoints(otherUser.m_matchesPoints)
+{}
+
+User::~User()
+{
+}
+
 void User::SetUsername(const String& username)
 {
 	m_username = username;
