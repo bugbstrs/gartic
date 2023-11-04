@@ -9,7 +9,7 @@ export class Player
 public:
 	// Constructors
 	Player();
-	Player(const User& user);
+	Player(const User& user, uint16_t points = 0);
 	
 	// Getters
 	uint16_t GetPoints() const;
@@ -18,6 +18,7 @@ public:
 	void AddPoints(int noOfPointsToBeAdded);
 
 	// Overloaded operators
+	Player& operator=(const Player& secondPlayer);
 	bool operator==(const Player& secondPlayer);
 
 private:
