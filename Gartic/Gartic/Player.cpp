@@ -7,14 +7,15 @@ Player::Player():
 	m_points(0)
 {}
 
-Player::Player(const User & user, uint16_t points) :
+Player::Player(const User &user, uint16_t points) :
 	m_user(user),
 	m_points(points)
 {}
 
-Player::Player(const Player & secondPlayer)
-{
-}
+Player::Player(const Player& secondPlayer) :
+	m_user(secondPlayer.m_user),
+	m_points(secondPlayer.m_points)
+{}
 
 Player::~Player()
 {

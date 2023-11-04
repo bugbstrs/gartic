@@ -28,6 +28,7 @@ public:
 	void AddMatchPoints(uint16_t matchPoint);
 
 	// Overloaded Operators
+	User& operator=(const User& secondUser);
 	bool operator==(const User& secondUser);
 private:
 	String m_username;

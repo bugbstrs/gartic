@@ -55,7 +55,21 @@ void User::AddMatchPoints(uint16_t matchPoint)
 	m_matchesPoints.emplace_back(matchPoint);
 }
 
-bool User::operator==(const User& secondUser)
+User& User::operator=(const User& otherUser)
 {
-	return this->m_username == secondUser.m_username && this->m_credits == secondUser.m_credits && this->m_averagePoints == secondUser.m_averagePoints && this->m_isPlaying == secondUser.m_isPlaying && std::equal(this->m_matchesPoints.begin(), this->m_matchesPoints.end(), secondUser.m_matchesPoints.begin());
+	if (this == &otherUser) {
+		return *this;
+	}
+	this->m_username = otherUser.m_username;
+	this->m_averagePoints = otherUser.m_averagePoints;
+	this->m_matchesPoints = otherUser.m_matchesPoints;
+	this->m_credits = otherUser.m_credits;
+	this->m_isPlaying = otherUser.m_isPlaying;
+
+	return *this;
+}
+
+bool User::operator==(const User& otherUser)
+{
+	return this->m_username == otherUser.m_username && this->m_credits == otherUser.m_credits && this->m_averagePoints == otherUser.m_averagePoints && this->m_isPlaying == otherUser.m_isPlaying && std::equal(this->m_matchesPoints.begin(), this->m_matchesPoints.end(), otherUser.m_matchesPoints.begin());
 }
