@@ -10,6 +10,13 @@ Player::Player():
 Player::Player(const User & user, uint16_t points) :
 	m_user(user),
 	m_points(points)
+{}
+
+Player::Player(const Player & secondPlayer)
+{
+}
+
+Player::~Player()
 {
 }
 
@@ -25,8 +32,12 @@ void Player::AddPoints(int noOfPointsToBeAdded)
 
 Player& Player::operator=(const Player& secondPlayer)
 {
+	if (this == &secondPlayer) {
+		return *this;
+	}
 	this->m_points = secondPlayer.m_points;
 	this->m_user = secondPlayer.m_user;
+	return *this;
 }
 
 bool Player::operator==(const Player& secondPlayer)

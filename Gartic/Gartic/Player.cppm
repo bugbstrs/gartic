@@ -10,6 +10,8 @@ public:
 	// Constructors
 	Player();
 	Player(const User& user, uint16_t points = 0);
+	Player(const Player& secondPlayer);
+	~Player();
 	
 	// Getters
 	uint16_t GetPoints() const;
