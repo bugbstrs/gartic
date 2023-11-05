@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{8e44bd99-5d96-4c68-b3b0-dab0fc3dac65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Implementation Units">
+      <UniqueIdentifier>{4a88f6a8-ef53-49ed-8678-d3c51b71b829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Interfaces">
+      <UniqueIdentifier>{50fa8052-015e-4913-961c-eb4bbd9a64fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Standalone">
+      <UniqueIdentifier>{424257a2-c682-4f84-bb37-89506d36f0e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
