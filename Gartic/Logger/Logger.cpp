@@ -35,34 +35,21 @@ const std::string Logger::FormatLog(Format logFormat, Level logLevel, const std:
 		);
 
 		if (logPath.size() == 0) logMessage += "none)";
-		else for (int i = 0; i < logPath.size(); i++)
+		else
 		{
-			//if (logPath.size() == 1)
-			//{
-			//	logMessage += std::format("{})", logPath[0]);
-			//	break;
-			//}
-			//if (i == 0)
-			//{
-			//	logMessage += logPath[0];
-			//	continue;
-			//}
-			//if (i == logPath.size() - 1)
-			//{
-			//	logMessage += std::format("");
-			//}
-			//logMessage += std::format("-> {} ", logPath);
-			logMessage += std::format(
-				"{}{}{}",
-				logPath.size() == 1 || i == 0 ? "" : " -> ",
-				logPath[i],
-				i == logPath.size() - 1 ? ")" : ""
-			);
+			for (int i = 0; i < logPath.size(); i++)
+			{
+				logMessage += std::format(
+					"{}{}{}",
+					logPath.size() == 1 || i == 0 ? "" : " -> ",
+					logPath[i],
+					i == logPath.size() - 1 ? ")" : ""
+				);
+			}
 		}
-
-		logMessage += std::format(" {}", logMessage);
+		logMessage += std::format(" {}", message);
 	}
-	if (logFormat == Format::MARKDOWN)
+	else if (logFormat == Format::MARKDOWN)
 	{
 		logMessage += std::format(
 			"- {} @ [{}]: (`{}`: ",
@@ -82,7 +69,7 @@ const std::string Logger::FormatLog(Format logFormat, Level logLevel, const std:
 			);
 		}
 
-		logMessage += std::format(" {}", logMessage);
+		logMessage += std::format(" {}", message);
 	}
 
 	return logMessage;
