@@ -39,5 +39,11 @@
     <ClCompile Include="LogFormat.cppm">
       <Filter>Modules\Standalone</Filter>
     </ClCompile>
+    <ClCompile Include="Logger.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

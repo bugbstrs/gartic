@@ -156,6 +156,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="LogFormat.cppm" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="Logger.cppm" />
     <ClCompile Include="LogLevel.cppm" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="TransportOptions.cppm" />
