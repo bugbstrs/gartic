@@ -22,7 +22,7 @@ void ConsoleManager::ClearScreen()
 
 void ConsoleManager::SetConsoleScale(uint16_t x, uint16_t y)
 {
-	std::string command = "mode " + std::to_string(x) + ',' + std::to_string(y);
+	String command = "mode " + std::to_string(x) + ',' + std::to_string(y);
 	system(command.c_str());
 }
 

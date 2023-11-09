@@ -13,7 +13,6 @@ export class ConsoleManager
 public:
 	// Console creation
 	static void Initialize();
-	static void ClearScreen();
 
 	// Setters
 	static void SetConsoleScale(uint16_t x, uint16_t y);
@@ -23,8 +22,10 @@ public:
 	static void SetColor(ColorType background, ColorType text);
 	
 	// Output related
+	static void ClearScreen();
 	static void WriteVertical(const String& sentence, uint16_t x, uint16_t y);
 	static void WriteHorizontal(const String& sentence, uint16_t x, uint16_t y);
+
 private:
 	static HANDLE m_h;
 

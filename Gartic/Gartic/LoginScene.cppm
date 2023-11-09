@@ -3,6 +3,7 @@ export module LoginScene;
 import <string>;
 
 import ConsoleManager;
+import MenuScene;
 export import Scene;
 export import SceneType;
 
