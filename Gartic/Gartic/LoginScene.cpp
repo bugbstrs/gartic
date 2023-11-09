@@ -4,18 +4,6 @@ import <string>;
 
 import SceneType;
 
-std::string LoginScene::m_username = "";
-std::string LoginScene::m_password = "";
-LoginScene::Options LoginScene::m_option;
-SceneType LoginScene::m_nextScene;
-
-SceneType LoginScene::SetActive()
-{
-	Start();
-	Update();
-	return m_nextScene;
-}
-
 void LoginScene::Start()
 {
 	m_username = "";

@@ -3,15 +3,14 @@ export module LoginScene;
 import <string>;
 
 import ConsoleManager;
+export import Scene;
 export import SceneType;
 
-export class LoginScene
+export class LoginScene : public Scene
 {
-public:
-	static SceneType SetActive();
 private:
-	static std::string m_username;
-	static std::string m_password;
+	std::string m_username;
+	std::string m_password;
 
 	enum Options
 	{
@@ -20,12 +19,11 @@ private:
 		LOGIN,
 		REGISTER
 	};
-	static Options m_option;
-	static SceneType m_nextScene;
+	Options m_option;
 
-	static void Start();
-	static void Update();
-	static void Display();
-	static bool Login();
-	static bool Register();
+	void Start() override;
+	void Update() override;
+	void Display() override;
+	bool Login();
+	bool Register();
 };

@@ -1,11 +1,10 @@
 export module MenuScene;
 
+export import Scene;
 export import SceneType;
 
-class MenuScene
+export class MenuScene : public Scene
 {
-public:
-	static SceneType SetActive();
 private:
 	enum Options
 	{
@@ -13,10 +12,9 @@ private:
 		STATS,
 		LOGOUT
 	};
-	static Options m_option;
-	static SceneType m_nextScene;
+	Options m_option;
 
-	static void Start();
-	static void Update();
-	static void Display();
+	void Start() override;
+	void Update() override;
+	void Display() override;
 };

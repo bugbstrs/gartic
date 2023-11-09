@@ -108,5 +108,11 @@
     <ClCompile Include="GameStatus.cppm">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

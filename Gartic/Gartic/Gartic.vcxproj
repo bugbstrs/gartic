@@ -170,6 +170,8 @@
     <ClCompile Include="MenuScene.cppm" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Player.cppm" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Scene.cppm" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneManager.cppm" />
     <ClCompile Include="SceneType.cppm" />

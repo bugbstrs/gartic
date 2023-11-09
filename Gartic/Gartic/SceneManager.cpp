@@ -20,7 +20,7 @@ void SceneManager::Update()
 		switch (m_activeScene)
 		{
 		case SceneType::LOGIN:
-			nextScene = LoginScene::SetActive();
+			//nextScene = LoginScene::SetActive();
 			break;
 		case SceneType::MENU:
 			break;
