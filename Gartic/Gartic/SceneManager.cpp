@@ -1,37 +1,25 @@
 module SceneManager;
 
 import ConsoleManager;
-import SceneType;
 
-SceneType SceneManager::m_activeScene;
+std::unique_ptr<Scene> SceneManager::m_activeScene;
 
 void SceneManager::Start()
 {
 	ConsoleManager::Initialize();
-	m_activeScene = SceneType::LOGIN;
+	m_activeScene = std::make_unique<LoginScene>();
 	Update();
 }
 
 void SceneManager::Update()
 {
-	while (m_activeScene != SceneType::NOT_A_SCENE)
+	while (m_activeScene)
 	{
-		SceneType nextScene = SceneType::NOT_A_SCENE;
-		switch (m_activeScene)
-		{
-		case SceneType::LOGIN:
-			//nextScene = LoginScene::SetActive();
-			break;
-		case SceneType::MENU:
-			break;
-		case SceneType::STATS:
-			break;
-		case SceneType::GAME:
-			break;
-		default:
-			//Scene not found
-			break;
-		}
-		m_activeScene = nextScene;
+		type_info* nextScene = m_activeScene->SetActive();
+
+		if (nextScene == &typeid(LoginScene))
+			m_activeScene = std::make_unique<LoginScene>();
+		if (nextScene == &typeid(MenuScene))
+			m_activeScene = std::make_unique<MenuScene>();
 	}
 }

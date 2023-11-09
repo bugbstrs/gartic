@@ -17,7 +17,7 @@ void LoginScene::Start()
 
 void LoginScene::Update()
 {
-	while (m_nextScene != nullptr)
+	while (m_nextScene == nullptr)
 	{
 		InputManager::ReadInput();
 		if (InputManager::GetCurrentKeyboardInput())
@@ -25,19 +25,33 @@ void LoginScene::Update()
 			switch (InputManager::ControlKey())
 			{
 			case ControlKeys::UpArrow:
-
+				if (m_option == REGISTER)
+				{
+					m_option = PASSWORD;
+					break;
+				}
+				if (m_option > USER)
+					m_option = static_cast<Options>(static_cast<int>(m_option) - 1);
 				break;
 			case ControlKeys::DownArrow:
-
+				if (m_option <= PASSWORD)
+					m_option = static_cast<Options>(static_cast<int>(m_option) + 1);
 				break;
 			case ControlKeys::LeftArrow:
-
+				if (m_option == REGISTER)
+					m_option = LOGIN;
 				break;
 			case ControlKeys::RightArrow:
-
+				if (m_option == LOGIN)
+					m_option = REGISTER;
 				break;
 			case ControlKeys::Enter:
-
+				if (m_option == LOGIN)
+					if (Login())
+						m_nextScene = const_cast<std::type_info*>(&typeid(LoginScene));
+				if (m_option == REGISTER)
+					if (Register())
+						m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
 				break;
 			default:
 				break;
