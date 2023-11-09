@@ -3,22 +3,56 @@ module LoginScene;
 import <string>;
 
 import SceneType;
+import InputManager;
 
 void LoginScene::Start()
 {
 	m_username = "";
 	m_password = "";
 	m_option = USER;
-	m_nextScene = SceneType::NOT_A_SCENE;
+	m_nextScene = nullptr;
 	ConsoleManager::SetConsoleScale(60, 15);
 	Display();
 }
 
 void LoginScene::Update()
 {
-	while (m_nextScene == SceneType::NOT_A_SCENE)
+	while (m_nextScene != nullptr)
 	{
-		Display();
+		InputManager::ReadInput();
+		if (InputManager::GetCurrentKeyboardInput())
+		{
+			switch (InputManager::ControlKey())
+			{
+			case ControlKeys::UpArrow:
+
+				break;
+			case ControlKeys::DownArrow:
+
+				break;
+			case ControlKeys::LeftArrow:
+
+				break;
+			case ControlKeys::RightArrow:
+
+				break;
+			case ControlKeys::Enter:
+
+				break;
+			default:
+				break;
+			}
+			if (InputManager::ControlKey() == ControlKeys::NotControl)
+			{
+				if (m_option == USER)
+					InputManager::UpdateString(m_username, 18);
+				if (m_option == PASSWORD)
+					InputManager::UpdateString(m_password, 18);
+			}
+		}
+
+		if (InputManager::GetCurrentKeyboardInput() || InputManager::ClickPressed())
+			Display();
 	}
 }
 
