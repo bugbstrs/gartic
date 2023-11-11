@@ -27,14 +27,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Modules\Implementation Units</Filter>
-    </ClCompile>
     <ClCompile Include="Timer.cppm">
       <Filter>Modules\Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="TimerUtils.cppm">
-      <Filter>Modules\Standalone</Filter>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Modules\Implementation Units</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

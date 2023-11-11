@@ -1,8 +1,20 @@
 export module Timer;
 
+import <thread>;
+import <mutex>;
+import <chrono>;
 import <cstdint>;
 
-export import TimerUtils;
+using Thread = std::thread;
+using Mutex = std::mutex;
+using ConditionVariable = std::condition_variable;
+using Milliseconds = std::chrono::milliseconds;
+using TimePoint = std::chrono::steady_clock::time_point;
+
+using namespace std::chrono_literals;
+
+export const int defaultMinutes = 1;
+export const int defaultResolution = 12;
 
 export class __declspec(dllexport) Timer
 {
