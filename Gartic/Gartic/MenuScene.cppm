@@ -1,7 +1,6 @@
 export module MenuScene;
 
 export import Scene;
-export import SceneType;
 
 export class MenuScene : public Scene
 {
@@ -16,5 +15,5 @@ private:
 
 	void Start() override;
 	void Update() override;
-	void Display() override;
+	void Display() const override;
 };

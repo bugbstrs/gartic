@@ -38,15 +38,20 @@ void InputManager::ReadInput()
 }
 
 
-void InputManager::UpdateString(String& text, int maxLenght)
+void InputManager::UpdateString(String& text, int pos, int maxLenght)
 {
 	if (m_isArrowKey)
 		return;
-	if (isalnum(m_lastKeyPressed) || m_lastKeyPressed == ' ')
-		if (maxLenght == -1 || text.length() < maxLenght)
-			text += m_lastKeyPressed;
-	if (m_lastKeyPressed == '\b' && text.length() > 0)//backspace
-		text.pop_back();
+	if (pos == -1)
+		pos = text.size();
+	if (m_lastKeyPressed == '\b' && text.size() > 0)//backspace
+		if (pos == text.size())
+			text.erase(pos - 1, 1);
+		else
+			text.erase(pos, 1);
+	if (m_lastKeyPressed >= 32 && m_lastKeyPressed <= 126)
+		if (maxLenght == -1 || text.size() < maxLenght)
+			text.insert(pos, 1, m_lastKeyPressed);
 }
 
 ControlKeys InputManager::ControlKey()

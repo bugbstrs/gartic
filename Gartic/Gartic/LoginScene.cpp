@@ -1,8 +1,9 @@
+#include <algorithm>
+
 module LoginScene;
 
 import <string>;
 
-import SceneType;
 import InputManager;
 
 void LoginScene::Start()
@@ -10,6 +11,7 @@ void LoginScene::Start()
 	m_username = "";
 	m_password = "";
 	m_option = USER;
+	m_textpos = 0;
 	m_nextScene = nullptr;
 	ConsoleManager::SetConsoleScale(60, 15);
 	Display();
@@ -25,30 +27,41 @@ void LoginScene::Update()
 			switch (InputManager::ControlKey())
 			{
 			case ControlKeys::UpArrow:
-				if (m_option == REGISTER)
+				if (m_option == PASSWORD)
+				{
+					m_option = USER;
+					m_textpos = std::min((int)m_username.size(), 17);
+				}
+				if (m_option > PASSWORD)
 				{
 					m_option = PASSWORD;
-					break;
+					m_textpos = std::min((int)m_password.size(), 17);
 				}
-				if (m_option > USER)
-					m_option = static_cast<Options>(static_cast<int>(m_option) - 1);
 				break;
 			case ControlKeys::DownArrow:
+				if (m_option == USER)
+					m_textpos = std::min(m_textpos, std::min((int)m_password.size(), 17));
 				if (m_option <= PASSWORD)
 					m_option = static_cast<Options>(static_cast<int>(m_option) + 1);
 				break;
 			case ControlKeys::LeftArrow:
 				if (m_option == REGISTER)
 					m_option = LOGIN;
+				if (m_option < LOGIN)
+					m_textpos = std::max(m_textpos - 1, 0);
 				break;
 			case ControlKeys::RightArrow:
 				if (m_option == LOGIN)
 					m_option = REGISTER;
+				if (m_option == USER)
+					m_textpos = std::min(m_textpos + 1, std::min((int)m_username.size(), 17));
+				if (m_option == PASSWORD)
+					m_textpos = std::min(m_textpos + 1, std::min((int)m_password.size(), 17));
 				break;
 			case ControlKeys::Enter:
 				if (m_option == LOGIN)
 					if (Login())
-						m_nextScene = const_cast<std::type_info*>(&typeid(LoginScene));
+						m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
 				if (m_option == REGISTER)
 					if (Register())
 						m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
@@ -59,9 +72,18 @@ void LoginScene::Update()
 			if (InputManager::ControlKey() == ControlKeys::NotControl)
 			{
 				if (m_option == USER)
-					InputManager::UpdateString(m_username, 18);
+				{
+					int len = m_username.size();
+					InputManager::UpdateString(m_username, m_textpos, 18);
+					m_textpos += m_username.size() - len;
+				}
 				if (m_option == PASSWORD)
-					InputManager::UpdateString(m_password, 18);
+				{
+					int len = m_password.size();
+					InputManager::UpdateString(m_password, m_textpos, 18);
+					m_textpos += m_password.size() - len;
+				}
+				m_textpos = std::max(m_textpos, 0);
 			}
 		}
 
@@ -70,7 +92,7 @@ void LoginScene::Update()
 	}
 }
 
-void LoginScene::Display()
+void LoginScene::Display() const
 {
 	//Title
 	ConsoleManager::ClearScreen();
@@ -112,15 +134,20 @@ void LoginScene::Display()
 	ConsoleManager::SetColor(ColorType::Black, ColorType::Gray);
 	ConsoleManager::WriteHorizontal("Use arrow keys to select options", 30, 12);
 	ConsoleManager::WriteHorizontal("And Enter to confirm", 30, 13);
+
+	if (m_option == USER)
+		ConsoleManager::SetCursor(23 + m_textpos, 5);
+	if (m_option == PASSWORD)
+		ConsoleManager::SetCursor(23 + m_textpos, 6);
 }
 
-bool LoginScene::Login()
+bool LoginScene::Login() const
 {
 	//Init User
 	return true;
 }
 
-bool LoginScene::Register()
+bool LoginScene::Register() const
 {
 	//Init User
 	return false;

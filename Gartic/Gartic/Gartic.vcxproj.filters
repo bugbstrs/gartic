@@ -78,9 +78,6 @@
     <ClCompile Include="Vocabulary.cppm">
       <Filter>Modules\Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="SceneType.cppm">
-      <Filter>Modules\Standalone</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cppm">
       <Filter>Modules\Interfaces</Filter>
     </ClCompile>

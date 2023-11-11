@@ -12,7 +12,7 @@ export class InputManager
 public:
 	// Read
 	static void ReadInput();
-	static void UpdateString(String& text, int maxLenght = -1);
+	static void UpdateString(String& text, int pos = -1, int maxLenght = -1);
 
 	// Getters
 	static char GetCurrentKeyboardInput();

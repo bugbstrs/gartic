@@ -5,7 +5,6 @@ import <string>;
 import ConsoleManager;
 import MenuScene;
 export import Scene;
-export import SceneType;
 
 export class LoginScene : public Scene
 {
@@ -21,10 +20,11 @@ private:
 		REGISTER
 	};
 	Options m_option;
+	int m_textpos;
 
 	void Start() override;
 	void Update() override;
-	void Display() override;
-	bool Login();
-	bool Register();
+	void Display() const override;
+	bool Login() const;
+	bool Register() const;
 };

@@ -9,5 +9,5 @@ std::type_info* Scene::SetActive()
 
 Scene::~Scene()
 {
-	delete m_nextScene;
+
 }

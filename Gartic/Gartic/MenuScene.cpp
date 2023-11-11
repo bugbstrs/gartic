@@ -10,7 +10,7 @@ void MenuScene::Update()
 
 }
 
-void MenuScene::Display()
+void MenuScene::Display() const
 {
 
 }
