@@ -17,6 +17,7 @@ public:
 	// Setters
 	static void SetConsoleScale(uint16_t x, uint16_t y);
 	static void SetCursor(uint16_t x, uint16_t y);
+	static void SetCursor(COORD coord);
 	static void SetBackgroundColor(ColorType color);
 	static void SetTextColor(ColorType color);
 	static void SetColor(ColorType background, ColorType text);

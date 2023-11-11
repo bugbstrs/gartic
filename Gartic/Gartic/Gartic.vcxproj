@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Align.cppm" />
     <ClCompile Include="ColorType.cppm" />
     <ClCompile Include="config.cppm" />
     <ClCompile Include="ConsoleManager.cpp" />
@@ -162,6 +163,8 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameScene.cppm" />
     <ClCompile Include="GameStatus.cppm" />
+    <ClCompile Include="GUIObject.cpp" />
+    <ClCompile Include="GUIObject.cppm" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="InputManager.cppm" />
     <ClCompile Include="LoginScene.cpp" />

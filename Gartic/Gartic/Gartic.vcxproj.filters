@@ -96,15 +96,6 @@
     <ClCompile Include="MenuScene.cppm">
       <Filter>Modules\Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameScene.cppm">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStatus.cppm">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cppm">
       <Filter>Modules\Interfaces</Filter>
     </ClCompile>
@@ -113,6 +104,24 @@
     </ClCompile>
     <ClCompile Include="MenuScene.cpp">
       <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStatus.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIObject.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIObject.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Align.cppm">
+      <Filter>Modules\Standalone</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

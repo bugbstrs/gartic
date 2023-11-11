@@ -34,6 +34,11 @@ void ConsoleManager::SetCursor(uint16_t x, uint16_t y)
 	SetConsoleCursorPosition(m_h, coord);
 }
 
+void ConsoleManager::SetCursor(COORD coord)
+{
+	SetConsoleCursorPosition(m_h, coord);
+}
+
 void ConsoleManager::SetBackgroundColor(ColorType color)
 {
 	m_color %= 16;

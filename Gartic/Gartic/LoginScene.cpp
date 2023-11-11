@@ -84,7 +84,12 @@ void LoginScene::Update()
 					m_textpos += m_password.size() - len;
 				}
 				m_textpos = std::max(m_textpos, 0);
+				m_textpos = std::min(m_textpos, 17);
 			}
+		}
+		if (InputManager::ClickPressed())
+		{
+			//check what object was pressed
 		}
 
 		if (InputManager::GetCurrentKeyboardInput() || InputManager::ClickPressed())
@@ -132,9 +137,9 @@ void LoginScene::Display() const
 	ConsoleManager::WriteHorizontal("Register", 36, 10);
 	//Controls
 	ConsoleManager::SetColor(ColorType::Black, ColorType::Gray);
-	ConsoleManager::WriteHorizontal("Use arrow keys to select options", 30, 12);
-	ConsoleManager::WriteHorizontal("And Enter to confirm", 30, 13);
-
+	ConsoleManager::WriteHorizontal("Use right click or arrow keys", 30, 12);
+	ConsoleManager::WriteHorizontal("to select options And Enter to confirm", 30, 13);
+	//Cursor position
 	if (m_option == USER)
 		ConsoleManager::SetCursor(23 + m_textpos, 5);
 	if (m_option == PASSWORD)
