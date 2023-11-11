@@ -90,6 +90,16 @@ Milliseconds Timer::GetElapsedTime() const
 	return m_initialTime - m_remainingTime;
 }
 
+double Timer::GetRemainingTimePercentage() const
+{
+	if (m_initialTime == 0ms)
+	{
+		return 0.0;
+	}
+
+	return static_cast<double>(m_remainingTime.count() / m_initialTime.count()) * 100.0;
+}
+
 void Timer::StartTimer()
 {
 	m_isSuspended = false;

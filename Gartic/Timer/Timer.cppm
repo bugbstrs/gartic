@@ -24,6 +24,8 @@ public:
 	// Constructors
 	Timer();
 	Timer(uint16_t totalMinutes, Milliseconds timerResolution = 1ms);
+	Timer(uint16_t initialMinutes, uint16_t remainingMinutes, Milliseconds timerResolution = 1ms);
+	
 	Timer(const Timer& newTimer);
 
 	// Destructor
@@ -41,6 +43,7 @@ public:
 	Milliseconds GetRemainingTime() const;
 	Milliseconds GetTimerResolution() const;
 	Milliseconds GetElapsedTime() const;
+	double GetRemainingTimePercentage() const;
 
 	// Flow of the timer
 	void StartTimer();
