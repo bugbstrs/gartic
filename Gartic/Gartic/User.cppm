@@ -13,6 +13,7 @@ public:
 	User();
 	User(const String& username, uint64_t credits, bool isPlaying);
 	User(const User& otherUser);
+	User(User&& otherUser);
 	~User() = default;
 	
 	// Setters
@@ -30,16 +31,17 @@ public:
 	void AddMatchPoints(uint16_t matchPoint);
 
 	// Overloaded Operators
-	User& operator=(const User& secondUser);
-	bool operator==(const User& secondUser) const noexcept;
+	User& operator=(const User& otherUser) noexcept;
+	User& operator=(User&& otherUser) noexcept;
+	bool operator==(const User& otherUser) const noexcept;
 private:
 	String m_username;
+
+	uint64_t m_credits;
 
 	uint16_t m_averagePoints;
 	
 	Int16Vector m_matchesPoints;
-	
-	uint64_t m_credits;
 	
 	bool m_isPlaying;
 };

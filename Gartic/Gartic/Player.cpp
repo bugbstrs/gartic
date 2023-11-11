@@ -12,9 +12,9 @@ Player::Player(const User& user, uint16_t points) :
 	m_points{ points }
 {}
 
-Player::Player(const Player& secondPlayer) :
-	m_user{ secondPlayer.m_user },
-	m_points{ secondPlayer.m_points }
+Player::Player(const Player& otherPlayer) :
+	m_user{ otherPlayer.m_user },
+	m_points{ otherPlayer.m_points }
 {}
 
 uint16_t Player::GetPoints() const noexcept
@@ -27,16 +27,16 @@ void Player::AddPoints(int noOfPointsToBeAdded) noexcept
 	m_points += noOfPointsToBeAdded;
 }
 
-Player& Player::operator=(const Player& secondPlayer)
+Player& Player::operator=(const Player& otherPlayer)
 {
-	if (this != &secondPlayer) {
-		this->m_points = secondPlayer.m_points;
-		this->m_user = secondPlayer.m_user;
+	if (this != &otherPlayer) {
+		this->m_points = otherPlayer.m_points;
+		this->m_user = otherPlayer.m_user;
 	}
 	return *this;
 }
 
-bool Player::operator==(const Player& secondPlayer) const noexcept
+bool Player::operator==(const Player& otherPlayer) const noexcept
 {
-	return this->m_points == secondPlayer.m_points && this->m_user == secondPlayer.m_user;
+	return this->m_points == otherPlayer.m_points && this->m_user == otherPlayer.m_user;
 }

@@ -10,7 +10,7 @@ public:
 	// Constructors
 	Player();
 	Player(const User& user, uint16_t points = 0);
-	Player(const Player& secondPlayer);
+	Player(const Player& otherPlayer);
 	~Player() = default;
 	
 	// Getters
@@ -20,8 +20,8 @@ public:
 	void AddPoints(int noOfPointsToBeAdded) noexcept;
 
 	// Overloaded operators
-	Player& operator=(const Player& secondPlayer);
-	bool operator==(const Player& secondPlayer) const noexcept;
+	Player& operator=(const Player& otherPlayer);
+	bool operator==(const Player& otherPlayer) const noexcept;
 
 private:
 	uint16_t m_points;
