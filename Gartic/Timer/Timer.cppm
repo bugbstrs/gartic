@@ -1,21 +1,10 @@
 export module Timer;
 
-import <thread>;
-import <mutex>;
-import <chrono>;
 import <cstdint>;
 
-export import config;
+export import TimerUtils;
 
-using Thread = std::thread;
-using Mutex = std::mutex;
-using ConditionVariable = std::condition_variable;
-using Milliseconds = std::chrono::milliseconds;
-using TimePoint = std::chrono::steady_clock::time_point;
-
-using namespace std::chrono_literals;
-
-export class Timer
+export class __declspec(dllexport) Timer
 {
 public:
 	// Constructors

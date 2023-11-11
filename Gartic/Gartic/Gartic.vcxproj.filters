@@ -66,12 +66,6 @@
     <ClCompile Include="User.cpp">
       <Filter>Modules\Implementation Units</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cppm">
-      <Filter>Modules\Interfaces</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Modules\Implementation Units</Filter>
-    </ClCompile>
     <ClCompile Include="Vocabulary.cpp">
       <Filter>Modules\Implementation Units</Filter>
     </ClCompile>
