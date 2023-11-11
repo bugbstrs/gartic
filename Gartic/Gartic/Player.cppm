@@ -21,7 +21,7 @@ public:
 
 	// Overloaded operators
 	Player& operator=(const Player& secondPlayer);
-	bool operator==(const Player& secondPlayer) noexcept;
+	bool operator==(const Player& secondPlayer) const noexcept;
 
 private:
 	uint16_t m_points;

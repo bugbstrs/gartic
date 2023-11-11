@@ -36,7 +36,7 @@ Player& Player::operator=(const Player& secondPlayer)
 	return *this;
 }
 
-bool Player::operator==(const Player& secondPlayer) noexcept
+bool Player::operator==(const Player& secondPlayer) const noexcept
 {
 	return this->m_points == secondPlayer.m_points && this->m_user == secondPlayer.m_user;
 }
