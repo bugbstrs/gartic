@@ -8,19 +8,21 @@ export class Player
 {
 public:
 	// Constructors
-	Player();
+	Player() noexcept;
 	Player(const User& user, uint16_t points = 0);
-	Player(const Player& otherPlayer);
+	Player(const Player& otherPlayer) noexcept;
+	Player(Player&& otherPlayer) noexcept;
 	~Player() = default;
 	
 	// Getters
 	uint16_t GetPoints() const noexcept;
 
 	// Functionality
-	void AddPoints(int noOfPointsToBeAdded) noexcept;
+	void AddPoints(uint16_t noOfPointsToBeAdded) noexcept;
 
 	// Overloaded operators
-	Player& operator=(const Player& otherPlayer);
+	Player& operator=(const Player& otherPlayer) noexcept;
+	Player& operator=(Player&& otherPlayer) noexcept;
 	bool operator==(const Player& otherPlayer) const noexcept;
 
 private:

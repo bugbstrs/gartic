@@ -10,10 +10,10 @@ export class User
 {
 public:
 	// Constructors
-	User();
+	User() noexcept;
 	User(const String& username, uint64_t credits, bool isPlaying);
-	User(const User& otherUser);
-	User(User&& otherUser);
+	User(const User& otherUser) noexcept;
+	User(User&& otherUser) noexcept;
 	~User() = default;
 	
 	// Setters

@@ -4,7 +4,7 @@ import <string>;
 import <vector>;
 import <algorithm>;
 
-User::User():
+User::User() noexcept:
 	m_username{ String{} },
 	m_credits{0},
 	m_averagePoints{0},
@@ -20,7 +20,7 @@ User::User(const String& username, uint64_t credits, bool isPlaying):
 	m_isPlaying{ isPlaying }
 {}
 
-User::User(const User& otherUser) :
+User::User(const User& otherUser) noexcept:
 	m_username{ otherUser.m_username },
 	m_credits{ otherUser.m_credits },
 	m_averagePoints{ otherUser.m_averagePoints },
@@ -28,7 +28,7 @@ User::User(const User& otherUser) :
 	m_isPlaying{ otherUser.m_isPlaying }
 {}
 
-User::User(User&& otherUser) :
+User::User(User&& otherUser) noexcept:
 	m_username{ std::move(otherUser.m_username) },
 	m_credits{ std::move(otherUser.m_credits) },
 	m_averagePoints{ std::move(otherUser.m_averagePoints) },
