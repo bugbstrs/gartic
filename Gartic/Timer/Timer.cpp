@@ -60,6 +60,16 @@ void Timer::SetTimerResolution(uint32_t milliseconds)
 	m_timerResolution = Milliseconds(milliseconds);
 }
 
+void Timer::SetCallback(TimerCallback callback)
+{
+	m_callback = callback;
+}
+
+void Timer::SetTimeoutCallback(TimerCallback timeoutCallback)
+{
+	m_timeoutCallback = timeoutCallback;
+}
+
 Milliseconds Timer::GetInitialTime() const
 {
 	return m_initialTime;
@@ -73,6 +83,11 @@ Milliseconds Timer::GetRemainingTime() const
 Milliseconds Timer::GetTimerResolution() const
 {
 	return m_timerResolution;
+}
+
+Milliseconds Timer::GetElapsedTime() const
+{
+	return m_initialTime - m_remainingTime;
 }
 
 void Timer::StartTimer()
@@ -97,6 +112,18 @@ void Timer::StopTimer()
 void Timer::ResetTimer()
 {
 	m_remainingTime = m_initialTime;
+}
+
+void Timer::StartTimerFrom(Milliseconds customStartTime)
+{
+	if (customStartTime <= 0ms)
+	{
+		return;
+	}
+
+	m_remainingTime = customStartTime;
+
+	this->StartTimer();
 }
 
 bool Timer::IsTimeExpired() const
