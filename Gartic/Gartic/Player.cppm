@@ -11,17 +11,17 @@ public:
 	Player();
 	Player(const User& user, uint16_t points = 0);
 	Player(const Player& secondPlayer);
-	~Player();
+	~Player() = default;
 	
 	// Getters
-	uint16_t GetPoints() const;
+	uint16_t GetPoints() const noexcept;
 
 	// Functionality
-	void AddPoints(int noOfPointsToBeAdded);
+	void AddPoints(int noOfPointsToBeAdded) noexcept;
 
 	// Overloaded operators
 	Player& operator=(const Player& secondPlayer);
-	bool operator==(const Player& secondPlayer);
+	bool operator==(const Player& secondPlayer) noexcept;
 
 private:
 	uint16_t m_points;
