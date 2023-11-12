@@ -7,7 +7,7 @@ Player::Player() noexcept:
 	m_points{ 0 }
 {}
 
-Player::Player(const User& user, uint16_t points) :
+Player::Player(const User& user, uint16_t points):
 	m_user{ user },
 	m_points{ points }
 {}
@@ -38,6 +38,7 @@ Player& Player::operator=(const Player& otherPlayer) noexcept
 		this->m_points = otherPlayer.m_points;
 		this->m_user = otherPlayer.m_user;
 	}
+
 	return *this;
 }
 
@@ -47,6 +48,7 @@ Player& Player::operator=(Player&& otherPlayer) noexcept
 		this->m_points = std::move(otherPlayer.m_points);
 		this->m_user = std::move(otherPlayer.m_user);
 	}
+
 	return *this;
 }
 

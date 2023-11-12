@@ -1,8 +1,7 @@
 module GameScene;
 
 GameScene::GameScene()
-{
-}
+{}
 
 GameScene::GameScene(const GameScene& newGameScene)
 {
@@ -10,8 +9,7 @@ GameScene::GameScene(const GameScene& newGameScene)
 }
 
 GameScene::~GameScene()
-{
-}
+{}
 
 void GameScene::SetGameStatus(GameStatus newGameStatus)
 {
@@ -70,10 +68,7 @@ void GameScene::AddPlayer(const Player& playerToAdd)
 
 void GameScene::RemovePlayer(const Player& playerToRemove)
 {
-	if (!m_players.size())
-	{
-		return;
-	}
+	if (!m_players.size()) return;
 
 	PlayersVector::iterator it = std::find(m_players.begin(), m_players.end(), playerToRemove);
 
@@ -82,10 +77,7 @@ void GameScene::RemovePlayer(const Player& playerToRemove)
 
 void GameScene::NextPainter()
 {
-	if (!m_players.size())
-	{
-		return;
-	}
+	if (!m_players.size()) return;
 
 	PlayersVector::iterator it = std::find(m_players.begin(), m_players.end(), m_painter);
 

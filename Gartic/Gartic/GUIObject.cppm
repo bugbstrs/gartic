@@ -15,6 +15,7 @@ public:
 	GUIObject(COORD upLeftCorner, Align align, ColorType backgroundColor, ColorType textColor, uint16_t width);
 	GUIObject(int16_t x, int16_t y, Align align, ColorType backgroundColor, ColorType textColor, uint16_t width);
 	virtual ~GUIObject();
+
 protected:
 	COORD m_upLeftCorner;
 	uint16_t m_width;

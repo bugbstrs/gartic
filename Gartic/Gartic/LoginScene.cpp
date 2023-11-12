@@ -7,8 +7,8 @@ import <print>;
 
 import InputManager;
 
-LoginScene::LoginScene(ConsoleManager* console)
-	:Scene{ console }
+LoginScene::LoginScene(ConsoleManager* console):
+	Scene{ console }
 {}
 
 LoginScene::~LoginScene()
@@ -111,42 +111,54 @@ void LoginScene::Display() const
 	m_console->ClearScreen();
 	m_console->SetColor(ColorType::Cyan, ColorType::Magenta);
 	m_console->WriteHorizontal("GARTIC", 30, 2);
+
 	//Username Field
 	m_console->SetColor(ColorType::Black, ColorType::White);
 	m_console->WriteHorizontal("User:", 20, 5);
+	
 	if (m_option == USER)
 		m_console->SetColor(ColorType::Blue, ColorType::White);
 	else
 		m_console->SetColor(ColorType::Gray, ColorType::Black);
+	
 	std::print("                  ");
 	m_console->SetCursor(23, 5);
 	std::print(m_username);
+	
 	//Password Field
 	m_console->SetColor(ColorType::Black, ColorType::White);
 	m_console->WriteHorizontal("Password:", 18, 6);
+	
 	if (m_option == PASSWORD)
 		m_console->SetColor(ColorType::Blue, ColorType::White);
 	else
 		m_console->SetColor(ColorType::Gray, ColorType::Black);
+	
 	std::print("                  ");
 	m_console->SetCursor(23, 6);
 	std::print(m_password);
+	
 	//Login Button
 	if (m_option == LOGIN)
 		m_console->SetColor(ColorType::Blue, ColorType::White);
 	else
 		m_console->SetColor(ColorType::DarkGray, ColorType::Green);
+	
 	m_console->WriteHorizontal("Login", 25, 10);
+	
 	//Register Button
 	if (m_option == REGISTER)
 		m_console->SetColor(ColorType::Blue, ColorType::White);
 	else
 		m_console->SetColor(ColorType::DarkGray, ColorType::Cyan);
+	
 	m_console->WriteHorizontal("Register", 36, 10);
+	
 	//Controls
 	m_console->SetColor(ColorType::Black, ColorType::Gray);
 	m_console->WriteHorizontal("Use right click or arrow keys", 30, 12);
 	m_console->WriteHorizontal("to select options And Enter to confirm", 30, 13);
+	
 	//Cursor position
 	if (m_option == USER)
 		m_console->SetCursor(23 + m_textpos, 5);

@@ -23,14 +23,18 @@ void InputManager::ReadInput()
 		m_cursorPosition = { -1, -1 };
 		m_rightClickPressed = false;
 	}
+
 	m_isArrowKey = false;
+	
 	if (!_kbhit())
 	{
 		m_lastKeyPressed = 0;
 		return;
 	}
+
 	m_lastKeyPressed = _getch();
-	if (m_lastKeyPressed == 224 || m_lastKeyPressed == -32)//224/-32 is right before arrow keys keycode
+	
+	if (m_lastKeyPressed == 224 || m_lastKeyPressed == -32) // 224/-32 is right before arrow keys keycode
 	{
 		m_isArrowKey = true;
 		m_lastKeyPressed = _getch();
@@ -38,19 +42,19 @@ void InputManager::ReadInput()
 }
 
 
-void InputManager::UpdateString(String& text, int pos, int maxLenght)
+void InputManager::UpdateString(String& text, int pos, int maxLength)
 {
 	if (m_isArrowKey)
 		return;
 	if (pos == -1)
 		pos = text.size();
-	if (m_lastKeyPressed == '\b' && text.size() > 0)//backspace
+	if (m_lastKeyPressed == '\b' && text.size() > 0) // backspace
 		if (pos == text.size())
 			text.erase(pos - 1, 1);
 		else
 			text.erase(pos, 1);
 	if (m_lastKeyPressed >= 32 && m_lastKeyPressed <= 126)
-		if (maxLenght == -1 || text.size() < maxLenght)
+		if (maxLength == -1 || text.size() < maxLength)
 			text.insert(pos, 1, m_lastKeyPressed);
 }
 
@@ -97,13 +101,16 @@ bool InputManager::IsCursorInConsole()
 	HWND foregroundWindow = GetForegroundWindow();
 	HWND consoleWindow = GetConsoleWindow();
 	RECT consoleRect;
-	GetClientRect(consoleWindow, &consoleRect);
 	POINT cursorPos;
+
+	GetClientRect(consoleWindow, &consoleRect);
 	GetCursorPos(&cursorPos);
 	ScreenToClient(consoleWindow, &cursorPos);
+	
 	if (PtInRect(&consoleRect, cursorPos))
 		if (foregroundWindow == consoleWindow)
 			return true;
+	
 	return false;
 }
 
@@ -111,10 +118,12 @@ COORD InputManager::CursorPositionInConsole()
 {
 	HWND consoleWindow = GetConsoleWindow();
 	POINT cursorPos;
+	COORD coord;
+	
 	GetCursorPos(&cursorPos);
 	ScreenToClient(consoleWindow, &cursorPos);
-	COORD coord;
 	coord.X = cursorPos.x / 8;
 	coord.Y = cursorPos.y / 16;
+	
 	return coord;
 }

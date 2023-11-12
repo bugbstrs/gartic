@@ -29,7 +29,7 @@ String FileHandler::Read(FileType fileType)
 	if (fileType == FileType::Dictionary)
 	{
 		std::vector<std::string> dictionaryWords;
-		std::ifstream dictionaryFile(Config::dictionaryFilePath);
+		std::ifstream dictionaryFile{ Config::dictionaryFilePath };
 
 		for (std::string word; dictionaryFile >> word;)
 		{
@@ -39,7 +39,7 @@ String FileHandler::Read(FileType fileType)
 		dictionaryFile.close();
 
 		std::random_device randomSeed;
-		std::uniform_int_distribution<int> range(0, (int) dictionaryWords.size());
+		std::uniform_int_distribution<int> range{ 0, (int)dictionaryWords.size() };
 
 		return dictionaryWords[range(randomSeed)];
 	}
