@@ -3,6 +3,7 @@ module ConsoleManager;
 import <string>;
 import <iostream>;
 import <Windows.h>;
+import <print>;
 
 import ColorType;
 
@@ -67,12 +68,12 @@ void ConsoleManager::WriteVertical(const String& sentence, uint16_t x, uint16_t 
 	for (int index = y - sentence.length() / 2; index <= y + (sentence.length() + 1) / 2; index++)
 	{
 		SetCursor(x, index);
-		std::cout << sentence[index - y + sentence.length() / 2];
+		std::print("{}", sentence[index - y + sentence.length() / 2]);
 	}
 }
 
 void ConsoleManager::WriteHorizontal(const String& sentence, uint16_t x, uint16_t y)
 {
 	SetCursor(x - sentence.length() / 2, y);
-	std::cout << sentence;
+	std::print(sentence);
 }

@@ -5,6 +5,7 @@ import <fstream>;
 import <string>;
 import <format>;
 import <chrono>;
+import <print>;
 
 Logger::Logger(const std::vector<TransportOptions>& transportOptions)
 {
@@ -106,7 +107,7 @@ void Logger::Dump(bool forced)
 
 			for (const std::string& line : m_transportBuffer[i])
 			{
-				outputFile << line << '\n';
+				std::println(outputFile, "{}", line);
 			}
 			m_transportBuffer[i].clear();
 

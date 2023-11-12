@@ -3,6 +3,7 @@
 module LoginScene;
 
 import <string>;
+import <print>;
 
 import InputManager;
 
@@ -117,9 +118,9 @@ void LoginScene::Display() const
 		m_console->SetColor(ColorType::Blue, ColorType::White);
 	else
 		m_console->SetColor(ColorType::Gray, ColorType::Black);
-	std::cout << "                  ";
+	std::print("                  ");
 	m_console->SetCursor(23, 5);
-	std::cout << m_username;
+	std::print(m_username);
 	//Password Field
 	m_console->SetColor(ColorType::Black, ColorType::White);
 	m_console->WriteHorizontal("Password:", 18, 6);
@@ -127,9 +128,9 @@ void LoginScene::Display() const
 		m_console->SetColor(ColorType::Blue, ColorType::White);
 	else
 		m_console->SetColor(ColorType::Gray, ColorType::Black);
-	std::cout << "                  ";
+	std::print("                  ");
 	m_console->SetCursor(23, 6);
-	std::cout << m_password;
+	std::print(m_password);
 	//Login Button
 	if (m_option == LOGIN)
 		m_console->SetColor(ColorType::Blue, ColorType::White);
