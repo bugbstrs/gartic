@@ -1,7 +1,6 @@
-#include <algorithm>
-
 module LoginScene;
 
+import <algorithm>;
 import <string>;
 import <print>;
 
@@ -123,7 +122,7 @@ void LoginScene::Display() const
 	
 	std::print("                  ");
 	m_console->SetCursor(23, 5);
-	std::print(m_username);
+	std::print("", m_username);
 	
 	//Password Field
 	m_console->SetColor(ColorType::Black, ColorType::White);
@@ -136,7 +135,7 @@ void LoginScene::Display() const
 	
 	std::print("                  ");
 	m_console->SetCursor(23, 6);
-	std::print(m_password);
+	std::print("{}", m_password);
 	
 	//Login Button
 	if (m_option == LOGIN)

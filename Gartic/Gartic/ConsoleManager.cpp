@@ -4,6 +4,7 @@ import <string>;
 import <iostream>;
 import <Windows.h>;
 import <print>;
+import <format>;
 
 import ColorType;
 
@@ -14,9 +15,7 @@ ConsoleManager::ConsoleManager()
 }
 
 ConsoleManager::~ConsoleManager()
-{
-	
-}
+{}
 
 void ConsoleManager::ClearScreen()
 {
@@ -32,9 +31,7 @@ void ConsoleManager::SetConsoleScale(uint16_t x, uint16_t y)
 
 void ConsoleManager::SetCursor(uint16_t x, uint16_t y)
 {
-	COORD coord;
-	coord.X = x;
-	coord.Y = y;
+	COORD coord = { x, y };
 	SetConsoleCursorPosition(m_h, coord);
 }
 
@@ -75,5 +72,5 @@ void ConsoleManager::WriteVertical(const String& sentence, uint16_t x, uint16_t 
 void ConsoleManager::WriteHorizontal(const String& sentence, uint16_t x, uint16_t y)
 {
 	SetCursor(x - sentence.length() / 2, y);
-	std::print(sentence);
+	std::print("{}", sentence);
 }
