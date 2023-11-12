@@ -6,6 +6,13 @@ import <string>;
 
 import InputManager;
 
+LoginScene::LoginScene(ConsoleManager* console)
+	:Scene{ console }
+{}
+
+LoginScene::~LoginScene()
+{}
+
 void LoginScene::Start()
 {
 	m_username = "";
@@ -13,7 +20,7 @@ void LoginScene::Start()
 	m_option = USER;
 	m_textpos = 0;
 	m_nextScene = nullptr;
-	ConsoleManager::SetConsoleScale(60, 15);
+	m_console->SetConsoleScale(60, 15);
 	Display();
 }
 
@@ -100,50 +107,50 @@ void LoginScene::Update()
 void LoginScene::Display() const
 {
 	//Title
-	ConsoleManager::ClearScreen();
-	ConsoleManager::SetColor(ColorType::Cyan, ColorType::Magenta);
-	ConsoleManager::WriteHorizontal("GARTIC", 30, 2);
+	m_console->ClearScreen();
+	m_console->SetColor(ColorType::Cyan, ColorType::Magenta);
+	m_console->WriteHorizontal("GARTIC", 30, 2);
 	//Username Field
-	ConsoleManager::SetColor(ColorType::Black, ColorType::White);
-	ConsoleManager::WriteHorizontal("User:", 20, 5);
+	m_console->SetColor(ColorType::Black, ColorType::White);
+	m_console->WriteHorizontal("User:", 20, 5);
 	if (m_option == USER)
-		ConsoleManager::SetColor(ColorType::Blue, ColorType::White);
+		m_console->SetColor(ColorType::Blue, ColorType::White);
 	else
-		ConsoleManager::SetColor(ColorType::Gray, ColorType::Black);
+		m_console->SetColor(ColorType::Gray, ColorType::Black);
 	std::cout << "                  ";
-	ConsoleManager::SetCursor(23, 5);
+	m_console->SetCursor(23, 5);
 	std::cout << m_username;
 	//Password Field
-	ConsoleManager::SetColor(ColorType::Black, ColorType::White);
-	ConsoleManager::WriteHorizontal("Password:", 18, 6);
+	m_console->SetColor(ColorType::Black, ColorType::White);
+	m_console->WriteHorizontal("Password:", 18, 6);
 	if (m_option == PASSWORD)
-		ConsoleManager::SetColor(ColorType::Blue, ColorType::White);
+		m_console->SetColor(ColorType::Blue, ColorType::White);
 	else
-		ConsoleManager::SetColor(ColorType::Gray, ColorType::Black);
+		m_console->SetColor(ColorType::Gray, ColorType::Black);
 	std::cout << "                  ";
-	ConsoleManager::SetCursor(23, 6);
+	m_console->SetCursor(23, 6);
 	std::cout << m_password;
 	//Login Button
 	if (m_option == LOGIN)
-		ConsoleManager::SetColor(ColorType::Blue, ColorType::White);
+		m_console->SetColor(ColorType::Blue, ColorType::White);
 	else
-		ConsoleManager::SetColor(ColorType::DarkGray, ColorType::Green);
-	ConsoleManager::WriteHorizontal("Login", 25, 10);
+		m_console->SetColor(ColorType::DarkGray, ColorType::Green);
+	m_console->WriteHorizontal("Login", 25, 10);
 	//Register Button
 	if (m_option == REGISTER)
-		ConsoleManager::SetColor(ColorType::Blue, ColorType::White);
+		m_console->SetColor(ColorType::Blue, ColorType::White);
 	else
-		ConsoleManager::SetColor(ColorType::DarkGray, ColorType::Cyan);
-	ConsoleManager::WriteHorizontal("Register", 36, 10);
+		m_console->SetColor(ColorType::DarkGray, ColorType::Cyan);
+	m_console->WriteHorizontal("Register", 36, 10);
 	//Controls
-	ConsoleManager::SetColor(ColorType::Black, ColorType::Gray);
-	ConsoleManager::WriteHorizontal("Use right click or arrow keys", 30, 12);
-	ConsoleManager::WriteHorizontal("to select options And Enter to confirm", 30, 13);
+	m_console->SetColor(ColorType::Black, ColorType::Gray);
+	m_console->WriteHorizontal("Use right click or arrow keys", 30, 12);
+	m_console->WriteHorizontal("to select options And Enter to confirm", 30, 13);
 	//Cursor position
 	if (m_option == USER)
-		ConsoleManager::SetCursor(23 + m_textpos, 5);
+		m_console->SetCursor(23 + m_textpos, 5);
 	if (m_option == PASSWORD)
-		ConsoleManager::SetCursor(23 + m_textpos, 6);
+		m_console->SetCursor(23 + m_textpos, 6);
 }
 
 bool LoginScene::Login() const

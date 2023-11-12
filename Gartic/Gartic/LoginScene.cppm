@@ -2,12 +2,18 @@ export module LoginScene;
 
 import <string>;
 
-import ConsoleManager;
 import MenuScene;
 export import Scene;
 
 export class LoginScene : public Scene
 {
+public:
+	// Constructors
+	LoginScene(ConsoleManager* console);
+
+	// Destructors
+	~LoginScene();
+
 private:
 	std::string m_username;
 	std::string m_password;

@@ -3,15 +3,18 @@ module ConsoleManager;
 import <string>;
 import <iostream>;
 import <Windows.h>;
+
 import ColorType;
 
-HANDLE ConsoleManager::m_h;
-uint16_t ConsoleManager::m_color;
-
-void ConsoleManager::Initialize()
+ConsoleManager::ConsoleManager()
 {
 	m_h = GetStdHandle(STD_OUTPUT_HANDLE);
 	m_color = 15;
+}
+
+ConsoleManager::~ConsoleManager()
+{
+	
 }
 
 void ConsoleManager::ClearScreen()

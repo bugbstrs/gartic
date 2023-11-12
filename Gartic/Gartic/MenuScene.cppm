@@ -4,6 +4,13 @@ export import Scene;
 
 export class MenuScene : public Scene
 {
+public:
+	// Constructors
+	MenuScene(ConsoleManager* console);
+
+	// Destructors
+	~MenuScene();
+
 private:
 	enum Options
 	{

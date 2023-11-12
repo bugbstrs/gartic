@@ -11,24 +11,26 @@ using String = std::string;
 export class ConsoleManager
 {
 public:
-	// Console creation
-	static void Initialize();
+	// Constructors
+	ConsoleManager();
+
+	// Destructors
+	~ConsoleManager();
 
 	// Setters
-	static void SetConsoleScale(uint16_t x, uint16_t y);
-	static void SetCursor(uint16_t x, uint16_t y);
-	static void SetCursor(COORD coord);
-	static void SetBackgroundColor(ColorType color);
-	static void SetTextColor(ColorType color);
-	static void SetColor(ColorType background, ColorType text);
+	void SetConsoleScale(uint16_t x, uint16_t y);
+	void SetCursor(uint16_t x, uint16_t y);
+	void SetCursor(COORD coord);
+	void SetBackgroundColor(ColorType color);
+	void SetTextColor(ColorType color);
+	void SetColor(ColorType background, ColorType text);
 	
 	// Output related
-	static void ClearScreen();
-	static void WriteVertical(const String& sentence, uint16_t x, uint16_t y);
-	static void WriteHorizontal(const String& sentence, uint16_t x, uint16_t y);
+	void ClearScreen();
+	void WriteVertical(const String& sentence, uint16_t x, uint16_t y);
+	void WriteHorizontal(const String& sentence, uint16_t x, uint16_t y);
 
 private:
-	static HANDLE m_h;
-
-	static uint16_t m_color;
+	HANDLE m_h;
+	uint16_t m_color;
 };
