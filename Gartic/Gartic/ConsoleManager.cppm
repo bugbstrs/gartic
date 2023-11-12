@@ -15,7 +15,7 @@ public:
 	ConsoleManager();
 
 	// Destructors
-	~ConsoleManager();
+	~ConsoleManager() = default;
 
 	// Setters
 	void SetConsoleScale(uint16_t x, uint16_t y);

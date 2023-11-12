@@ -11,10 +11,15 @@ export typedef short int16_t;
 export class GUIObject
 {
 public:
-	virtual void Draw() = 0;
+	// Constructors
 	GUIObject(COORD upLeftCorner, Align align, ColorType backgroundColor, ColorType textColor, uint16_t width);
 	GUIObject(int16_t x, int16_t y, Align align, ColorType backgroundColor, ColorType textColor, uint16_t width);
-	virtual ~GUIObject();
+	
+	// Destructor
+	virtual ~GUIObject() = default;
+	
+	// Method to override
+	virtual void Draw() = 0;
 
 protected:
 	COORD m_upLeftCorner;

@@ -18,7 +18,7 @@ public:
 	static char GetCurrentKeyboardInput();
 	static COORD GetCurrentCursorPosition();
 	static ControlKeys ControlKey();
-	static bool ClickPressed();
+	static bool GetClickPressed();
 
 private:
 	static char m_lastKeyPressed;
@@ -32,3 +32,5 @@ private:
 	
 	static COORD CursorPositionInConsole();
 };
+
+// TODO: Redo non Static

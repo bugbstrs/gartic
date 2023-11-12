@@ -15,11 +15,11 @@ export class GameScene
 {
 public:
 	// Constructors
-	GameScene();
+	GameScene() = default;
 	GameScene(const GameScene& newGameScene);
 
 	// Destructor
-	~GameScene();
+	~GameScene() = default;
 
 	// Setters
 	void SetGameStatus(GameStatus newGameStatus);
@@ -42,6 +42,7 @@ public:
 
 private:
 	GameStatus m_gameStatus;
+
 	uint16_t m_roundNumber;
 	
 	PlayersVector m_players;

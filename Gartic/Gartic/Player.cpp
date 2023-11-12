@@ -34,9 +34,10 @@ void Player::AddPoints(uint16_t noOfPointsToBeAdded) noexcept
 
 Player& Player::operator=(const Player& otherPlayer) noexcept
 {
-	if (this != &otherPlayer) {
-		this->m_points = otherPlayer.m_points;
-		this->m_user = otherPlayer.m_user;
+	if (this != &otherPlayer) 
+	{
+		m_points = otherPlayer.m_points;
+		m_user = otherPlayer.m_user;
 	}
 
 	return *this;
@@ -45,8 +46,8 @@ Player& Player::operator=(const Player& otherPlayer) noexcept
 Player& Player::operator=(Player&& otherPlayer) noexcept
 {
 	if (this != &otherPlayer) {
-		this->m_points = std::move(otherPlayer.m_points);
-		this->m_user = std::move(otherPlayer.m_user);
+		m_points = std::move(otherPlayer.m_points);
+		m_user = std::move(otherPlayer.m_user);
 	}
 
 	return *this;
@@ -54,5 +55,6 @@ Player& Player::operator=(Player&& otherPlayer) noexcept
 
 bool Player::operator==(const Player& otherPlayer) const noexcept
 {
-	return this->m_points == otherPlayer.m_points && this->m_user == otherPlayer.m_user;
+	return m_points == otherPlayer.m_points && 
+		   m_user == otherPlayer.m_user;
 }

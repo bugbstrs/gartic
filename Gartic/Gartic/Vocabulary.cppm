@@ -11,7 +11,7 @@ using StringTuple = std::tuple<std::string, std::string, std::string>;
 export class Vocabulary
 {
 public:
-	StringTuple fetchWords();
+	StringTuple FetchWords();
 
 private:
 	StringVector m_words;

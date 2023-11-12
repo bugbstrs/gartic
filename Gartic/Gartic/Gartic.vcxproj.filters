@@ -117,5 +117,8 @@
     <ClCompile Include="GameStatus.cppm">
       <Filter>Modules\Standalone</Filter>
     </ClCompile>
+    <ClCompile Include="FileType.cppm">
+      <Filter>Modules\Standalone</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

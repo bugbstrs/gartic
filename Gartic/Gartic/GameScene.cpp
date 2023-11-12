@@ -1,15 +1,9 @@
 module GameScene;
 
-GameScene::GameScene()
-{}
-
 GameScene::GameScene(const GameScene& newGameScene)
 {
 	*this = newGameScene;
 }
-
-GameScene::~GameScene()
-{}
 
 void GameScene::SetGameStatus(GameStatus newGameStatus)
 {

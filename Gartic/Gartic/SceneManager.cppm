@@ -6,14 +6,18 @@ import ConsoleManager;
 
 import <memory>;
 
+using UniquePtrScene = std::unique_ptr<Scene>;
+
 export class SceneManager
 {
 public:
 	static void Start();
 
 private:
-	static std::unique_ptr<Scene> m_activeScene;
+	static UniquePtrScene m_activeScene;
 	static ConsoleManager* m_console;
 
 	static void Update();
 };
+
+// TODO: remove static

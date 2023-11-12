@@ -5,20 +5,22 @@ import <string>;
 import MenuScene;
 export import Scene;
 
+using String = std::string;
+
 export class LoginScene : public Scene
 {
 public:
 	// Constructors
 	LoginScene(ConsoleManager* console);
 
-	// Destructors
-	~LoginScene();
+	// Destructor
+	~LoginScene() = default;
 
 private:
-	std::string m_username;
-	std::string m_password;
+	String m_username;
+	String m_password;
 
-	enum Options
+	enum class Options
 	{
 		USER,
 		PASSWORD,

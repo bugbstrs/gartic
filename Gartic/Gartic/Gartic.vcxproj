@@ -160,6 +160,7 @@
     <ClCompile Include="ControlKeys.cppm" />
     <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="FileHandler.cppm" />
+    <ClCompile Include="FileType.cppm" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameScene.cppm" />
     <ClCompile Include="GameStatus.cppm" />

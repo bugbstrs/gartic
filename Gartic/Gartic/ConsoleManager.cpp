@@ -14,15 +14,6 @@ ConsoleManager::ConsoleManager()
 	m_color = 15;
 }
 
-ConsoleManager::~ConsoleManager()
-{}
-
-void ConsoleManager::ClearScreen()
-{
-	SetColor(ColorType::Black, ColorType::White);
-	system("cls");
-}
-
 void ConsoleManager::SetConsoleScale(uint16_t x, uint16_t y)
 {
 	String command = std::format("mode {},{}", std::to_string(x), std::to_string(y));
@@ -58,6 +49,12 @@ void ConsoleManager::SetColor(ColorType background, ColorType text)
 {
 	m_color = 16 * (int)background + (int)text;
 	SetConsoleTextAttribute(m_h, m_color);
+}
+
+void ConsoleManager::ClearScreen()
+{
+	SetColor(ColorType::Black, ColorType::White);
+	system("cls");
 }
 
 void ConsoleManager::WriteVertical(const String& sentence, uint16_t x, uint16_t y)

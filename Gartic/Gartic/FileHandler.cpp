@@ -9,29 +9,33 @@ import config;
 
 void FileHandler::Write(FileType fileType, const String& data)
 {
-	if (fileType == FileType::Dictionary)
+	switch(fileType)
 	{
+	case FileType::Dictionary:
 		throw std::exception("bad access: tried writing in the dictionary file!");
-	}
-	if (fileType == FileType::Database)
-	{
+	case FileType::Database:
 		// TODO: implement writing in the Database
-	}
-	if (fileType == FileType::LogFile)
-	{
+		break;
+	case FileType::LogFile:
 		// TODO: implement writing in the LogFile
+		break;
+	default:
+		throw std::exception("Invalid FileType provided on FileHandler::write");
 	}
-	throw std::exception("Invalid FileType provided on FileHandler::write");
+
+	// TODO: change to custom exceptions
 }
 
 String FileHandler::Read(FileType fileType)
 {
-	if (fileType == FileType::Dictionary)
+	switch (fileType)
 	{
-		std::vector<std::string> dictionaryWords;
+	case FileType::Dictionary:
+	{
+		std::vector<String> dictionaryWords;
 		std::ifstream dictionaryFile{ Config::dictionaryFilePath };
 
-		for (std::string word; dictionaryFile >> word;)
+		for (String word; dictionaryFile >> word;)
 		{
 			dictionaryWords.push_back(word);
 		}
@@ -43,13 +47,15 @@ String FileHandler::Read(FileType fileType)
 
 		return dictionaryWords[range(randomSeed)];
 	}
-	if (fileType == FileType::Database)
-	{
-		// TODO: implement reading from the Database
+	case FileType::Database:
+		// TODO: implement reading in the Database
+		break;
+	case FileType::LogFile:
+		// TODO: implement reading in the LogFile
+		break;
+	default:
+		throw std::exception("Invalid FileType provided on FileHandler::read");
 	}
-	if (fileType == FileType::LogFile)
-	{
-		// TODO: implement reading from the LogFile
-	}
-	throw std::exception("Invalid FileType provided on FileHandler::read");
+
+	// TODO: change to custom exceptions
 }

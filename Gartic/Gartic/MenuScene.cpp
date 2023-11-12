@@ -4,9 +4,6 @@ MenuScene::MenuScene(ConsoleManager* console):
 	Scene{ console }
 {}
 
-MenuScene::~MenuScene()
-{}
-
 void MenuScene::Start()
 {}
 

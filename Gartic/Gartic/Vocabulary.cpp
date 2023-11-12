@@ -9,17 +9,18 @@ import FileHandler;
 
 using StringArray = std::array<std::string, 3>;
 
-StringTuple Vocabulary::fetchWords()
+StringTuple Vocabulary::FetchWords()
 {
 	StringArray words;
+	FileHandler fileHandler;
 	
 	for (size_t i = 0; i < 3; i++)
 	{
-		String word = FileHandler::Read(FileHandler::FileType::Dictionary);
+		String word = fileHandler.Read(FileType::Dictionary);
 		
 		while (std::find(m_words.begin(), m_words.end(), word) == m_words.end())
 		{
-			word = FileHandler::Read(FileHandler::FileType::Dictionary);
+			word = fileHandler.Read(FileType::Dictionary);
 		}
 
 		words[i] = word;

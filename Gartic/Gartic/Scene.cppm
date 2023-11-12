@@ -10,8 +10,8 @@ public:
 	// Constructors
 	Scene(ConsoleManager* console);
 
-	// Destructors
-    virtual ~Scene();
+	// Destructor
+    virtual ~Scene() = default;
 
 	// Activate
     std::type_info* SetActive();

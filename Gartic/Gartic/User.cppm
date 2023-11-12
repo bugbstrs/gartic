@@ -19,6 +19,7 @@ public:
 	// Setters
 	void SetUsername(const String& username);
 	void SetCredits(int credits);
+	void SetPlayingState(bool isPlaying);
 	
 	// Getters
 	String GetUsername() const noexcept;
@@ -27,13 +28,13 @@ public:
 	// Functionality
 	bool IsPlaying() const;
 	
-	void SetPlayingState(bool isPlaying);
 	void AddMatchPoints(uint16_t matchPoint);
 
 	// Overloaded Operators
 	User& operator=(const User& otherUser) noexcept;
 	User& operator=(User&& otherUser) noexcept;
 	bool operator==(const User& otherUser) const noexcept;
+
 private:
 	String m_username;
 

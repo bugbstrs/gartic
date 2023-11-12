@@ -44,18 +44,20 @@ void InputManager::ReadInput()
 
 void InputManager::UpdateString(String& text, int pos, int maxLength)
 {
-	if (m_isArrowKey)
-		return;
-	if (pos == -1)
-		pos = text.size();
+	if (m_isArrowKey) return;
+	
+	if (pos == -1) pos = text.size();
+
 	if (m_lastKeyPressed == '\b' && text.size() > 0) // backspace
-		if (pos == text.size())
-			text.erase(pos - 1, 1);
-		else
-			text.erase(pos, 1);
+	{
+		text.erase(pos == text.size() ? pos - 1 : pos, 1);
+	}
+
 	if (m_lastKeyPressed >= 32 && m_lastKeyPressed <= 126)
+	{
 		if (maxLength == -1 || text.size() < maxLength)
 			text.insert(pos, 1, m_lastKeyPressed);
+	}
 }
 
 ControlKeys InputManager::ControlKey()
@@ -81,7 +83,7 @@ ControlKeys InputManager::ControlKey()
 	};
 }
 
-bool InputManager::ClickPressed()
+bool InputManager::GetClickPressed()
 {
 	return m_rightClickPressed;
 }

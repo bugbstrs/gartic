@@ -8,11 +8,11 @@ public:
 	// Constructors
 	MenuScene(ConsoleManager* console);
 
-	// Destructors
-	~MenuScene();
+	// Destructor
+	~MenuScene() = default;
 
 private:
-	enum Options
+	enum class Options
 	{
 		PLAY,
 		STATS,

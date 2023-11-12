@@ -12,6 +12,8 @@ public:
 	Player(const User& user, uint16_t points = 0);
 	Player(const Player& otherPlayer) noexcept;
 	Player(Player&& otherPlayer) noexcept;
+
+	// Destructor
 	~Player() = default;
 	
 	// Getters

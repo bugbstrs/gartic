@@ -13,6 +13,3 @@ GUIObject::GUIObject(int16_t x, int16_t y, Align align, ColorType backgroundColo
 	m_backgroundColor{ backgroundColor },
 	m_textColor{ textColor },
 	m_width{ width } {}
-
-GUIObject::~GUIObject()
-{}
