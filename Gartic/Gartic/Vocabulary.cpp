@@ -13,7 +13,7 @@ StringTuple Vocabulary::fetchWords()
 {
 	StringArray words;
 	
-	for (int i = 0; i < 3; i++)
+	for (size_t i = 0; i < 3; i++)
 	{
 		String word = FileHandler::Read(FileHandler::FileType::Dictionary);
 		

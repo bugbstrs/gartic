@@ -38,7 +38,7 @@ const std::string Logger::FormatLog(Format logFormat, Level logLevel, const std:
 		if (logPath.size() == 0) logMessage += "none)";
 		else
 		{
-			for (int i = 0; i < logPath.size(); i++)
+			for (size_t i = 0; i < logPath.size(); i++)
 			{
 				logMessage += std::format(
 					"{}{}{}",
@@ -60,7 +60,7 @@ const std::string Logger::FormatLog(Format logFormat, Level logLevel, const std:
 		);
 
 		if (logPath.size() == 0) logMessage += "`none`)";
-		else for (int i = 0; i < logPath.size(); i++)
+		else for (size_t i = 0; i < logPath.size(); i++)
 		{
 			logMessage += std::format(
 				"{}{}{}",
@@ -78,7 +78,7 @@ const std::string Logger::FormatLog(Format logFormat, Level logLevel, const std:
 
 void Logger::Log(Level logLevel, const std::string& scope, const std::vector<std::string>& logPath, const std::string& message)
 {
-	for (int i = 0; i < m_transportOptions.size(); i++)
+	for (size_t i = 0; i < m_transportOptions.size(); i++)
 	{
 		int logLevelInt = (int)logLevel;
 		int logLevelMinInt = (int)m_transportOptions[i].minLevel;
@@ -100,7 +100,7 @@ void Logger::Log(Level logLevel, const std::string& scope, const std::vector<std
 
 void Logger::Dump(bool forced)
 {
-	for (int i = 0; i < m_transportBuffer.size(); i++) {
+	for (size_t i = 0; i < m_transportBuffer.size(); i++) {
 		if (forced || m_transportBuffer[i].size() >= m_transportOptions[i].bufferSize)
 		{
 			std::ofstream outputFile{ m_transportOptions[i].filePath, std::ios_base::app };

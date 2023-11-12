@@ -26,7 +26,7 @@ void ConsoleManager::ClearScreen()
 
 void ConsoleManager::SetConsoleScale(uint16_t x, uint16_t y)
 {
-	String command = "mode " + std::to_string(x) + ',' + std::to_string(y);
+	String command = std::format("mode {},{}", std::to_string(x), std::to_string(y));
 	system(command.c_str());
 }
 
@@ -65,7 +65,7 @@ void ConsoleManager::SetColor(ColorType background, ColorType text)
 
 void ConsoleManager::WriteVertical(const String& sentence, uint16_t x, uint16_t y)
 {
-	for (int index = y - sentence.length() / 2; index <= y + (sentence.length() + 1) / 2; index++)
+	for (size_t index = y - sentence.length() / 2; index <= y + (sentence.length() + 1) / 2; index++)
 	{
 		SetCursor(x, index);
 		std::print("{}", sentence[index - y + sentence.length() / 2]);
