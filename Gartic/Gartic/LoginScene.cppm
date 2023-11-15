@@ -11,7 +11,7 @@ export class LoginScene : public Scene
 {
 public:
 	// Constructors
-	LoginScene(ConsoleManager* console);
+	LoginScene(ConsoleManager* console, InputManager* inputManager);
 
 	// Destructor
 	~LoginScene() = default;

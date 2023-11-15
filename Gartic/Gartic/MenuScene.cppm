@@ -6,7 +6,7 @@ export class MenuScene : public Scene
 {
 public:
 	// Constructors
-	MenuScene(ConsoleManager* console);
+	MenuScene(ConsoleManager* console, InputManager* inputManager);
 
 	// Destructor
 	~MenuScene() = default;

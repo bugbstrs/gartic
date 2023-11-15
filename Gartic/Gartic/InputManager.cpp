@@ -6,11 +6,6 @@ import <cctype>;
 
 import ControlKeys;
 
-char InputManager::m_lastKeyPressed;
-bool InputManager::m_isArrowKey;
-bool InputManager::m_rightClickPressed;
-COORD InputManager::m_cursorPosition;
-
 void InputManager::ReadInput()
 {
 	if (IsCursorInConsole())
@@ -48,9 +43,10 @@ void InputManager::UpdateString(String& text, int pos, int maxLength)
 	
 	if (pos == -1) pos = text.size();
 
-	if (m_lastKeyPressed == '\b' && text.size() > 0) // backspace
+	if (m_lastKeyPressed == '\b' && pos > 0) // backspace
 	{
-		text.erase(pos == text.size() ? pos - 1 : pos, 1);
+		text.erase(pos - 1, 1);
+		//text.erase(pos == text.size() ? pos - 1 : pos, 1);
 	}
 
 	if (m_lastKeyPressed >= 32 && m_lastKeyPressed <= 126)

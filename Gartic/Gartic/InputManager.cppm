@@ -10,27 +10,31 @@ using String = std::string;
 export class InputManager
 {
 public:
+	// Constructors
+	InputManager() = default;
+
+	// Destructor
+	~InputManager() = default;
+
 	// Read
-	static void ReadInput();
-	static void UpdateString(String& text, int pos = -1, int maxLenght = -1);
+	void ReadInput();
+	void UpdateString(String& text, int pos = -1, int maxLenght = -1);
 
 	// Getters
-	static char GetCurrentKeyboardInput();
-	static COORD GetCurrentCursorPosition();
-	static ControlKeys ControlKey();
-	static bool GetClickPressed();
+	ControlKeys ControlKey();
+	bool GetClickPressed();
+	char GetCurrentKeyboardInput();
+	COORD GetCurrentCursorPosition();
 
 private:
-	static char m_lastKeyPressed;
+	char m_lastKeyPressed;
 
-	static bool m_isArrowKey;
-	static bool m_rightClickPressed;
+	bool m_isArrowKey;
+	bool m_rightClickPressed;
 	
-	static COORD m_cursorPosition;
+	COORD m_cursorPosition;
 
-	static bool IsCursorInConsole();
+	bool IsCursorInConsole();
 	
-	static COORD CursorPositionInConsole();
+	COORD CursorPositionInConsole();
 };
-
-// TODO: Redo non Static

@@ -14,7 +14,7 @@ public:
 	// Constructors
 	ConsoleManager();
 
-	// Destructors
+	// Destructor
 	~ConsoleManager() = default;
 
 	// Setters

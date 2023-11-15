@@ -2,13 +2,14 @@ export module Scene;
 
 import <typeindex>;
 
+import InputManager;
 import ConsoleManager;
 
 export class Scene
 {
 public:
 	// Constructors
-	Scene(ConsoleManager* console);
+	Scene(ConsoleManager* console, InputManager* inputManager);
 
 	// Destructor
     virtual ~Scene() = default;
@@ -19,6 +20,7 @@ public:
 protected:
 	std::type_info* m_nextScene;
 	ConsoleManager* m_console;
+	InputManager* m_input;
 
 	virtual void Start() = 0;
 	virtual void Update() = 0;

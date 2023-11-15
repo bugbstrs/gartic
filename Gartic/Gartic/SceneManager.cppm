@@ -2,6 +2,7 @@ export module SceneManager;
 
 import LoginScene;
 import MenuScene;
+import InputManager;
 import ConsoleManager;
 
 import <memory>;
@@ -11,13 +12,12 @@ using UniquePtrScene = std::unique_ptr<Scene>;
 export class SceneManager
 {
 public:
-	static void Start();
+	void Start();
 
 private:
-	static UniquePtrScene m_activeScene;
-	static ConsoleManager* m_console;
+	UniquePtrScene m_activeScene;
+	ConsoleManager* m_console;
+	InputManager* m_input;
 
-	static void Update();
+	void Update();
 };
-
-// TODO: remove static

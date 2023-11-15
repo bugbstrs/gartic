@@ -1,7 +1,7 @@
 module MenuScene;
 
-MenuScene::MenuScene(ConsoleManager* console):
-	Scene{ console }
+MenuScene::MenuScene(ConsoleManager* console, InputManager* inputManager) :
+	Scene{ console, inputManager }
 {}
 
 void MenuScene::Start()

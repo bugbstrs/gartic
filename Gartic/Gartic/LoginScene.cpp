@@ -6,8 +6,8 @@ import <print>;
 
 import InputManager;
 
-LoginScene::LoginScene(ConsoleManager* console) :
-	Scene{ console }
+LoginScene::LoginScene(ConsoleManager* console, InputManager* inputManager) :
+	Scene{ console, inputManager }
 {}
 
 void LoginScene::Start()
@@ -25,10 +25,10 @@ void LoginScene::Update()
 {
 	while (m_nextScene == nullptr)
 	{
-		InputManager::ReadInput();
-		if (InputManager::GetCurrentKeyboardInput())
+		m_input->ReadInput();
+		if (m_input->GetCurrentKeyboardInput())
 		{
-			switch (InputManager::ControlKey())
+			switch (m_input->ControlKey())
 			{
 			case ControlKeys::UpArrow:
 				if (m_option == Options::PASSWORD)
@@ -44,7 +44,7 @@ void LoginScene::Update()
 				break;
 			case ControlKeys::DownArrow:
 				if (m_option == Options::USER)
-					m_textpos = std::min(m_textpos, std::min((int)m_password.size(), 17));
+					m_textpos = std::min((int)m_password.size(), 17);
 				if (m_option <= Options::PASSWORD)
 					m_option = static_cast<Options>(static_cast<int>(m_option) + 1);
 				break;
@@ -71,29 +71,30 @@ void LoginScene::Update()
 			default:
 				break;
 			}
-			if (InputManager::ControlKey() == ControlKeys::NotControl)
+			if (m_input->ControlKey() == ControlKeys::NotControl)
 			{
-				int len = m_username.size();
 				if (m_option == Options::USER)
 				{
-					InputManager::UpdateString(m_username, m_textpos, 18);
+					int len = m_username.size();
+					m_input->UpdateString(m_username, m_textpos, 18);
 					m_textpos += m_username.size() - len;
 				}
 				if (m_option == Options::PASSWORD)
 				{
-					InputManager::UpdateString(m_password, m_textpos, 18);
+					int len = m_password.size();
+					m_input->UpdateString(m_password, m_textpos, 18);
 					m_textpos += m_password.size() - len;
 				}
 				m_textpos = std::max(m_textpos, 0);
 				m_textpos = std::min(m_textpos, 17);
 			}
 		}
-		if (InputManager::GetClickPressed())
+		if (m_input->GetClickPressed())
 		{
 			//check what object was pressed
 		}
 
-		if (InputManager::GetCurrentKeyboardInput() || InputManager::GetClickPressed())
+		if (m_input->GetCurrentKeyboardInput() || m_input->GetClickPressed())
 			Display();
 	}
 }
@@ -114,7 +115,7 @@ void LoginScene::Display() const
 
 	std::print("                  ");
 	m_console->SetCursor(23, 5);
-	std::print("", m_username);
+	std::print("{}", m_username);
 
 	//Password Field
 	m_console->SetColor(ColorType::Black, ColorType::White);
