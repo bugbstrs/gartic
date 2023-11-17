@@ -1,0 +1,9 @@
+# ninja log v5
+3	250	7219494825542434	GUI_autogen/timestamp	4898bbe6f2d4a45a
+3	250	7219494825542434	GUI_autogen/mocs_compilation.cpp	4898bbe6f2d4a45a
+3	250	7219494825542434	D:/QT/Projects/GUI/out/build/x64-Debug/GUI_autogen/timestamp	4898bbe6f2d4a45a
+3	250	7219494825542434	D:/QT/Projects/GUI/out/build/x64-Debug/GUI_autogen/mocs_compilation.cpp	4898bbe6f2d4a45a
+257	2348	7219494847027110	CMakeFiles/GUI.dir/main.cpp.obj	dfe6484bb62e7f0d
+251	2351	7219494847027110	CMakeFiles/GUI.dir/GUI_autogen/mocs_compilation.cpp.obj	b487f64055930350
+262	2651	7219494850058034	CMakeFiles/GUI.dir/mainwindow.cpp.obj	37f924cf15aacab4
+2652	2932	7219494852754364	GUI.exe	1767d95e0b68fd69
