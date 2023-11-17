@@ -11,16 +11,12 @@ export class WordsEntity
 {
 public:
 	WordsEntity() = default;
-	WordsEntity(const String& newName, const Vector& newPreviousScores, uint16_t newPoints);
+	WordsEntity(const String& newName);
 
 	~WordsEntity() = default;
 
 	String GetName() const;
-	Vector GetPreviousScores() const;
-	uint16_t GetPoints() const;
 
 private:
 	String name;
-	Vector previousScores;
-	uint16_t points;
 };
