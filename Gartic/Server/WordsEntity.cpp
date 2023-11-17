@@ -1,16 +1,26 @@
-module WordsEntity;
+#include "WordsEntity.h"
 
-WordsEntity::WordsEntity(const String& newName):
+WordsEntity::WordsEntity(const std::string& newName):
     name(newName)
 {
 }
 
-void WordsEntity::SetName(const String& newName)
+void WordsEntity::SetName(const std::string& newName)
 {
     this->name = newName;
 }
 
-String WordsEntity::GetName() const
+void WordsEntity::SetId(int newId)
+{
+    this->id = newId;
+}
+
+int WordsEntity::GetId() const
+{
+    return id;
+}
+
+std::string WordsEntity::GetName() const
 {
     return name;
 }

@@ -1,69 +1,59 @@
-module UsersEntity;
+#include "UsersEntity.h"
 
-UsersEntity::UsersEntity(uint16_t newId, const String& newUsername, const String& newPassword):
+UsersEntity::UsersEntity(int newId, const std::string& newUsername, const std::string& newPassword):
 	id(newId),
 	username(newUsername),
 	password(newPassword)
 {
 }
 
-void UsersEntity::SetId(uint16_t id)
+void UsersEntity::SetId(int id)
 {
 	this->id = id;
 }
 
-void UsersEntity::SetGamesPlayed(uint16_t gamesPlayed)
+void UsersEntity::SetGamesPlayed(int gamesPlayed)
 {
 	this->gamesPlayed = gamesPlayed;
 }
 
-void UsersEntity::SetPoints(uint16_t points)
+void UsersEntity::SetPoints(int points)
 {
 	this->points = points;
 }
 
-void UsersEntity::SetUsername(const String& username)
+void UsersEntity::SetUsername(const std::string& username)
 {
 	this->username = username;
 }
 
-void UsersEntity::SetPassword(const String& password)
+void UsersEntity::SetPassword(const std::string& password)
 {
 	this->password = password;
 }
 
-void UsersEntity::SetPrevScores(const Vector& previousScores)
-{
-	this->previousScores = previousScores;
-}
-
-uint16_t UsersEntity::GetId() const
+int UsersEntity::GetId() const
 {
 	return id;
 }
 
-uint16_t UsersEntity::GetGamesPlayed() const
+int UsersEntity::GetGamesPlayed() const
 {
 	return gamesPlayed;
 }
 
-uint16_t UsersEntity::GetPoints() const
+int UsersEntity::GetPoints() const
 {
 	return points;
 }
 
-String UsersEntity::GetUsername() const
+std::string UsersEntity::GetUsername() const
 {
 	return username;
 }
 
-String UsersEntity::GetPassword() const
+std::string UsersEntity::GetPassword() const
 {
 	return password;
-}
-
-Vector UsersEntity::GetPrevScores() const
-{
-	return previousScores;
 }
 
