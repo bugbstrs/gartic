@@ -14,16 +14,13 @@ int main()
 	DatabaseManager manager{ db };
 	
 	manager.PopulateWordsEntity();
+	manager.PopulateUsersEntity();
 
-	auto words = db.get_all<WordsEntity>();
-	for (const auto& word : words) {
-		std::cout << "Word Name: " << word.GetName() << std::endl;
-	}
+	WordVector words{manager.FetchAllWords()};
+	UserVector users{manager.FetchAllUsers()};
 
-	//if (initProductsCount == 0)
-	//	populateStorage(db);
+	std::cout << words << std::endl;
+	std::cout << users << std::endl;
 
-	//auto productsCount = db.count<WordsEntity>();
-	//std::cout << "productsCount = " << productsCount << '\n';
 	return 0;
 }

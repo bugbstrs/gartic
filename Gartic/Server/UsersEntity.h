@@ -5,7 +5,7 @@ class UsersEntity
 {
 public:
 	UsersEntity() = default;
-	UsersEntity(int newId, const std::string& newUsername, const std::string& newPassword);
+	UsersEntity(int newGamesPlayed, int newPoints, const std::string& newUsername, const std::string& newPassword);
 
 	~UsersEntity() = default;
 

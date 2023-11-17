@@ -1,7 +1,8 @@
 #include "UsersEntity.h"
 
-UsersEntity::UsersEntity(int newId, const std::string& newUsername, const std::string& newPassword):
-	id(newId),
+UsersEntity::UsersEntity(int newGamesPlayed, int newPoints, const std::string& newUsername, const std::string& newPassword):
+	gamesPlayed(newGamesPlayed),
+	points(newPoints),
 	username(newUsername),
 	password(newPassword)
 {

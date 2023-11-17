@@ -1,0 +1,5 @@
+10 1000 David 1q2w3e
+20 3999 Teo qwerty
+30 5678 Maria 1234
+120 15 Ioan gheghe
+5 0 Monica qazxcde
