@@ -22,5 +22,10 @@ int main()
 	std::cout << words << std::endl;
 	std::cout << users << std::endl;
 
+	std::cout << manager.CheckCredentials("David", "1q2w3e") << std::endl;
+	std::cout << manager.CheckCredentials("David", "1q2w32") << std::endl;
+
+	std::cout << manager.FetchWord();
+
 	return 0;
 }

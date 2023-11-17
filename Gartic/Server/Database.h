@@ -4,6 +4,8 @@
 
 #include <sqlite_orm/sqlite_orm.h>
 
+using String = std::string;
+
 namespace sql = sqlite_orm;
 
 class Database

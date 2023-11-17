@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include <tuple>
+#include <random>
 
 using WordEntityVector = std::vector<WordsEntity>;
 using File = std::ifstream;
@@ -22,8 +23,17 @@ public:
 	WordVector FetchAllWords();
 	UserVector FetchAllUsers();
 
+	bool CheckCredentials(const String& givenUsername, const String& givenPassword) const;
+	bool CheckUsernameAlreadyExists(const String& givenUsername) const;
+
+	void CreateUser(const String& givenUsername, const String& givenPassword) const;
+
+	String FetchWord();
+
 private:
 	Storage& m_db;
+
+	int GenerateRandomId() const;
 };
 
 std::ostream& operator<<(std::ostream& out, const WordVector& words);
