@@ -42,10 +42,8 @@
     <ClCompile Include="Database.cppm">
       <Filter>Modules\Interfaces</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Database.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="Database.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

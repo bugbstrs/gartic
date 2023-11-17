@@ -15,6 +15,8 @@ public:
 
 	~WordsEntity() = default;
 
+	void SetName(const String& newName);
+
 	String GetName() const;
 
 private:

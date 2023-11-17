@@ -7,6 +7,36 @@ UsersEntity::UsersEntity(uint16_t newId, const String& newUsername, const String
 {
 }
 
+void UsersEntity::SetId(uint16_t id)
+{
+	this->id = id;
+}
+
+void UsersEntity::SetGamesPlayed(uint16_t gamesPlayed)
+{
+	this->gamesPlayed = gamesPlayed;
+}
+
+void UsersEntity::SetPoints(uint16_t points)
+{
+	this->points = points;
+}
+
+void UsersEntity::SetUsername(const String& username)
+{
+	this->username = username;
+}
+
+void UsersEntity::SetPassword(const String& password)
+{
+	this->password = password;
+}
+
+void UsersEntity::SetPrevScores(const Vector& previousScores)
+{
+	this->previousScores = previousScores;
+}
+
 uint16_t UsersEntity::GetId() const
 {
 	return id;

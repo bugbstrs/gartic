@@ -15,6 +15,13 @@ public:
 
 	~UsersEntity() = default;
 
+	void SetId(uint16_t id);
+	void SetGamesPlayed(uint16_t gamesPlayed);
+	void SetPoints(uint16_t points);
+	void SetUsername(const String& username);
+	void SetPassword(const String& password);
+	void SetPrevScores(const Vector& previousScores);
+
 	uint16_t GetId() const;
 	uint16_t GetGamesPlayed() const;
 	uint16_t GetPoints() const;
