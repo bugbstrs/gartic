@@ -12,7 +12,7 @@ export class ConsoleBuffer
 {
 public:
 	// Constructors
-	ConsoleBuffer();
+	ConsoleBuffer(uint16_t width, uint16_t height);
 
 	// Destructor
 	~ConsoleBuffer();
@@ -24,7 +24,7 @@ public:
 	void SetTextColor(ColorType color);
 	void SetBackgroundColor(ColorType color);
 private:
-	HANDLE m_h;
+	HANDLE m_buffer;
 	uint16_t m_color;
 	uint16_t m_width;
 	uint16_t m_height;

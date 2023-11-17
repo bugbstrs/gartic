@@ -155,6 +155,8 @@
     <ClCompile Include="Align.cppm" />
     <ClCompile Include="ColorType.cppm" />
     <ClCompile Include="config.cppm" />
+    <ClCompile Include="ConsoleBuffer.cpp" />
+    <ClCompile Include="ConsoleBuffer.cppm" />
     <ClCompile Include="ConsoleManager.cpp" />
     <ClCompile Include="ConsoleManager.cppm" />
     <ClCompile Include="ControlKeys.cppm" />

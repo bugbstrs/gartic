@@ -120,5 +120,11 @@
     <ClCompile Include="FileType.cppm">
       <Filter>Modules\Standalone</Filter>
     </ClCompile>
+    <ClCompile Include="ConsoleBuffer.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleBuffer.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
