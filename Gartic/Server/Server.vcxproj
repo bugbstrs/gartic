@@ -152,14 +152,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Database.cpp" />
+    <ClCompile Include="DatabaseManager.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="UsersEntity.cpp" />
     <ClCompile Include="WordsEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Database.h" />
+    <ClInclude Include="DatabaseManager.h" />
     <ClInclude Include="UsersEntity.h" />
     <ClInclude Include="WordsEntity.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="users.txt" />
+    <Text Include="words.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
