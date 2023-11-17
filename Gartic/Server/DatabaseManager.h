@@ -2,8 +2,6 @@
 
 #include "Database.h"
 
-#include <string>
-#include <vector>
 #include <fstream>
 
 using WordEntityVector = std::vector<WordsEntity>;

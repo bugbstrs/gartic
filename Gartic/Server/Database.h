@@ -34,15 +34,15 @@ public:
 
 using Storage = decltype(Database::createStorage(""));
 
-void populateStorage(Storage& storage)
-{
-	std::vector<WordsEntity> words{
-	WordsEntity{"Milk"},
-	WordsEntity{"Egg"},
-	WordsEntity{"Flour"},
-	WordsEntity{"Butter"},
-	WordsEntity{"Salt"},
-	WordsEntity{"Jam"}
-	};
-	storage.insert_range(words.begin(), words.end());
-}
+//void populateStorage(Storage& storage)
+//{
+//	std::vector<WordsEntity> words{
+//	WordsEntity{"Milk"},
+//	WordsEntity{"Egg"},
+//	WordsEntity{"Flour"},
+//	WordsEntity{"Butter"},
+//	WordsEntity{"Salt"},
+//	WordsEntity{"Jam"}
+//	};
+//	storage.insert_range(words.begin(), words.end());
+//}
