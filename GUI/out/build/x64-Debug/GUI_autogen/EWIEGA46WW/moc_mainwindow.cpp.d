@@ -1,4 +1,4 @@
-D:/QT/Projects/GUI/out/build/x64-Debug/GUI_autogen/EWIEGA46WW/moc_mainwindow.cpp: D:/QT/Projects/GUI/mainwindow.h \
+D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug/GUI_autogen/EWIEGA46WW/moc_mainwindow.cpp: D:/Visual_Studio/MC/Gartic_Project/GUI/mainwindow.h \
   D:/QT/6.5.3/msvc2019_64/include/QtCore/q20memory.h \
   D:/QT/6.5.3/msvc2019_64/include/QtCore/q20type_traits.h \
   D:/QT/6.5.3/msvc2019_64/include/QtCore/qalgorithms.h \

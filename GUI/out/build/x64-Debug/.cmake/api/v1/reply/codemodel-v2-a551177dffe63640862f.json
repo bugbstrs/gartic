@@ -44,7 +44,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "GUI::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-GUI-Debug-50540e63da6d544efb6a.json",
+					"jsonFile" : "target-GUI-Debug-0d71db1ae6e2119a5ae9.json",
 					"name" : "GUI",
 					"projectIndex" : 0
 				},
@@ -68,8 +68,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "D:/QT/Projects/GUI/out/build/x64-Debug",
-		"source" : "D:/QT/Projects/GUI"
+		"build" : "D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug",
+		"source" : "D:/Visual_Studio/MC/Gartic_Project/GUI"
 	},
 	"version" : 
 	{

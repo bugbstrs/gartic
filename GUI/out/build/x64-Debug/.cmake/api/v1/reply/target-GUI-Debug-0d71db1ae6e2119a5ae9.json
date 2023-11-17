@@ -328,14 +328,14 @@
 			"includes" : 
 			[
 				{
-					"path" : "D:/QT/Projects/GUI/out/build/x64-Debug"
+					"path" : "D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug"
 				},
 				{
-					"path" : "D:/QT/Projects/GUI"
+					"path" : "D:/Visual_Studio/MC/Gartic_Project/GUI"
 				},
 				{
 					"backtrace" : 0,
-					"path" : "D:/QT/Projects/GUI/out/build/x64-Debug/GUI_autogen/include"
+					"path" : "D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug/GUI_autogen/include"
 				},
 				{
 					"backtrace" : 14,
@@ -384,11 +384,11 @@
 	"dependencies" : 
 	[
 		{
-			"backtrace" : 0,
-			"id" : "GUI_autogen::@6890427a1f51a3e7e1df"
+			"id" : "GUI_autogen_timestamp_deps::@6890427a1f51a3e7e1df"
 		},
 		{
-			"id" : "GUI_autogen_timestamp_deps::@6890427a1f51a3e7e1df"
+			"backtrace" : 0,
+			"id" : "GUI_autogen::@6890427a1f51a3e7e1df"
 		}
 	],
 	"id" : "GUI::@6890427a1f51a3e7e1df",
@@ -403,7 +403,7 @@
 		],
 		"prefix" : 
 		{
-			"path" : "D:/QT/Projects/GUI/out/install/x64-Debug"
+			"path" : "D:/Visual_Studio/MC/Gartic_Project/GUI/out/install/x64-Debug"
 		}
 	},
 	"link" : 

@@ -1,8 +1,8 @@
-D:/QT/Projects/GUI/out/build/x64-Debug/CMakeFiles/GUI.dir
-D:/QT/Projects/GUI/out/build/x64-Debug/CMakeFiles/edit_cache.dir
-D:/QT/Projects/GUI/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
-D:/QT/Projects/GUI/out/build/x64-Debug/CMakeFiles/list_install_components.dir
-D:/QT/Projects/GUI/out/build/x64-Debug/CMakeFiles/install.dir
-D:/QT/Projects/GUI/out/build/x64-Debug/CMakeFiles/install/local.dir
-D:/QT/Projects/GUI/out/build/x64-Debug/CMakeFiles/GUI_autogen_timestamp_deps.dir
-D:/QT/Projects/GUI/out/build/x64-Debug/CMakeFiles/GUI_autogen.dir
+D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug/CMakeFiles/GUI.dir
+D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug/CMakeFiles/list_install_components.dir
+D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug/CMakeFiles/install.dir
+D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug/CMakeFiles/install/local.dir
+D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug/CMakeFiles/GUI_autogen_timestamp_deps.dir
+D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug/CMakeFiles/GUI_autogen.dir

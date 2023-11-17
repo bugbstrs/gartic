@@ -39,7 +39,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "d:/QT/Projects/GUI/out/build/x64-Debug"
+			"value" : "d:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -123,10 +123,10 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "CXX compiler"
 				}
 			],
-			"type" : "FILEPATH",
+			"type" : "STRING",
 			"value" : "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x64/cl.exe"
 		},
 		{
@@ -367,7 +367,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "D:/QT/Projects/GUI/out/build/x64-Debug/CMakeFiles/pkgRedirects"
+			"value" : "D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -463,7 +463,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "D:/QT/Projects/GUI"
+			"value" : "D:/Visual_Studio/MC/Gartic_Project/GUI"
 		},
 		{
 			"name" : "CMAKE_INSTALL_BINDIR",
@@ -667,7 +667,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "D:/QT/Projects/GUI/out/install/x64-Debug"
+			"value" : "D:/Visual_Studio/MC/Gartic_Project/GUI/out/install/x64-Debug"
 		},
 		{
 			"name" : "CMAKE_INSTALL_RUNSTATEDIR",
@@ -1351,7 +1351,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "D:/QT/Projects/GUI/out/build/x64-Debug"
+			"value" : "D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug"
 		},
 		{
 			"name" : "GUI_IS_TOP_LEVEL",
@@ -1375,7 +1375,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "D:/QT/Projects/GUI"
+			"value" : "D:/Visual_Studio/MC/Gartic_Project/GUI"
 		},
 		{
 			"name" : "HAVE_STDATOMIC",
@@ -5927,7 +5927,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "D:/QT/Projects/GUI/out/install/x64-Debug"
+			"value" : "D:/Visual_Studio/MC/Gartic_Project/GUI/out/install/x64-Debug"
 		}
 	],
 	"kind" : "cache",

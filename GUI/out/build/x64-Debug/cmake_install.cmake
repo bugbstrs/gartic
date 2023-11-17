@@ -1,8 +1,8 @@
-# Install script for directory: D:/QT/Projects/GUI
+# Install script for directory: D:/Visual_Studio/MC/Gartic_Project/GUI
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "D:/QT/Projects/GUI/out/install/x64-Debug")
+  set(CMAKE_INSTALL_PREFIX "D:/Visual_Studio/MC/Gartic_Project/GUI/out/install/x64-Debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,7 +33,7 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "D:/QT/Projects/GUI/out/build/x64-Debug/GUI.exe")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug/GUI.exe")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -44,5 +44,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/QT/Projects/GUI/out/build/x64-Debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/Visual_Studio/MC/Gartic_Project/GUI/out/build/x64-Debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
