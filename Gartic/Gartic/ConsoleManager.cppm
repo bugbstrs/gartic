@@ -1,10 +1,7 @@
 export module ConsoleManager;
 
-import <string>;
-import <iostream>;
-import <Windows.h>;
-
 export import ColorType;
+import ConsoleBuffer;
 
 using String = std::string;
 
