@@ -14,6 +14,12 @@ ConsoleManager::ConsoleManager()
 	m_color = 15;
 }
 
+void ConsoleManager::NewConsole(const LPCWSTR title, uint16_t width, uint16_t height)
+{
+	//scale
+	SetConsoleTitle(title);
+}
+
 void ConsoleManager::SetConsoleScale(uint16_t x, uint16_t y)
 {
 	String command = std::format("mode {},{}", std::to_string(x), std::to_string(y));
