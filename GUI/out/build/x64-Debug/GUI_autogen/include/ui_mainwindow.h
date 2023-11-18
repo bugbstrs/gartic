@@ -70,9 +70,10 @@ public:
     QPushButton *pushButton_5;
     QFrame *answerFrame;
     QGridLayout *gridLayout_2;
-    QLineEdit *lineEdit_2;
     QPlainTextEdit *plainTextEdit_2;
+    QLineEdit *lineEdit_2;
     QGroupBox *groupBox;
+    QGridLayout *gridLayout_13;
     QPushButton *pushButton_6;
     QMenuBar *menubar;
 
@@ -354,7 +355,7 @@ public:
         sizePolicy.setHeightForWidth(chatBoxes->sizePolicy().hasHeightForWidth());
         chatBoxes->setSizePolicy(sizePolicy);
         chatBoxes->setMinimumSize(QSize(300, 0));
-        chatBoxes->setMaximumSize(QSize(1100, 300));
+        chatBoxes->setMaximumSize(QSize(1500, 300));
         chatBoxes->setLayoutDirection(Qt::LeftToRight);
         chatBoxes->setStyleSheet(QString::fromUtf8("background: transparent;"));
         chatBoxes->setFrameShape(QFrame::StyledPanel);
@@ -363,8 +364,11 @@ public:
         gridLayout_11->setObjectName("gridLayout_11");
         chatFrame = new QFrame(chatBoxes);
         chatFrame->setObjectName("chatFrame");
-        sizePolicy2.setHeightForWidth(chatFrame->sizePolicy().hasHeightForWidth());
-        chatFrame->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy4(QSizePolicy::Maximum, QSizePolicy::Expanding);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(chatFrame->sizePolicy().hasHeightForWidth());
+        chatFrame->setSizePolicy(sizePolicy4);
         chatFrame->setMinimumSize(QSize(100, 100));
         chatFrame->setMaximumSize(QSize(300, 300));
         chatFrame->setFrameShape(QFrame::StyledPanel);
@@ -373,12 +377,12 @@ public:
         gridLayout->setObjectName("gridLayout");
         lineEdit = new QLineEdit(chatFrame);
         lineEdit->setObjectName("lineEdit");
-        QSizePolicy sizePolicy4(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
-        lineEdit->setSizePolicy(sizePolicy4);
-        lineEdit->setMaximumSize(QSize(16777215, 16777215));
+        QSizePolicy sizePolicy5(QSizePolicy::Maximum, QSizePolicy::Fixed);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
+        lineEdit->setSizePolicy(sizePolicy5);
+        lineEdit->setMaximumSize(QSize(300, 16777215));
         QFont font4;
         font4.setPointSize(9);
         lineEdit->setFont(font4);
@@ -389,9 +393,12 @@ public:
         plainTextEdit = new QPlainTextEdit(chatFrame);
         plainTextEdit->setObjectName("plainTextEdit");
         plainTextEdit->setEnabled(true);
-        sizePolicy4.setHeightForWidth(plainTextEdit->sizePolicy().hasHeightForWidth());
-        plainTextEdit->setSizePolicy(sizePolicy4);
-        plainTextEdit->setMaximumSize(QSize(16777215, 16777215));
+        QSizePolicy sizePolicy6(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(plainTextEdit->sizePolicy().hasHeightForWidth());
+        plainTextEdit->setSizePolicy(sizePolicy6);
+        plainTextEdit->setMaximumSize(QSize(300, 200));
         plainTextEdit->setStyleSheet(QString::fromUtf8("background-color: white;"));
         plainTextEdit->setReadOnly(true);
 
@@ -402,8 +409,11 @@ public:
 
         frame = new QFrame(chatBoxes);
         frame->setObjectName("frame");
-        sizePolicy3.setHeightForWidth(frame->sizePolicy().hasHeightForWidth());
-        frame->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy7(QSizePolicy::Maximum, QSizePolicy::Preferred);
+        sizePolicy7.setHorizontalStretch(0);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(frame->sizePolicy().hasHeightForWidth());
+        frame->setSizePolicy(sizePolicy7);
         frame->setMinimumSize(QSize(100, 0));
         frame->setMaximumSize(QSize(200, 300));
         frame->setFrameShape(QFrame::StyledPanel);
@@ -412,6 +422,7 @@ public:
         gridLayout_12->setObjectName("gridLayout_12");
         pushButton_4 = new QPushButton(frame);
         pushButton_4->setObjectName("pushButton_4");
+        pushButton_4->setMaximumSize(QSize(300, 16777215));
         pushButton_4->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,\n"
 "                                stop: 0 #FFA500, stop: 1 #FF0000);\n"
@@ -444,6 +455,7 @@ public:
 
         pushButton_5 = new QPushButton(frame);
         pushButton_5->setObjectName("pushButton_5");
+        pushButton_5->setMaximumSize(QSize(300, 16777215));
         pushButton_5->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
 "                                stop: 0 #4CAF50, stop: 1 #2196F3);\n"
@@ -479,35 +491,38 @@ public:
 
         answerFrame = new QFrame(chatBoxes);
         answerFrame->setObjectName("answerFrame");
-        sizePolicy.setHeightForWidth(answerFrame->sizePolicy().hasHeightForWidth());
-        answerFrame->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy8(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
+        sizePolicy8.setHorizontalStretch(0);
+        sizePolicy8.setVerticalStretch(0);
+        sizePolicy8.setHeightForWidth(answerFrame->sizePolicy().hasHeightForWidth());
+        answerFrame->setSizePolicy(sizePolicy8);
         answerFrame->setMinimumSize(QSize(100, 100));
         answerFrame->setMaximumSize(QSize(300, 300));
         answerFrame->setFrameShape(QFrame::StyledPanel);
         answerFrame->setFrameShadow(QFrame::Raised);
         gridLayout_2 = new QGridLayout(answerFrame);
         gridLayout_2->setObjectName("gridLayout_2");
-        lineEdit_2 = new QLineEdit(answerFrame);
-        lineEdit_2->setObjectName("lineEdit_2");
-        sizePolicy4.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
-        lineEdit_2->setSizePolicy(sizePolicy4);
-        lineEdit_2->setMaximumSize(QSize(16777215, 16777215));
-        lineEdit_2->setFont(font4);
-        lineEdit_2->setStyleSheet(QString::fromUtf8("background-color: white;"));
-
-        gridLayout_2->addWidget(lineEdit_2, 1, 0, 1, 1);
-
         plainTextEdit_2 = new QPlainTextEdit(answerFrame);
         plainTextEdit_2->setObjectName("plainTextEdit_2");
         plainTextEdit_2->setEnabled(true);
-        sizePolicy4.setHeightForWidth(plainTextEdit_2->sizePolicy().hasHeightForWidth());
-        plainTextEdit_2->setSizePolicy(sizePolicy4);
-        plainTextEdit_2->setMaximumSize(QSize(16777215, 16777215));
+        sizePolicy6.setHeightForWidth(plainTextEdit_2->sizePolicy().hasHeightForWidth());
+        plainTextEdit_2->setSizePolicy(sizePolicy6);
+        plainTextEdit_2->setMaximumSize(QSize(300, 200));
         plainTextEdit_2->setLayoutDirection(Qt::LeftToRight);
         plainTextEdit_2->setStyleSheet(QString::fromUtf8("background-color: white;"));
         plainTextEdit_2->setReadOnly(true);
 
         gridLayout_2->addWidget(plainTextEdit_2, 0, 0, 1, 1);
+
+        lineEdit_2 = new QLineEdit(answerFrame);
+        lineEdit_2->setObjectName("lineEdit_2");
+        sizePolicy6.setHeightForWidth(lineEdit_2->sizePolicy().hasHeightForWidth());
+        lineEdit_2->setSizePolicy(sizePolicy6);
+        lineEdit_2->setMaximumSize(QSize(300, 16777215));
+        lineEdit_2->setFont(font4);
+        lineEdit_2->setStyleSheet(QString::fromUtf8("background-color: white;"));
+
+        gridLayout_2->addWidget(lineEdit_2, 1, 0, 1, 1);
 
 
         gridLayout_11->addWidget(answerFrame, 0, 2, 1, 1);
@@ -516,14 +531,18 @@ public:
         groupBox->setObjectName("groupBox");
         sizePolicy3.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
         groupBox->setSizePolicy(sizePolicy3);
-        groupBox->setMinimumSize(QSize(50, 0));
-        groupBox->setMaximumSize(QSize(200, 300));
+        groupBox->setMinimumSize(QSize(200, 0));
+        groupBox->setMaximumSize(QSize(300, 300));
+        gridLayout_13 = new QGridLayout(groupBox);
+        gridLayout_13->setObjectName("gridLayout_13");
         pushButton_6 = new QPushButton(groupBox);
         pushButton_6->setObjectName("pushButton_6");
-        pushButton_6->setGeometry(QRect(0, 30, 21, 21));
         sizePolicy1.setHeightForWidth(pushButton_6->sizePolicy().hasHeightForWidth());
         pushButton_6->setSizePolicy(sizePolicy1);
         pushButton_6->setStyleSheet(QString::fromUtf8("background-color: red;"));
+
+        gridLayout_13->addWidget(pushButton_6, 0, 0, 1, 1);
+
 
         gridLayout_11->addWidget(groupBox, 0, 0, 1, 1);
 
@@ -543,7 +562,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 926, 25));
+        menubar->setGeometry(QRect(0, 0, 926, 22));
         menubar->setAutoFillBackground(false);
         menubar->setStyleSheet(QString::fromUtf8("background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
 "                             stop: 0 #001F33, stop: 1 #003366);\n"
@@ -552,7 +571,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(1);
         pushButton->setDefault(false);
 
 

@@ -47,7 +47,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="P1">
        <property name="styleSheet">
@@ -511,7 +511,7 @@ QPushButton:hover {
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>1100</width>
+                  <width>1500</width>
                   <height>300</height>
                  </size>
                 </property>
@@ -531,7 +531,7 @@ QPushButton:hover {
                  <item row="0" column="1">
                   <widget class="QFrame" name="chatFrame">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -558,14 +558,14 @@ QPushButton:hover {
                     <item row="1" column="0">
                      <widget class="QLineEdit" name="lineEdit">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>16777215</width>
+                        <width>300</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -595,8 +595,8 @@ QPushButton:hover {
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>16777215</width>
-                        <height>16777215</height>
+                        <width>300</width>
+                        <height>200</height>
                        </size>
                       </property>
                       <property name="styleSheet">
@@ -613,7 +613,7 @@ QPushButton:hover {
                  <item row="0" column="3">
                   <widget class="QFrame" name="frame">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -639,6 +639,12 @@ QPushButton:hover {
                    <layout class="QGridLayout" name="gridLayout_12">
                     <item row="0" column="3">
                      <widget class="QPushButton" name="pushButton_4">
+                      <property name="maximumSize">
+                       <size>
+                        <width>300</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">QPushButton {
     background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
@@ -675,6 +681,12 @@ QPushButton:hover {
                     </item>
                     <item row="1" column="3">
                      <widget class="QPushButton" name="pushButton_5">
+                      <property name="maximumSize">
+                       <size>
+                        <width>300</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">QPushButton {
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
@@ -715,7 +727,7 @@ QPushButton:hover {
                  <item row="0" column="2">
                   <widget class="QFrame" name="answerFrame">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Maximum" vsizetype="MinimumExpanding">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -739,6 +751,34 @@ QPushButton:hover {
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_2">
+                    <item row="0" column="0">
+                     <widget class="QPlainTextEdit" name="plainTextEdit_2">
+                      <property name="enabled">
+                       <bool>true</bool>
+                      </property>
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>300</width>
+                        <height>200</height>
+                       </size>
+                      </property>
+                      <property name="layoutDirection">
+                       <enum>Qt::LeftToRight</enum>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: white;</string>
+                      </property>
+                      <property name="readOnly">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
                     <item row="1" column="0">
                      <widget class="QLineEdit" name="lineEdit_2">
                       <property name="sizePolicy">
@@ -749,7 +789,7 @@ QPushButton:hover {
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>16777215</width>
+                        <width>300</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -766,34 +806,6 @@ QPushButton:hover {
                       </property>
                      </widget>
                     </item>
-                    <item row="0" column="0">
-                     <widget class="QPlainTextEdit" name="plainTextEdit_2">
-                      <property name="enabled">
-                       <bool>true</bool>
-                      </property>
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="layoutDirection">
-                       <enum>Qt::LeftToRight</enum>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: white;</string>
-                      </property>
-                      <property name="readOnly">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
                    </layout>
                   </widget>
                  </item>
@@ -807,41 +819,37 @@ QPushButton:hover {
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>50</width>
+                     <width>200</width>
                      <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>200</width>
+                     <width>300</width>
                      <height>300</height>
                     </size>
                    </property>
                    <property name="title">
                     <string>Colors</string>
                    </property>
-                   <widget class="QPushButton" name="pushButton_6">
-                    <property name="geometry">
-                     <rect>
-                      <x>0</x>
-                      <y>30</y>
-                      <width>21</width>
-                      <height>21</height>
-                     </rect>
-                    </property>
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: red;</string>
-                    </property>
-                    <property name="text">
-                     <string/>
-                    </property>
-                   </widget>
+                   <layout class="QGridLayout" name="gridLayout_13">
+                    <item row="0" column="0">
+                     <widget class="QPushButton" name="pushButton_6">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: red;</string>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </widget>
                  </item>
                 </layout>
@@ -865,7 +873,7 @@ QPushButton:hover {
      <x>0</x>
      <y>0</y>
      <width>926</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="autoFillBackground">
