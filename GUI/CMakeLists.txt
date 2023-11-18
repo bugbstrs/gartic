@@ -4,12 +4,6 @@ cmake_minimum_required(VERSION 3.5)
 
 project(GUI VERSION 0.1 LANGUAGES CXX)
 
-
-set(Qt6_DIR "D:/QT/6.5.3/msvc2019_64/lib/cmake/Qt6")
-set(QT_DIR ${Qt6_DIR})
-set(Qt6WidgetsTools_DIR "${Qt6_DIR}WidgetsTools")
-set(Qt6CoreTools_DIR "${Qt6_DIR}CoreTools")
-set(Qt6GuiTools_DIR "${Qt6_DIR}GuiTools")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOUIC ON)
