@@ -13,19 +13,19 @@ User::User() noexcept:
 {}
 
 User::User(const User& otherUser) noexcept:
-	m_username		{ otherUser.m_username		},
-	m_credits		{ otherUser.m_credits		},
+	m_username      { otherUser.m_username      },
+	m_credits       { otherUser.m_credits       },
 	m_averagePoints { otherUser.m_averagePoints },
 	m_matchesPoints { otherUser.m_matchesPoints },
-	m_isPlaying		{ otherUser.m_isPlaying		}
+	m_isPlaying     { otherUser.m_isPlaying     }
 {}
 
 User::User(User&& otherUser) noexcept:
-	m_username		{ std::move(otherUser.m_username)	   },
-	m_credits		{ std::move(otherUser.m_credits)	   },
+	m_username      { std::move(otherUser.m_username)      },
+	m_credits       { std::move(otherUser.m_credits)       },
 	m_averagePoints { std::move(otherUser.m_averagePoints) },
 	m_matchesPoints { std::move(otherUser.m_matchesPoints) },
-	m_isPlaying		{ std::move(otherUser.m_isPlaying)	   }
+	m_isPlaying     { std::move(otherUser.m_isPlaying)     }
 {}
 
 User::User(const String& username, uint64_t credits, bool isPlaying):
