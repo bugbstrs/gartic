@@ -5,7 +5,7 @@ import TransportOptions;
 import <vector>;
 import <string>;
 
-export class Logger
+export class __declspec(dllexport) Logger
 {
 public:
 	using TransportOptions = TransportOptions;
