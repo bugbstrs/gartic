@@ -15,8 +15,8 @@ using StringVector = std::vector<std::string>;
 export class Vocabulary
 {
 public:
-	StringTuple FetchWords();
+    StringTuple FetchWords();
 
 private:
-	StringVector m_words;
+    StringVector m_words;
 };

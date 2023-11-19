@@ -10,28 +10,28 @@ using String = std::string;
 export class InputManager
 {
 public:
-	// Constructors
-	InputManager() = default;
+    // Constructors
+    InputManager() = default;
 
-	// Destructor
-	~InputManager() = default;
+    // Destructor
+    ~InputManager() = default;
 
-	// Read
-	void ReadInput();
-	void UpdateString(String& text, int pos = -1, int maxLenght = -1);
+    // Read
+    void ReadInput    ();
+    void UpdateString (String& text, int pos = -1, int maxLength = -1);
 
-	// Getters
-	bool		GetClickPressed();
-	char		GetCurrentKeyboardInput();
-	ControlKeys ControlKey();
-	COORD		GetCurrentCursorPosition();
+    // Getters
+    bool        GetClickPressed();
+    char        GetCurrentKeyboardInput();
+    ControlKeys ControlKey();
+    COORD       GetCurrentCursorPosition();
 
 private:
-	bool m_isArrowKey;
-	bool m_rightClickPressed;
-	char m_lastKeyPressed;
+    bool m_isArrowKey;
+    bool m_rightClickPressed;
+    char m_lastKeyPressed;
 
-	bool  IsCursorInConsole();
-	COORD CursorPositionInConsole();
-	COORD m_cursorPosition;
+    bool  IsCursorInConsole();
+    COORD CursorPositionInConsole();
+    COORD m_cursorPosition;
 };

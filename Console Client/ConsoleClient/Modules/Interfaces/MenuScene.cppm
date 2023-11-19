@@ -5,22 +5,22 @@ export import Scene;
 export class MenuScene : public Scene
 {
 public:
-	// Constructors
-	MenuScene(ConsoleManager* console, InputManager* inputManager);
+    // Constructors
+    MenuScene(ConsoleManager* console, InputManager* inputManager);
 
-	// Destructor
-	~MenuScene() = default;
+    // Destructor
+    ~MenuScene() = default;
 
 private:
-	enum class Options
-	{
-		PLAY,
-		STATS,
-		LOGOUT
-	};
-	Options m_option;
+    enum class Options
+    {
+        PLAY,
+        STATS,
+        LOGOUT
+    };
+    Options m_option;
 
-	void Display() const override;
-	void Start()   override;
-	void Update()  override;
+    void Display() const override;
+    void Start()   override;
+    void Update()  override;
 };

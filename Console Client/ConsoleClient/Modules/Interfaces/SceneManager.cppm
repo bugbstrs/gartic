@@ -14,12 +14,12 @@ using UniquePtrScene = std::unique_ptr<Scene>;
 export class SceneManager
 {
 public:
-	void Start();
+    void Start();
 
 private:
-	ConsoleManager* m_console;
-	InputManager* m_input;
-	UniquePtrScene m_activeScene;
+    ConsoleManager* m_console;
+    InputManager*   m_input;
+    UniquePtrScene  m_activeScene;
 
-	void Update();
+    void Update();
 };

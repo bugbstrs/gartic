@@ -13,6 +13,6 @@ using String = std::string;
 export class FileHandler
 {
 public:
-	String Read  (FileType fileType);
-	void   Write (FileType fileType, const String& data);
+    String Read  (FileType fileType);
+    void   Write (FileType fileType, const String& data);
 };

@@ -1,83 +1,81 @@
 module ConsoleManager;
 
-import <string>;
-import <iostream>;
-import <Windows.h>;
-import <print>;
 import <format>;
+import <iostream>;
+import <print>;
+import <string>;
+import <Windows.h>;
 
 import ColorType;
 
 ConsoleManager::ConsoleManager()
 {
-	m_buffers	  = nullptr;
-	m_bufferIndex = 0;
+    m_h     = GetStdHandle(STD_OUTPUT_HANDLE);
+    m_color = 15;
 }
 
-ConsoleManager::~ConsoleManager()
+void ConsoleManager::NewConsole(const LPCWSTR title, uint16_t width, uint16_t height)
 {
-	if(m_buffers)
-		delete[] m_buffers;
-}
-
-void ConsoleManager::NewConsole(const LPCWSTR title, int16_t width, int16_t height)
-{
-	if(m_buffers)
-		delete[] m_buffers;
-
-	m_bufferIndex = 0;
-	m_buffers	  = new ConsoleBuffer[2]{
-		ConsoleBuffer{ width,height },
-		ConsoleBuffer{ width,height }
-	};
-
-	SetConsoleTitle(title);
-}
-
-void ConsoleManager::SetTextColor(ColorType color)
-{
-	m_buffers[m_bufferIndex].SetTextColor(color);
+    //scale
+    SetConsoleTitle(title);
 }
 
 void ConsoleManager::SetBackgroundColor(ColorType color)
 {
-	m_buffers[m_bufferIndex].SetBackgroundColor(color);
+    m_color %= 16;
+    m_color += 16 * (int) color;
+
+    SetConsoleTextAttribute(m_h, m_color);
 }
 
 void ConsoleManager::SetColor(ColorType background, ColorType text)
 {
-	m_buffers[m_bufferIndex].SetColor(background, text);
+    m_color = 16 * (int) background + (int) text;
+    SetConsoleTextAttribute(m_h, m_color);
 }
 
-void ConsoleManager::SetCursor(bool visible, COORD coord)
+void ConsoleManager::SetConsoleScale(uint16_t x, uint16_t y)
 {
-	m_buffers[m_bufferIndex].SetCursor(visible, coord);
+    String command = std::format("mode {},{}", std::to_string(x), std::to_string(y));
+    system(command.c_str());
 }
 
-void ConsoleManager::SetCursor(bool visible, int16_t x, int16_t y)
+void ConsoleManager::SetCursor(COORD coord)
 {
-	m_buffers[m_bufferIndex].SetCursor(visible, { x,y });
+    SetConsoleCursorPosition(m_h, coord);
 }
 
-void ConsoleManager::WriteHorizontal(const String& sentence, int16_t x, int16_t y)
+void ConsoleManager::SetCursor(uint16_t x, uint16_t y)
 {
-	m_buffers[m_bufferIndex].Write(sentence, x, y);
+    COORD coord = { x, y };
+    SetConsoleCursorPosition(m_h, coord);
 }
 
-void ConsoleManager::WriteVertical(const String& sentence, int16_t x, int16_t y)
+void ConsoleManager::SetTextColor(ColorType color)
 {
-	for (size_t index = 0; index < sentence.size(); ++index)
-		m_buffers[m_bufferIndex].Write(sentence[index], x, y + index);
+    m_color  = m_color / 16 * 16;
+    m_color += (int) color;
+
+    SetConsoleTextAttribute(m_h, m_color);
 }
 
-void ConsoleManager::UpdateConsole()
+void ConsoleManager::ClearScreen()
 {
-	m_buffers[m_bufferIndex].WriteBufferToConsole();
-	m_bufferIndex = !m_bufferIndex;
-	ClearBuffer();
+    SetColor(ColorType::Black, ColorType::White);
+    system("cls");
 }
 
-void ConsoleManager::ClearBuffer()
+void ConsoleManager::WriteHorizontal(const String& sentence, uint16_t x, uint16_t y)
 {
-	m_buffers[m_bufferIndex].Clear();
+    SetCursor(x - sentence.length() / 2, y);
+    std::print("{}", sentence);
+}
+
+void ConsoleManager::WriteVertical(const String& sentence, uint16_t x, uint16_t y)
+{
+    for (size_t index = y - sentence.length() / 2; index <= y + (sentence.length() + 1) / 2; ++index)
+    {
+        SetCursor(x, index);
+        std::print("{}", sentence[index - y + sentence.length() / 2]);
+    }
 }
