@@ -1,3 +1,4 @@
+#pragma region module
 export module Timer;
 
 #pragma region Timer
@@ -24,8 +25,10 @@ export const int defaultMinutes    = 1;
 export const int defaultResolution = 12;
 #pragma endregion constants
 
+#pragma region Timer
 export class __declspec(dllexport) Timer
 {
+#pragma region Timer
 public:
     #pragma region Timer
     Timer ();
@@ -63,7 +66,8 @@ public:
     bool IsTimeExpired ()  const;
     void Run           ();
     #pragma endregion functionality
-
+#pragma endregion public members
+#pragma region Timer
 private:
     Thread m_thread;
 
@@ -80,4 +84,7 @@ private:
 
     TimerCallback m_callback;
     TimerCallback m_timeoutCallback;
+#pragma endregion private members
 };
+#pragma endregion class
+#pragma endregion module

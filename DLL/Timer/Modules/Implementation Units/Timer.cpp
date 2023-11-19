@@ -1,5 +1,7 @@
+#pragma region Timer
 module Timer;
 
+#pragma region Timer
 static Milliseconds ConvertToMilliseconds(uint16_t time, bool isInMinutes)
 {
     return isInMinutes ? Milliseconds(time * 60000)
@@ -11,7 +13,9 @@ static Milliseconds CurrentTimeInMillis(const TimePoint& initialTime)
     auto currentTime = std::chrono::steady_clock::now();
     return std::chrono::duration_cast<Milliseconds>(currentTime - initialTime);
 }
+#pragma endregion static methods
 
+#pragma region Timer
 Timer::Timer():
     m_initialTime     { ConvertToMilliseconds(defaultMinutes, true)    },
     m_remainingTime   { m_initialTime                                  },
@@ -42,7 +46,9 @@ Timer::~Timer()
 
     if (m_thread.joinable()) m_thread.join();
 }
+#pragma endregion constructors & destructor
 
+#pragma region Timer
 void Timer::SetCallback(TimerCallback callback)
 {
     m_callback = callback;
@@ -67,7 +73,9 @@ void Timer::SetTimerResolution(uint32_t milliseconds)
 {
     m_timerResolution = Milliseconds(milliseconds);
 }
+#pragma endregion setters
 
+#pragma region Timer
 Milliseconds Timer::GetRemainingTime() const
 {
     return m_remainingTime;
@@ -94,7 +102,9 @@ Milliseconds Timer::GetTimerResolution() const
 {
     return m_timerResolution;
 }
+#pragma endregion getters
 
+#pragma region Timer
 void Timer::ResetTimer()
 {
     m_remainingTime = m_initialTime;
@@ -127,7 +137,9 @@ void Timer::StopTimer()
 
     m_conditionalVariable.notify_all();
 }
+#pragma endregion timer flow: start, stop, reset, starttimerfrom
 
+#pragma region Timer
 bool Timer::IsTimeExpired() const
 {
     return m_remainingTime <= Milliseconds(0);
@@ -158,3 +170,5 @@ void Timer::Run()
         }
     }
 }
+#pragma endregion functionality
+#pragma endregion module
