@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{42c09d78-7f93-4ef1-985f-f4ecbd8ae6bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Interfaces">
+      <UniqueIdentifier>{a166cdd0-72d0-4131-83f6-55a213e9fe92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Implementation Units">
+      <UniqueIdentifier>{b7a9956d-1049-4f2e-9bce-42b4fe45f952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Standalone">
+      <UniqueIdentifier>{d28b766b-01f4-4f62-8645-2e943177187a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Modules\Implementation Units\ConsoleBuffer.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Implementation Units\ConsoleManager.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Implementation Units\FileHandler.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Implementation Units\GameScene.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Implementation Units\GUIObject.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Implementation Units\InputManager.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Implementation Units\LoginScene.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Implementation Units\MenuScene.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Implementation Units\Player.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Implementation Units\Scene.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Implementation Units\SceneManager.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Implementation Units\User.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Implementation Units\Vocabulary.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Interfaces\ConsoleBuffer.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Interfaces\ConsoleManager.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Interfaces\FileHandler.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Interfaces\GameScene.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Interfaces\GUIObject.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Interfaces\InputManager.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Interfaces\LoginScene.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Interfaces\MenuScene.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Interfaces\Player.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Interfaces\Scene.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Interfaces\SceneManager.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Interfaces\User.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Interfaces\Vocabulary.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Standalone\Align.cppm">
+      <Filter>Modules\Standalone</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Standalone\ColorType.cppm">
+      <Filter>Modules\Standalone</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Standalone\config.cppm">
+      <Filter>Modules\Standalone</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Standalone\ControlKeys.cppm">
+      <Filter>Modules\Standalone</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Standalone\FileType.cppm">
+      <Filter>Modules\Standalone</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Standalone\GameStatus.cppm">
+      <Filter>Modules\Standalone</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

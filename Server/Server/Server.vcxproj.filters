@@ -27,42 +27,42 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Database.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UsersEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WordsEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DatabaseManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <Text Include="Database Files\users.txt">
+      <Filter>Database Files</Filter>
+    </Text>
+    <Text Include="Database Files\words.txt">
+      <Filter>Database Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Database.h">
+    <ClInclude Include="Header Files\Database.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UsersEntity.h">
+    <ClInclude Include="Header Files\DatabaseManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WordsEntity.h">
+    <ClInclude Include="Header Files\UsersEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DatabaseManager.h">
+    <ClInclude Include="Header Files\WordsEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="words.txt">
-      <Filter>Database Files</Filter>
-    </Text>
-    <Text Include="users.txt">
-      <Filter>Database Files</Filter>
-    </Text>
+    <ClCompile Include="Source Files\Database.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\DatabaseManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\UsersEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\WordsEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@
 
 int main()
 {
-	const std::string db_file = "gartic.sqlite";
+	const std::string db_file = "Database Files\\gartic.sqlite";
 	Storage db = Database::createStorage(db_file);
 	db.sync_schema();
 

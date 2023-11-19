@@ -398,5 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Qt build files
-GUI/out/*
+GUI Client/out/*
 *CMakeUserPresets.json

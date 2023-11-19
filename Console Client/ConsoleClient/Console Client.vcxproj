@@ -21,32 +21,33 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{1ec21e52-e476-4aaf-8c77-475bdf238d84}</ProjectGuid>
-    <RootNamespace>Logger</RootNamespace>
+    <ProjectGuid>{f9f382d2-5ef8-4ff0-ae7d-d00503432674}</ProjectGuid>
+    <RootNamespace>Console Client</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Console Client</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -86,17 +87,15 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;LOGGER_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableUAC>false</EnableUAC>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -105,36 +104,32 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;LOGGER_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableUAC>false</EnableUAC>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;LOGGER_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableUAC>false</EnableUAC>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -143,28 +138,61 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;LOGGER_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ScanSourceForModuleDependencies>true</ScanSourceForModuleDependencies>
       <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableUAC>false</EnableUAC>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="LogFormat.cppm" />
-    <ClCompile Include="Logger.cpp" />
-    <ClCompile Include="Logger.cppm" />
-    <ClCompile Include="LogLevel.cppm" />
-    <ClCompile Include="Source.cpp" />
-    <ClCompile Include="TransportOptions.cppm" />
+    <ProjectReference Include="..\..\DLL\Logger\Logger.vcxproj">
+      <Project>{1ec21e52-e476-4aaf-8c77-475bdf238d84}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DLL\Timer\Timer.vcxproj">
+      <Project>{f0b495a8-fdba-4ec7-9d33-9ca6bc783f55}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Modules\Implementation Units\ConsoleBuffer.cpp" />
+    <ClCompile Include="Modules\Implementation Units\ConsoleManager.cpp" />
+    <ClCompile Include="Modules\Implementation Units\FileHandler.cpp" />
+    <ClCompile Include="Modules\Implementation Units\GameScene.cpp" />
+    <ClCompile Include="Modules\Implementation Units\GUIObject.cpp" />
+    <ClCompile Include="Modules\Implementation Units\InputManager.cpp" />
+    <ClCompile Include="Modules\Implementation Units\LoginScene.cpp" />
+    <ClCompile Include="Modules\Implementation Units\MenuScene.cpp" />
+    <ClCompile Include="Modules\Implementation Units\Player.cpp" />
+    <ClCompile Include="Modules\Implementation Units\Scene.cpp" />
+    <ClCompile Include="Modules\Implementation Units\SceneManager.cpp" />
+    <ClCompile Include="Modules\Implementation Units\User.cpp" />
+    <ClCompile Include="Modules\Implementation Units\Vocabulary.cpp" />
+    <ClCompile Include="Modules\Interfaces\ConsoleBuffer.cppm" />
+    <ClCompile Include="Modules\Interfaces\ConsoleManager.cppm" />
+    <ClCompile Include="Modules\Interfaces\FileHandler.cppm" />
+    <ClCompile Include="Modules\Interfaces\GameScene.cppm" />
+    <ClCompile Include="Modules\Interfaces\GUIObject.cppm" />
+    <ClCompile Include="Modules\Interfaces\InputManager.cppm" />
+    <ClCompile Include="Modules\Interfaces\LoginScene.cppm" />
+    <ClCompile Include="Modules\Interfaces\MenuScene.cppm" />
+    <ClCompile Include="Modules\Interfaces\Player.cppm" />
+    <ClCompile Include="Modules\Interfaces\Scene.cppm" />
+    <ClCompile Include="Modules\Interfaces\SceneManager.cppm" />
+    <ClCompile Include="Modules\Interfaces\User.cppm" />
+    <ClCompile Include="Modules\Interfaces\Vocabulary.cppm" />
+    <ClCompile Include="Modules\Standalone\Align.cppm" />
+    <ClCompile Include="Modules\Standalone\ColorType.cppm" />
+    <ClCompile Include="Modules\Standalone\config.cppm" />
+    <ClCompile Include="Modules\Standalone\ControlKeys.cppm" />
+    <ClCompile Include="Modules\Standalone\FileType.cppm" />
+    <ClCompile Include="Modules\Standalone\GameStatus.cppm" />
+    <ClCompile Include="Source Files\Main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
