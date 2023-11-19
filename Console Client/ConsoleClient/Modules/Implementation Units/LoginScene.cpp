@@ -25,7 +25,6 @@ bool LoginScene::Register() const
 void LoginScene::Display() const
 {
 	//Title
-	m_console->ClearScreen();
 	m_console->SetColor(ColorType::Cyan, ColorType::Magenta);
 	m_console->WriteHorizontal("GARTIC", 30, 2);
 
@@ -35,10 +34,8 @@ void LoginScene::Display() const
 
 	m_option == Options::USER ? m_console->SetColor(ColorType::Blue, ColorType::White)
 							  : m_console->SetColor(ColorType::Gray, ColorType::Black);
-
-	std::print("                  ");
-	m_console->SetCursor(23, 5);
-	std::print("{}", m_username);
+	m_console->WriteHorizontal("                  ", 28, 5);
+	m_console->WriteHorizontal(m_username, 28, 5);
 
 	//Password Field
 	m_console->SetColor(ColorType::Black, ColorType::White);
@@ -48,10 +45,8 @@ void LoginScene::Display() const
 		m_console->SetColor(ColorType::Blue, ColorType::White);
 	else
 		m_console->SetColor(ColorType::Gray, ColorType::Black);
-
-	std::print("                  ");
-	m_console->SetCursor(23, 6);
-	std::print("{}", m_password);
+	m_console->WriteHorizontal("                  ", 28, 6);
+	m_console->WriteHorizontal(m_password, 28, 6);
 
 	//Login Button
 	if (m_option == Options::LOGIN)
@@ -75,10 +70,14 @@ void LoginScene::Display() const
 	m_console->WriteHorizontal("to select options And Enter to confirm", 30, 13);
 
 	//Cursor position
+	m_console->SetCursor(false);
 	if (m_option == Options::USER)
-		m_console->SetCursor(23 + m_textpos, 5);
+		m_console->SetCursor(true, 23 + m_textpos, 5);
 	if (m_option == Options::PASSWORD)
-		m_console->SetCursor(23 + m_textpos, 6);
+		m_console->SetCursor(true, 23 + m_textpos, 6);
+
+	//Update console
+	m_console->UpdateConsole();
 }
 
 void LoginScene::Start()
@@ -89,7 +88,7 @@ void LoginScene::Start()
 	m_textpos   = 0;
 	m_nextScene = nullptr;
 	
-	m_console->SetConsoleScale(60, 15);
+	m_console->NewConsole(L"Menu", 60, 15);
 	Display();
 }
 

@@ -12,23 +12,24 @@ public:
 	ConsoleManager();
 
 	// Destructor
-	~ConsoleManager() = default;
+	~ConsoleManager();
 
 	// Setters
-	void NewConsole			(const LPCWSTR title, uint16_t width, uint16_t height);
+	void NewConsole			(const LPCWSTR title, int16_t width, int16_t height);
+	void SetTextColor		(ColorType color);
 	void SetBackgroundColor (ColorType color);
 	void SetColor			(ColorType background, ColorType text);
-	void SetConsoleScale	(uint16_t x, uint16_t y);
-	void SetCursor			(COORD coord);
-	void SetCursor			(uint16_t x, uint16_t y);
-	void SetTextColor		(ColorType color);
+	void SetCursor			(bool visible, COORD coord = { 0,0 });
+	void SetCursor			(bool visible, int16_t x, int16_t y);
 	
 	// Output related
-	void ClearScreen	 ();
-	void WriteHorizontal (const String& sentence, uint16_t x, uint16_t y);
-	void WriteVertical	 (const String& sentence, uint16_t x, uint16_t y);
+	void WriteHorizontal(const String& sentence, int16_t x, int16_t y);
+	void WriteVertical	(const String& sentence, int16_t x, int16_t y);
+	void UpdateConsole	();
 
 private:
-	HANDLE   m_h;
-	uint16_t m_color;
+	ConsoleBuffer* m_buffers;
+	bool m_bufferIndex;
+
+	void ClearBuffer();
 };

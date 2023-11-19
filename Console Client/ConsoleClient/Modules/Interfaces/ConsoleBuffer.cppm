@@ -21,10 +21,13 @@ public:
 	void SetBackgroundColor (ColorType color);
 	void SetColor			(ColorType background, ColorType text);
 	void SetTextColor		(ColorType color);
+	void SetCursor			(bool visible, COORD coord);
 
 	// Output related
-	void Clear();
-	void Write(const String& sentence, int16_t x, int16_t y);
+	void Clear					();
+	void Write					(const String& sentence, int16_t x, int16_t y);
+	void Write					(char c, int16_t x, int16_t y);
+	void WriteBufferToConsole	();
 
 private:
 	COORD	   m_bufferSize;
