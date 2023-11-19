@@ -2,7 +2,8 @@ module Timer;
 
 static Milliseconds ConvertToMilliseconds(uint16_t time, bool isInMinutes)
 {
-	return isInMinutes ? Milliseconds(time * 60000) : Milliseconds(time * 1000);
+	return isInMinutes ? Milliseconds(time * 60000)
+					   : Milliseconds(time * 1000);
 }
 
 static Milliseconds CurrentTimeInMillis(const TimePoint& initialTime)
@@ -11,38 +12,35 @@ static Milliseconds CurrentTimeInMillis(const TimePoint& initialTime)
 	return std::chrono::duration_cast<Milliseconds>(currentTime - initialTime);
 }
 
-Timer::Timer() :
-	m_initialTime(ConvertToMilliseconds(defaultMinutes, true)),
-	m_remainingTime(m_initialTime),
-	m_timerResolution(ConvertToMilliseconds(defaultResolution, true)),
-	m_timeToDecrease(0ms),
-	m_isSuspended(false)
+Timer::Timer():
+	m_initialTime	  { ConvertToMilliseconds(defaultMinutes, true)    },
+	m_remainingTime	  { m_initialTime								   },
+	m_timerResolution { ConvertToMilliseconds(defaultResolution, true) },
+	m_timeToDecrease  { 0ms											   },
+	m_isSuspended	  { false										   }
 {}
 
-Timer::Timer(uint16_t totalMinutes, Milliseconds timerResolution) :
-	m_initialTime(ConvertToMilliseconds(totalMinutes, true)),
-	m_remainingTime(m_initialTime),
-	m_timerResolution(timerResolution),
-	m_timeToDecrease(0ms),
-	m_isSuspended(false)
+Timer::Timer(uint16_t totalMinutes, Milliseconds timerResolution):
+	m_initialTime	  { ConvertToMilliseconds(totalMinutes, true) },
+	m_remainingTime	  { m_initialTime							  },
+	m_timerResolution { timerResolution							  },
+	m_timeToDecrease  { 0ms										  },
+	m_isSuspended	  { false									  }
 {}
 
-Timer::Timer(const Timer& newTimer) :
-	m_initialTime(newTimer.m_initialTime),
-	m_remainingTime(newTimer.m_remainingTime),
-	m_timerResolution(newTimer.m_timerResolution),
-	m_timeToDecrease(0ms),
-	m_isSuspended(newTimer.m_isSuspended)
+Timer::Timer(const Timer& newTimer):
+	m_initialTime	  { newTimer.m_initialTime	   },
+	m_remainingTime	  { newTimer.m_remainingTime   },
+	m_timerResolution { newTimer.m_timerResolution },
+	m_timeToDecrease  { 0ms						   },
+	m_isSuspended	  { newTimer.m_isSuspended	   }
 {}
 
 Timer::~Timer()
 {
 	m_conditionalVariable.notify_one();
 
-	if (m_thread.joinable())
-	{
-		m_thread.join();
-	}
+	if (m_thread.joinable()) m_thread.join();
 }
 
 void Timer::SetInitialTime(uint16_t minutes)
@@ -144,14 +142,15 @@ void Timer::Run()
 		std::unique_lock lock(m_mutex);
 		m_conditionalVariable.wait_for(lock, m_timerResolution, [&] { return !m_isSuspended; });
 
-		auto elapsedTime = CurrentTimeInMillis(initialTime);
-		m_timeToDecrease += elapsedTime;
+		auto elapsedTime	  =  CurrentTimeInMillis(initialTime);
+			 m_timeToDecrease += elapsedTime;
 
 		initialTime = std::chrono::steady_clock::now();
 
 		auto& remainingTime = m_remainingTime;
-
-		remainingTime = elapsedTime < remainingTime ? remainingTime - elapsedTime : 0ms;
+			  remainingTime = elapsedTime < remainingTime 
+							? remainingTime - elapsedTime
+							: 0ms;
 
 		if (IsTimeExpired())
 		{

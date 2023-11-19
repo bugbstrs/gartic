@@ -1,11 +1,12 @@
 ﻿module Logger;
-import <exception>;
-import <vector>;
-import <fstream>;
-import <string>;
-import <format>;
+
 import <chrono>;
+import <exception>;
+import <format>;
+import <fstream>;
 import <print>;
+import <string>;
+import <vector>;
 
 Logger::Logger(const std::vector<TransportOptions>& transportOptions)
 {
@@ -15,10 +16,60 @@ Logger::Logger(const std::vector<TransportOptions>& transportOptions)
 	}
 
 	m_transportOptions = transportOptions;
-	m_transportBuffer = std::vector<std::vector<std::string>>{ transportOptions.size(), {{}} };
+	m_transportBuffer  = std::vector<std::vector<std::string>>{ transportOptions.size(), {{}} };
 }
 
-const std::string Logger::FormatLog(Format logFormat, Level logLevel, const std::string& scope, const std::vector<std::string>& logPath, const std::string& message) const
+Logger::~Logger()
+{
+	Dump(true);
+}
+
+void Logger::Error(const String& scope, const Path& path, const String& message)
+{
+	this->Log(Logger::Level::ERROR, scope, path, message);
+}
+
+void Logger::Fatal(const String& scope, const Path& path, const String& message)
+{
+	this->Log(Logger::Level::FATAL, scope, path, message);
+}
+
+void Logger::Info(const String& scope, const Path& path, const String& message)
+{
+	this->Log(Logger::Level::INFO, scope, path, message);
+}
+
+void Logger::Warn(const String& scope, const Path& path, const String& message)
+{
+	this->Log(Logger::Level::WARN, scope, path, message);
+}
+
+void Logger::ForceDump()
+{
+	Dump(true);
+}
+
+const Logger::String Logger::ConvertLogLevelToEmoji(Level level)
+{
+	if	    (level == Level::INFO)  return "ℹ️";
+	else if (level == Level::WARN)  return "⚠️";
+	else if (level == Level::ERROR) return "🔴";
+	else if (level == Level::FATAL) return "🚨";
+
+	throw std::exception("Invalid level provided in ConvertLogLevelToEmoji function!");
+}
+
+const Logger::String Logger::ConvertLogLevelToString(Level level)
+{
+	if		(level == Level::INFO)  return "INFO";
+	else if (level == Level::WARN)  return "WARN";
+	else if (level == Level::ERROR) return "ERROR";
+	else if (level == Level::FATAL) return "FATAL";
+
+	throw std::exception("Invalid level provided in ConvertLogLevelToString function!");
+}
+
+const Logger::String Logger::FormatLog(Format logFormat, Level logLevel, const std::string& scope, const std::vector<std::string>& logPath, const std::string& message) const
 {
 	std::string logMessage = "";
 	//const auto now = std::chrono::system_clock::now();
@@ -76,28 +127,6 @@ const std::string Logger::FormatLog(Format logFormat, Level logLevel, const std:
 	return logMessage;
 }
 
-void Logger::Log(Level logLevel, const std::string& scope, const std::vector<std::string>& logPath, const std::string& message)
-{
-	for (size_t i = 0; i < m_transportOptions.size(); i++)
-	{
-		int logLevelInt = (int)logLevel;
-		int logLevelMinInt = (int)m_transportOptions[i].minLevel;
-		int logLevelMaxInt = (int)m_transportOptions[i].maxLevel;
-
-		if (logLevelInt >= logLevelMinInt && logLevelMaxInt >= logLevelInt) m_transportBuffer[i].push_back(
-			FormatLog(
-				m_transportOptions[i].logFormat,
-				logLevel,
-				scope,
-				logPath,
-				message
-			)
-		);
-	}
-
-	Dump(false);
-}
-
 void Logger::Dump(bool forced)
 {
 	for (size_t i = 0; i < m_transportBuffer.size(); i++) {
@@ -116,52 +145,24 @@ void Logger::Dump(bool forced)
 	}
 }
 
-void Logger::Info(const std::string& scope, const std::vector<std::string>& path, const std::string& message)
+void Logger::Log(Level logLevel, const std::string& scope, const std::vector<std::string>& logPath, const std::string& message)
 {
-	this->Log(Logger::Level::INFO, scope, path, message);
-}
+	for (size_t i = 0; i < m_transportOptions.size(); i++)
+	{
+		int logLevelInt    = (int) logLevel;
+		int logLevelMinInt = (int) m_transportOptions[i].minLevel;
+		int logLevelMaxInt = (int) m_transportOptions[i].maxLevel;
 
-void Logger::Warn(const std::string& scope, const std::vector<std::string>& path, const std::string& message)
-{
-	this->Log(Logger::Level::WARN, scope, path, message);
-}
+		if (logLevelInt >= logLevelMinInt && logLevelMaxInt >= logLevelInt) m_transportBuffer[i].push_back(
+			FormatLog(
+				m_transportOptions[i].logFormat,
+				logLevel,
+				scope,
+				logPath,
+				message
+			)
+		);
+	}
 
-void Logger::Error(const std::string& scope, const std::vector<std::string>& path, const std::string& message)
-{
-	this->Log(Logger::Level::ERROR, scope, path, message);
-}
-
-void Logger::Fatal(const std::string& scope, const std::vector<std::string>& path, const std::string& message)
-{
-	this->Log(Logger::Level::FATAL, scope, path, message);
-}
-
-void Logger::ForceDump()
-{
-	Dump(true);
-}
-
-Logger::~Logger()
-{
-	Dump(true);
-}
-
-const std::string Logger::ConvertLogLevelToString(Level level)
-{
-	if (level == Level::INFO) return "INFO";
-	else if (level == Level::WARN) return "WARN";
-	else if (level == Level::ERROR) return "ERROR";
-	else if (level == Level::FATAL) return "FATAL";
-
-	throw std::exception("Invalid level provided in ConvertLogLevelToString function!");
-}
-
-const std::string Logger::ConvertLogLevelToEmoji(Level level)
-{
-	if (level == Level::INFO) return "ℹ️";
-	else if (level == Level::WARN) return "⚠️";
-	else if (level == Level::ERROR) return "🔴";
-	else if (level == Level::FATAL) return "🚨";
-
-	throw std::exception("Invalid level provided in ConvertLogLevelToEmoji function!");
+	Dump(false);
 }

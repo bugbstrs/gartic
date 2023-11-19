@@ -8,10 +8,10 @@ export class Player
 {
 public:
 	#pragma region Player
-	Player() noexcept;
+	Player()										noexcept;
+	Player(const Player& otherPlayer)				noexcept;
+	Player(Player&& otherPlayer)				    noexcept;
 	Player(const User& user, uint16_t points = 0);
-	Player(const Player& otherPlayer) noexcept;
-	Player(Player&& otherPlayer) noexcept;
 	
 	~Player() = default;
 	#pragma endregion constructors & destructor
@@ -25,13 +25,12 @@ public:
 	#pragma endregion functionality
 
 	#pragma region Player
-	Player& operator=(const Player& otherPlayer) noexcept;
-	Player& operator=(Player&& otherPlayer) noexcept;
-	bool operator==(const Player& otherPlayer) const noexcept;
+	bool    operator== (const Player& otherPlayer) const noexcept;
+	Player& operator=  (const Player& otherPlayer) noexcept;
+	Player& operator=  (Player&& otherPlayer)	   noexcept;
 	#pragma endregion overloaded operators
 
 private:
 	uint16_t m_points;
-
 	User m_user;
 };

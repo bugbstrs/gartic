@@ -2,8 +2,8 @@ module SceneManager;
 
 void SceneManager::Start()
 {
-	m_console = new ConsoleManager();
-	m_input = new InputManager();
+	m_console     = new ConsoleManager();
+	m_input       = new InputManager();
 	m_activeScene = std::make_unique<LoginScene>(m_console, m_input);
 	Update();
 }

@@ -1,10 +1,10 @@
 export module SceneManager;
 
 #pragma region SceneManager
+import ConsoleManager;
+import InputManager;
 import LoginScene;
 import MenuScene;
-import InputManager;
-import ConsoleManager;
 
 import <memory>;
 #pragma endregion imports
@@ -17,9 +17,9 @@ public:
 	void Start();
 
 private:
-	UniquePtrScene m_activeScene;
 	ConsoleManager* m_console;
 	InputManager* m_input;
+	UniquePtrScene m_activeScene;
 
 	void Update();
 };

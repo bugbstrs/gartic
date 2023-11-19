@@ -1,9 +1,9 @@
 export module FileHandler;
 
-import <vector>;
 import <fstream>;
-import <string>;
 import <random>;
+import <string>;
+import <vector>;
 
 import config;
 import FileType;
@@ -13,6 +13,6 @@ using String = std::string;
 export class FileHandler
 {
 public:
-	void Write(FileType fileType, const String& data);
-	String Read(FileType fileType);
+	String Read  (FileType fileType);
+	void   Write (FileType fileType, const String& data);
 };

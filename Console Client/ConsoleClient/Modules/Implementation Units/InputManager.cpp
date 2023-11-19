@@ -1,8 +1,8 @@
 module InputManager;
 
-import <winuser.rh>;
-import <conio.h>;
 import <cctype>;
+import <conio.h>;
+import <winuser.rh>;
 
 import ControlKeys;
 
@@ -10,12 +10,12 @@ void InputManager::ReadInput()
 {
 	if (IsCursorInConsole())
 	{
-		m_cursorPosition = CursorPositionInConsole();
+		m_cursorPosition    = CursorPositionInConsole();
 		m_rightClickPressed = GetAsyncKeyState(VK_RBUTTON);
 	}
 	else
 	{
-		m_cursorPosition = { -1, -1 };
+		m_cursorPosition    = { -1, -1 };
 		m_rightClickPressed = false;
 	}
 
@@ -31,11 +31,10 @@ void InputManager::ReadInput()
 	
 	if (m_lastKeyPressed == 224 || m_lastKeyPressed == -32) // 224/-32 is right before arrow keys keycode
 	{
-		m_isArrowKey = true;
+		m_isArrowKey     = true;
 		m_lastKeyPressed = _getch();
 	}
 }
-
 
 void InputManager::UpdateString(String& text, int pos, int maxLength)
 {
@@ -56,29 +55,6 @@ void InputManager::UpdateString(String& text, int pos, int maxLength)
 	}
 }
 
-ControlKeys InputManager::ControlKey()
-{
-	switch (m_lastKeyPressed)
-	{
-	case (int)ControlKeys::Enter:
-		return ControlKeys::Enter;
-	case (int)ControlKeys::UpArrow:
-		if (m_isArrowKey)
-			return ControlKeys::UpArrow;
-	case (int)ControlKeys::DownArrow:
-		if (m_isArrowKey)
-			return ControlKeys::DownArrow;
-	case (int)ControlKeys::LeftArrow:
-		if (m_isArrowKey)
-			return ControlKeys::LeftArrow;
-	case (int)ControlKeys::RightArrow:
-		if (m_isArrowKey)
-			return ControlKeys::RightArrow;
-	default:
-		return ControlKeys::NotControl;
-	};
-}
-
 bool InputManager::GetClickPressed()
 {
 	return m_rightClickPressed;
@@ -89,6 +65,29 @@ char InputManager::GetCurrentKeyboardInput()
 	return m_lastKeyPressed;
 }
 
+ControlKeys InputManager::ControlKey()
+{
+	switch (m_lastKeyPressed)
+	{
+	case (int) ControlKeys::Enter:
+		return ControlKeys::Enter;
+	case (int) ControlKeys::UpArrow:
+		if (m_isArrowKey)
+			return ControlKeys::UpArrow;
+	case (int) ControlKeys::DownArrow:
+		if (m_isArrowKey)
+			return ControlKeys::DownArrow;
+	case (int) ControlKeys::LeftArrow:
+		if (m_isArrowKey)
+			return ControlKeys::LeftArrow;
+	case (int) ControlKeys::RightArrow:
+		if (m_isArrowKey)
+			return ControlKeys::RightArrow;
+	default:
+		return ControlKeys::NotControl;
+	};
+}
+
 COORD InputManager::GetCurrentCursorPosition()
 {
 	return m_cursorPosition;
@@ -96,9 +95,9 @@ COORD InputManager::GetCurrentCursorPosition()
 
 bool InputManager::IsCursorInConsole()
 {
-	HWND foregroundWindow = GetForegroundWindow();
-	HWND consoleWindow = GetConsoleWindow();
-	RECT consoleRect;
+	HWND  foregroundWindow = GetForegroundWindow();
+	HWND  consoleWindow    = GetConsoleWindow();
+	RECT  consoleRect;
 	POINT cursorPos;
 
 	GetClientRect(consoleWindow, &consoleRect);
@@ -114,12 +113,13 @@ bool InputManager::IsCursorInConsole()
 
 COORD InputManager::CursorPositionInConsole()
 {
-	HWND consoleWindow = GetConsoleWindow();
+	HWND  consoleWindow = GetConsoleWindow();
 	POINT cursorPos;
 	COORD coord;
 	
 	GetCursorPos(&cursorPos);
 	ScreenToClient(consoleWindow, &cursorPos);
+	
 	coord.X = cursorPos.x / 8;
 	coord.Y = cursorPos.y / 16;
 	

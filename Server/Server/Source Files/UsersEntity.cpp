@@ -1,11 +1,15 @@
-#include "UsersEntity.h"
+#include "../Header Files/UsersEntity.h"
 
 UsersEntity::UsersEntity(int newGamesPlayed, int newPoints, const std::string& newUsername, const std::string& newPassword):
-	gamesPlayed(newGamesPlayed),
-	points(newPoints),
-	username(newUsername),
-	password(newPassword)
+	gamesPlayed { newGamesPlayed },
+	points		{ newPoints		 },
+	username	{ newUsername	 },
+	password	{ newPassword	 }
+{}
+
+void UsersEntity::SetGamesPlayed(int gamesPlayed)
 {
+	this->gamesPlayed = gamesPlayed;
 }
 
 void UsersEntity::SetId(int id)
@@ -13,9 +17,9 @@ void UsersEntity::SetId(int id)
 	this->id = id;
 }
 
-void UsersEntity::SetGamesPlayed(int gamesPlayed)
+void UsersEntity::SetPassword(const std::string& password)
 {
-	this->gamesPlayed = gamesPlayed;
+	this->password = password;
 }
 
 void UsersEntity::SetPoints(int points)
@@ -28,9 +32,9 @@ void UsersEntity::SetUsername(const std::string& username)
 	this->username = username;
 }
 
-void UsersEntity::SetPassword(const std::string& password)
+int UsersEntity::GetGamesPlayed() const
 {
-	this->password = password;
+	return gamesPlayed;
 }
 
 int UsersEntity::GetId() const
@@ -38,19 +42,9 @@ int UsersEntity::GetId() const
 	return id;
 }
 
-int UsersEntity::GetGamesPlayed() const
-{
-	return gamesPlayed;
-}
-
 int UsersEntity::GetPoints() const
 {
 	return points;
-}
-
-std::string UsersEntity::GetUsername() const
-{
-	return username;
 }
 
 std::string UsersEntity::GetPassword() const
@@ -58,3 +52,7 @@ std::string UsersEntity::GetPassword() const
 	return password;
 }
 
+std::string UsersEntity::GetUsername() const
+{
+	return username;
+}

@@ -1,8 +1,8 @@
 module LoginScene;
 
 import <algorithm>;
-import <string>;
 import <print>;
+import <string>;
 
 import InputManager;
 
@@ -10,93 +10,16 @@ LoginScene::LoginScene(ConsoleManager* console, InputManager* inputManager) :
 	Scene{ console, inputManager }
 {}
 
-void LoginScene::Start()
+bool LoginScene::Login() const
 {
-	m_username = "";
-	m_password = "";
-	m_option = Options::USER;
-	m_textpos = 0;
-	m_nextScene = nullptr;
-	m_console->SetConsoleScale(60, 15);
-	Display();
+	//Init User
+	return true;
 }
 
-void LoginScene::Update()
+bool LoginScene::Register() const
 {
-	while (m_nextScene == nullptr)
-	{
-		m_input->ReadInput();
-		if (m_input->GetCurrentKeyboardInput())
-		{
-			switch (m_input->ControlKey())
-			{
-			case ControlKeys::UpArrow:
-				if (m_option == Options::PASSWORD)
-				{
-					m_option = Options::USER;
-					m_textpos = std::min((int)m_username.size(), 17);
-				}
-				if (m_option > Options::PASSWORD)
-				{
-					m_option = Options::PASSWORD;
-					m_textpos = std::min((int)m_password.size(), 17);
-				}
-				break;
-			case ControlKeys::DownArrow:
-				if (m_option == Options::USER)
-					m_textpos = std::min((int)m_password.size(), 17);
-				if (m_option <= Options::PASSWORD)
-					m_option = static_cast<Options>(static_cast<int>(m_option) + 1);
-				break;
-			case ControlKeys::LeftArrow:
-				if (m_option == Options::REGISTER)
-					m_option = Options::LOGIN;
-				if (m_option < Options::LOGIN)
-					m_textpos = std::max(m_textpos - 1, 0);
-				break;
-			case ControlKeys::RightArrow:
-				if (m_option == Options::LOGIN)
-					m_option = Options::REGISTER;
-				if (m_option == Options::USER)
-					m_textpos = std::min(m_textpos + 1, std::min((int)m_username.size(), 17));
-				if (m_option == Options::PASSWORD)
-					m_textpos = std::min(m_textpos + 1, std::min((int)m_password.size(), 17));
-				break;
-			case ControlKeys::Enter:
-				if (m_option == Options::LOGIN && Login())
-					m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
-				if (m_option == Options::REGISTER && Register())
-					m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
-				break;
-			default:
-				break;
-			}
-			if (m_input->ControlKey() == ControlKeys::NotControl)
-			{
-				if (m_option == Options::USER)
-				{
-					int len = m_username.size();
-					m_input->UpdateString(m_username, m_textpos, 18);
-					m_textpos += m_username.size() - len;
-				}
-				if (m_option == Options::PASSWORD)
-				{
-					int len = m_password.size();
-					m_input->UpdateString(m_password, m_textpos, 18);
-					m_textpos += m_password.size() - len;
-				}
-				m_textpos = std::max(m_textpos, 0);
-				m_textpos = std::min(m_textpos, 17);
-			}
-		}
-		if (m_input->GetClickPressed())
-		{
-			//check what object was pressed
-		}
-
-		if (m_input->GetCurrentKeyboardInput() || m_input->GetClickPressed())
-			Display();
-	}
+	//Init User
+	return false;
 }
 
 void LoginScene::Display() const
@@ -158,14 +81,93 @@ void LoginScene::Display() const
 		m_console->SetCursor(23 + m_textpos, 6);
 }
 
-bool LoginScene::Login() const
+void LoginScene::Start()
 {
-	//Init User
-	return true;
+	m_username  = "";
+	m_password  = "";
+	m_option    = Options::USER;
+	m_textpos   = 0;
+	m_nextScene = nullptr;
+	
+	m_console->SetConsoleScale(60, 15);
+	Display();
 }
 
-bool LoginScene::Register() const
+void LoginScene::Update()
 {
-	//Init User
-	return false;
+	while (m_nextScene == nullptr)
+	{
+		m_input->ReadInput();
+		if (m_input->GetCurrentKeyboardInput())
+		{
+			switch (m_input->ControlKey())
+			{
+			case ControlKeys::UpArrow:
+				if (m_option == Options::PASSWORD)
+				{
+					m_option  = Options::USER;
+					m_textpos = std::min((int) m_username.size(), 17);
+				}
+				if (m_option > Options::PASSWORD)
+				{
+					m_option  = Options::PASSWORD;
+					m_textpos = std::min((int) m_password.size(), 17);
+				}
+				break;
+			case ControlKeys::DownArrow:
+				if (m_option == Options::USER)
+					m_textpos = std::min((int) m_password.size(), 17);
+				if (m_option <= Options::PASSWORD)
+					m_option = static_cast<Options>(static_cast<int>(m_option) + 1);
+				break;
+			case ControlKeys::LeftArrow:
+				if (m_option == Options::REGISTER)
+					m_option = Options::LOGIN;
+				if (m_option < Options::LOGIN)
+					m_textpos = std::max(m_textpos - 1, 0);
+				break;
+			case ControlKeys::RightArrow:
+				if (m_option == Options::LOGIN)
+					m_option = Options::REGISTER;
+				if (m_option == Options::USER)
+					m_textpos = std::min(m_textpos + 1, std::min((int) m_username.size(), 17));
+				if (m_option == Options::PASSWORD)
+					m_textpos = std::min(m_textpos + 1, std::min((int) m_password.size(), 17));
+				break;
+			case ControlKeys::Enter:
+				if (m_option == Options::LOGIN && Login())
+					m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
+				if (m_option == Options::REGISTER && Register())
+					m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
+				break;
+			default:
+				break;
+			}
+			if (m_input->ControlKey() == ControlKeys::NotControl)
+			{
+				if (m_option == Options::USER)
+				{
+					int len = m_username.size();
+					m_input->UpdateString(m_username, m_textpos, 18);
+					m_textpos += m_username.size() - len;
+				}
+				if (m_option == Options::PASSWORD)
+				{
+					int len = m_password.size();
+					m_input->UpdateString(m_password, m_textpos, 18);
+					m_textpos += m_password.size() - len;
+				}
+				m_textpos = std::max(m_textpos, 0);
+				m_textpos = std::min(m_textpos, 17);
+			}
+		}
+
+		if (m_input->GetClickPressed())
+		{
+			//check what object was pressed
+		}
+
+		if (m_input->GetCurrentKeyboardInput() || m_input->GetClickPressed())
+			Display();
+	}
 }

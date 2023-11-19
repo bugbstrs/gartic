@@ -9,21 +9,25 @@ export class __declspec(dllexport) Logger
 {
 public:
 	#pragma region Logger
-	using TransportOptions = TransportOptions;
-	using Format = LogFormat;
-	using Level = LogLevel;
+	using Format               = LogFormat;
+	using Level                = LogLevel;
+	using Path                 = std::vector<std::string>;
+	using String               = std::string;
+	using TransportOptions     = TransportOptions;
+	using TransportBuffer      = std::vector<std::vector<std::string>>;
+	using TransportOptionsVect = std::vector<TransportOptions>;
 	#pragma endregion using statements for TransportOptions, LogFormat & LogLevel
 
 	#pragma region Logger
-	Logger(const std::vector<TransportOptions>& transportOptions);
+	Logger(const TransportOptionsVect& transportOptions);
 	~Logger();
 	#pragma endregion constructors and destructor
 
 	#pragma region Logger
-	void Info(const std::string& scope, const std::vector<std::string>& path, const std::string& message);
-	void Warn(const std::string& scope, const std::vector<std::string>& path, const std::string& message);
-	void Error(const std::string& scope, const std::vector<std::string>& path, const std::string& message);
-	void Fatal(const std::string& scope, const std::vector<std::string>& path, const std::string& message);
+	void Error (const String& scope, const Path& path, const String& message);
+	void Fatal (const String& scope, const Path& path, const String& message);
+	void Info  (const String& scope, const Path& path, const String& message);
+	void Warn  (const String& scope, const Path& path, const String& message);
 	#pragma endregion logging functions for the 4 levels: info/warn/error/fatal
 	
 	#pragma region Logger
@@ -31,18 +35,18 @@ public:
 	#pragma endregion other functions
 
 	#pragma region Logger
-	static const std::string ConvertLogLevelToString(Level level);
 	static const std::string ConvertLogLevelToEmoji(Level level);
+	static const std::string ConvertLogLevelToString(Level level);
 	#pragma endregion static members (converting log levels to emoji/string)
 private:
 	#pragma region Logger
-	std::vector<std::vector<std::string>> m_transportBuffer;
-	std::vector<TransportOptions> m_transportOptions;
+	TransportBuffer	     m_transportBuffer;
+	TransportOptionsVect m_transportOptions;
 	#pragma endregion private variables
 
 	#pragma region Logger
-	const std::string FormatLog(Format logFormat, Level logLevel, const std::string& scope, const std::vector<std::string>& logPath, const std::string& message) const;
-	void Log(Level logLevel, const std::string& scope, const std::vector<std::string>& logPath, const std::string& message);
-	void Dump(bool forced = false);
+	const String FormatLog(Format logFormat, Level logLevel, const String& scope, const Path& logPath, const String& message) const;
+	void		 Dump(bool forced = false);
+	void		 Log(Level logLevel, const String& scope, const Path& logPath, const String& message);
 	#pragma endregion private functions for formatting a log message, logging and dumping logs
 };

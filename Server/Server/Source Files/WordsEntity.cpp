@@ -1,18 +1,17 @@
-#include "WordsEntity.h"
+#include "../Header Files/WordsEntity.h"
 
 WordsEntity::WordsEntity(const std::string& newName):
-    name(newName)
+    name{ newName }
+{}
+
+void WordsEntity::SetId(int newId)
 {
+    this->id = newId;
 }
 
 void WordsEntity::SetName(const std::string& newName)
 {
     this->name = newName;
-}
-
-void WordsEntity::SetId(int newId)
-{
-    this->id = newId;
 }
 
 int WordsEntity::GetId() const

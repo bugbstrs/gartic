@@ -17,9 +17,6 @@ public:
 	~LoginScene() = default;
 
 private:
-	String m_username;
-	String m_password;
-
 	enum class Options
 	{
 		USER,
@@ -27,12 +24,15 @@ private:
 		LOGIN,
 		REGISTER
 	};
-	Options m_option;
-	int m_textpos;
 
-	void Start() override;
-	void Update() override;
-	void Display() const override;
-	bool Login() const;
+	int		m_textpos;
+	Options m_option;
+	String  m_password;
+	String  m_username;
+
+	bool Login()    const;
 	bool Register() const;
+	void Display()  const override;
+	void Start()	override;
+	void Update()   override;
 };

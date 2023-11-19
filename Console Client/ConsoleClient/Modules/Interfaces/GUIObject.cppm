@@ -22,9 +22,9 @@ public:
 	virtual void Draw() = 0;
 
 protected:
-	COORD m_upLeftCorner;
-	uint16_t m_width;
-	Align m_align;
+	Align	  m_align;
 	ColorType m_backgroundColor;
 	ColorType m_textColor;
+	COORD	  m_upLeftCorner;
+	uint16_t  m_width;
 };

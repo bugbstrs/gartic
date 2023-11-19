@@ -9,22 +9,22 @@ public:
 
 	~UsersEntity() = default;
 
-	void SetId(int id);
-	void SetGamesPlayed(int gamesPlayed);
-	void SetPoints(int points);
-	void SetUsername(const std::string& username);
-	void SetPassword(const std::string& password);
+	void SetGamesPlayed (int gamesPlayed);
+	void SetId			(int id);
+	void SetPassword	(const std::string& password);
+	void SetPoints		(int points);
+	void SetUsername	(const std::string& username);
 	
-	int GetId() const;
-	int GetGamesPlayed() const;
-	int GetPoints() const;
-	std::string GetUsername() const;
-	std::string GetPassword() const;
+	int			GetGamesPlayed() const;
+	int			GetId()			 const;
+	int			GetPoints()		 const;
+	std::string GetPassword()	 const;
+	std::string GetUsername()	 const;
 	
 private:
-	int id;
-	int gamesPlayed;
-	int points;
-	std::string username;
+	int			gamesPlayed;
+	int			id;
+	int			points;
 	std::string password;
+	std::string username;
 };

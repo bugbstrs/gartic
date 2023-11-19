@@ -6,10 +6,10 @@
 #include <tuple>
 #include <random>
 
+using File             = std::ifstream;
+using UserVector       = std::vector<UsersEntity>;
 using WordEntityVector = std::vector<WordsEntity>;
-using File = std::ifstream;
-using WordVector = std::vector<std::string>;
-using UserVector = std::vector<UsersEntity>;
+using WordVector       = std::vector<std::string>;
 
 class DatabaseManager
 {
@@ -17,18 +17,14 @@ public:
 	DatabaseManager() = delete;
 	DatabaseManager(Storage& storage);
 
-	void PopulateWordsEntity();
-	void PopulateUsersEntity();
-
-	WordVector FetchAllWords();
+	bool	   CheckCredentials(const String& givenUsername, const String& givenPassword) const;
+	bool	   CheckUsernameAlreadyExists(const String& givenUsername)					  const;
+	String	   FetchWord();
 	UserVector FetchAllUsers();
-
-	bool CheckCredentials(const String& givenUsername, const String& givenPassword) const;
-	bool CheckUsernameAlreadyExists(const String& givenUsername) const;
-
-	void CreateUser(const String& givenUsername, const String& givenPassword) const;
-
-	String FetchWord();
+	void	   CreateUser(const String& givenUsername, const String& givenPassword)		  const;
+	void	   PopulateUsersEntity();
+	void	   PopulateWordsEntity();
+	WordVector FetchAllWords();
 
 private:
 	Storage& m_db;
@@ -36,6 +32,5 @@ private:
 	int GenerateRandomId() const;
 };
 
-std::ostream& operator<<(std::ostream& out, const WordVector& words);
-
 std::ostream& operator<<(std::ostream& out, const UserVector& users);
+std::ostream& operator<<(std::ostream& out, const WordVector& words);

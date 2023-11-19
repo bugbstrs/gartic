@@ -1,8 +1,8 @@
 module Vocabulary;
 
 import <array>;
-import <tuple>;
 import <string>;
+import <tuple>;
 import <vector>;
 
 import FileHandler;
@@ -14,7 +14,7 @@ StringTuple Vocabulary::FetchWords()
 	StringArray words;
 	FileHandler fileHandler;
 	
-	for (size_t i = 0; i < 3; i++)
+	for (size_t i = 0; i < 3; ++i)
 	{
 		String word = fileHandler.Read(FileType::Dictionary);
 		

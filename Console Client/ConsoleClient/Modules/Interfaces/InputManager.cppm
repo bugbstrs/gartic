@@ -1,7 +1,7 @@
 export module InputManager;
 
-import <Windows.h>;
 import <string>;
+import <Windows.h>;
 
 export import ControlKeys;
 
@@ -21,20 +21,17 @@ public:
 	void UpdateString(String& text, int pos = -1, int maxLenght = -1);
 
 	// Getters
+	bool		GetClickPressed();
+	char		GetCurrentKeyboardInput();
 	ControlKeys ControlKey();
-	bool GetClickPressed();
-	char GetCurrentKeyboardInput();
-	COORD GetCurrentCursorPosition();
+	COORD		GetCurrentCursorPosition();
 
 private:
-	char m_lastKeyPressed;
-
 	bool m_isArrowKey;
 	bool m_rightClickPressed;
-	
-	COORD m_cursorPosition;
+	char m_lastKeyPressed;
 
-	bool IsCursorInConsole();
-	
+	bool  IsCursorInConsole();
 	COORD CursorPositionInConsole();
+	COORD m_cursorPosition;
 };
