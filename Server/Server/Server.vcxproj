@@ -35,6 +35,11 @@
     <ClCompile Include="Source Files\UsersEntity.cpp" />
     <ClCompile Include="Source Files\WordsEntity.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DLL\Timer\Timer.vcxproj">
+      <Project>{f0b495a8-fdba-4ec7-9d33-9ca6bc783f55}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
