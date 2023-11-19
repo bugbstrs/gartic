@@ -8,14 +8,14 @@ import ConsoleManager;
 export class Scene
 {
 public:
-	// Constructors
+#pragma region Scene
 	Scene(ConsoleManager* console, InputManager* inputManager);
-
-	// Destructor
-    virtual ~Scene() = default;
+	
+	virtual ~Scene() = default;
+#pragma endregion constructors & destructor
 
 	// Activate
-    std::type_info* SetActive();
+	std::type_info* SetActive();
 
 protected:
 	std::type_info* m_nextScene;

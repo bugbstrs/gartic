@@ -1,11 +1,13 @@
 export module SceneManager;
 
+#pragma region SceneManager
 import LoginScene;
 import MenuScene;
 import InputManager;
 import ConsoleManager;
 
 import <memory>;
+#pragma endregion imports
 
 using UniquePtrScene = std::unique_ptr<Scene>;
 
