@@ -12,23 +12,26 @@ export class ConsoleBuffer
 {
 public:
 	// Constructors
-	ConsoleBuffer(uint16_t width, uint16_t height);
+	ConsoleBuffer(int16_t width, int16_t height);
 
 	// Destructor
 	~ConsoleBuffer();
 
-	void Clear();
-	void Write(const String& sentence, uint16_t x, uint16_t y);
-	void SetConsoleScale(uint16_t x, uint16_t y);
+	// Setters
 	void SetColor(ColorType background, ColorType text);
 	void SetTextColor(ColorType color);
 	void SetBackgroundColor(ColorType color);
+
+	// Output related
+	void Clear();
+	void Write(const String& sentence, int16_t x, int16_t y);
+
 private:
 	HANDLE m_buffer;
 	uint16_t m_color;
-	uint16_t m_width;
-	uint16_t m_height;
+	int16_t m_width;
+	int16_t m_height;
 	COORD m_bufferSize;
 	SMALL_RECT m_writeRect;
-	PCHAR_INFO m_infoBuffer;
+	PCHAR_INFO m_charInfoBuffer;
 };
