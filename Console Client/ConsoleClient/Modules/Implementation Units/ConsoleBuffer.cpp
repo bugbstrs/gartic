@@ -9,7 +9,7 @@ ConsoleBuffer::ConsoleBuffer(int16_t width, int16_t height) :
 	m_width{ width },
 	m_height{ height }
 {
-	m_buffer = CreateConsoleScreenBuffer(GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
+	m_buffer = CreateFile(L"CONOUT$", GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0);
 
 	SetConsoleScreenBufferSize(m_buffer, m_bufferSize);
 	SetConsoleWindowInfo(m_buffer, TRUE, &m_writeRect);
@@ -20,6 +20,7 @@ ConsoleBuffer::ConsoleBuffer(int16_t width, int16_t height) :
 ConsoleBuffer::~ConsoleBuffer()
 {
 	delete[] m_charInfoBuffer;
+	CloseHandle(m_buffer);
 }
 
 void ConsoleBuffer::SetBackgroundColor(ColorType color)
