@@ -29,7 +29,7 @@ public:
     void SetCurrentWord (const String& newCurrentWord);
     void SetGameStatus  (GameStatus newGameStatus);
     void SetPainter     (const Player& newPlayer);
-    void SetPlayer      (const PlayersVector& newPlayersVector);
+    void SetPlayers     (const PlayersVector& newPlayersVector);
     void SetRoundNumber (uint16_t newRoundNumber);
     #pragma endregion setters
 
