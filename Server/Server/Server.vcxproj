@@ -27,8 +27,10 @@
     <ClInclude Include="Header Files\DatabaseManager.h" />
     <ClInclude Include="Header Files\UsersEntity.h" />
     <ClInclude Include="Header Files\WordsEntity.h" />
+    <ClInclude Include="HttpUtils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="HttpUtils.cpp" />
     <ClCompile Include="Source Files\Database.cpp" />
     <ClCompile Include="Source Files\DatabaseManager.cpp" />
     <ClCompile Include="Source Files\Source.cpp" />

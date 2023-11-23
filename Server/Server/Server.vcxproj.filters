@@ -47,6 +47,9 @@
     <ClInclude Include="Header Files\WordsEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HttpUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\Database.cpp">
@@ -62,6 +65,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\WordsEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HttpUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
