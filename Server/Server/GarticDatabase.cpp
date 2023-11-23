@@ -1,28 +1,27 @@
-#include "../Header Files/DatabaseManager.h"
+#include "GarticDatabase.h"
 
 #include "print"
 
-struct User {
-	int			id = 0;
-	std::string name;
-};
+#include <random>
 
-DatabaseManager::DatabaseManager(Storage& storage):
-	m_db(storage)
+using namespace http;
+
+GarticStorage::GarticStorage(Storage& storage) :
+	m_db{ storage }
 {
 }
 
-bool DatabaseManager::CheckCredentials(const String& givenUsername, const String& givenPassword) const
+bool GarticStorage::CheckCredentials(const String& givenUsername, const String& givenPassword) const
 {
-	auto result1 = m_db.select(sqlite_orm::columns(&UsersEntity::GetId, &UsersEntity::GetUsername),
+	auto result1 = m_db.select(sql::columns(&UsersEntity::GetId, &UsersEntity::GetUsername),
 		sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetUsername, givenUsername)));
 
-	auto result2 = m_db.select(sqlite_orm::columns(&UsersEntity::GetId, &UsersEntity::GetUsername), sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetPassword, givenPassword)));
+	auto result2 = m_db.select(sql::columns(&UsersEntity::GetId, &UsersEntity::GetUsername), sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetPassword, givenPassword)));
 
 	return !result1.empty() && !result2.empty();
 }
 
-bool DatabaseManager::CheckUsernameAlreadyExists(const String& givenUsername) const
+bool GarticStorage::CheckUsernameAlreadyExists(const String& givenUsername) const
 {
 	auto result = m_db.select(sqlite_orm::columns(&UsersEntity::GetId, &UsersEntity::GetUsername),
 		sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetUsername, givenUsername)));
@@ -30,7 +29,7 @@ bool DatabaseManager::CheckUsernameAlreadyExists(const String& givenUsername) co
 	return !result.empty();
 }
 
-String DatabaseManager::FetchWord()
+String GarticStorage::FetchWord()
 {
 	int randomId = GenerateRandomId();
 
@@ -43,7 +42,7 @@ String DatabaseManager::FetchWord()
 	}
 }
 
-UserVector DatabaseManager::FetchAllUsers()
+UserVector GarticStorage::FetchAllUsers()
 {
 	UserVector allUsers;
 
@@ -56,17 +55,17 @@ UserVector DatabaseManager::FetchAllUsers()
 	return allUsers;
 }
 
-void DatabaseManager::CreateUser(const String& givenUsername, const String& givenPassword) const
+void GarticStorage::CreateUser(const String& givenUsername, const String& givenPassword) const
 {
 	if (CheckUsernameAlreadyExists(givenUsername))
 	{
 		return;		// possible exception to throw here
 	}
 
-	m_db.insert(UsersEntity{0, 0, givenUsername, givenPassword});
+	m_db.insert(UsersEntity{ 0, 0, givenUsername, givenPassword });
 }
 
-void DatabaseManager::PopulateUsersEntity()
+void GarticStorage::PopulateUsersEntity()
 {
 
 	int						 points;
@@ -91,7 +90,7 @@ void DatabaseManager::PopulateUsersEntity()
 	filename.close();
 }
 
-void DatabaseManager::PopulateWordsEntity()
+void GarticStorage::PopulateWordsEntity()
 {
 	std::ifstream filename;
 	std::string   word;
@@ -112,7 +111,7 @@ void DatabaseManager::PopulateWordsEntity()
 	filename.close();
 }
 
-WordVector DatabaseManager::FetchAllWords()
+WordVector GarticStorage::FetchAllWords()
 {
 	WordVector allWords;
 
@@ -125,7 +124,7 @@ WordVector DatabaseManager::FetchAllWords()
 	return allWords;
 }
 
-int DatabaseManager::GenerateRandomId() const
+int GarticStorage::GenerateRandomId() const
 {
 	std::random_device				   rd;
 	std::default_random_engine		   engine(rd());
@@ -135,20 +134,33 @@ int DatabaseManager::GenerateRandomId() const
 	return distribution(engine);
 }
 
-std::ostream& operator<<(std::ostream& out, const UserVector& users)
+// Gartic Handler class
+
+http::GarticHandler::GarticHandler(GarticStorage& storage):m_db{ storage }
+{
+}
+
+crow::response http::GarticHandler::operator()(const crow::request& req) const
+{
+	return crow::response();
+}
+
+// External operators
+
+std::ostream& http::operator<<(std::ostream& out, const UserVector& users)
 {
 	std::print(out, "Users: ");
 
 	for (const auto& user : users)
 	{
 		std::print(
-		   out,
-		   "id: {} username: {} password: {} points: {} games played: {} \n",
-		   user.GetId(),
-		   user.GetUsername(),
-		   user.GetPassword(),
-		   user.GetPoints(),
-		   user.GetGamesPlayed()
+			out,
+			"id: {} username: {} password: {} points: {} games played: {} \n",
+			user.GetId(),
+			user.GetUsername(),
+			user.GetPassword(),
+			user.GetPoints(),
+			user.GetGamesPlayed()
 		);
 	}
 
@@ -156,7 +168,7 @@ std::ostream& operator<<(std::ostream& out, const UserVector& users)
 	return out;
 }
 
-std::ostream& operator<<(std::ostream& out, const WordVector& words)
+std::ostream& http::operator<<(std::ostream& out, const WordVector& words)
 {
 	std::print(out, "Words: ");
 

@@ -1,5 +1,7 @@
 #include "../Header Files/UsersEntity.h"
 
+using namespace http;
+
 UsersEntity::UsersEntity(int newGamesPlayed, int newPoints, const std::string& newUsername, const std::string& newPassword):
 	gamesPlayed { newGamesPlayed },
 	points		{ newPoints		 },

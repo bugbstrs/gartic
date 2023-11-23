@@ -2,9 +2,9 @@
 
 using namespace http;
 
-StringVector http::Split(const String& str, const String& delim)
+std::vector<String> http::Split(const String& str, const String& delim)
 {
-    StringVector result;
+    std::vector<String> result;
     size_t startIndex = 0;
 
     for (size_t found = str.find(delim); found != String::npos; found = str.find(delim, startIndex))

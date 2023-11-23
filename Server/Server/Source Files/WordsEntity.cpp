@@ -1,5 +1,7 @@
 #include "../Header Files/WordsEntity.h"
 
+using namespace http;
+
 WordsEntity::WordsEntity(const std::string& newName):
     name{ newName }
 {}
