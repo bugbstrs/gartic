@@ -22,7 +22,6 @@ void DrawingBoard::mousePressEvent(QMouseEvent* event) {
     }
 }
 
-
 void DrawingBoard::mouseReleaseEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton && drawing) {
         drawing = false;

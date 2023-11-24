@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    isUserLoggedIn = false;
 }
 
 MainWindow::~MainWindow() = default;
@@ -30,5 +31,10 @@ void MainWindow::on_redColorButton_released()
 void MainWindow::on_leaveGameButton_released()
 {
     ui->stackedWidget->setCurrentIndex(0);
+}
+
+void MainWindow::on_statsButton_released()
+{
+    ui->stackedWidget->setCurrentIndex(2);
 }
 

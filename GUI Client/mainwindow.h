@@ -23,7 +23,11 @@ private slots:
 
     //Drawing scene buttons
     void on_leaveGameButton_released();
+
+    //Stats scene
+    void on_statsButton_released();
 private:
     std::unique_ptr<Ui::MainWindow> ui = std::make_unique<Ui::MainWindow>();
+    bool isUserLoggedIn;
 };
 #endif // MAINWINDOW_H
