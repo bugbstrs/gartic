@@ -78,7 +78,7 @@ namespace http
 		const std::string kDbFile{ "products.sqlite" };
 		const std::string kWordsFile{ "words.txt" };
 		const std::string kUsersFile{ "users.txt" };
-		const std::string kBannedWordsFile{ "banned words.txt" };
+		const std::string kBannedWordsFile{ "banned.txt" };
 		const std::string kQuotesFile{ "quotes.txt" };
 
 		Storage m_db = CreateStorage(kDbFile);
