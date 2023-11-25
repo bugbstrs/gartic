@@ -20,6 +20,8 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        MatchHistoryTable.cpp
+        MatchHistoryTable.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

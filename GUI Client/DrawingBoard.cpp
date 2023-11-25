@@ -44,7 +44,6 @@ void DrawingBoard::changePenColor(QColor color)
 
 void DrawingBoard::paintEvent(QPaintEvent* event) {
     if (firstPaint) {
-        
         setAutoFillBackground(true);
         firstPaint = false;
     }

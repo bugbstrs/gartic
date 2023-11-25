@@ -38,3 +38,8 @@ void MainWindow::on_statsButton_released()
     ui->stackedWidget->setCurrentIndex(2);
 }
 
+void MainWindow::on_backToMenuButton_released()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
