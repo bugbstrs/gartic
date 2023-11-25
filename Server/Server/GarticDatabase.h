@@ -65,7 +65,7 @@ namespace http
 		UserVector FetchAllUsers();
 		WordVector FetchAllWords();
 
-		void	   CreateUser(int gamesPlayed, int points, const String& givenUsername, const String& givenPassword);
+		void	   CreateUser(const String& givenUsername, const String& givenPassword);
 		void	   PopulateUsersEntity();
 		void	   PopulateWordsEntity();
 		void	   PopulateBannedWordsEntity();
