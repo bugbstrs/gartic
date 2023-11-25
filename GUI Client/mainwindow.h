@@ -26,6 +26,7 @@ private slots:
 
     //Stats scene
     void on_statsButton_released();
+    void on_backToMenuButton_released();
 private:
     std::unique_ptr<Ui::MainWindow> ui = std::make_unique<Ui::MainWindow>();
     bool isUserLoggedIn;
