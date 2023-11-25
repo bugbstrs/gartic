@@ -51,5 +51,33 @@ void http::RouteManager::Run(GarticStorage& storage)
 		return crow::json::wvalue{ users_json };
 	});
 
+    CROW_ROUTE(m_app, "/login")([&storage](const crow::request& request) {
+        char* password = request.url_params.get("password");
+        char* username = request.url_params.get("username");
+
+        crow::response response;
+        response.set_header("Content-Type", "application/json");
+        
+        if (password == nullptr || username == nullptr)
+        {
+            // todo: log
+            response.code = 400;
+            response.body = crow::json::wvalue({
+                {"found", false}
+            }).dump();
+
+            return response;
+        }
+
+        bool foundCredentials = storage.CheckCredentials(String(username), String(password));
+        
+        response.code = foundCredentials ? 200 : 401;
+        response.body = crow::json::wvalue({
+            {"found", foundCredentials ? true : false}
+        }).dump();
+
+        return response;
+    });
+
 	m_app.port(18080).multithreaded().run();
 }
