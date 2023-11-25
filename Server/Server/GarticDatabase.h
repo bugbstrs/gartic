@@ -65,16 +65,6 @@ namespace http
 		Storage m_db = CreateStorage(kDbFile);
 	};
 
-	class GarticHandler {
-	public:
-		GarticHandler(GarticStorage& storage);
-
-		crow::response operator() (const crow::request& req) const;
-
-	private:
-		GarticStorage& m_db;
-	};
-
 	std::ostream& operator<<(std::ostream& out, const UserVector& users);
 	std::ostream& operator<<(std::ostream& out, const WordVector& words);
 }

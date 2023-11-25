@@ -143,17 +143,6 @@ int GarticStorage::GenerateRandomId()
 	return distribution(engine);
 }
 
-// Gartic Handler class
-
-http::GarticHandler::GarticHandler(GarticStorage& storage):m_db{ storage }
-{
-}
-
-crow::response http::GarticHandler::operator()(const crow::request& req) const
-{
-	return crow::response();
-}
-
 // External operators
 
 std::ostream& http::operator<<(std::ostream& out, const UserVector& users)

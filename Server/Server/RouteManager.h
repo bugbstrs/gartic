@@ -6,7 +6,7 @@ namespace http
 	class RouteManager
 	{
 	public:
-		void Run();
+		void Run(GarticStorage& storage);
 
 	private:
 		crow::SimpleApp m_app;
