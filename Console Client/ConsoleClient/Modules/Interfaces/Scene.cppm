@@ -26,7 +26,7 @@ protected:
     std::type_info* m_nextScene;
 
     std::vector<SelectableObject*> m_selectableObjects;
-    std::vector<GUIObject*> m_objects;
+    std::vector<GUIObject*>        m_objects;
 
     virtual void Display () const = 0;
     virtual void Start   ()       = 0;

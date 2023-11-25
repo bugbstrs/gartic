@@ -21,6 +21,6 @@ private:
     Options m_option;
 
     void Display() const override;
-    void Start()   override;
-    void Update()  override;
+    void Start  ()       override;
+    void Update ()       override;
 };

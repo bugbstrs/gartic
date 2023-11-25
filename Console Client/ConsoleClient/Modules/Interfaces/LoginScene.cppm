@@ -33,6 +33,6 @@ private:
     bool Login()    const;
     bool Register() const;
     void Display()  const override;
-    void Start()    override;
-    void Update()   override;
+    void Start()          override;
+    void Update()         override;
 };
