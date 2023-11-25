@@ -138,5 +138,17 @@
     <ClCompile Include="Label.cpp">
       <Filter>Modules\Implementation Units</Filter>
     </ClCompile>
+    <ClCompile Include="InputField.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="InputField.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="HorizontalLayout.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="HorizontalLayout.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
