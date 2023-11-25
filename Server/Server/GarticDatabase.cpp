@@ -43,12 +43,12 @@ bool http::GarticStorage::Initialize()
 
 bool GarticStorage::CheckCredentials(const String& givenUsername, const String& givenPassword) 
 {
-	auto result1 = m_db.select(sql::columns(&UsersEntity::GetId, &UsersEntity::GetUsername),
-		sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetUsername, givenUsername)));
+    auto users = m_db.get_all<UsersEntity>(
+        sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetUsername, givenUsername)),
+        sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetPassword, givenPassword))
+    );
 
-	auto result2 = m_db.select(sql::columns(&UsersEntity::GetId, &UsersEntity::GetUsername), sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetPassword, givenPassword)));
-
-	return !result1.empty() && !result2.empty();
+    return !users.empty();
 }
 
 bool GarticStorage::CheckUsernameAlreadyExists(const String& givenUsername)
@@ -98,14 +98,14 @@ WordVector GarticStorage::FetchAllWords()
 	return allWords;
 }
 
-void GarticStorage::CreateUser(int gamesPlayed, int points, const String& givenUsername, const String& givenPassword)
+void GarticStorage::CreateUser(const String& givenUsername, const String& givenPassword)
 {
 	if (CheckUsernameAlreadyExists(givenUsername))
 	{
 		return;		// possible exception to throw here
 	}
 
-	m_db.insert(UsersEntity{ gamesPlayed, points, givenUsername, givenPassword });
+	m_db.insert(UsersEntity{ 0, 0, givenUsername, givenPassword });
 }
 
 void GarticStorage::PopulateUsersEntity()
