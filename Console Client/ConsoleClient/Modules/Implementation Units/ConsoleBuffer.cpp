@@ -70,7 +70,22 @@ void ConsoleBuffer::Write(const String& sentence, int16_t x, int16_t y)
 	}
 }
 
-void ConsoleBuffer::Write(char c, int16_t x, int16_t y)
+void ConsoleBuffer::Write(const WString& sentence, int16_t x, int16_t y)
+{
+	for (int16_t i{ 0 }; i < sentence.size(); ++i)
+	{
+		m_charInfoBuffer[(x + i) + y * m_width].Attributes = m_color;
+		m_charInfoBuffer[(x + i) + y * m_width].Char.UnicodeChar = sentence[i];
+	}
+}
+
+void ConsoleBuffer::Write(const char c, int16_t x, int16_t y)
+{
+	m_charInfoBuffer[x + y * m_width].Attributes = m_color;
+	m_charInfoBuffer[x + y * m_width].Char.UnicodeChar = c;
+}
+
+void ConsoleBuffer::Write(const wchar_t c, int16_t x, int16_t y)
 {
 	m_charInfoBuffer[x + y * m_width].Attributes = m_color;
 	m_charInfoBuffer[x + y * m_width].Char.UnicodeChar = c;

@@ -7,6 +7,7 @@ export import <Windows.h>;
 import ColorType;
 
 using String = std::string;
+using WString = std::wstring;
 
 export class ConsoleBuffer
 {
@@ -18,16 +19,18 @@ public:
 	~ConsoleBuffer();
 
 	// Setters
-	void SetBackgroundColor(ColorType color);
-	void SetColor(ColorType background, ColorType text);
-	void SetTextColor(ColorType color);
-	void SetCursor(bool visible, COORD coord);
+	void SetBackgroundColor (ColorType color);
+	void SetColor			(ColorType background, ColorType text);
+	void SetTextColor		(ColorType color);
+	void SetCursor			(bool visible, COORD coord);
 
 	// Output related
-	void Clear();
-	void Write(const String& sentence, int16_t x, int16_t y);
-	void Write(char c, int16_t x, int16_t y);
-	void WriteBufferToConsole();
+	void Clear				  ();
+	void Write				  (const String& sentence, int16_t x, int16_t y);
+	void Write				  (const WString& sentence, int16_t x, int16_t y);
+	void Write				  (const char c, int16_t x, int16_t y);
+	void Write				  (const wchar_t c, int16_t x, int16_t y);
+	void WriteBufferToConsole ();
 
 private:
 	COORD	   m_bufferSize;

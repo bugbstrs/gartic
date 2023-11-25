@@ -64,13 +64,29 @@ void ConsoleManager::WriteHorizontal(const String& sentence, int16_t x, int16_t 
 	m_buffers[m_bufferIndex].Write(sentence, x, y);
 }
 
+void ConsoleManager::WriteHorizontal(const WString& sentence, int16_t x, int16_t y)
+{
+	m_buffers[m_bufferIndex].Write(sentence, x, y);
+}
+
 void ConsoleManager::WriteVertical(const String& sentence, int16_t x, int16_t y)
 {
 	for (size_t index{ 0 }; index < sentence.size(); ++index)
 		m_buffers[m_bufferIndex].Write(sentence[index], x, y + index);
 }
 
+void ConsoleManager::WriteVertical(const WString& sentence, int16_t x, int16_t y)
+{
+	for (size_t index{ 0 }; index < sentence.size(); ++index)
+		m_buffers[m_bufferIndex].Write(sentence[index], x, y + index);
+}
+
 void ConsoleManager::Write(const char c, int16_t x, int16_t y)
+{
+	m_buffers[m_bufferIndex].Write(c, x, y);
+}
+
+void ConsoleManager::Write(const wchar_t c, int16_t x, int16_t y)
 {
 	m_buffers[m_bufferIndex].Write(c, x, y);
 }
