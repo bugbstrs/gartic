@@ -45,7 +45,6 @@ void InputManager::UpdateString(String& text, int pos, int maxLength)
     if (m_lastKeyPressed == '\b' && pos > 0) // backspace
     {
         text.erase(pos - 1, 1);
-        //text.erase(pos == text.size() ? pos - 1 : pos, 1);
     }
 
     if (m_lastKeyPressed >= 32 && m_lastKeyPressed <= 126)

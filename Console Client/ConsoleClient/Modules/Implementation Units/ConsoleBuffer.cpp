@@ -51,9 +51,9 @@ void ConsoleBuffer::SetCursor(bool visible, COORD coord)
 
 void ConsoleBuffer::Clear()
 {
-	for (int16_t x = 0; x < m_width; ++x)
+	for (int16_t x{ 0 }; x < m_width; ++x)
 	{
-		for (int16_t y = 0; y < m_height; ++y)
+		for (int16_t y{ 0 }; y < m_height; ++y)
 		{
 			m_charInfoBuffer[x + y * m_width].Attributes = (int)ColorType::Black;
 			m_charInfoBuffer[x + y * m_width].Char.AsciiChar = ' ';
@@ -63,7 +63,7 @@ void ConsoleBuffer::Clear()
 
 void ConsoleBuffer::Write(const String& sentence, int16_t x, int16_t y)
 {
-	for (int16_t i = 0; i < sentence.size(); ++i)
+	for (int16_t i{ 0 }; i < sentence.size(); ++i)
 	{
 		m_charInfoBuffer[(x + i) + y * m_width].Attributes = m_color;
 		m_charInfoBuffer[(x + i) + y * m_width].Char.UnicodeChar = sentence[i];

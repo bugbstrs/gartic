@@ -25,6 +25,7 @@ public:
 	// Output related
 	void WriteHorizontal(const String& sentence, int16_t x, int16_t y);
 	void WriteVertical(const String& sentence, int16_t x, int16_t y);
+	void Write(const char c, int16_t x, int16_t y);
 	void UpdateConsole();
 
 private:

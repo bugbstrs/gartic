@@ -2,6 +2,7 @@ export module GUIObject;
 
 export import <Windows.h>;
 
+export import ConsoleManager;
 export import ColorType;
 export import Align;
 
@@ -11,14 +12,14 @@ export class GUIObject
 {
 public:
     // Constructors
-    GUIObject(COORD upLeftCorner, Align align, ColorType backgroundColor, ColorType textColor, int16_t max_width);
-    GUIObject(int16_t x, int16_t y, Align align, ColorType backgroundColor, ColorType textColor, int16_t max_width);
+    GUIObject(COORD upLeftCorner, Align align, ColorType backgroundColor, ColorType textColor, int16_t maxWidth);
+    GUIObject(int16_t x, int16_t y, Align align, ColorType backgroundColor, ColorType textColor, int16_t maxWidth);
     
     // Destructor
     virtual ~GUIObject() = default;
     
     // Method to override
-    virtual void Draw() = 0;
+    virtual void Draw(ConsoleManager* cm) = 0;
 
 protected:
     Align     m_align;

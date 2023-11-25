@@ -12,9 +12,9 @@ export class SelectableObject : public GUIObject
 public:
     // Constructors
     SelectableObject(COORD upLeftCorner, Align align, ColorType backgroundColor, ColorType textColor,
-                     int16_t max_width, ColorType selectedBackgroundColor, ColorType selectedTextColor);
+                     int16_t maxWidth, ColorType selectedBackgroundColor, ColorType selectedTextColor);
     SelectableObject(int16_t x, int16_t y, Align align, ColorType backgroundColor, ColorType textColor,
-                     int16_t max_width, ColorType selectedBackgroundColor, ColorType selectedTextColor);
+                     int16_t maxWidth, ColorType selectedBackgroundColor, ColorType selectedTextColor);
 
     // Destructor
     virtual ~SelectableObject() = default;

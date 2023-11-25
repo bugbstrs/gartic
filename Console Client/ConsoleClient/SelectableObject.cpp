@@ -1,15 +1,15 @@
 module SelectableObject;
 
 SelectableObject::SelectableObject(COORD upLeftCorner, Align align, ColorType backgroundColor, ColorType textColor,
-                                   int16_t max_width, ColorType selectedBackgroundColor, ColorType selectedTextColor):
-    GUIObject                 { upLeftCorner, align, backgroundColor, textColor, max_width },
+                                   int16_t maxWidth, ColorType selectedBackgroundColor, ColorType selectedTextColor):
+    GUIObject                 { upLeftCorner, align, backgroundColor, textColor, maxWidth },
 	m_selectedBackgroundColor { selectedBackgroundColor                                    },
 	m_selectedTextColor		  { selectedTextColor		                                   }
 {}
 
 SelectableObject::SelectableObject(int16_t x, int16_t y, Align align, ColorType backgroundColor, ColorType textColor,
-                                   int16_t max_width, ColorType selectedBackgroundColor, ColorType selectedTextColor):
-    GUIObject                 { x, y, align, backgroundColor, textColor, max_width },
+                                   int16_t maxWidth, ColorType selectedBackgroundColor, ColorType selectedTextColor):
+    GUIObject                 { x, y, align, backgroundColor, textColor, maxWidth },
     m_selectedBackgroundColor { selectedBackgroundColor                            },
     m_selectedTextColor       { selectedTextColor                                  }
 {}

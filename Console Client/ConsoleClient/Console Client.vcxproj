@@ -157,6 +157,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Label.cpp" />
+    <ClCompile Include="Label.cppm" />
     <ClCompile Include="Modules\Implementation Units\ConsoleBuffer.cpp" />
     <ClCompile Include="Modules\Implementation Units\ConsoleManager.cpp" />
     <ClCompile Include="Modules\Implementation Units\FileHandler.cpp" />
