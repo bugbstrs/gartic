@@ -8,18 +8,47 @@ void http::RouteManager::Run(GarticStorage& storage)
 	});
 
 	CROW_ROUTE(m_app, "/fetchword")([&storage]() {
-		std::vector<crow::json::wvalue> words_json;
+		std::vector<crow::json::wvalue> word_json;
 
 		std::string fetchedWord = storage.FetchWord();
 
-		words_json.push_back(crow::json::wvalue{ {"word", fetchedWord} });
+		word_json.push_back(crow::json::wvalue{ {"word", fetchedWord} });
 
-		return crow::json::wvalue{ words_json };
+		return crow::json::wvalue{ word_json };
 		});
 
 	auto& createUserPut = CROW_ROUTE(m_app, "/createuser")
 		.methods(crow::HTTPMethod::PUT);
 	createUserPut(CreateUserHandler(storage));
+
+	CROW_ROUTE(m_app, "/fetchallwords")([&storage]() {
+		std::vector<crow::json::wvalue> words_json;
+
+		WordVector allWords = storage.FetchAllWords();
+
+		for (const auto& word : allWords)
+		{
+			words_json.push_back( crow::json::wvalue{ {"word", word}});
+		}
+
+		return crow::json::wvalue{ words_json };
+		});
+
+	CROW_ROUTE(m_app, "/fetchallusers")([&storage]() {
+		std::vector<crow::json::wvalue> users_json;
+
+		UserVector allUsers = storage.FetchAllUsers();
+
+		for (const auto& user : allUsers)
+		{
+			users_json.push_back(crow::json::wvalue{ 
+				{"username", user.GetUsername()}, 
+				{"points", user.GetPoints()},
+				{"games played", user.GetGamesPlayed()}});
+		}
+
+		return crow::json::wvalue{ users_json };
+		});
 
 	m_app.port(18080).multithreaded().run();
 }

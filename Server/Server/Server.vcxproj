@@ -23,7 +23,7 @@
     <Text Include="Database Files\words.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FetchWordHandler.h" />
+    <ClInclude Include="CreateUserHandler.h" />
     <ClInclude Include="GarticDatabase.h" />
     <ClInclude Include="Header Files\UsersEntity.h" />
     <ClInclude Include="Header Files\WordsEntity.h" />
@@ -31,7 +31,7 @@
     <ClInclude Include="RouteManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FetchWordHandler.cpp" />
+    <ClCompile Include="CreateUserHandler.cpp" />
     <ClCompile Include="GarticDatabase.cpp" />
     <ClCompile Include="HttpUtils.cpp" />
     <ClCompile Include="RouteManager.cpp" />

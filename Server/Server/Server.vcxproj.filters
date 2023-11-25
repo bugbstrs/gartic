@@ -50,7 +50,7 @@
     <ClInclude Include="RouteManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FetchWordHandler.h">
+    <ClInclude Include="CreateUserHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -73,7 +73,7 @@
     <ClCompile Include="RouteManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FetchWordHandler.cpp">
+    <ClCompile Include="CreateUserHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
