@@ -43,12 +43,12 @@ bool http::GarticStorage::Initialize()
 
 bool GarticStorage::CheckCredentials(const String& givenUsername, const String& givenPassword) 
 {
-	auto result1 = m_db.select(sql::columns(&UsersEntity::GetId, &UsersEntity::GetUsername),
-		sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetUsername, givenUsername)));
+    auto users = m_db.get_all<UsersEntity>(
+        sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetUsername, givenUsername)),
+        sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetPassword, givenPassword))
+    );
 
-	auto result2 = m_db.select(sql::columns(&UsersEntity::GetId, &UsersEntity::GetUsername), sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetPassword, givenPassword)));
-
-	return !result1.empty() && !result2.empty();
+    return !users.empty();
 }
 
 bool GarticStorage::CheckUsernameAlreadyExists(const String& givenUsername)
