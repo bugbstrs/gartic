@@ -1,20 +1,16 @@
 module Label;
 
 Label::Label(COORD upLeftCorner, Align align, ColorType backgroundColor, ColorType textColor,
-			 int16_t maxWidth, String text) :
-	GUIObject { upLeftCorner, align, backgroundColor, textColor, maxWidth },
-	m_text	  { text													  }
-{
-	m_height = m_text.size() / m_width;
-}
+			 int16_t maxWidth, int16_t maxHeight, String text) :
+	GUIObject { upLeftCorner, align, backgroundColor, textColor, maxWidth, maxHeight },
+	m_text	  { text																 }
+{}
 
 Label::Label(int16_t x, int16_t y, Align align, ColorType backgroundColor, ColorType textColor,
-			 int16_t maxWidth, String text) :
-	GUIObject { x, y, align, backgroundColor, textColor, maxWidth },
-	m_text	  { text											  }
-{
-	m_height = m_text.size() / m_width;
-}
+			 int16_t maxWidth, int16_t maxHeight, String text) :
+	GUIObject { x, y, align, backgroundColor, textColor, maxWidth, maxHeight },
+	m_text	  { text														 }
+{}
 
 void Label::Draw(ConsoleManager* cm)
 {
