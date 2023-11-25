@@ -1,17 +1,23 @@
 module SelectableObject;
 
-SelectableObject::SelectableObject(COORD upLeftCorner, Align align, ColorType backgroundColor, ColorType textColor,
-                                   int16_t maxWidth, ColorType selectedBackgroundColor, ColorType selectedTextColor):
-    GUIObject                 { upLeftCorner, align, backgroundColor, textColor, maxWidth },
-	m_selectedBackgroundColor { selectedBackgroundColor                                    },
-	m_selectedTextColor		  { selectedTextColor		                                   }
+SelectableObject::SelectableObject(COORD upLeftCorner, Align align, ColorType backgroundColor,
+                                   ColorType textColor, int16_t maxWidth, int16_t maxHeight,
+                                   ColorType selectedBackgroundColor,
+                                   ColorType selectedTextColor, SelectableObject*& selected) :
+    GUIObject                 { upLeftCorner, align, backgroundColor, textColor, maxWidth, maxHeight },
+	m_selectedBackgroundColor { selectedBackgroundColor                                              },
+	m_selectedTextColor		  { selectedTextColor		                                             },
+    m_selectedObject          { selected                                                             }
 {}
 
-SelectableObject::SelectableObject(int16_t x, int16_t y, Align align, ColorType backgroundColor, ColorType textColor,
-                                   int16_t maxWidth, ColorType selectedBackgroundColor, ColorType selectedTextColor):
-    GUIObject                 { x, y, align, backgroundColor, textColor, maxWidth },
-    m_selectedBackgroundColor { selectedBackgroundColor                            },
-    m_selectedTextColor       { selectedTextColor                                  }
+SelectableObject::SelectableObject(int16_t x, int16_t y, Align align, ColorType backgroundColor,
+                                   ColorType textColor, int16_t maxWidth, int16_t maxHeight,
+                                   ColorType selectedBackgroundColor,
+                                   ColorType selectedTextColor, SelectableObject*& selected) :
+    GUIObject                 { x, y, align, backgroundColor, textColor, maxWidth, maxHeight },
+    m_selectedBackgroundColor { selectedBackgroundColor                                      },
+    m_selectedTextColor       { selectedTextColor                                            },
+    m_selectedObject          { selected                                                     }
 {}
 
 bool SelectableObject::IsPointInside(COORD point)
