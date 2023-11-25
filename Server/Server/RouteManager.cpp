@@ -15,7 +15,7 @@ void http::RouteManager::Run(GarticStorage& storage)
 		word_json.push_back(crow::json::wvalue{ {"word", fetchedWord} });
 
 		return crow::json::wvalue{ word_json };
-		});
+	});
 
 	auto& createUserPut = CROW_ROUTE(m_app, "/createuser")
 		.methods(crow::HTTPMethod::PUT);
@@ -32,7 +32,7 @@ void http::RouteManager::Run(GarticStorage& storage)
 		}
 
 		return crow::json::wvalue{ words_json };
-		});
+	});
 
 	CROW_ROUTE(m_app, "/fetchallusers")([&storage]() {
 		std::vector<crow::json::wvalue> users_json;
@@ -42,13 +42,14 @@ void http::RouteManager::Run(GarticStorage& storage)
 		for (const auto& user : allUsers)
 		{
 			users_json.push_back(crow::json::wvalue{ 
-				{"username", user.GetUsername()}, 
-				{"points", user.GetPoints()},
-				{"games played", user.GetGamesPlayed()}});
+				{ "username",     user.GetUsername()    }, 
+				{ "points",       user.GetPoints()      },
+				{ "games played", user.GetGamesPlayed() }
+            });
 		}
 
 		return crow::json::wvalue{ users_json };
-		});
+	});
 
 	m_app.port(18080).multithreaded().run();
 }
