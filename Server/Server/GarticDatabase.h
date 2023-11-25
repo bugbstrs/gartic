@@ -45,25 +45,24 @@ namespace http
 	class GarticStorage
 	{
 	public:
-		GarticStorage() = delete;
-		GarticStorage(Storage& storage);
+		bool Initialize();
 
-		bool	   CheckCredentials(const String& givenUsername, const String& givenPassword) const;
-		bool	   CheckUsernameAlreadyExists(const String& givenUsername)					  const;
+		bool	   CheckCredentials(const String& givenUsername, const String& givenPassword);
+		bool	   CheckUsernameAlreadyExists(const String& givenUsername);
 		String	   FetchWord();
 		UserVector FetchAllUsers();
-		void	   CreateUser(const String& givenUsername, const String& givenPassword)		  const;
+		void	   CreateUser(const String& givenUsername, const String& givenPassword);
 		void	   PopulateUsersEntity();
 		void	   PopulateWordsEntity();
 		WordVector FetchAllWords();
 
 	private:
-		int GenerateRandomId() const;
+		int GenerateRandomId();
 
 	private:
 		const std::string kDbFile{ "products.sqlite" };
 
-		Storage& m_db;
+		Storage m_db = CreateStorage(kDbFile);
 	};
 
 	class GarticHandler {

@@ -6,12 +6,21 @@
 
 using namespace http;
 
-GarticStorage::GarticStorage(Storage& storage) :
-	m_db{ storage }
+bool http::GarticStorage::Initialize()
 {
+	m_db.sync_schema();
+	auto initWordsCount = m_db.count<WordsEntity>();
+	if (!initWordsCount)
+	{
+		PopulateWordsEntity();
+	}
+
+	auto wordsCount = m_db.count<WordsEntity>();
+
+	return wordsCount != 0;
 }
 
-bool GarticStorage::CheckCredentials(const String& givenUsername, const String& givenPassword) const
+bool GarticStorage::CheckCredentials(const String& givenUsername, const String& givenPassword) 
 {
 	auto result1 = m_db.select(sql::columns(&UsersEntity::GetId, &UsersEntity::GetUsername),
 		sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetUsername, givenUsername)));
@@ -21,7 +30,7 @@ bool GarticStorage::CheckCredentials(const String& givenUsername, const String& 
 	return !result1.empty() && !result2.empty();
 }
 
-bool GarticStorage::CheckUsernameAlreadyExists(const String& givenUsername) const
+bool GarticStorage::CheckUsernameAlreadyExists(const String& givenUsername)
 {
 	auto result = m_db.select(sqlite_orm::columns(&UsersEntity::GetId, &UsersEntity::GetUsername),
 		sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetUsername, givenUsername)));
@@ -55,7 +64,7 @@ UserVector GarticStorage::FetchAllUsers()
 	return allUsers;
 }
 
-void GarticStorage::CreateUser(const String& givenUsername, const String& givenPassword) const
+void GarticStorage::CreateUser(const String& givenUsername, const String& givenPassword)
 {
 	if (CheckUsernameAlreadyExists(givenUsername))
 	{
@@ -124,7 +133,7 @@ WordVector GarticStorage::FetchAllWords()
 	return allWords;
 }
 
-int GarticStorage::GenerateRandomId() const
+int GarticStorage::GenerateRandomId()
 {
 	std::random_device				   rd;
 	std::default_random_engine		   engine(rd());

@@ -3,6 +3,10 @@
 #include <memory>
 #include <crow.h>
 
+#include "Server/RouteManager.h"
+
+using namespace http;
+
 int main()
 {
 	//const std::string db_file = "Database Files\\gartic.sqlite";
@@ -26,4 +30,10 @@ int main()
 	//std::cout << manager.FetchWord();
 
 	//return 0;
+
+	RouteManager manager;
+
+	manager.Run();
+
+	return 0;
 }
