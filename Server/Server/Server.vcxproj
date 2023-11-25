@@ -29,6 +29,7 @@
     <ClInclude Include="Header Files\UsersEntity.h" />
     <ClInclude Include="Header Files\WordsEntity.h" />
     <ClInclude Include="HttpUtils.h" />
+    <ClInclude Include="QuotesEntity.h" />
     <ClInclude Include="RouteManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -36,6 +37,7 @@
     <ClCompile Include="CreateUserHandler.cpp" />
     <ClCompile Include="GarticDatabase.cpp" />
     <ClCompile Include="HttpUtils.cpp" />
+    <ClCompile Include="QuotesEntity.cpp" />
     <ClCompile Include="RouteManager.cpp" />
     <ClCompile Include="Source Files\Source.cpp" />
     <ClCompile Include="Source Files\UsersEntity.cpp" />

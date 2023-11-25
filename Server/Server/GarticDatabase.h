@@ -46,8 +46,8 @@ namespace http
 			),
 			sql::make_table(
 				"QuotesEntity",
-				sql::make_column("id", &BannedWordsEntity::SetId, &BannedWordsEntity::GetId, sql::primary_key().autoincrement()),
-				sql::make_column("name", &BannedWordsEntity::SetName, &BannedWordsEntity::GetName)
+				sql::make_column("id", &QuotesEntity::SetId, &QuotesEntity::GetId, sql::primary_key().autoincrement()),
+				sql::make_column("name", &QuotesEntity::SetName, &QuotesEntity::GetName)
 			)
 		);
 	}
