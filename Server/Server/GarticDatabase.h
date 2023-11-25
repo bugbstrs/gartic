@@ -11,6 +11,7 @@ namespace sql = sqlite_orm;
 #include "Header Files/UsersEntity.h"
 #include "Header Files/WordsEntity.h"
 #include "BannedWordsEntity.h"
+#include "QuotesEntity.h"
 #include "HttpUtils.h"
 
 using String = std::string;
@@ -42,6 +43,11 @@ namespace http
 				"BannedWordsEntity",
 				sql::make_column("id", &BannedWordsEntity::SetId, &BannedWordsEntity::GetId, sql::primary_key().autoincrement()),
 				sql::make_column("name", &BannedWordsEntity::SetName, &BannedWordsEntity::GetName)
+			),
+			sql::make_table(
+				"QuotesEntity",
+				sql::make_column("id", &BannedWordsEntity::SetId, &BannedWordsEntity::GetId, sql::primary_key().autoincrement()),
+				sql::make_column("name", &BannedWordsEntity::SetName, &BannedWordsEntity::GetName)
 			)
 		);
 	}
@@ -63,6 +69,7 @@ namespace http
 		void	   PopulateUsersEntity();
 		void	   PopulateWordsEntity();
 		void	   PopulateBannedWordsEntity();
+		void	   PopulateQuotesEntity();
 
 	private:
 		int GenerateRandomId();
@@ -72,6 +79,7 @@ namespace http
 		const std::string kWordsFile{ "words.txt" };
 		const std::string kUsersFile{ "users.txt" };
 		const std::string kBannedWordsFile{ "banned words.txt" };
+		const std::string kQuotesFile{ "quotes.txt" };
 
 		Storage m_db = CreateStorage(kDbFile);
 	};

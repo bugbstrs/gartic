@@ -30,8 +30,15 @@ bool http::GarticStorage::Initialize()
 	}
 	auto bannedWordsCount = m_db.count<BannedWordsEntity>();
 
+	auto initQuotesCount = m_db.count<QuotesEntity>();
+	if (!initQuotesCount)
+	{
+		PopulateQuotesEntity();
+	}
+	auto quotesCount = m_db.count<QuotesEntity>();
 
-	return wordsCount != 0 && usersCount != 0 && bannedWordsCount != 0;
+
+	return wordsCount != 0 && usersCount != 0 && bannedWordsCount != 0 && quotesCount != 0;
 }
 
 bool GarticStorage::CheckCredentials(const String& givenUsername, const String& givenPassword) 
@@ -147,6 +154,27 @@ void GarticStorage::PopulateWordsEntity()
 }
 
 void http::GarticStorage::PopulateBannedWordsEntity()
+{
+	std::ifstream filename;
+	std::string	  quote;
+	WordVector    quotes;
+
+	filename.open(kQuotesFile);
+
+	while (filename >> quote)
+	{
+		quotes.push_back(quote);
+	}
+
+	for (const auto& quote : quotes)
+	{
+		m_db.insert(QuotesEntity{ quote });
+	}
+
+	filename.close();
+}
+
+void http::GarticStorage::PopulateQuotesEntity()
 {
 	std::ifstream filename;
 	std::string bannedWord;
