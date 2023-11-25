@@ -157,6 +157,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="HorizontalLayout.cpp" />
+    <ClCompile Include="HorizontalLayout.cppm" />
+    <ClCompile Include="InputField.cpp" />
+    <ClCompile Include="InputField.cppm" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="Label.cppm" />
     <ClCompile Include="Modules\Implementation Units\ConsoleBuffer.cpp" />
