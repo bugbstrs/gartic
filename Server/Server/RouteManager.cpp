@@ -1,4 +1,5 @@
 #include "RouteManager.h"
+#include "CreateUserHandler.h"
 
 void http::RouteManager::Run(GarticStorage& storage)
 {
@@ -6,7 +7,7 @@ void http::RouteManager::Run(GarticStorage& storage)
 		return "This is an example app of crow and sql-orm";
 	});
 
-	CROW_ROUTE(m_app, "/FetchWord")([&storage]() {
+	CROW_ROUTE(m_app, "/fetchword")([&storage]() {
 		std::vector<crow::json::wvalue> words_json;
 
 		std::string fetchedWord = storage.FetchWord();
@@ -15,6 +16,10 @@ void http::RouteManager::Run(GarticStorage& storage)
 
 		return crow::json::wvalue{ words_json };
 		});
+
+	auto& createUserPut = CROW_ROUTE(m_app, "/createuser")
+		.methods(crow::HTTPMethod::PUT);
+	createUserPut(CreateUserHandler(storage));
 
 	m_app.port(18080).multithreaded().run();
 }

@@ -64,14 +64,14 @@ UserVector GarticStorage::FetchAllUsers()
 	return allUsers;
 }
 
-void GarticStorage::CreateUser(const String& givenUsername, const String& givenPassword)
+void GarticStorage::CreateUser(int gamesPlayed, int points, const String& givenUsername, const String& givenPassword)
 {
 	if (CheckUsernameAlreadyExists(givenUsername))
 	{
 		return;		// possible exception to throw here
 	}
 
-	m_db.insert(UsersEntity{ 0, 0, givenUsername, givenPassword });
+	m_db.insert(UsersEntity{ gamesPlayed, points, givenUsername, givenPassword });
 }
 
 void GarticStorage::PopulateUsersEntity()

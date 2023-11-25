@@ -51,7 +51,7 @@ namespace http
 		bool	   CheckUsernameAlreadyExists(const String& givenUsername);
 		String	   FetchWord();
 		UserVector FetchAllUsers();
-		void	   CreateUser(const String& givenUsername, const String& givenPassword);
+		void	   CreateUser(int gamesPlayed, int points, const String& givenUsername, const String& givenPassword);
 		void	   PopulateUsersEntity();
 		void	   PopulateWordsEntity();
 		WordVector FetchAllWords();
