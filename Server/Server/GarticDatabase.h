@@ -10,6 +10,7 @@ namespace sql = sqlite_orm;
 
 #include "Header Files/UsersEntity.h"
 #include "Header Files/WordsEntity.h"
+#include "BannedWordsEntity.h"
 #include "HttpUtils.h"
 
 using String = std::string;
@@ -36,6 +37,11 @@ namespace http
 				"WordsEntity",
 				sql::make_column("id", &WordsEntity::SetId, &WordsEntity::GetId, sql::primary_key().autoincrement()),
 				sql::make_column("name", &WordsEntity::SetName, &WordsEntity::GetName)
+			),
+			sql::make_table(
+				"BannedWordsEntity",
+				sql::make_column("id", &BannedWordsEntity::SetId, &BannedWordsEntity::GetId, sql::primary_key().autoincrement()),
+				sql::make_column("name", &BannedWordsEntity::SetName, &BannedWordsEntity::GetName)
 			)
 		);
 	}
@@ -51,16 +57,21 @@ namespace http
 		bool	   CheckUsernameAlreadyExists(const String& givenUsername);
 		String	   FetchWord();
 		UserVector FetchAllUsers();
+		WordVector FetchAllWords();
+
 		void	   CreateUser(int gamesPlayed, int points, const String& givenUsername, const String& givenPassword);
 		void	   PopulateUsersEntity();
 		void	   PopulateWordsEntity();
-		WordVector FetchAllWords();
+		void	   PopulateBannedWordsEntity();
 
 	private:
 		int GenerateRandomId();
 
 	private:
 		const std::string kDbFile{ "products.sqlite" };
+		const std::string kWordsFile{ "words.txt" };
+		const std::string kUsersFile{ "users.txt" };
+		const std::string kBannedWordsFile{ "banned words.txt" };
 
 		Storage m_db = CreateStorage(kDbFile);
 	};

@@ -23,6 +23,7 @@
     <Text Include="Database Files\words.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BannedWordsEntity.h" />
     <ClInclude Include="CreateUserHandler.h" />
     <ClInclude Include="GarticDatabase.h" />
     <ClInclude Include="Header Files\UsersEntity.h" />
@@ -31,6 +32,7 @@
     <ClInclude Include="RouteManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BannedWordsEntity.cpp" />
     <ClCompile Include="CreateUserHandler.cpp" />
     <ClCompile Include="GarticDatabase.cpp" />
     <ClCompile Include="HttpUtils.cpp" />

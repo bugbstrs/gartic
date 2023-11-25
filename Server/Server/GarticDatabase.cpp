@@ -14,10 +14,24 @@ bool http::GarticStorage::Initialize()
 	{
 		PopulateWordsEntity();
 	}
-
 	auto wordsCount = m_db.count<WordsEntity>();
 
-	return wordsCount != 0;
+	auto initUsersCount = m_db.count<UsersEntity>();
+	if (!initUsersCount)
+	{
+		PopulateUsersEntity();
+	}
+	auto usersCount = m_db.count<UsersEntity>();
+
+	auto initBannedWordsCount = m_db.count<BannedWordsEntity>();
+	if (!initBannedWordsCount)
+	{
+		PopulateBannedWordsEntity();
+	}
+	auto bannedWordsCount = m_db.count<BannedWordsEntity>();
+
+
+	return wordsCount != 0 && usersCount != 0 && bannedWordsCount != 0;
 }
 
 bool GarticStorage::CheckCredentials(const String& givenUsername, const String& givenPassword) 
@@ -64,6 +78,19 @@ UserVector GarticStorage::FetchAllUsers()
 	return allUsers;
 }
 
+WordVector GarticStorage::FetchAllWords()
+{
+	WordVector allWords;
+
+	auto words = m_db.get_all<WordsEntity>();
+	for (const auto& word : words)
+	{
+		allWords.push_back(word.GetName());
+	}
+
+	return allWords;
+}
+
 void GarticStorage::CreateUser(int gamesPlayed, int points, const String& givenUsername, const String& givenPassword)
 {
 	if (CheckUsernameAlreadyExists(givenUsername))
@@ -76,7 +103,6 @@ void GarticStorage::CreateUser(int gamesPlayed, int points, const String& givenU
 
 void GarticStorage::PopulateUsersEntity()
 {
-
 	int						 points;
 	int						 gamesPlayed;
 	std::ifstream			 filename;
@@ -84,7 +110,7 @@ void GarticStorage::PopulateUsersEntity()
 	std::string				 username;
 	std::vector<UsersEntity> users;
 
-	filename.open("users.txt");
+	filename.open(kUsersFile);
 
 	while (filename >> gamesPlayed >> points >> username >> password)
 	{
@@ -105,7 +131,7 @@ void GarticStorage::PopulateWordsEntity()
 	std::string   word;
 	WordVector    words;
 
-	filename.open("words.txt");
+	filename.open(kWordsFile);
 
 	while (filename >> word)
 	{
@@ -120,18 +146,27 @@ void GarticStorage::PopulateWordsEntity()
 	filename.close();
 }
 
-WordVector GarticStorage::FetchAllWords()
+void http::GarticStorage::PopulateBannedWordsEntity()
 {
-	WordVector allWords;
+	std::ifstream filename;
+	std::string bannedWord;
+	WordVector bannedWords;
 
-	auto words = m_db.get_all<WordsEntity>();
-	for (const auto& word : words)
+	filename.open(kBannedWordsFile);
+
+	while (filename >> bannedWord)
 	{
-		allWords.push_back(word.GetName());
+		bannedWords.push_back(bannedWord);
 	}
 
-	return allWords;
+	for (const auto& bannedWord : bannedWords)
+	{
+		m_db.insert(BannedWordsEntity{ bannedWord });
+	}
+
+	filename.close();
 }
+
 
 int GarticStorage::GenerateRandomId()
 {
