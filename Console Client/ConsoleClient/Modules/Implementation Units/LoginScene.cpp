@@ -88,7 +88,7 @@ void LoginScene::Start()
 	m_textpos = 0;
 	m_nextScene = nullptr;
 
-	m_console->NewConsole(L"Menu", 60, 15);
+	m_console->NewConsole(L"Login", 60, 15);
 	Display();
 }
 
@@ -146,13 +146,13 @@ void LoginScene::Update()
 			{
 				if (m_option == Options::USER)
 				{
-					int len = m_username.size();
+					size_t len{ m_username.size() };
 					m_input->UpdateString(m_username, m_textpos, 18);
 					m_textpos += m_username.size() - len;
 				}
 				if (m_option == Options::PASSWORD)
 				{
-					int len = m_password.size();
+					size_t len{ m_password.size() };
 					m_input->UpdateString(m_password, m_textpos, 18);
 					m_textpos += m_password.size() - len;
 				}

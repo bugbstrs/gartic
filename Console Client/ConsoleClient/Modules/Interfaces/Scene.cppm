@@ -1,9 +1,12 @@
 export module Scene;
 
+export import <vector>;
 import <typeindex>;
 
-import ConsoleManager;
-import InputManager;
+export import SelectableObject;
+export import ConsoleManager;
+export import InputManager;
+export import GUIObject;
 
 export class Scene
 {
@@ -11,7 +14,7 @@ public:
     #pragma region Scene
     Scene(ConsoleManager* console, InputManager* inputManager);
     
-    virtual ~Scene() = default;
+    virtual ~Scene();
     #pragma endregion constructors & destructor
 
     #pragma region Scene
@@ -21,6 +24,9 @@ protected:
     ConsoleManager* m_console;
     InputManager*   m_input;
     std::type_info* m_nextScene;
+
+    std::vector<SelectableObject*> m_selectableObjects;
+    std::vector<GUIObject*> m_objects;
 
     virtual void Display () const = 0;
     virtual void Start   ()       = 0;

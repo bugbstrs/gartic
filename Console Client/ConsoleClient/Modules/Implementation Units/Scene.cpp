@@ -5,6 +5,12 @@ Scene::Scene(ConsoleManager* console, InputManager* inputManager) :
     m_input   { inputManager }
 {}
 
+Scene::~Scene()
+{
+    for(auto object : m_objects)
+        delete object;
+}
+
 std::type_info* Scene::SetActive()
 {
     Start();
