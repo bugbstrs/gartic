@@ -56,16 +56,21 @@ bool GarticStorage::CheckCredentials(const String& givenUsername, const String& 
 
 bool GarticStorage::CheckUsernameAlreadyExists(const String& givenUsername)
 {
-	auto result = m_db.select(sqlite_orm::columns(&UsersEntity::GetId, &UsersEntity::GetUsername),
-		sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetUsername, givenUsername)));
+	auto result = m_db.get_all<UsersEntity>(
+		where(
+			c(&UsersEntity::GetUsername) == givenUsername
+		)
+	);
 
 	return !result.empty();
 }
 
 bool http::GarticStorage::CheckBannedWord(const String& givenWord)
 {
-	auto result = m_db.select(sqlite_orm::columns(&BannedWordsEntity::GetId, &BannedWordsEntity::GetName),
-		sqlite_orm::where(sqlite_orm::is_equal(&BannedWordsEntity::GetName, givenWord))
+	auto result = m_db.get_all<BannedWordsEntity>(
+		where(
+			c(&BannedWordsEntity::GetName) == givenWord
+		)
 	);
 
 	return !result.empty();
@@ -78,7 +83,7 @@ String GarticStorage::FetchWord()
 	auto result = m_db.select(sqlite_orm::columns(&WordsEntity::GetName),
 		where(
 			c(&WordsEntity::GetId) == randomId
-			)
+		)
 	);
 
 	if (!result.empty())
@@ -118,6 +123,19 @@ UserVector GarticStorage::FetchAllUsers()
 	}
 
 	return allUsers;
+}
+
+UserVector http::GarticStorage::FetchTop5Users()
+{
+	UserVector allUsers = FetchAllUsers();
+
+	std::sort(allUsers.begin(), allUsers.end(), [](const UsersEntity& user1, const UsersEntity& user2) {
+		return user1.GetPoints() < user2.GetPoints();
+	});
+
+	int numTopUsers = std::min(5, static_cast<int>(allUsers.size()));
+
+	return UserVector(allUsers.begin(), allUsers.begin() + numTopUsers);
 }
 
 WordVector GarticStorage::FetchAllWords()

@@ -65,7 +65,10 @@ namespace http
 
 		String	   FetchWord();
 		String	   FetchQuote();
+
 		UserVector FetchAllUsers();
+		UserVector FetchTop5Users();
+		
 		WordVector FetchAllWords();
 
 		void	   CreateUser(const String& givenUsername, const String& givenPassword);

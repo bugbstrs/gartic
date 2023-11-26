@@ -75,6 +75,26 @@ void http::RouteManager::CreateFetchAllUsersRoute(GarticStorage& storage)
     });
 }
 
+void http::RouteManager::CreateFetchTop5UsersRoute(GarticStorage& storage)
+{
+    CROW_ROUTE(m_app, "/fetchtopusers")([&storage]() {
+        std::vector<crow::json::wvalue> top_users_json;
+
+        UserVector topUsers = storage.FetchTop5Users();
+
+        for (const auto& user : topUsers)
+        {
+            top_users_json.push_back(crow::json::wvalue{
+                { "username",     user.GetUsername()    },
+                { "points",       user.GetPoints()      },
+                { "games played", user.GetGamesPlayed() }
+                });
+        }
+
+        return crow::json::wvalue{ top_users_json };
+    });
+}
+
 void http::RouteManager::CreateLoginRoute(GarticStorage& storage)
 {
     CROW_ROUTE(m_app, "/login")([&storage](const crow::request& request) {

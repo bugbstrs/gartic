@@ -13,6 +13,7 @@ namespace http
 		void CreateFetchQuoteRoute(GarticStorage& storage);
 		void CreateFetchAllWordsRoute(GarticStorage& storage);
 		void CreateFetchAllUsersRoute(GarticStorage& storage);
+		void CreateFetchTop5UsersRoute(GarticStorage& storage);
 		void CreateLoginRoute(GarticStorage& storage);
 		void CreateRegisterRoute(GarticStorage& storage);
 		void CreateCheckBannedWordRoute(GarticStorage& storage);
