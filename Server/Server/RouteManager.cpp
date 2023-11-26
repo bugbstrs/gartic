@@ -17,6 +17,16 @@ void http::RouteManager::Run(GarticStorage& storage)
 		return crow::json::wvalue{ word_json };
 	});
 
+    CROW_ROUTE(m_app, "/fetchquote")([&storage]() {
+        std::vector<crow::json::wvalue> quote_json;
+
+        std::string fetchedQuote = storage.FetchQuote();
+
+        quote_json.push_back(crow::json::wvalue{ {"quote", fetchedQuote} });
+
+        return crow::json::wvalue{ quote_json };
+    });
+
 	auto& createUserPut = CROW_ROUTE(m_app, "/createuser")
 		.methods(crow::HTTPMethod::PUT);
 	createUserPut(CreateUserHandler(storage));

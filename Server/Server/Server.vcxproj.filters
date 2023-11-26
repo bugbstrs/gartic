@@ -36,6 +36,12 @@
     <Text Include="Database Files\words.txt">
       <Filter>Database Files</Filter>
     </Text>
+    <Text Include="banned.txt">
+      <Filter>Database Files</Filter>
+    </Text>
+    <Text Include="quotes.txt">
+      <Filter>Database Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HttpUtils.h">

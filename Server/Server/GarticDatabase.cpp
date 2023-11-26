@@ -64,15 +64,38 @@ bool GarticStorage::CheckUsernameAlreadyExists(const String& givenUsername)
 
 String GarticStorage::FetchWord()
 {
-	int randomId = GenerateRandomId();
+	int randomId = GenerateRandomId(true);
 
 	auto result = m_db.select(sqlite_orm::columns(&WordsEntity::GetName),
-		sqlite_orm::where(sqlite_orm::is_equal(&WordsEntity::GetId, randomId)));
+		where(
+			c(&WordsEntity::GetId) == randomId
+			)
+	);
 
 	if (!result.empty())
 	{
 		return std::get<0>(result[0]);
 	}
+
+	// exception to throw
+}
+
+String http::GarticStorage::FetchQuote()
+{
+	int randomId = GenerateRandomId(false);
+
+	auto result = m_db.select(sqlite_orm::columns(&QuotesEntity::GetName),
+		where(
+			c(&QuotesEntity::GetId) == randomId
+		)
+	);
+
+	if (!result.empty())
+	{
+		return std::get<0>(result[0]);
+	}
+	
+	// exception to throw
 }
 
 UserVector GarticStorage::FetchAllUsers()
@@ -198,11 +221,11 @@ void http::GarticStorage::PopulateQuotesEntity()
 	filename.close();
 }
 
-int GarticStorage::GenerateRandomId()
+int GarticStorage::GenerateRandomId(bool isWordsEntity)
 {
 	std::random_device				   rd;
 	std::default_random_engine		   engine(rd());
-	auto							   count = m_db.count<WordsEntity>();
+	auto							   count = isWordsEntity ? m_db.count<WordsEntity>() : m_db.count<QuotesEntity>();
 	std::uniform_int_distribution<int> distribution(0, count - 1);
 
 	return distribution(engine);

@@ -62,6 +62,7 @@ namespace http
 		bool	   CheckCredentials(const String& givenUsername, const String& givenPassword);
 		bool	   CheckUsernameAlreadyExists(const String& givenUsername);
 		String	   FetchWord();
+		String	   FetchQuote();
 		UserVector FetchAllUsers();
 		WordVector FetchAllWords();
 
@@ -72,7 +73,7 @@ namespace http
 		void	   PopulateQuotesEntity();
 
 	private:
-		int GenerateRandomId();
+		int GenerateRandomId(bool isWordsEntity);
 
 	private:
 		const std::string kDbFile{ "products.sqlite" };
