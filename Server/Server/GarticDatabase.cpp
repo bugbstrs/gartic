@@ -62,6 +62,15 @@ bool GarticStorage::CheckUsernameAlreadyExists(const String& givenUsername)
 	return !result.empty();
 }
 
+bool http::GarticStorage::CheckBannedWord(const String& givenWord)
+{
+	auto result = m_db.select(sqlite_orm::columns(&BannedWordsEntity::GetId, &BannedWordsEntity::GetName),
+		sqlite_orm::where(sqlite_orm::is_equal(&BannedWordsEntity::GetName, givenWord))
+	);
+
+	return !result.empty();
+}
+
 String GarticStorage::FetchWord()
 {
 	int randomId = GenerateRandomId(true);

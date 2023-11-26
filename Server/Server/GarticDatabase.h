@@ -61,6 +61,8 @@ namespace http
 
 		bool	   CheckCredentials(const String& givenUsername, const String& givenPassword);
 		bool	   CheckUsernameAlreadyExists(const String& givenUsername);
+		bool	   CheckBannedWord(const String& givenWord);
+
 		String	   FetchWord();
 		String	   FetchQuote();
 		UserVector FetchAllUsers();

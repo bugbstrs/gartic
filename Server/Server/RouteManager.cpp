@@ -106,6 +106,16 @@ void http::RouteManager::Run(GarticStorage& storage)
         return crow::response(201);
     });
 
+    CROW_ROUTE(m_app, "/bannedword")([&storage](const crow::request& request) {
+        char* word = request.url_params.get("name");
+
+        if (word == nullptr) return crow::response(400);
+
+        bool checkBannedWord = storage.CheckBannedWord(String(word));
+
+        return checkBannedWord ? crow::response(201) : crow::response(403);
+    });
+
 	m_app
         .port(18080)
         .multithreaded()
