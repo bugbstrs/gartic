@@ -35,12 +35,6 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Header Files\UsersEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\WordsEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="HttpUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -59,17 +53,14 @@
     <ClInclude Include="QuotesEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UsersEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WordsEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source Files\Source.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Files\UsersEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Files\WordsEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="HttpUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -86,6 +77,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QuotesEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UsersEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WordsEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

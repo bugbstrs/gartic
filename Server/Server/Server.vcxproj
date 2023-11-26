@@ -26,11 +26,11 @@
     <ClInclude Include="BannedWordsEntity.h" />
     <ClInclude Include="CreateUserHandler.h" />
     <ClInclude Include="GarticDatabase.h" />
-    <ClInclude Include="Header Files\UsersEntity.h" />
-    <ClInclude Include="Header Files\WordsEntity.h" />
     <ClInclude Include="HttpUtils.h" />
     <ClInclude Include="QuotesEntity.h" />
     <ClInclude Include="RouteManager.h" />
+    <ClInclude Include="UsersEntity.h" />
+    <ClInclude Include="WordsEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BannedWordsEntity.cpp" />
@@ -39,9 +39,9 @@
     <ClCompile Include="HttpUtils.cpp" />
     <ClCompile Include="QuotesEntity.cpp" />
     <ClCompile Include="RouteManager.cpp" />
-    <ClCompile Include="Source Files\Source.cpp" />
-    <ClCompile Include="Source Files\UsersEntity.cpp" />
-    <ClCompile Include="Source Files\WordsEntity.cpp" />
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="UsersEntity.cpp" />
+    <ClCompile Include="WordsEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DLL\Timer\Timer.vcxproj">

@@ -3,29 +3,34 @@
 #include <memory>
 #include <crow.h>
 
-#include "../Header Files/DatabaseManager.h"
+#include "Server/RouteManager.h"
 
-int main()
+#define DOCTEST_CONFIG_IMPLEMENT
+#include "doctest/doctest.h";
+
+using namespace http;
+
+int main(int argc, char** argv)
 {
-	const std::string db_file = "Database Files\\gartic.sqlite";
-	Storage db = Database::createStorage(db_file);
-	db.sync_schema();
+    if (argc == 2 && strcmp("test", argv[1]) == 0)
+    {
+        doctest::Context ctx;
+        ctx.setOption("abort-after", 1);
+        ctx.applyCommandLine(argc, argv);
+        ctx.setOption("no-breaks", true);
+        return ctx.run();
+    }
 
-	DatabaseManager manager{ db };
-	
-	manager.PopulateWordsEntity();
-	manager.PopulateUsersEntity();
+	GarticStorage storage;
+	if (!storage.Initialize())
+	{
+		std::cout << "[ERROR] Failed to initialize the database!";
+		return -1;
+	}
 
-	WordVector words{manager.FetchAllWords()};
-	UserVector users{manager.FetchAllUsers()};
+	RouteManager manager;
 
-	std::cout << words << std::endl;
-	std::cout << users << std::endl;
-
-	std::cout << manager.CheckCredentials("David", "1q2w3e") << std::endl;
-	std::cout << manager.CheckCredentials("David", "1q2w32") << std::endl;
-
-	std::cout << manager.FetchWord();
+	manager.Run(storage);
 
 	return 0;
 }
