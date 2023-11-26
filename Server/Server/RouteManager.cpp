@@ -18,9 +18,17 @@ void http::RouteManager::CreateFetchWordRoute(GarticStorage& storage)
     CROW_ROUTE(m_app, "/fetchword")([&storage]() {
         std::vector<crow::json::wvalue> word_json;
 
-        std::string fetchedWord = storage.FetchWord();
-
-        word_json.push_back(crow::json::wvalue{ {"word", fetchedWord} });
+        std::string fetchedWord;
+        
+        try
+        {
+            fetchedWord = storage.FetchWord();
+            word_json.push_back(crow::json::wvalue{ {"word", fetchedWord} });
+        }
+        catch (CannotFetchWordException& exception)
+        {
+            word_json.push_back(crow::json::wvalue{ {"word", "N/A"}});
+        }
 
         return crow::json::wvalue{ word_json };
     });
@@ -31,9 +39,17 @@ void http::RouteManager::CreateFetchQuoteRoute(GarticStorage& storage)
     CROW_ROUTE(m_app, "/fetchquote")([&storage]() {
         std::vector<crow::json::wvalue> quote_json;
 
-        std::string fetchedQuote = storage.FetchQuote();
+        std::string fetchedQuote;
 
-        quote_json.push_back(crow::json::wvalue{ {"quote", fetchedQuote} });
+        try
+        {
+            fetchedQuote = storage.FetchQuote();
+            quote_json.push_back(crow::json::wvalue{ {"quote", fetchedQuote} });
+        }
+        catch (CannotFetchQuoteException& exception)
+        {
+            quote_json.push_back(crow::json::wvalue{ {"quote", "N/A"} });
+        };
 
         return crow::json::wvalue{ quote_json };
     });
@@ -137,11 +153,15 @@ void http::RouteManager::CreateRegisterRoute(GarticStorage& storage)
 
         if (password == nullptr || username == nullptr) return crow::response(400);
 
-        bool foundUser = storage.CheckUsernameAlreadyExists(String(username));
+        try
+        {
+            storage.CreateUser(String(username), String(password));
+        }
+        catch (UserAlreadyExistsException& exception)
+        {
+            return crow::response(403);
+        }
 
-        if (foundUser) return crow::response(403);
-
-        storage.CreateUser(String(username), String(password));
         return crow::response(201);
     });
 }

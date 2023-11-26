@@ -91,7 +91,7 @@ String GarticStorage::FetchWord()
 		return std::get<0>(result[0]);
 	}
 
-	// exception to throw
+	throw CannotFetchWordException("[ERROR] Word could not be fetched!");
 }
 
 String http::GarticStorage::FetchQuote()
@@ -109,7 +109,7 @@ String http::GarticStorage::FetchQuote()
 		return std::get<0>(result[0]);
 	}
 	
-	// exception to throw
+	throw CannotFetchQuoteException("[ERROR] Quote could not be fetched!");
 }
 
 UserVector GarticStorage::FetchAllUsers()
@@ -155,7 +155,7 @@ void GarticStorage::CreateUser(const String& givenUsername, const String& givenP
 {
 	if (CheckUsernameAlreadyExists(givenUsername))
 	{
-		return;		// possible exception to throw here
+		throw UserAlreadyExistsException("[ERROR] User already exists!");
 	}
 
 	m_db.insert(UsersEntity{ 0, 0, givenUsername, givenPassword });

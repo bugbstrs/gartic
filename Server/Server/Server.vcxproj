@@ -26,20 +26,28 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BannedWordsEntity.h" />
+    <ClInclude Include="CannotFetchQuoteException.h" />
+    <ClInclude Include="CannotFetchWordException.h" />
     <ClInclude Include="GarticDatabase.h" />
+    <ClInclude Include="GarticException.h" />
     <ClInclude Include="HttpUtils.h" />
     <ClInclude Include="QuotesEntity.h" />
     <ClInclude Include="RouteManager.h" />
+    <ClInclude Include="UserAlreadyExistsException.h" />
     <ClInclude Include="UsersEntity.h" />
     <ClInclude Include="WordsEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BannedWordsEntity.cpp" />
+    <ClCompile Include="CannotFetchQuoteException.cpp" />
+    <ClCompile Include="CannotFetchWordException.cpp" />
     <ClCompile Include="GarticDatabase.cpp" />
+    <ClCompile Include="GarticException.cpp" />
     <ClCompile Include="HttpUtils.cpp" />
     <ClCompile Include="QuotesEntity.cpp" />
     <ClCompile Include="RouteManager.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="UserAlreadyExistsException.cpp" />
     <ClCompile Include="UsersEntity.cpp" />
     <ClCompile Include="WordsEntity.cpp" />
   </ItemGroup>

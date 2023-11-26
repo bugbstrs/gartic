@@ -28,6 +28,9 @@
     <Filter Include="Entities">
       <UniqueIdentifier>{ff5c042b-76c0-4b9d-8258-25f2968656cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Exceptions">
+      <UniqueIdentifier>{d4e83d7f-30b4-4194-8c09-225f4c65cd83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Database Files\users.txt">
@@ -65,6 +68,18 @@
     <ClInclude Include="WordsEntity.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="GarticException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="UserAlreadyExistsException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="CannotFetchWordException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="CannotFetchQuoteException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HttpUtils.cpp">
@@ -90,6 +105,18 @@
     </ClCompile>
     <ClCompile Include="BannedWordsEntity.cpp">
       <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="GarticException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UserAlreadyExistsException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CannotFetchWordException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CannotFetchQuoteException.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

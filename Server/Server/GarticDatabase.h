@@ -14,6 +14,12 @@ namespace sql = sqlite_orm;
 #include "QuotesEntity.h"
 #include "HttpUtils.h"
 
+// Exceptions
+
+#include "UserAlreadyExistsException.h"
+#include "CannotFetchWordException.h"
+#include "CannotFetchQuoteException.h"
+
 using String = std::string;
 using File = std::ifstream;
 using UserVector = std::vector<http::UsersEntity>;
