@@ -16,12 +16,16 @@ public:
               int16_t maxWidth, int16_t maxHeight);
     GUIObject(int16_t x, int16_t y, Align align, ColorType backgroundColor, ColorType textColor,
               int16_t maxWidth, int16_t maxHeight);
+    GUIObject(Align align, ColorType backgroundColor, ColorType textColor, int16_t maxWidth,
+              int16_t maxHeight);
     
     // Destructor
     virtual ~GUIObject() = default;
     
     // Method to override
     virtual void Draw(ConsoleManager* cm) = 0;
+
+    void InitializeTransform(COORD upLeftCorner, int16_t maxWidth, int16_t maxHeight);
 
 protected:
     Align     m_align;
