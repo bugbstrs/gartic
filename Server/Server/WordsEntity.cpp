@@ -1,4 +1,4 @@
-#include "../Header Files/WordsEntity.h"
+#include "WordsEntity.h"
 
 using namespace http;
 

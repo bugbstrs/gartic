@@ -8,8 +8,8 @@
 
 namespace sql = sqlite_orm;
 
-#include "Header Files/UsersEntity.h"
-#include "Header Files/WordsEntity.h"
+#include "UsersEntity.h"
+#include "WordsEntity.h"
 #include "BannedWordsEntity.h"
 #include "QuotesEntity.h"
 #include "HttpUtils.h"
