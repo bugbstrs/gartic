@@ -17,7 +17,7 @@ void Label::Draw(ConsoleManager* cm)
 	cm->SetColor(m_backgroundColor, m_textColor);
 
 	int index{ 0 };
-	while (index < m_text.size())
+	while (index < m_text.size() && index < m_width * m_height)
 	{
 		cm->Write(m_text[index], m_upLeftCorner.X + index % m_width, m_upLeftCorner.Y + index / m_width);
 		++index;
