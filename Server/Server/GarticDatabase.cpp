@@ -5,6 +5,7 @@
 #include <random>
 
 using namespace http;
+using namespace sqlite_orm;
 
 bool http::GarticStorage::Initialize()
 {
@@ -44,8 +45,10 @@ bool http::GarticStorage::Initialize()
 bool GarticStorage::CheckCredentials(const String& givenUsername, const String& givenPassword) 
 {
     auto users = m_db.get_all<UsersEntity>(
-        sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetUsername, givenUsername)),
-        sqlite_orm::where(sqlite_orm::is_equal(&UsersEntity::GetPassword, givenPassword))
+        where(
+            c(&UsersEntity::GetUsername) == givenUsername &&
+            c(&UsersEntity::GetPassword) == givenPassword
+        )
     );
 
     return !users.empty();
