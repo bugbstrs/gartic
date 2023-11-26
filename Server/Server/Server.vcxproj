@@ -26,7 +26,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BannedWordsEntity.h" />
-    <ClInclude Include="CreateUserHandler.h" />
     <ClInclude Include="GarticDatabase.h" />
     <ClInclude Include="HttpUtils.h" />
     <ClInclude Include="QuotesEntity.h" />
@@ -36,7 +35,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BannedWordsEntity.cpp" />
-    <ClCompile Include="CreateUserHandler.cpp" />
     <ClCompile Include="GarticDatabase.cpp" />
     <ClCompile Include="HttpUtils.cpp" />
     <ClCompile Include="QuotesEntity.cpp" />

@@ -53,9 +53,6 @@
     <ClInclude Include="RouteManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CreateUserHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BannedWordsEntity.h">
       <Filter>Entities</Filter>
     </ClInclude>
@@ -77,9 +74,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RouteManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CreateUserHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source.cpp">
