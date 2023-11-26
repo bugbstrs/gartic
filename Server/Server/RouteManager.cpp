@@ -91,7 +91,9 @@ void http::RouteManager::Run(GarticStorage& storage)
         bool foundUser = storage.CheckUsernameAlreadyExists(String(username));
 
         if (foundUser) return crow::response(403);
-        else return crow::response(201);
+        
+        storage.CreateUser(String(username), String(password));
+        return crow::response(201);
     });
 
 	m_app
