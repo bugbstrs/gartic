@@ -25,6 +25,9 @@
     <Filter Include="Database Files">
       <UniqueIdentifier>{efa3e69e-fd52-42f4-bd9f-88198c45d9ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{ff5c042b-76c0-4b9d-8258-25f2968656cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Database Files\users.txt">
@@ -48,16 +51,16 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BannedWordsEntity.h">
-      <Filter>Header Files</Filter>
+      <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="QuotesEntity.h">
-      <Filter>Header Files</Filter>
+      <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="UsersEntity.h">
-      <Filter>Header Files</Filter>
+      <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="WordsEntity.h">
-      <Filter>Header Files</Filter>
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -73,20 +76,20 @@
     <ClCompile Include="CreateUserHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BannedWordsEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QuotesEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UsersEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WordsEntity.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="UsersEntity.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="QuotesEntity.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="BannedWordsEntity.cpp">
+      <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
