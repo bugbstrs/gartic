@@ -20,6 +20,7 @@ private slots:
     void on_playButton_released();
     void on_quitButton_released();
     void on_redColorButton_released();
+    void on_goToSignUpButton_released();
 
     //Drawing scene buttons
     void on_leaveGameButton_released();
@@ -27,6 +28,8 @@ private slots:
     //Stats scene
     void on_statsButton_released();
     void on_backToMenuButton_released();
+
+    //SignUp scene
 private:
     std::unique_ptr<Ui::MainWindow> ui = std::make_unique<Ui::MainWindow>();
     bool isUserLoggedIn;

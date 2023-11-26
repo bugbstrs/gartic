@@ -7,8 +7,10 @@ class MatchHistoryTable : public QTableWidget
 	Q_OBJECT
 
 public:
-	//Constructors
+	//Constructor
 	MatchHistoryTable(QWidget *parent = nullptr);
+
+	//Destructor
 	~MatchHistoryTable();
 
 protected:

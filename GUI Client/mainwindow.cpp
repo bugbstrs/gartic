@@ -28,6 +28,11 @@ void MainWindow::on_redColorButton_released()
     ui->drawingBoardCanvas->changePenColor(Qt::red);
 }
 
+void MainWindow::on_goToSignUpButton_released()
+{
+    ui->stackedWidget->setCurrentIndex(3);
+}
+
 void MainWindow::on_leaveGameButton_released()
 {
     ui->stackedWidget->setCurrentIndex(0);
