@@ -20,6 +20,7 @@ private slots:
     void on_quitButton_released();
     void on_redColorButton_released();
     void on_goToSignUpButton_released();
+    void on_goToLogInButton_released();
 
     //Drawing scene buttons
     void on_leaveGameButton_released();

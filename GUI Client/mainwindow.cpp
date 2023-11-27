@@ -31,6 +31,11 @@ void MainWindow::on_goToSignUpButton_released()
     ui->stackedWidget->setCurrentIndex(3);
 }
 
+void MainWindow::on_goToLogInButton_released()
+{
+    ui->stackedWidget->setCurrentIndex(4);
+}
+
 void MainWindow::on_leaveGameButton_released()
 {
     ui->stackedWidget->setCurrentIndex(0);
