@@ -9,9 +9,9 @@ export class HorizontalLayout : public GUIObject
 public:
 	// Constructors
 	HorizontalLayout(COORD upLeftCorner, Align align, ColorType backgroundColor,
-					 int16_t maxWidth, int16_t maxHeight, int space);
+					 int16_t maxWidth, int16_t maxHeight, ConsoleManager* cm, int space);
 	HorizontalLayout(int16_t x, int16_t y, Align align, ColorType backgroundColor,
-					 int16_t maxWidth, int16_t maxHeight, int space);
+					 int16_t maxWidth, int16_t maxHeight, ConsoleManager* cm, int space);
 
 	// Destructor
 	~HorizontalLayout() = default;
