@@ -34,6 +34,7 @@
     <ClInclude Include="QuotesEntity.h" />
     <ClInclude Include="RouteManager.h" />
     <ClInclude Include="UserAlreadyExistsException.h" />
+    <ClInclude Include="UserDoesntExistException.h" />
     <ClInclude Include="UsersEntity.h" />
     <ClInclude Include="WordsEntity.h" />
   </ItemGroup>
@@ -48,6 +49,7 @@
     <ClCompile Include="RouteManager.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="UserAlreadyExistsException.cpp" />
+    <ClCompile Include="UserDoesntExistException.cpp" />
     <ClCompile Include="UsersEntity.cpp" />
     <ClCompile Include="WordsEntity.cpp" />
   </ItemGroup>

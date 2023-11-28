@@ -80,6 +80,9 @@
     <ClInclude Include="CannotFetchQuoteException.h">
       <Filter>Exceptions</Filter>
     </ClInclude>
+    <ClInclude Include="UserDoesntExistException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HttpUtils.cpp">
@@ -116,6 +119,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CannotFetchQuoteException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UserDoesntExistException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
