@@ -42,7 +42,12 @@ COORD GUIObject::GetUpLeftCorner()
     return m_upLeftCorner;
 }
 
-COORD GUIObject::GetDownRightCorner()
+int16_t GUIObject::GetWidth()
 {
-    return { m_width, m_height };
+    return m_width;
+}
+
+int16_t GUIObject::GetHeight()
+{
+    return m_height;
 }

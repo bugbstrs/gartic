@@ -28,7 +28,8 @@ public:
     void InitializeTransform(COORD upLeftCorner);
 
     COORD GetUpLeftCorner();
-    COORD GetDownRightCorner();
+    int16_t GetWidth     ();
+    int16_t GetHeight    ();
 
 protected:
     Align           m_align;

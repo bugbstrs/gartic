@@ -16,7 +16,7 @@ HorizontalLayout::HorizontalLayout(int16_t x, int16_t y, Align align, ColorType 
 
 void HorizontalLayout::AddObject(GUIObject* object)
 {
-	/*COORD upLeft = m_upLeftCorner;
+	COORD upLeft = m_upLeftCorner;
 	COORD downRight = { upLeft.X + m_width, upLeft.Y + m_height };
 	if (!m_objects.empty())
 	{
@@ -33,5 +33,5 @@ void HorizontalLayout::AddObject(GUIObject* object)
 	
 	m_objects.push_back(object);
 	
-	object->InitializeTransform();*/
+	object->InitializeTransform();
 }
