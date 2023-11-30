@@ -15,19 +15,20 @@ public:
     ~MainWindow();
 
 private slots:
+
     //Main menu buttons
-    void on_playButton_released();
-    void on_quitButton_released();
-    void on_redColorButton_released();
-    void on_goToSignUpButton_released();
-    void on_goToLogInButton_released();
+    void OnPlayButtonReleased();
+    void OnQuitButtonReleased();
+    void OnStatsButtonReleased();
+    void OnGoToLogInButtonReleased();
+    void OnGoToSignUpButtonReleased();
 
     //Drawing scene
-    void on_leaveGameButton_released();
+    void OnRedColorButtonReleased();
+    void OnLeaveGameButtonReleased();
 
     //Stats scene
-    void on_statsButton_released();
-    void on_backToMenuButton_released();
+    void OnBackToMenuButtonReleased();
 
     //SignUp scene
 private:

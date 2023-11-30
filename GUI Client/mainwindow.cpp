@@ -8,47 +8,52 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     isUserLoggedIn = false;
+    //Main menu scene connections
+    QObject::connect(ui->playButton, &QPushButton::released, this, &MainWindow::OnPlayButtonReleased);
+    QObject::connect(ui->quitButton, &QPushButton::released, this, &MainWindow::OnQuitButtonReleased);
+    QObject::connect(ui->statsButton, &QPushButton::released, this, &MainWindow::OnStatsButtonReleased);
+    QObject::connect(ui->goToLogInButton, &QPushButton::released, this, &MainWindow::OnGoToLogInButtonReleased);
+    QObject::connect(ui->goToSignUpButton, &QPushButton::released, this, &MainWindow::OnGoToSignUpButtonReleased);
+
+    //Game scene connections
+    QObject::connect(ui->redColorButton, &QPushButton::released, this, &MainWindow::OnRedColorButtonReleased);
+    QObject::connect(ui->leaveGameButton, &QPushButton::released, this, &MainWindow::OnLeaveGameButtonReleased);
+
+    //Stats scene connections
+    QObject::connect(ui->backToMenuButton, &QPushButton::released, this, &MainWindow::OnBackToMenuButtonReleased);
 }
 
 MainWindow::~MainWindow() = default;
 
-void MainWindow::on_playButton_released()
-{
-    ui->stackedWidget->setCurrentIndex(1);
-}
 
-void MainWindow::on_quitButton_released()
-{
-    QCoreApplication::quit();
-}
 
-void MainWindow::on_redColorButton_released()
-{
-    ui->drawingBoardCanvas->changePenColor(Qt::red);
-}
 
-void MainWindow::on_goToSignUpButton_released()
-{
-    ui->stackedWidget->setCurrentIndex(3);
-}
+//Main menu events
 
-void MainWindow::on_goToLogInButton_released()
-{
-    ui->stackedWidget->setCurrentIndex(4);
-}
+void MainWindow::OnPlayButtonReleased() { ui->stackedWidget->setCurrentIndex(1); }
 
-void MainWindow::on_leaveGameButton_released()
-{
-    ui->stackedWidget->setCurrentIndex(0);
-}
+void MainWindow::OnQuitButtonReleased() { QCoreApplication::quit(); }
 
-void MainWindow::on_statsButton_released()
-{
-    ui->stackedWidget->setCurrentIndex(2);
-}
+void MainWindow::OnStatsButtonReleased() { ui->stackedWidget->setCurrentIndex(2); }
 
-void MainWindow::on_backToMenuButton_released()
-{
-    ui->stackedWidget->setCurrentIndex(0);
-}
+void MainWindow::OnGoToLogInButtonReleased() { ui->stackedWidget->setCurrentIndex(4); }
+
+void MainWindow::OnGoToSignUpButtonReleased() { ui->stackedWidget->setCurrentIndex(3); }
+
+
+
+
+//Game scene events
+
+void MainWindow::OnRedColorButtonReleased() { ui->drawingBoardCanvas->changePenColor(Qt::red); }
+
+void MainWindow::OnLeaveGameButtonReleased() { ui->stackedWidget->setCurrentIndex(0); }
+
+
+
+
+
+// Stats scene events
+
+void MainWindow::OnBackToMenuButtonReleased() { ui->stackedWidget->setCurrentIndex(0); }
 
