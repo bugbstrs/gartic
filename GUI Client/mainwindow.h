@@ -22,7 +22,7 @@ private slots:
     void on_goToSignUpButton_released();
     void on_goToLogInButton_released();
 
-    //Drawing scene buttons
+    //Drawing scene
     void on_leaveGameButton_released();
 
     //Stats scene

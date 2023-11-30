@@ -510,6 +510,44 @@ QPushButton:hover {
            </sizepolicy>
           </property>
           <layout class="QGridLayout" name="gridLayout_9">
+           <item row="0" column="1">
+            <widget class="Chat" name="chatFrame">
+             <property name="maximumSize">
+              <size>
+               <width>240</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_2">
+              <item row="1" column="0">
+               <widget class="ChatWritingBox" name="chatWritingBox">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Type your answer here...</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="ChatConversation" name="chatConversation">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;</string>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
            <item row="0" column="0">
             <widget class="QFrame" name="boxesFrame">
              <property name="enabled">
@@ -841,41 +879,6 @@ QPushButton:hover {
                  </widget>
                 </item>
                </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QFrame" name="chatFrame">
-             <property name="maximumSize">
-              <size>
-               <width>240</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_2">
-              <item row="1" column="0">
-               <widget class="QLineEdit" name="lineEdit_2">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;</string>
-                </property>
-                <property name="placeholderText">
-                 <string>Type your answer here...</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QListWidget" name="chatWidget">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;</string>
-                </property>
-               </widget>
               </item>
              </layout>
             </widget>
@@ -2249,6 +2252,22 @@ QPushButton:hover {
    <class>MatchHistoryTable</class>
    <extends>QTableWidget</extends>
    <header>MatchHistoryTable.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ChatConversation</class>
+   <extends>QTextBrowser</extends>
+   <header>Chatconversation.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Chat</class>
+   <extends>QFrame</extends>
+   <header>Chat.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ChatWritingBox</class>
+   <extends>QLineEdit</extends>
+   <header>Chatwritingbox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

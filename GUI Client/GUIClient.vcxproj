@@ -109,6 +109,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Chat.cpp" />
+    <ClCompile Include="ChatConversation.cpp" />
+    <ClCompile Include="ChatWritingBox.cpp" />
     <ClCompile Include="MatchHistoryTable.cpp" />
     <QtRcc Include="mainwindow.qrc" />
     <QtUic Include="mainwindow.ui" />
@@ -122,6 +125,15 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MatchHistoryTable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ChatWritingBox.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ChatConversation.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Chat.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

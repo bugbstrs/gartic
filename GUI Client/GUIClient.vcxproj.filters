@@ -46,12 +46,30 @@
     <ClCompile Include="MatchHistoryTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ChatWritingBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChatConversation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Chat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DrawingBoard.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="MatchHistoryTable.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ChatWritingBox.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ChatConversation.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Chat.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
