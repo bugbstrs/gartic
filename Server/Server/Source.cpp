@@ -22,11 +22,11 @@ int main(int argc, char** argv)
     //}
 
 	GarticStorage storage;
-	if (!storage.Initialize())
+	/*if (!storage.Initialize())
 	{
 		std::cout << "[ERROR] Failed to initialize the database!";
 		return -1;
-	}
+	}*/
 
 	RouteManager manager;
 

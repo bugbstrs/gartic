@@ -9,7 +9,4 @@ class ChatConversation  : public QTextBrowser
 public:
 	ChatConversation(QWidget *parent = nullptr);
 	~ChatConversation();
-
-public slots:
-	/*void OnEnterPressed();*/
 };

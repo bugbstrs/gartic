@@ -55,6 +55,9 @@
     <ClCompile Include="Chat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameplayWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DrawingBoard.h">
@@ -70,6 +73,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Chat.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="GameplayWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

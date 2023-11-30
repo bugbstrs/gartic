@@ -7,7 +7,3 @@ ChatConversation::ChatConversation(QWidget *parent)
 
 ChatConversation::~ChatConversation()
 {}
-
-//void ChatConversation::OnEnterPressed() {
-//
-//}
