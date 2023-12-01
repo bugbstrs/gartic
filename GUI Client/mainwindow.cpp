@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(ui->goToSignUpButton, &QPushButton::released, this, &MainWindow::OnGoToSignUpButtonReleased);
 
     //Game scene connections
-    //QObject::connect(ui->redColorButton, &QPushButton::released, this, &MainWindow::OnRedColorButtonReleased);
     QObject::connect(ui->leaveGameButton, &QPushButton::released, this, &MainWindow::OnLeaveGameButtonReleased);
 
     //Stats scene connections

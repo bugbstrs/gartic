@@ -16,8 +16,7 @@ void Chat::OnConversationWaitingForUpdate(const QString& newMessage) {
 }
 
 Chat::~Chat()
-{
-}
+{}
 
 void Chat::showEvent(QShowEvent* event)
 {

@@ -58,6 +58,9 @@
     <ClCompile Include="GameplayWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ToolsFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DrawingBoard.h">
@@ -76,6 +79,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="GameplayWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ToolsFrame.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
