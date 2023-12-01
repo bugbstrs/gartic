@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1426</width>
-    <height>662</height>
+    <width>1494</width>
+    <height>640</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -612,22 +612,6 @@ QPushButton:hover {
                  <enum>QFrame::Raised</enum>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_11">
-                 <item row="0" column="2">
-                  <spacer name="horizontalSpacer_10">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>700</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
                  <item row="0" column="1">
                   <widget class="QFrame" name="colorsFrame">
                    <property name="sizePolicy">
@@ -719,7 +703,23 @@ QPushButton:hover {
                    </layout>
                   </widget>
                  </item>
-                 <item row="0" column="4">
+                 <item row="0" column="3">
+                  <spacer name="horizontalSpacer_10">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>700</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="0" column="5">
                   <widget class="QFrame" name="buttonsFrame">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -839,6 +839,22 @@ QPushButton:hover {
                    </layout>
                   </widget>
                  </item>
+                 <item row="0" column="2">
+                  <widget class="QFrame" name="frame">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </widget>
               </item>
@@ -853,7 +869,7 @@ QPushButton:hover {
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>30</height>
+                  <height>35</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -894,6 +910,11 @@ QPushButton:hover {
                  </item>
                  <item row="0" column="2">
                   <widget class="QLabel" name="wordToGuessLabel">
+                   <property name="font">
+                    <font>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
                    <property name="text">
                     <string>YOUR WORD</string>
                    </property>
@@ -912,7 +933,7 @@ QPushButton:hover {
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
-                     <width>400</width>
+                     <width>430</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -2312,7 +2333,7 @@ QPushButton:hover {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1426</width>
+     <width>1494</width>
      <height>22</height>
     </rect>
    </property>
@@ -2332,11 +2353,6 @@ QPushButton:hover {
    <extends>QWidget</extends>
    <header>DrawingBoard.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>MatchHistoryTable</class>
-   <extends>QTableWidget</extends>
-   <header>MatchHistoryTable.h</header>
   </customwidget>
   <customwidget>
    <class>ChatConversation</class>
@@ -2359,6 +2375,11 @@ QPushButton:hover {
    <extends>QWidget</extends>
    <header>GameplayWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MatchHistoryTable</class>
+   <extends>QTableWidget</extends>
+   <header>MatchHistoryTable.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

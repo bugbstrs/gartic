@@ -22,7 +22,7 @@ void MatchHistoryTable::showEvent(QShowEvent * event)
 	}
 }
 
-QString MatchHistoryTable::GetRowInfoForColumnWithIndex(uint8_t index, const Row& row)
+QString MatchHistoryTable::GetRowInfoForColumnWithIndex(uint16_t index, const Row& row)
 {
 	if (index == 0)
 		return row.ranking;

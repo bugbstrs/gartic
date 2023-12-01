@@ -16,9 +16,10 @@ void Chat::OnConversationWaitingForUpdate(const QString& newMessage) {
 }
 
 Chat::~Chat()
-{}
+{
+}
 
-void Chat::showEvent(QShowEvent * event)
+void Chat::showEvent(QShowEvent* event)
 {
 	chatWritingBox = findChild<ChatWritingBox*>("chatWritingBox");
 	chatConversation = findChild<ChatConversation*>("chatConversation"); 

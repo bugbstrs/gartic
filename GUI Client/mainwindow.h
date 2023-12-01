@@ -32,7 +32,8 @@ private slots:
 
     //SignUp scene
 private:
-    std::unique_ptr<Ui::MainWindow> ui = std::make_unique<Ui::MainWindow>();
+    /*std::unique_ptr<Ui::MainWindow> ui = std::make_unique<Ui::MainWindow>();*/
+    Ui::MainWindow* ui;
     bool isUserLoggedIn;
 };
 #endif // MAINWINDOW_H

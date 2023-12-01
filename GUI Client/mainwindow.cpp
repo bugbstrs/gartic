@@ -1,10 +1,9 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include "ChatWritingBox.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    ,ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     isUserLoggedIn = false;
@@ -23,7 +22,9 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(ui->backToMenuButton, &QPushButton::released, this, &MainWindow::OnBackToMenuButtonReleased);
 }
 
-MainWindow::~MainWindow() = default;
+MainWindow::~MainWindow() {
+    delete ui;
+}
 
 
 
