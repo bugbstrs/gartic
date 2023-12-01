@@ -24,7 +24,6 @@ private slots:
     void OnGoToSignUpButtonReleased();
 
     //Drawing scene
-    void OnRedColorButtonReleased();
     void OnLeaveGameButtonReleased();
 
     //Stats scene
