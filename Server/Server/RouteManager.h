@@ -1,5 +1,7 @@
 #include <crow.h>
+
 #include "GarticDatabase.h"
+#include "OngoingGame.h"
 
 namespace http
 {
@@ -20,5 +22,7 @@ namespace http
 
 	private:
 		crow::SimpleApp m_app;
+
+		OngoingGame m_game;
 	};
 }
