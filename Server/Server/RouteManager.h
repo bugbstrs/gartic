@@ -8,6 +8,7 @@ namespace http
 	class RouteManager
 	{
 	public:
+        RouteManager() = default;
 		void Run(GarticStorage& storage);
 
 	private:

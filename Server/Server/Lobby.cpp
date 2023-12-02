@@ -30,11 +30,11 @@ int http::Lobby::GetRoundsNumber() const noexcept
 	return m_config.GetRoundsNumber();
 }
 
-Game* http::Lobby::StartGame()
+http::Game* http::Lobby::StartGame()
 {
 	if (m_players.size() > 2)
 	{
-		return new Game(m_players);
+		return new Game(std::move(m_players));
 	}
 
 	throw NotEnoughPlayersException("There are not enough players to start a game!");

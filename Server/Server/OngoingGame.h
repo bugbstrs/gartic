@@ -8,10 +8,8 @@ namespace http
 	class OngoingGame
 	{
 	public:
-		OnGoingGame() = delete;
-
-		void AddLobby(const Lobby& newLobby);
-		void AddGame(const Game& newGame);
+		void AddLobby(Lobby& newLobby);
+		void AddGame(Game& newGame);
 
 		Lobby* GetLobby() const noexcept;
 		Game* GetGame() const noexcept;

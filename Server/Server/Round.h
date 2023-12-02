@@ -7,7 +7,7 @@ namespace http
 	class Round
 	{
 	public:
-		Round() = delete;
+        Round() = default;
 		Round(int numberOfSubRounds, std::string&& wordToGuess);
 
 		bool IsLastSubRound() const noexcept;

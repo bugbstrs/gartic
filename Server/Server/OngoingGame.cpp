@@ -1,21 +1,21 @@
 #include "OngoingGame.h"
 
-void http::OngoingGame::AddLobby(const Lobby& newLobby) 
+void http::OngoingGame::AddLobby(Lobby& newLobby) 
 {
-	m_lobby{ newLobby };
+	m_lobby = &newLobby;
 }
 
-void http::OngoingGame::AddGame(const Game& newGame) 
+void http::OngoingGame::AddGame(Game& newGame) 
 {
-	m_game{ newGame };
+	m_game = &newGame;
 }
 
-Lobby* http::OngoingGame::GetLobby() const noexcept
+http::Lobby* http::OngoingGame::GetLobby() const noexcept
 {
 	return m_lobby;
 }
 
-Game* http::OngoingGame::GetGame() const noexcept
+http::Game* http::OngoingGame::GetGame() const noexcept
 {
 	return m_game;
 }
