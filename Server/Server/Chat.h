@@ -8,7 +8,7 @@ namespace http
 	class Chat
 	{
 	public:
-		Chat();
+		Chat() = default;
 
 		void AddMessage(const std::pair<std::string, std::string>& messages);
 
