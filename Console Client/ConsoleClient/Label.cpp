@@ -12,11 +12,24 @@ Label::Label(int16_t x, int16_t y, Align align, ColorType backgroundColor, Color
 	m_text	  { text															 }
 {}
 
+Label::Label(Align align, ColorType backgroundColor, ColorType textColor, int16_t maxWidth,
+			 int16_t maxHeight, ConsoleManager *cm, String text):
+	GUIObject { align, backgroundColor, textColor, maxWidth, maxHeight, cm },
+	m_text	  { text													   }
+{}
+
 void Label::Draw()
 {
-	m_cm->SetColor(m_backgroundColor, m_textColor);
+	SetColor();
 
-	int index{ 0 };
+	DrawBackground();
+
+	DrawContents();
+}
+
+void Label::DrawContents()
+{
+	int index{0};
 	while (index < m_text.size() && index < m_width * m_height)
 	{
 		m_cm->Write(m_text[index], m_upLeftCorner.X + index % m_width,
