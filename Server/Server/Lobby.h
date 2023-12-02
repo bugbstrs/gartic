@@ -7,18 +7,25 @@
 
 #include "LobbyConfig.h"
 #include "Player.h"
+#include "Game.h"
+
+#include "UserDoesntExistException.h"
 
 namespace http
 {
 	class Lobby
 	{
 	public:
-		Lobby();
+		Lobby() = default;
 
-		void JoinLobby();
-		void LeaveLobby();
+		void JoinLobby(Player&& newPlayer);
+		void LeaveLobby(const Player& playerToLeave);
 
-		bool StartGame();
+		int GetPlayersNumber() const noexcept;
+		int GetDrawTime() const noexcept;
+		int GetRoundsNumber() const noexcept;
+
+		Game* StartGame();
 
 	private:
 		LobbyConfig m_config;
