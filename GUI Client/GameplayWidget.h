@@ -4,6 +4,7 @@
 #include <qlabel.h>
 #include "DrawingBoard.h"
 #include "ToolsFrame.h"
+#include "Chat.h"
 #include <numeric>
 #include <sstream>
 #include <regex>
@@ -29,4 +30,5 @@ private:
 	QLabel* wordToDraw;
 	DrawingBoard* drawingBoard;
 	ToolsFrame* toolsFrame;
+	Chat* chat;
 };
