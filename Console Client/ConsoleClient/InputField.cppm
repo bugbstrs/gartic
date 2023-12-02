@@ -18,6 +18,9 @@ public:
 			   int16_t maxWidth, int16_t maxHeight, ColorType selectedBackgroungColor,
 			   ColorType selectedTextColor, ConsoleManager* cm, InputManager* im,
 			   SelectableObject*& selected, String& text);
+	InputField(Align align, ColorType backgroundColor, ColorType textColor, int16_t maxWidth,
+			   int16_t maxHeight, ColorType selectedBackgroungColor, ColorType selectedTextColor,
+			   ConsoleManager *cm, InputManager *im, SelectableObject *&selected, String &text);
 	
 	// Destructor
 	~InputField() = default;
@@ -27,4 +30,6 @@ public:
 private:
 	String m_text;
 	int    m_textPos;
+
+	void DrawContents() override;
 };
