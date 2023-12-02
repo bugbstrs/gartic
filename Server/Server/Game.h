@@ -21,6 +21,8 @@ public:
 private:
 	Timer m_timer;
 
+	int m_roundNumber;
+
 	Round m_currRound;
 
 	Chat m_chat;

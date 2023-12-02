@@ -8,7 +8,9 @@ namespace http
 	{
 	public:
 		Round() = delete;
-		Round(int numberOfRounds, std::string&& wordToGuess);
+		Round(int numberOfSubRounds, std::string&& wordToGuess);
+
+		bool IsLastSubRound() const noexcept;
 
 		void NextSubRound();
 
@@ -17,7 +19,7 @@ namespace http
 
 		int m_currSubRound;
 
-		int m_numberOfRounds;
+		int m_numberOfSubRounds;
 
 		std::string m_wordToGuess;
 
