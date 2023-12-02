@@ -2,6 +2,10 @@ export module MenuScene;
 
 export import Scene;
 
+export import <string>;
+
+using String = std::string;
+
 export class MenuScene : public Scene
 {
 public:
@@ -20,7 +24,12 @@ private:
     };
     Options m_option;
 
+    SelectableObject* m_selected;
+    String            m_password;
+    String            m_username;
+
     void Display() const override;
+    void Input  () const override;
     void Start  ()       override;
     void Update ()       override;
 };
