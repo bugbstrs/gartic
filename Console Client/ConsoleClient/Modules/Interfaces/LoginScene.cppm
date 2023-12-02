@@ -24,15 +24,16 @@ private:
         LOGIN,
         REGISTER
     };
-
-    int     m_textpos;
     Options m_option;
-    String  m_password;
-    String  m_username;
+
+    String m_password;
+    String m_username;
+    int    m_textpos;
 
     bool Login()    const;
     bool Register() const;
     void Display()  const override;
+    void Input()    const override;
     void Start()          override;
     void Update()         override;
 };

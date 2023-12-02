@@ -80,6 +80,11 @@ void LoginScene::Display() const
 	m_console->UpdateConsole();
 }
 
+void LoginScene::Input() const
+{
+
+}
+
 void LoginScene::Start()
 {
 	m_username = "";
