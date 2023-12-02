@@ -61,10 +61,34 @@ void SelectableObject::SetConections(SelectableObject* up, SelectableObject* dow
     m_rightObject = right;
 }
 
+void SelectableObject::CheckCursor()
+{
+    if (IsPointInside(m_im->GetCurrentCursorPosition()) &&
+        m_im->GetClickPressed())
+    {
+        m_selectedObject = this;
+        if (m_function)
+            m_function();
+    }
+}
+
 bool SelectableObject::IsPointInside(COORD point)
 {
-    if (m_upLeftCorner.X >= point.X && m_upLeftCorner.X + m_width < point.X &&
-        m_upLeftCorner.Y >= point.Y && m_upLeftCorner.Y + m_height < point.Y)
+    if (m_upLeftCorner.X <= point.X && m_upLeftCorner.X + m_width > point.X &&
+        m_upLeftCorner.Y <= point.Y && m_upLeftCorner.Y + m_height > point.Y)
         return true;
     return false;
+}
+
+void SelectableObject::SetColor()
+{
+    if (this == m_selectedObject)
+        m_cm->SetColor(m_selectedBackgroundColor, m_selectedTextColor);
+    else
+    {
+        if (IsPointInside(m_im->GetCurrentCursorPosition()))
+            m_cm->SetColor(m_hoverBackgroundColor, m_hoverTextColor);
+        else
+            m_cm->SetColor(m_backgroundColor, m_textColor);
+    }
 }
