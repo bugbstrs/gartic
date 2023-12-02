@@ -543,6 +543,9 @@ QPushButton:hover {
               </item>
               <item row="0" column="0">
                <widget class="ChatConversation" name="chatConversation">
+                <property name="cursor" stdset="0">
+                 <cursorShape>IBeamCursor</cursorShape>
+                </property>
                 <property name="styleSheet">
                  <string notr="true">background-color: white;</string>
                 </property>
@@ -706,6 +709,9 @@ QPushButton:hover {
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: lightgray;</string>
                       </property>
@@ -741,6 +747,9 @@ QPushButton:hover {
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: blue;</string>
                       </property>
@@ -756,6 +765,9 @@ QPushButton:hover {
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: #00d900;</string>
@@ -773,6 +785,9 @@ QPushButton:hover {
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: #025f37;</string>
                       </property>
@@ -788,6 +803,9 @@ QPushButton:hover {
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: darkred;</string>
@@ -805,6 +823,9 @@ QPushButton:hover {
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: #fe7025;</string>
                       </property>
@@ -820,6 +841,9 @@ QPushButton:hover {
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: purple;</string>
@@ -837,6 +861,9 @@ QPushButton:hover {
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: darkblue;</string>
                       </property>
@@ -853,6 +880,9 @@ QPushButton:hover {
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: gray;</string>
                       </property>
@@ -868,6 +898,9 @@ QPushButton:hover {
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: #b54b5d;</string>
@@ -923,6 +956,9 @@ QPushButton:hover {
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: #520052;</string>
                       </property>
@@ -938,6 +974,9 @@ QPushButton:hover {
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: #ffad00;</string>
@@ -955,6 +994,9 @@ QPushButton:hover {
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: #cd3000;</string>
                       </property>
@@ -970,6 +1012,9 @@ QPushButton:hover {
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: white;</string>
@@ -1006,6 +1051,9 @@ QPushButton:hover {
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: #0757b9;</string>
                       </property>
@@ -1021,6 +1069,9 @@ QPushButton:hover {
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: palevioletred;</string>
@@ -1038,6 +1089,9 @@ QPushButton:hover {
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: sienna;</string>
                       </property>
@@ -1053,6 +1107,9 @@ QPushButton:hover {
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: #63331c;</string>
@@ -1274,7 +1331,7 @@ QPushButton:hover {
                   <widget class="QLabel" name="wordToGuessLabel">
                    <property name="font">
                     <font>
-                     <pointsize>10</pointsize>
+                     <pointsize>9</pointsize>
                     </font>
                    </property>
                    <property name="text">
