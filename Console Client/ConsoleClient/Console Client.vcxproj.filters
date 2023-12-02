@@ -150,5 +150,11 @@
     <ClCompile Include="HorizontalLayout.cpp">
       <Filter>Modules\Implementation Units</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,10 +1,13 @@
 export module GUIObject;
 
 export import <Windows.h>;
+export import <string>;
 
 export import ConsoleManager;
 export import ColorType;
 export import Align;
+
+export using String = std::string;
 
 export typedef short int16_t;
 
@@ -39,4 +42,8 @@ protected:
     int16_t         m_width;
     int16_t         m_height;
     ConsoleManager* m_cm;
+
+    virtual void SetColor      ();
+    virtual void DrawContents  () = 0;
+    void         DrawBackground();
 };

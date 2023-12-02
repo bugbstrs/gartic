@@ -157,6 +157,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Button.cppm" />
     <ClCompile Include="HorizontalLayout.cpp" />
     <ClCompile Include="HorizontalLayout.cppm" />
     <ClCompile Include="InputField.cpp" />
