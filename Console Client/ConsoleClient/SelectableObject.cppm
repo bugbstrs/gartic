@@ -36,19 +36,22 @@ public:
                                 SelectableObject* left, SelectableObject* right);
 
     virtual void CheckInput () = 0;
+    void CheckCursor        ();
     
 protected:
-    ColorType         m_selectedBackgroundColor;
-    ColorType         m_selectedTextColor;
-    ColorType         m_hoverBackgroundColor;
-    ColorType         m_hoverTextColor;
-    SelectableObject* m_selectedObject;
-    SelectableObject* m_upObject;
-    SelectableObject* m_downObject;
-    SelectableObject* m_leftObject;
-    SelectableObject* m_rightObject;
-    InputManager*     m_im;
-    Function          m_function;
+    ColorType          m_selectedBackgroundColor;
+    ColorType          m_selectedTextColor;
+    ColorType          m_hoverBackgroundColor;
+    ColorType          m_hoverTextColor;
+    SelectableObject*& m_selectedObject;
+    SelectableObject*  m_upObject;
+    SelectableObject*  m_downObject;
+    SelectableObject*  m_leftObject;
+    SelectableObject*  m_rightObject;
+    InputManager*      m_im;
+    Function           m_function;
 
     bool IsPointInside(COORD point);
+
+    void SetColor() override;
 };
