@@ -58,3 +58,12 @@ std::string UsersEntity::GetUsername() const
 {
 	return username;
 }
+
+bool http::UsersEntity::operator==(const UsersEntity& secondUser) const noexcept
+{
+	return this->gamesPlayed == secondUser.gamesPlayed && 
+		   this->points == secondUser.points		   && 
+		   this->username == secondUser.username       && 
+		   this->password == secondUser.password       && 
+		   this->id == secondUser.id;
+}

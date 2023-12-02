@@ -23,6 +23,8 @@ namespace http
 		std::string GetPassword()	 const;
 		std::string GetUsername()	 const;
 
+		bool operator==(const UsersEntity& secondUser) const noexcept;
+
 	private:
 		int			gamesPlayed;
 		int			id;

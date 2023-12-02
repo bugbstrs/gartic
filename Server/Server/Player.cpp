@@ -42,8 +42,6 @@ void Player::AddPoints(uint16_t noOfPointsToBeAdded) noexcept
 bool Player::operator==(const Player& otherPlayer) const noexcept
 {
     return m_points == otherPlayer.m_points && m_user == otherPlayer.m_user;
-
-    // adauga == in UsersEntity !!!
 }
 
 Player& Player::operator=(const Player& otherPlayer) noexcept

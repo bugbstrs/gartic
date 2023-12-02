@@ -1,6 +1,5 @@
 #include "Lobby.h"
 
-
 void http::Lobby::JoinLobby(Player&& newPlayer)
 {
 	m_players.push_back(std::move(newPlayer));
