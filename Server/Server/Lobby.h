@@ -10,6 +10,7 @@
 #include "Game.h"
 
 #include "UserDoesntExistException.h"
+#include "NotEnoughPlayersException.h"
 
 namespace http
 {

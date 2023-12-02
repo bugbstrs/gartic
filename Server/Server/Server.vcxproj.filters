@@ -25,10 +25,28 @@
     <Filter Include="Database Files">
       <UniqueIdentifier>{efa3e69e-fd52-42f4-bd9f-88198c45d9ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entities">
-      <UniqueIdentifier>{ff5c042b-76c0-4b9d-8258-25f2968656cf}</UniqueIdentifier>
+    <Filter Include="Header Files\Logic">
+      <UniqueIdentifier>{336a6e29-cc16-40d0-8959-67437d67919b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Exceptions">
+    <Filter Include="Source Files\Logic">
+      <UniqueIdentifier>{03533bc1-183f-4e3c-b1ce-28f6c9cb6b91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Exceptions">
+      <UniqueIdentifier>{d65a0b92-c1ed-4ebb-b911-999f3f25ac0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Database">
+      <UniqueIdentifier>{fefb98f4-bbb3-43b4-bcac-6cfb008ce912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Route">
+      <UniqueIdentifier>{a4c16aec-b502-4b3f-8e0e-74b357f26102}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Database">
+      <UniqueIdentifier>{7447580e-c193-48bc-8c1c-42ab235810b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Route">
+      <UniqueIdentifier>{38ed4533-b6ad-407a-b498-0a7350f1a0a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Exceptions">
       <UniqueIdentifier>{d4e83d7f-30b4-4194-8c09-225f4c65cd83}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -47,82 +65,130 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HttpUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GarticDatabase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RouteManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BannedWordsEntity.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="QuotesEntity.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="UsersEntity.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="WordsEntity.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
     <ClInclude Include="GarticException.h">
-      <Filter>Exceptions</Filter>
+      <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="UserAlreadyExistsException.h">
-      <Filter>Exceptions</Filter>
+      <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="CannotFetchWordException.h">
-      <Filter>Exceptions</Filter>
+      <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="CannotFetchQuoteException.h">
-      <Filter>Exceptions</Filter>
+      <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="UserDoesntExistException.h">
-      <Filter>Exceptions</Filter>
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Chat.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Lobby.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="OngoingGame.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Round.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyConfig.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="NotEnoughPlayersException.h">
+      <Filter>Header Files\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="GarticDatabase.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="HttpUtils.h">
+      <Filter>Header Files\Route</Filter>
+    </ClInclude>
+    <ClInclude Include="RouteManager.h">
+      <Filter>Header Files\Route</Filter>
+    </ClInclude>
+    <ClInclude Include="BannedWordsEntity.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="QuotesEntity.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="UsersEntity.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="WordsEntity.h">
+      <Filter>Header Files\Database</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HttpUtils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GarticDatabase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RouteManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WordsEntity.cpp">
-      <Filter>Entities</Filter>
+    <ClCompile Include="Chat.cpp">
+      <Filter>Source Files\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="UsersEntity.cpp">
-      <Filter>Entities</Filter>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="QuotesEntity.cpp">
-      <Filter>Entities</Filter>
+    <ClCompile Include="Lobby.cpp">
+      <Filter>Source Files\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="BannedWordsEntity.cpp">
-      <Filter>Entities</Filter>
+    <ClCompile Include="OngoingGame.cpp">
+      <Filter>Source Files\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="GarticException.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="UserAlreadyExistsException.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Round.cpp">
+      <Filter>Source Files\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="CannotFetchWordException.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="LobbyConfig.cpp">
+      <Filter>Source Files\Logic</Filter>
     </ClCompile>
     <ClCompile Include="CannotFetchQuoteException.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="CannotFetchWordException.cpp">
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="NotEnoughPlayersException.cpp">
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="UserAlreadyExistsException.cpp">
+      <Filter>Source Files\Exceptions</Filter>
     </ClCompile>
     <ClCompile Include="UserDoesntExistException.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="GarticException.cpp">
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="GarticDatabase.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="RouteManager.cpp">
+      <Filter>Source Files\Route</Filter>
+    </ClCompile>
+    <ClCompile Include="HttpUtils.cpp">
+      <Filter>Source Files\Route</Filter>
+    </ClCompile>
+    <ClCompile Include="BannedWordsEntity.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="QuotesEntity.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="UsersEntity.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="WordsEntity.cpp">
+      <Filter>Source Files\Database</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,11 +1,13 @@
 #include "OngoingGame.h"
 
-void http::OngoingGame::AddLobby(const Lobby& newLobby): m_lobby{newLobby}
+void http::OngoingGame::AddLobby(const Lobby& newLobby) 
 {
+	m_lobby{ newLobby };
 }
 
-void http::OngoingGame::AddGame(const Game& newGame) : m_game{newGame}
+void http::OngoingGame::AddGame(const Game& newGame) 
 {
+	m_game{ newGame };
 }
 
 Lobby* http::OngoingGame::GetLobby() const noexcept

@@ -1,11 +1,13 @@
 #include "Game.h"
 
+using namespace http;
+
 Game::Game(std::vector<Player>&& newPlayers) :
-	m_timer{ Timer() },
+	//m_timer{ Timer() },
 	m_roundNumber{ 1 },
-	m_currRound{ Round() },
-	m_players{ std::move(newPlayers) },
-	m_chat{ Chat() }
+	//m_currRound{ Round() },
+	m_players{ std::move(newPlayers) }
+	//m_chat{ Chat() }
 {
 }
 
@@ -28,10 +30,10 @@ void Game::NextRound()
 	m_currRound = Round();
 }
 
-Timer Game::GetTimer() const noexcept
-{
-	return m_timer;
-}
+//Timer Game::GetTimer() const noexcept
+//{
+//	return m_timer;
+//}
 
 Round Game::GetCurrRound() const noexcept
 {

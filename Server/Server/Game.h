@@ -2,32 +2,34 @@
 
 #include "Round.h"
 #include "Chat.h"
+#include "Player.h"
 
 import Timer;
 
-class Game
+namespace http
 {
-public:
-	Game() = delete;
-	Game(std::vector<Player>&& newPlayers);
+	class Game
+	{
+	public:
+		Game(std::vector<Player>&& newPlayers);
 
-	void NextSubRound();
-	void NextRound();
+		void NextSubRound();
+		void NextRound();
 
-	Timer GetTimer() const noexcept;
-	Round GetCurrRound() const noexcept;
-	Chat GetChat() const noexcept;
+		//Timer GetTimer() const noexcept;
+		Round GetCurrRound() const noexcept;
+		Chat GetChat() const noexcept;
 
-private:
-	Timer m_timer;
+	private:
+		//Timer m_timer;
 
-	int m_roundNumber;
+		int m_roundNumber;
 
-	Round m_currRound;
+		Round m_currRound;
 
-	Chat m_chat;
+		Chat m_chat;
 
-	std::vector<Player> m_players;
-};
+		std::vector<Player> m_players;
+	};
 }
 
