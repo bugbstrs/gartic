@@ -7,6 +7,15 @@ void http::RouteManager::Run(GarticStorage& storage)
 		return "This is an example app of crow and sql-orm";
 	});
 
+    CreateFetchWordRoute(storage);
+    CreateFetchQuoteRoute(storage);
+    CreateFetchAllWordsRoute(storage);
+    CreateFetchAllUsersRoute(storage);
+    CreateFetchTop5UsersRoute(storage);
+    CreateLoginRoute(storage);
+    CreateRegisterRoute(storage);
+    CreateCheckBannedWordRoute(storage);
+
 	m_app
         .port(18080)
         .multithreaded()
