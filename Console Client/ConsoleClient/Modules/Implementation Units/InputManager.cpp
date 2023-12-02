@@ -119,8 +119,19 @@ COORD InputManager::CursorPositionInConsole()
     GetCursorPos(&cursorPos);
     ScreenToClient(consoleWindow, &cursorPos);
     
-    coord.X = cursorPos.x / 8;
-    coord.Y = cursorPos.y / 16;
+    COORD font{8,16};
+    //font = GetFontSize();
+
+    coord.X = cursorPos.x / font.X;
+    coord.Y = cursorPos.y / font.Y;
     
     return coord;
+}
+
+COORD InputManager::GetFontSize()
+{
+    //PCONSOLE_FONT_INFOEX fontInfo;
+    //GetCurrentConsoleFontEx(STD_OUTPUT_HANDLE, FALSE, fontInfo);
+    //return fontInfo->dwFontSize;
+    return {8,16};
 }

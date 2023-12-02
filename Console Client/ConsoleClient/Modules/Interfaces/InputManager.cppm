@@ -33,5 +33,6 @@ private:
 
     bool  IsCursorInConsole();
     COORD CursorPositionInConsole();
+    COORD GetFontSize();
     COORD m_cursorPosition;
 };
