@@ -51,3 +51,17 @@ int16_t GUIObject::GetHeight()
 {
     return m_height;
 }
+
+void GUIObject::SetColor()
+{
+    m_cm->SetColor(m_backgroundColor, m_textColor);
+}
+
+void GUIObject::DrawBackground()
+{
+    String s{""};
+    for (int i{0}; i < m_width; ++i)
+        s += " ";
+    for (int i{0}; i < m_height; ++i)
+        m_cm->WriteHorizontal(s, m_upLeftCorner.X, m_upLeftCorner.Y + i);
+}
