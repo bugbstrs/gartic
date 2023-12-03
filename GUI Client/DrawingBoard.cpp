@@ -4,12 +4,12 @@ DrawingBoard::DrawingBoard(QWidget *parent)
 	: QWidget(parent)
 {
 	setMouseTracking(true);
-    changePenPropertiesTo(Qt::black, 2);
+    changePenPropertiesTo(Qt::black, 4);
 }
 
 void DrawingBoard::mouseMoveEvent(QMouseEvent* event) {
     if (drawing) {
-        currentPath.lineTo(event->pos());
+        currentLine.pathCoordinates.push_back(event->pos());
         update();
     }
 }
@@ -17,7 +17,9 @@ void DrawingBoard::mouseMoveEvent(QMouseEvent* event) {
 void DrawingBoard::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
         drawing = true;
-        currentPath = QPainterPath(event->pos());
+        currentLine.pathCoordinates.push_back(event->pos());
+        currentLine.color = pen.color();
+        currentLine.width = pen.width();
         update();
     }
 }
@@ -25,7 +27,9 @@ void DrawingBoard::mousePressEvent(QMouseEvent* event) {
 void DrawingBoard::mouseReleaseEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton && drawing) {
         drawing = false;
-        paths.push_back(currentPath);
+        currentLine.pathCoordinates.push_back(event->pos());
+        coordinates.push_back(currentLine);
+        currentLine.pathCoordinates.clear();
         update();
     }
 }
@@ -41,6 +45,11 @@ void DrawingBoard::changePenColor(QColor color)
     pen.setColor(color);
 }
 
+void DrawingBoard::changePenWidth(int width)
+{
+    pen.setWidth(width);
+}
+
 
 void DrawingBoard::paintEvent(QPaintEvent* event) {
     if (firstPaint) {
@@ -50,14 +59,19 @@ void DrawingBoard::paintEvent(QPaintEvent* event) {
     else {
         QPainter painter(this);
 
-        painter.setPen(pen);
-        for (const auto& path : paths) {
-            painter.drawPath(path);
+        for (auto& drawnLine : coordinates) {
+            pen.setColor(drawnLine.color);
+            pen.setWidth(drawnLine.width);
+            painter.setPen(pen);
+            for (int index = 1; index < drawnLine.pathCoordinates.size(); index++) {
+                painter.drawLine(drawnLine.pathCoordinates[index - 1], drawnLine.pathCoordinates[index]);
+            }
         }
 
-        if (drawing) {
-            painter.setPen(pen);
-            painter.drawPath(currentPath);
-        }
+        pen.setColor(currentLine.color);
+        pen.setWidth(currentLine.width);
+        painter.setPen(pen);
+        for (int index = 1; index < currentLine.pathCoordinates.size(); index++)
+            painter.drawLine(currentLine.pathCoordinates[index - 1], currentLine.pathCoordinates[index]);
     }
 }

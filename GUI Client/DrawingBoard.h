@@ -1,9 +1,8 @@
 #pragma once
 
 #include <QWidget>
-#include <qpainter.h>
 #include <QMouseEvent>
-#include <qpainterpath.h>
+#include <qpainter.h>
 
 class DrawingBoard : public QWidget
 {
@@ -16,6 +15,7 @@ public:
 	//Functionality
 	void changePenPropertiesTo(QColor color, int width);
 	void changePenColor(QColor color);
+	void changePenWidth(int width);
 
 
 protected:
@@ -26,11 +26,16 @@ protected:
 
 
 private:
+	struct DrawnLine {
+		std::vector<QPointF> pathCoordinates;
+		QColor color;
+		int width;
+	};
 	bool firstPaint = true;
 	bool mouseOverBoard = false;
 	bool drawing = false;
 	QPen pen;
-	QPainterPath currentPath;
-	QList<QPainterPath> paths;
-	std::vector<QPointF> circles;
+	DrawnLine currentLine;
+	std::vector<DrawnLine> coordinates;
+	QPointF lastCoordinates;
 };

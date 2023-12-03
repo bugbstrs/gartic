@@ -40,8 +40,9 @@ void MenuScene::Start()
 
     auto layout{new HorizontalLayout{20, 5, Align::Left, Color::Black, 23, 1, m_console, 0}};
     layout->AddObject(new Label{Align::Left, Color::Black, Color::White, 5, 1, m_console, "User:"});
-    auto userField{new InputField{Align::Left, Color::Gray, Color::Black, 18, 1, Color::Blue, Color::White,
+    auto userField{new InputField{Align::Left, Color::Gray, Color::Black, 18, 1, Color::DarkBlue, Color::White,
                         m_console, m_input, m_selected, m_username}};
+    userField->SetHoverColors(Color::Blue, Color::White);
     layout->AddObject(userField);
     m_selectableObjects.emplace_back(userField);
 
@@ -49,23 +50,24 @@ void MenuScene::Start()
 
     layout = new HorizontalLayout{16, 6, Align::Left, Color::Black, 27, 1, m_console, 0};
     layout->AddObject(new Label{Align::Left, Color::Black, Color::White, 9, 1, m_console, "Password:"});
-    auto passwordField{new InputField{Align::Left, Color::Gray, Color::Black, 18, 1, Color::Blue, Color::White,
+    auto passwordField{new InputField{Align::Left, Color::Gray, Color::Black, 18, 1, Color::DarkBlue, Color::White,
                         m_console, m_input, m_selected, m_password}};
+    passwordField->SetHoverColors(Color::Blue, Color::White);
     layout->AddObject(passwordField);
     m_selectableObjects.emplace_back(passwordField);
 
     m_objects.emplace_back(layout);
 
-    auto loginButton{new Button{25, 10, Align::Left, Color::DarkGray, Color::Green, 5, 1, Color::Blue,
+    auto loginButton{new Button{25, 10, Align::Left, Color::DarkGray, Color::Green, 5, 1, Color::DarkBlue,
                         Color::White, m_console, m_input, m_selected, "LOGIN"}};
-    loginButton->SetHoverColors(Color::DarkBlue, Color::White);
+    loginButton->SetHoverColors(Color::Blue, Color::White);
     //loginButton->SetFunctionOnActivate();
     m_objects.emplace_back(loginButton);
     m_selectableObjects.emplace_back(loginButton);
 
-    auto registerButton{new Button{36, 10, Align::Left, Color::DarkGray, Color::Cyan, 8, 1, Color::Blue,
+    auto registerButton{new Button{36, 10, Align::Left, Color::DarkGray, Color::Cyan, 8, 1, Color::DarkBlue,
                         Color::White, m_console, m_input, m_selected, "REGISTER"}};
-    registerButton->SetHoverColors(Color::DarkBlue, Color::White);
+    registerButton->SetHoverColors(Color::Blue, Color::White);
     //loginButton->SetFunctionOnActivate();
     m_objects.emplace_back(registerButton);
     m_selectableObjects.emplace_back(registerButton);
