@@ -1,5 +1,7 @@
 module InputField;
 
+import <algorithm>;
+
 InputField::InputField(COORD upLeftCorner, Align align, ColorType backgroundColor,
 					   ColorType textColor, int16_t maxWidth, int16_t maxHeight,
 					   ColorType selectedBackgroungColor, ColorType selectedTextColor,
@@ -67,12 +69,31 @@ void InputField::CheckInput()
 			m_textPos--;
 		break;
 	case ControlKeys::RightArrow:
-		if (m_textPos + 1 < m_width * m_height)
+		if (m_textPos + 1 < m_width * m_height && m_text.size() > m_textPos)
 			m_textPos++;
 		break;
+	case ControlKeys::NotControl:
+		if (m_im->GetCurrentKeyboardInput())
+		{
+			size_t len{ m_text.size() };
+			m_im->UpdateString(m_text, m_textPos, m_width * m_height);
+			m_textPos += m_text.size() - len;
+
+			m_textPos = std::max(m_textPos, 0);
+			m_textPos = std::min(m_textPos, m_width * m_height - 1);
+		}
 	default:
 		break;
 	}
+	
+	if (IsPointInside(m_im->GetCurrentCursorPosition()) &&
+		m_im->GetClickPressed())
+	{
+		COORD cursorPos = m_im->GetCurrentCursorPosition();
+		m_textPos = std::min((int)m_text.size(), cursorPos.X - m_upLeftCorner.X +
+					(cursorPos.Y - m_upLeftCorner.Y) * m_width);
+	}
+
 }
 
 void InputField::DrawContents()
