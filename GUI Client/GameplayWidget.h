@@ -21,6 +21,7 @@ public:
 	~GameplayWidget();
 
 	void ChangePenColor(QColor color);
+	void ChangePenWidth(int width);
 
 public slots:
 	void showEvent(QShowEvent* event);

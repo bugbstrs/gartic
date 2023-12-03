@@ -12,6 +12,20 @@ void ToolsFrame::OnColorChange()
 	emit ColorChanged(qobject_cast<QPushButton*>(sender())->palette().color(QPalette::Button));
 }
 
+void ToolsFrame::OnWidthChange()
+{
+	int width;
+	QString buttonName = qobject_cast<QPushButton*>(sender())->objectName();
+	if (buttonName == kSmallWidthButton)
+		width = 4;
+	else if (buttonName == kMediumWidthButton)
+		width = 10;
+	else if (buttonName == kLargeWidthButton)
+		width = 18;
+	else width = 26;
+	emit WidthChanged(width);
+}
+
 void ToolsFrame::showEvent(QShowEvent* event) {
 	QObject::connect(findChild<QPushButton*>("blackColorButton"), &QPushButton::released, this, &ToolsFrame::OnColorChange);
 	QObject::connect(findChild<QPushButton*>("whiteColorButton"), &QPushButton::released, this, &ToolsFrame::OnColorChange);
@@ -45,6 +59,11 @@ void ToolsFrame::showEvent(QShowEvent* event) {
 
 	QObject::connect(findChild<QPushButton*>("brownColorButton"), &QPushButton::released, this, &ToolsFrame::OnColorChange);
 	QObject::connect(findChild<QPushButton*>("darkBrownColorButton"), &QPushButton::released, this, &ToolsFrame::OnColorChange);
+
+	QObject::connect(findChild<QPushButton*>("smallWidthButton"), &QPushButton::released, this, &ToolsFrame::OnWidthChange);
+	QObject::connect(findChild<QPushButton*>("mediumWidthButton"), &QPushButton::released, this, &ToolsFrame::OnWidthChange);
+	QObject::connect(findChild<QPushButton*>("largeWidthButton"), &QPushButton::released, this, &ToolsFrame::OnWidthChange);
+	QObject::connect(findChild<QPushButton*>("extraLargeWidthButton"), &QPushButton::released, this, &ToolsFrame::OnWidthChange);
 
 
 }

@@ -10,6 +10,12 @@
     <height>640</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -701,442 +707,541 @@ QPushButton:hover {
                     <property name="spacing">
                      <number>0</number>
                     </property>
-                    <item row="3" column="1">
-                     <widget class="QPushButton" name="grayColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: lightgray;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="4">
-                     <widget class="QPushButton" name="yellowColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: yellow;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="7">
-                     <widget class="QPushButton" name="blueColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: blue;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="5">
-                     <widget class="QPushButton" name="greenColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: #00d900;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="5">
-                     <widget class="QPushButton" name="darkGreenColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: #025f37;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="2">
-                     <widget class="QPushButton" name="darkRedColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: darkred;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="3">
-                     <widget class="QPushButton" name="orangeColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: #fe7025;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="8">
-                     <widget class="QPushButton" name="purpleColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: purple;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="7">
-                     <widget class="QPushButton" name="darkBlueColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: darkblue;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
                     <item row="4" column="1">
-                     <widget class="QPushButton" name="darkGrayColorButton">
+                     <widget class="QFrame" name="widthSettingsFrame">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>50</height>
+                       </size>
                       </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: gray;</string>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
                       </property>
-                      <property name="text">
-                       <string/>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
                       </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="9">
-                     <widget class="QPushButton" name="darkPinkColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: #b54b5d;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="6">
-                     <widget class="QPushButton" name="skyBlueColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: deepskyblue;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
+                      <layout class="QGridLayout" name="gridLayout_29">
+                       <item row="0" column="3">
+                        <widget class="QPushButton" name="largeWidthButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: white;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="2">
+                        <widget class="QPushButton" name="mediumWidthButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: white;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="1">
+                        <widget class="QPushButton" name="smallWidthButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: white;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="4">
+                        <widget class="QPushButton" name="extraLargeWidthButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: white;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                     </item>
                     <item row="4" column="0">
-                     <widget class="QPushButton" name="blackColorButton">
+                     <widget class="QFrame" name="colorsFrame">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
                       </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: black;</string>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
                       </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="8">
-                     <widget class="QPushButton" name="darkPurpleColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: #520052;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="4">
-                     <widget class="QPushButton" name="darkYellowColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: #ffad00;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="3">
-                     <widget class="QPushButton" name="darkOrangeColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: #cd3000;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="0">
-                     <widget class="QPushButton" name="whiteColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: white;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="2">
-                     <widget class="QPushButton" name="redColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: red;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="6">
-                     <widget class="QPushButton" name="darkSkyBlueColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: #0757b9;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="9">
-                     <widget class="QPushButton" name="pinkColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: palevioletred;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="3" column="10">
-                     <widget class="QPushButton" name="brownColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: sienna;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="4" column="10">
-                     <widget class="QPushButton" name="darkBrownColorButton">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: #63331c;</string>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
+                      <layout class="QGridLayout" name="gridLayout_30">
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <item row="0" column="0">
+                        <widget class="QPushButton" name="whiteColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: white;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="1">
+                        <widget class="QPushButton" name="grayColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: lightgray;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="2">
+                        <widget class="QPushButton" name="redColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: red;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="3">
+                        <widget class="QPushButton" name="orangeColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: #fe7025;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="4">
+                        <widget class="QPushButton" name="yellowColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: yellow;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="5">
+                        <widget class="QPushButton" name="greenColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: #00d900;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="6">
+                        <widget class="QPushButton" name="skyBlueColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: deepskyblue;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="7">
+                        <widget class="QPushButton" name="blueColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: blue;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="8">
+                        <widget class="QPushButton" name="purpleColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: purple;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="9">
+                        <widget class="QPushButton" name="pinkColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: palevioletred;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="10">
+                        <widget class="QPushButton" name="brownColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: sienna;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="0">
+                        <widget class="QPushButton" name="blackColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: black;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="1">
+                        <widget class="QPushButton" name="darkGrayColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: gray;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="2">
+                        <widget class="QPushButton" name="darkRedColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: darkred;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="3">
+                        <widget class="QPushButton" name="darkOrangeColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: #cd3000;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="4">
+                        <widget class="QPushButton" name="darkYellowColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: #ffad00;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="5">
+                        <widget class="QPushButton" name="darkGreenColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: #025f37;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="6">
+                        <widget class="QPushButton" name="darkSkyBlueColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: #0757b9;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="7">
+                        <widget class="QPushButton" name="darkBlueColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: darkblue;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="8">
+                        <widget class="QPushButton" name="darkPurpleColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: #520052;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="9">
+                        <widget class="QPushButton" name="darkPinkColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: #b54b5d;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="10">
+                        <widget class="QPushButton" name="darkBrownColorButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: #63331c;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                     </item>
                    </layout>
                   </widget>
-                 </item>
-                 <item row="0" column="3">
-                  <spacer name="horizontalSpacer_10">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>300</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
                  </item>
                  <item row="0" column="5">
                   <widget class="QFrame" name="buttonsFrame">
@@ -1258,21 +1363,21 @@ QPushButton:hover {
                    </layout>
                   </widget>
                  </item>
-                 <item row="0" column="2">
-                  <widget class="QFrame" name="frame">
-                   <property name="maximumSize">
+                 <item row="0" column="3">
+                  <spacer name="horizontalSpacer_10">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
                     <size>
-                     <width>16777215</width>
-                     <height>50</height>
+                     <width>300</width>
+                     <height>20</height>
                     </size>
                    </property>
-                   <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                  </widget>
+                  </spacer>
                  </item>
                 </layout>
                </widget>

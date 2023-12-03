@@ -15,6 +15,7 @@ public:
 	//Functionality
 	void changePenPropertiesTo(QColor color, int width);
 	void changePenColor(QColor color);
+	void changePenWidth(int width);
 
 
 protected:
@@ -25,11 +26,16 @@ protected:
 
 
 private:
+	struct DrawnLine {
+		std::vector<QPointF> pathCoordinates;
+		QColor color;
+		int width;
+	};
 	bool firstPaint = true;
 	bool mouseOverBoard = false;
 	bool drawing = false;
 	QPen pen;
-	std::pair<std::vector <QPointF>, QColor> currentLine;
-	std::vector<std::pair<std::vector<QPointF>, QColor>> coordinates;
+	DrawnLine currentLine;
+	std::vector<DrawnLine> coordinates;
 	QPointF lastCoordinates;
 };

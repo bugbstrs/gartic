@@ -15,10 +15,16 @@ public:
 public slots:
 	void showEvent(QShowEvent* event);
 	void OnColorChange();
+	void OnWidthChange();
 
 signals:
 	void ColorChanged(QColor color);
+	void WidthChanged(int width);
 
 private:
 	QPushButton* button;
+	const QString kSmallWidthButton = "smallWidthButton";
+	const QString kMediumWidthButton = "mediumWidthButton";
+	const QString kLargeWidthButton = "largeWidthButton";
+	const QString kExtraLargeWidthButton = "extraLargeWidthButton";
 };
