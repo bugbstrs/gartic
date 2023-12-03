@@ -9,7 +9,7 @@ DrawingBoard::DrawingBoard(QWidget *parent)
 
 void DrawingBoard::mouseMoveEvent(QMouseEvent* event) {
     if (drawing) {
-        currentPath.lineTo(event->pos());
+        currentLine.first.push_back(event->pos());
         update();
     }
 }
@@ -17,7 +17,8 @@ void DrawingBoard::mouseMoveEvent(QMouseEvent* event) {
 void DrawingBoard::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
         drawing = true;
-        currentPath = QPainterPath(event->pos());
+        currentLine.first.push_back(event->pos());
+        currentLine.second = pen.color();
         update();
     }
 }
@@ -25,7 +26,9 @@ void DrawingBoard::mousePressEvent(QMouseEvent* event) {
 void DrawingBoard::mouseReleaseEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton && drawing) {
         drawing = false;
-        paths.push_back(currentPath);
+        currentLine.first.push_back(event->pos());
+        coordinates.push_back(currentLine);
+        currentLine.first.clear();
         update();
     }
 }
@@ -49,15 +52,17 @@ void DrawingBoard::paintEvent(QPaintEvent* event) {
     }
     else {
         QPainter painter(this);
-
+        pen.setColor(currentLine.second);
         painter.setPen(pen);
-        for (const auto& path : paths) {
-            painter.drawPath(path);
-        }
+        for (int index = 1; index < currentLine.first.size(); index++)
+            painter.drawLine(currentLine.first[index - 1], currentLine.first[index]);
 
-        if (drawing) {
+        for (auto& drawnLine : coordinates) {
+            pen.setColor(drawnLine.second);
             painter.setPen(pen);
-            painter.drawPath(currentPath);
+            for (int index = 1; index < drawnLine.first.size(); index++) {
+                painter.drawLine(drawnLine.first[index - 1], drawnLine.first[index]);
+            }
         }
     }
 }
