@@ -400,3 +400,4 @@ FodyWeavers.xsd
 # Qt build files
 GUI Client/out/*
 *CMakeUserPresets.json
+*.sqlite
