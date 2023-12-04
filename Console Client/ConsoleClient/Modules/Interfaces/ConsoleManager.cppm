@@ -2,6 +2,7 @@ export module ConsoleManager;
 
 export import ColorType;
 import ConsoleBuffer;
+import Align;
 
 using String = std::string;
 using WString = std::wstring;
@@ -28,6 +29,10 @@ public:
 	void WriteHorizontal (const WString& sentence, int16_t x, int16_t y);
 	void WriteVertical   (const String& sentence, int16_t x, int16_t y);
 	void WriteVertical   (const WString& sentence, int16_t x, int16_t y);
+	void Write		     (const String& sentence, int16_t x, int16_t y, int16_t width, int16_t height,
+						  Align horizontal, Align vertical);
+	void Write			 (const WString& sentence, int16_t x, int16_t y, int16_t width, int16_t height,
+						  Align horizontal, Align vertical);
 	void Write			 (const char c, int16_t x, int16_t y);
 	void Write			 (const wchar_t c, int16_t x, int16_t y);
 	void UpdateConsole	 ();
