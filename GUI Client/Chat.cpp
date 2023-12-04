@@ -30,6 +30,6 @@ void Chat::showEvent(QShowEvent* event)
 {
 	chatWritingBox = findChild<ChatWritingBox*>("chatWritingBox");
 	chatConversation = findChild<ChatConversation*>("chatConversation"); 
-	QObject::connect(chatWritingBox, &ChatWritingBox::OnConversationWaitingForUpdate, this, &Chat::OnConversationWaitingForUpdate);
+	QObject::connect(chatWritingBox, &ChatWritingBox::OnConversationWaitingForUpdateSignal, this, &Chat::OnConversationWaitingForUpdate);
 	QWidget::showEvent(event);
 }

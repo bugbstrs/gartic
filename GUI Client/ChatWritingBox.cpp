@@ -11,6 +11,6 @@ ChatWritingBox::~ChatWritingBox()
 }
 
 void ChatWritingBox::OnEnterPressed() {
-	emit OnConversationWaitingForUpdate(text());
+	emit OnConversationWaitingForUpdateSignal(text());
 	clear();
 }

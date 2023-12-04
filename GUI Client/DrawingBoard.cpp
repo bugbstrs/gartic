@@ -4,7 +4,7 @@ DrawingBoard::DrawingBoard(QWidget *parent)
 	: QWidget(parent)
 {
 	setMouseTracking(true);
-    changePenPropertiesTo(Qt::black, 4);
+    ChangePenPropertiesTo(Qt::black, 4);
 }
 
 void DrawingBoard::mouseMoveEvent(QMouseEvent* event) {
@@ -35,21 +35,29 @@ void DrawingBoard::mouseReleaseEvent(QMouseEvent* event) {
     }
 }
 
-void DrawingBoard::changePenPropertiesTo(QColor color, int width)
+void DrawingBoard::ChangePenPropertiesTo(QColor color, int width)
 {
     currentLine.color = color;
     currentLine.width = width;
     pen.setCapStyle(Qt::RoundCap);
 }
 
-void DrawingBoard::changePenColor(QColor color)
+void DrawingBoard::ChangePenColor(QColor color)
 {
     pen.setColor(color);
 }
 
-void DrawingBoard::changePenWidth(int width)
+void DrawingBoard::ChangePenWidth(int width)
 {
     pen.setWidth(width);
+}
+
+void DrawingBoard::ClearCanvas()
+{
+    lastCoordinates = QPointF();
+    currentLine = DrawnLine();
+    drawnLines.clear();
+    update();
 }
 
 

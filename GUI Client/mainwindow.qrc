@@ -1,1 +1,6 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/image">
+        <file alias="trash">Resource Files/trash.png</file>
+        <file alias="black_circle">Resource Files/Circle.png</file>
+    </qresource>
+</RCC>

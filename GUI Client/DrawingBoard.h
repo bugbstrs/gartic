@@ -13,9 +13,10 @@ public:
 	DrawingBoard(QWidget* parent = nullptr);
 
 	//Functionality
-	void changePenPropertiesTo(QColor color, int width);
-	void changePenColor(QColor color);
-	void changePenWidth(int width);
+	void ChangePenPropertiesTo(QColor color, int width);
+	void ChangePenColor(QColor color);
+	void ChangePenWidth(int width);
+	void ClearCanvas();
 
 
 protected:
