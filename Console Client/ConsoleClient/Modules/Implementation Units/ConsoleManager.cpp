@@ -116,20 +116,42 @@ void ConsoleManager::Write(const String &sentence, int16_t x, int16_t y, int16_t
 
 	for (const String &word : words)
 	{
-		if (line.size() + word.size() + 1 > width) // next word doesn't fit into the line.
+		if (line.size() + word.size() < width)
+		{
+			if (!line.empty())
+				line.push_back(' ');
+
+			line.append(word);
+		} else
+		if (word.size() > width) // The word is bigger than the width
+		{
+			if (!line.empty())
+			{
+				lines.push_back(line);
+				line.clear();
+			}
+
+			int i{ 0 };
+			while (i < word.size())
+			{
+				line.push_back(word[i]);
+
+				++i;
+				if (i % width == 0)
+				{
+					lines.push_back(line);
+					line.clear();
+				}
+			}
+		} else // The line is full
 		{
 			lines.push_back(line);
 			line.clear();
 			line = word;
-		} else
-		{
-			if (!line.empty())
-			{
-				line.append(" ");
-			}
-			line.append(word);
 		}
 	}
+	if (!line.empty())
+		lines.push_back(line);
 
 	for (int i = lines.size(); i > height; --i)
 		lines.pop_back();
@@ -139,7 +161,7 @@ void ConsoleManager::Write(const String &sentence, int16_t x, int16_t y, int16_t
 		case Align::Up:
 			break;
 		case Align::Center:
-			y = (y + height) / 2 - lines.size() / 2;
+			y = y + height / 2 - lines.size() / 2;
 			break;
 		case Align::Down:
 			y = y + height - lines.size();
@@ -153,17 +175,18 @@ void ConsoleManager::Write(const String &sentence, int16_t x, int16_t y, int16_t
 		switch (horizontal)
 		{
 			case Align::Left:
-				m_buffers[m_bufferIndex].Write(sentence, x, y);
+				m_buffers[m_bufferIndex].Write(line, x, y);
 				break;
 			case Align::Center:
-				m_buffers[m_bufferIndex].Write(sentence, (x + width) / 2 - sentence.size() / 2, y);
+				m_buffers[m_bufferIndex].Write(line, (x + width) / 2 - line.size() / 2, y);
 				break;
 			case Align::Right:
-				m_buffers[m_bufferIndex].Write(sentence, x + width - sentence.size(), y);
+				m_buffers[m_bufferIndex].Write(line, x + width - line.size(), y);
 				break;
 			default:
 				break;
 		}
+		++y;
 	}
 }
 
