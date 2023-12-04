@@ -111,11 +111,6 @@ void InputField::DrawContents()
 		m_cm->SetCursor(true, cursorPos);
 	}
 
-	int index{0};
-	while (index < m_text.size())
-	{
-		m_cm->Write(m_text[index], m_upLeftCorner.X + index % m_width,
-					m_upLeftCorner.Y + index / m_width);
-		++index;
-	}
+	m_cm->Write(m_text, m_upLeftCorner.X, m_upLeftCorner.Y,
+				m_width, m_height, m_horizontalAlign, m_verticalAlign);
 }

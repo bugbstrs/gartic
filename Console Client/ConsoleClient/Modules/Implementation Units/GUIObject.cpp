@@ -62,9 +62,7 @@ void GUIObject::SetColor()
 
 void GUIObject::DrawBackground()
 {
-    String s{""};
-    for (int i{0}; i < m_width; ++i)
-        s += " ";
-    for (int i{0}; i < m_height; ++i)
-        m_cm->WriteHorizontal(s, m_upLeftCorner.X, m_upLeftCorner.Y + i);
+    String s(m_width * m_height, ' ');
+    m_cm->Write(s, m_upLeftCorner.X, m_upLeftCorner.Y,
+                m_width, m_height, m_horizontalAlign, m_verticalAlign);
 }
