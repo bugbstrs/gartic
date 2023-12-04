@@ -28,10 +28,10 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 	QObject::connect(toolsFrame, &ToolsFrame::ColorChanged, this, &GameplayWidget::ChangePenColor);
 	QObject::connect(toolsFrame, &ToolsFrame::WidthChanged, this, &GameplayWidget::ChangePenWidth);
 
-	cpr::Response response = cpr::Get(cpr::Url{ "http://localhost:18080/fetchword" });
+	/*cpr::Response response = cpr::Get(cpr::Url{ "http://localhost:18080/fetchword" });
 	auto word = crow::json::load(response.text);
 	std::string firstWord = std::string(word[0]["word"]);
 	QString newWord = QString::fromUtf8(firstWord);
 	wordToDraw->setText(newWord);
-	chat->SetWordToGuess(newWord);
+	chat->SetWordToGuess(newWord);*/
 }

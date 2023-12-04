@@ -8,8 +8,9 @@ DrawingBoard::DrawingBoard(QWidget *parent)
 }
 
 void DrawingBoard::mouseMoveEvent(QMouseEvent* event) {
-    if (drawing) {
+    if (drawing && event->pos() != lastCoordinates) {
         currentLine.pathCoordinates.push_back(event->pos());
+        lastCoordinates = event->pos();
         update();
     }
 }
@@ -28,7 +29,7 @@ void DrawingBoard::mouseReleaseEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton && drawing) {
         drawing = false;
         currentLine.pathCoordinates.push_back(event->pos());
-        coordinates.push_back(currentLine);
+        drawnLines.push_back(currentLine);
         currentLine.pathCoordinates.clear();
         update();
     }
@@ -36,8 +37,9 @@ void DrawingBoard::mouseReleaseEvent(QMouseEvent* event) {
 
 void DrawingBoard::changePenPropertiesTo(QColor color, int width)
 {
-    pen.setColor(color);
-    pen.setWidth(width);
+    currentLine.color = color;
+    currentLine.width = width;
+    pen.setCapStyle(Qt::RoundCap);
 }
 
 void DrawingBoard::changePenColor(QColor color)
@@ -59,7 +61,7 @@ void DrawingBoard::paintEvent(QPaintEvent* event) {
     else {
         QPainter painter(this);
 
-        for (auto& drawnLine : coordinates) {
+        for (auto& drawnLine : drawnLines) {
             pen.setColor(drawnLine.color);
             pen.setWidth(drawnLine.width);
             painter.setPen(pen);
@@ -67,11 +69,11 @@ void DrawingBoard::paintEvent(QPaintEvent* event) {
                 painter.drawLine(drawnLine.pathCoordinates[index - 1], drawnLine.pathCoordinates[index]);
             }
         }
-
         pen.setColor(currentLine.color);
         pen.setWidth(currentLine.width);
         painter.setPen(pen);
-        for (int index = 1; index < currentLine.pathCoordinates.size(); index++)
+        for (int index = 1; index < currentLine.pathCoordinates.size(); index++) {
             painter.drawLine(currentLine.pathCoordinates[index - 1], currentLine.pathCoordinates[index]);
+        }
     }
 }
