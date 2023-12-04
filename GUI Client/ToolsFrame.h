@@ -16,10 +16,12 @@ public slots:
 	void showEvent(QShowEvent* event);
 	void OnColorChange();
 	void OnWidthChange();
+	void OnCanvasCleared();
 
 signals:
-	void ColorChanged(QColor color);
-	void WidthChanged(int width);
+	void OnColorChangedSignal(QColor color);
+	void OnWidthChangedSignal(int width);
+	void OnCanvasClearedSignal();
 
 private:
 	QPushButton* button;

@@ -9,7 +9,7 @@ ToolsFrame::~ToolsFrame()
 
 void ToolsFrame::OnColorChange()
 {
-	emit ColorChanged(qobject_cast<QPushButton*>(sender())->palette().color(QPalette::Button));
+	emit OnColorChangedSignal(qobject_cast<QPushButton*>(sender())->palette().color(QPalette::Button));
 }
 
 void ToolsFrame::OnWidthChange()
@@ -23,7 +23,11 @@ void ToolsFrame::OnWidthChange()
 	else if (buttonName == kLargeWidthButton)
 		width = 18;
 	else width = 26;
-	emit WidthChanged(width);
+	emit OnWidthChangedSignal(width);
+}
+
+void ToolsFrame::OnCanvasCleared() {
+	emit OnCanvasClearedSignal();
 }
 
 void ToolsFrame::showEvent(QShowEvent* event) {
@@ -65,5 +69,5 @@ void ToolsFrame::showEvent(QShowEvent* event) {
 	QObject::connect(findChild<QPushButton*>("largeWidthButton"), &QPushButton::released, this, &ToolsFrame::OnWidthChange);
 	QObject::connect(findChild<QPushButton*>("extraLargeWidthButton"), &QPushButton::released, this, &ToolsFrame::OnWidthChange);
 
-
+	QObject::connect(findChild<QPushButton*>("clearDrawingBoardButton"), &QPushButton::released, this, &ToolsFrame::OnCanvasClearedSignal);
 }

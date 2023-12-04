@@ -14,5 +14,5 @@ public slots:
 	void OnEnterPressed();
 
 signals:
-	void OnConversationWaitingForUpdate(const QString& message);
+	void OnConversationWaitingForUpdateSignal(const QString& message);
 };
