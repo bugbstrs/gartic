@@ -53,7 +53,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="MainMenuScene">
        <property name="styleSheet">
@@ -2181,7 +2181,7 @@ padding: 5px 10px;</string>
                     <number>150</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="nameLabel">
+                    <widget class="QLabel" name="nameSignUpLabel">
                      <property name="maximumSize">
                       <size>
                        <width>100</width>
@@ -2204,7 +2204,7 @@ border: 0px; </string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="enterNameInput">
+                    <widget class="QLineEdit" name="enterNameSignUpInput">
                      <property name="maximumSize">
                       <size>
                        <width>200</width>
@@ -2236,7 +2236,7 @@ padding: 5px 10px;
                     <number>150</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="passwordLabel">
+                    <widget class="QLabel" name="passwordSignUpLabel">
                      <property name="maximumSize">
                       <size>
                        <width>145</width>
@@ -2259,7 +2259,7 @@ border: 0px;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="enterPasswordInput">
+                    <widget class="QLineEdit" name="enterPasswordSignUpInput">
                      <property name="maximumSize">
                       <size>
                        <width>200</width>
@@ -2270,6 +2270,9 @@ border: 0px;</string>
                       <string notr="true">border: 2px solid #000000;
 border-radius: 10px;
 padding: 5px 10px;</string>
+                     </property>
+                     <property name="echoMode">
+                      <enum>QLineEdit::Password</enum>
                      </property>
                      <property name="placeholderText">
                       <string>Enter your password here..</string>
@@ -2380,7 +2383,7 @@ QPushButton:hover {
                      </widget>
                     </item>
                     <item row="0" column="1">
-                     <widget class="QPushButton" name="logInButton">
+                     <widget class="QPushButton" name="goToLogInFromSignUpButton">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -2565,7 +2568,7 @@ padding: 5px 10px;
                     <number>150</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="label_4">
+                    <widget class="QLabel" name="nameLogInLabel">
                      <property name="maximumSize">
                       <size>
                        <width>100</width>
@@ -2588,7 +2591,7 @@ border: 0px;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="enterNameInput_2">
+                    <widget class="QLineEdit" name="enterNameLogInInput">
                      <property name="maximumSize">
                       <size>
                        <width>200</width>
@@ -2620,7 +2623,7 @@ padding: 5px 10px;
                     <number>150</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="label_5">
+                    <widget class="QLabel" name="passwordLogInLabel">
                      <property name="maximumSize">
                       <size>
                        <width>145</width>
@@ -2643,7 +2646,7 @@ border: 0px;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="enterPasswordInput_2">
+                    <widget class="QLineEdit" name="enterPasswordLogInInput">
                      <property name="maximumSize">
                       <size>
                        <width>200</width>
@@ -2688,12 +2691,15 @@ padding: 5px 10px;
                 </property>
                 <layout class="QGridLayout" name="gridLayout_33">
                  <item row="0" column="0">
-                  <widget class="QPushButton" name="logInButton_2">
+                  <widget class="QPushButton" name="logInButton">
                    <property name="maximumSize">
                     <size>
                      <width>300</width>
                      <height>100</height>
                     </size>
+                   </property>
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
                    </property>
                    <property name="styleSheet">
                     <string notr="true">QPushButton {
@@ -2748,7 +2754,7 @@ QPushButton:hover {
                      <number>1</number>
                     </property>
                     <item>
-                     <widget class="QLabel" name="label_6">
+                     <widget class="QLabel" name="noAccountLabel">
                       <property name="maximumSize">
                        <size>
                         <width>155</width>
@@ -2765,12 +2771,15 @@ border: 0px;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton_2">
+                     <widget class="QPushButton" name="goToSignUpFromLogInButton">
                       <property name="maximumSize">
                        <size>
                         <width>70</width>
                         <height>16777215</height>
                        </size>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">QPushButton {
