@@ -53,18 +53,18 @@ void HorizontalLayout::AddObject(GUIObject* object)
 	if (object->GetHeight() > m_height || object->GetWidth() > m_width)
 		return;
 
-	int16_t rightPoint{ object->GetWidth() };
-	if (!m_objects.empty())
-		rightPoint = m_objects[m_objects.size() - 1]->GetWidth() +
-					 object->GetWidth() - 1 + m_space;
+	int16_t length{object->GetWidth()};
 
-	while (rightPoint > m_width)
+	for (auto it = m_objects.rbegin(); it != m_objects.rend(); ++it)
 	{
-		m_objects.erase(m_objects.begin());
-		SetObjectsPosition();
-
-		rightPoint = m_objects[m_objects.size() - 1]->GetWidth() +
-					 object->GetWidth() - 1 + m_space;
+		length += (*it)->GetWidth() + m_space;
+		while (length > m_width)
+		{
+			if ((*m_objects.begin()) == (*it))
+				length -= (*it)->GetWidth() + m_space;
+			delete (*m_objects.begin());
+			m_objects.erase(m_objects.begin());
+		}
 	}
 
 	m_objects.push_back(object);
@@ -77,12 +77,51 @@ void HorizontalLayout::DrawContents()
 		obj->Draw();
 }
 
+int16_t HorizontalLayout::GetTotalWidth()
+{
+	int16_t total = 0;
+	for (auto &obj : m_objects)
+		total += obj->GetWidth();
+	return total;
+}
+
 void HorizontalLayout::SetObjectsPosition()
 {
-	COORD pos{m_upLeftCorner};
-	for (auto object : m_objects)
+	COORD pos;
+
+	switch (m_horizontalAlign)
 	{
+		case Align::Left:
+			pos.X = m_upLeftCorner.X;
+			break;
+		case Align::Center:
+			pos.X = m_upLeftCorner.X + m_width / 2 - GetTotalWidth() / 2;
+			break;
+		case Align::Right:
+			pos.X = m_upLeftCorner.X + m_width - GetTotalWidth();
+			break;
+		default:
+			break;
+	}
+
+	for (const auto& object : m_objects)
+	{
+		switch (m_verticalAlign)
+		{
+			case Align::Up:
+				pos.Y = m_upLeftCorner.Y;
+				break;
+			case Align::Center:
+				pos.Y = m_upLeftCorner.Y + m_height / 2 - object->GetHeight() / 2;
+				break;
+			case Align::Down:
+				pos.Y = m_upLeftCorner.Y + m_height - object->GetHeight();
+				break;
+			default:
+				break;
+		}
+
 		object->InitializeTransform(pos);
-		pos.X += object->GetWidth();
+		pos.X += object->GetWidth() + m_space;
 	}
 }

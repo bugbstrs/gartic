@@ -30,5 +30,6 @@ private:
 	int						m_space;
 
 	void DrawContents		() override;
+	int16_t GetTotalWidth	();
 	void SetObjectsPosition	();
 };
