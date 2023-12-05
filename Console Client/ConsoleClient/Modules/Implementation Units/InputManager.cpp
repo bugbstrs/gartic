@@ -11,12 +11,12 @@ void InputManager::ReadInput()
     if (IsCursorInConsole())
     {
         m_cursorPosition    = CursorPositionInConsole();
-        m_rightClickPressed = GetAsyncKeyState(VK_RBUTTON);
+        m_ClickPressed = GetAsyncKeyState(VK_RBUTTON) || GetAsyncKeyState(VK_LBUTTON);
     }
     else
     {
         m_cursorPosition    = { -1, -1 };
-        m_rightClickPressed = false;
+        m_ClickPressed = false;
     }
 
     m_isArrowKey = false;
@@ -56,7 +56,7 @@ void InputManager::UpdateString(String& text, int pos, int maxLength)
 
 bool InputManager::GetClickPressed()
 {
-    return m_rightClickPressed;
+    return m_ClickPressed;
 }
 
 char InputManager::GetCurrentKeyboardInput()

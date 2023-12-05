@@ -35,6 +35,9 @@ void ConsoleManager::NewConsole(const LPCWSTR title, int16_t width, int16_t heig
 	};
 
 	SetConsoleTitle(title);
+	DWORD mode;
+	GetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), &mode);
+	SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), mode);
 }
 
 void ConsoleManager::SetTextColor(ColorType color)
