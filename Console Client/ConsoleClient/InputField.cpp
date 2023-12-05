@@ -7,36 +7,42 @@ InputField::InputField(COORD upLeftCorner, Align horizontalAlign, Align vertical
 					   int16_t maxWidth, int16_t maxHeight,
 					   ColorType selectedBackgroungColor, ColorType selectedTextColor,
 					   ConsoleManager* cm, InputManager* im,
-					   SelectableObject*& selected, String& text) :
+					   SelectableObject*& selected, String& text, int maxTextLength) :
 	SelectableObject { upLeftCorner, horizontalAlign, verticalAlign, backgroundColor,
 					   textColor, maxWidth, maxHeight, selectedBackgroungColor,
 					   selectedTextColor, cm, im, selected							  },
 	m_text			 { text															  }
-{}
+{
+	m_maxTextLength = maxTextLength == -1 ? maxWidth * maxHeight : maxTextLength;
+}
 
 InputField::InputField(int16_t x, int16_t y, Align horizontalAlign, Align verticalAlign,
 					   ColorType backgroundColor, ColorType textColor,
 					   int16_t maxWidth, int16_t maxHeight,
 					   ColorType selectedBackgroungColor, ColorType selectedTextColor,
 					   ConsoleManager* cm, InputManager* im,
-					   SelectableObject*& selected, String& text) :
+					   SelectableObject*& selected, String& text, int maxTextLength) :
 	SelectableObject { x, y, horizontalAlign, verticalAlign, backgroundColor, textColor,
 					   maxWidth, maxHeight, selectedBackgroungColor, selectedTextColor,
 					   cm, im, selected													},
 	m_text			 { text																}
-{}
+{
+	m_maxTextLength = maxTextLength == -1 ? maxWidth * maxHeight : maxTextLength;
+}
 
 InputField::InputField(Align horizontalAlign, Align verticalAlign,
 					   ColorType backgroundColor, ColorType textColor,
 					   int16_t maxWidth, int16_t maxHeight,
 					   ColorType selectedBackgroungColor, ColorType selectedTextColor,
 					   ConsoleManager *cm, InputManager *im,
-					   SelectableObject *&selected, String &text):
+					   SelectableObject *&selected, String &text, int maxTextLength) :
 	SelectableObject { horizontalAlign, verticalAlign, backgroundColor, textColor,
 					   maxWidth, maxHeight, selectedBackgroungColor,
 					   selectedTextColor, cm, im, selected						  },
 	m_text			 { text														  }
-{}
+{
+	m_maxTextLength = maxTextLength == -1 ? maxWidth * maxHeight : maxTextLength;
+}
 
 void InputField::Draw()
 {
@@ -74,18 +80,18 @@ void InputField::CheckInput()
 			m_textPos--;
 		break;
 	case ControlKeys::RightArrow:
-		if (m_textPos + 1 < m_width * m_height && m_text.size() > m_textPos)
+		if (m_textPos + 1 < m_maxTextLength && m_text.size() > m_textPos)
 			m_textPos++;
 		break;
 	case ControlKeys::NotControl:
 		if (m_im->GetCurrentKeyboardInput())
 		{
 			size_t len{ m_text.size() };
-			m_im->UpdateString(m_text, m_textPos, m_width * m_height);
+			m_im->UpdateString(m_text, m_textPos, m_maxTextLength);
 			m_textPos += m_text.size() - len;
 
 			m_textPos = std::max(m_textPos, 0);
-			m_textPos = std::min(m_textPos, m_width * m_height - 1);
+			m_textPos = std::min(m_textPos, m_maxTextLength - 1);
 		}
 	default:
 		break;
