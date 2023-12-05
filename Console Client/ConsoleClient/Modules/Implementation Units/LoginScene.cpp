@@ -17,13 +17,15 @@ LoginScene::LoginScene(ConsoleManager* console, InputManager* inputManager) :
 
 void LoginScene::Login()
 {
-	//Init User
+	// Talk to server
+	User::Initialize(m_username, m_password);
 	m_nextScene = const_cast<std::type_info *>(&typeid(MenuScene));
 }
 
 void LoginScene::Register()
 {
-	//Init User
+	// Talk to server
+	User::Initialize(m_username, m_password);
 	m_nextScene = const_cast<std::type_info *>(&typeid(MenuScene));
 }
 
