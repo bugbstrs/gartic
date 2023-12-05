@@ -7,6 +7,7 @@ export import SelectableObject;
 export import ConsoleManager;
 export import InputManager;
 export import GUIObject;
+export import User;
 
 export class Scene
 {

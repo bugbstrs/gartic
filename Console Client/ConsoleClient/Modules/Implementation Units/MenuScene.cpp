@@ -28,56 +28,42 @@ void MenuScene::Input() const
     for (auto object : m_selectableObjects)
         object->CheckCursor();
 
-    m_selected->CheckInput();
+    //m_selected->CheckInput();
 }
 
 void MenuScene::Start()
 {
     m_nextScene = nullptr;
-    m_console->NewConsole(L"Menu", 60, 15);
+    m_console->NewConsole(L"Menu", 70, 20);
+
 
     m_objects.emplace_back(new Label{30, 2, Align::Left, Align::Up, Color::Cyan, Color::Magenta, 6, 1, m_console, "GARTIC"});
 
-    auto layout{new HorizontalLayout{16, 5, Align::Right, Align::Up, Color::Black, 27, 1, m_console, 0}};
-    layout->AddObject(new Label{Align::Left, Align::Up, Color::Black, Color::White, 5, 1, m_console, "User:"});
-    auto userField{new InputField{Align::Left, Align::Up, Color::Gray, Color::Black, 18, 1, Color::DarkBlue, Color::White,
-                        m_console, m_input, m_selected, m_username}};
-    userField->SetHoverColors(Color::Blue, Color::White);
-    layout->AddObject(userField);
-    m_selectableObjects.emplace_back(userField);
+
+    auto createLobbyButton{ new Button{25, 7, Align::Center, Align::Center, Color::DarkGray, Color::Green,
+                            14, 3, Color::DarkBlue, Color::White, m_console, m_input, m_selected, "Create Lobby"} };
+    createLobbyButton->SetHoverColors(Color::Blue, Color::White);
+    //createLobbyButton->SetFunctionOnActivate(std::bind(&LoginScene::Login, this));
+    m_objects.emplace_back(createLobbyButton);
+    m_selectableObjects.emplace_back(createLobbyButton);
+
+
+    auto layout{ new HorizontalLayout{25, 12, Align::Right, Align::Center, Color::Black, 30, 3, m_console, 0} };
+
+    auto joinLobbyButton{ new Button{Align::Center, Align::Center, Color::DarkGray, Color::Green,
+                          14, 3, Color::DarkBlue, Color::White, m_console, m_input, m_selected, "Join Lobby"} };
+    joinLobbyButton->SetHoverColors(Color::Blue, Color::White);
+    //joinLobbyButton->SetFunctionOnActivate(std::bind(&LoginScene::Login, this));
+    layout->AddObject(joinLobbyButton);
+    m_selectableObjects.emplace_back(joinLobbyButton);
+
+    auto codeField{ new InputField{Align::Left, Align::Center, Color::Gray, Color::Black, 5, 3, Color::DarkBlue, Color::White,
+                        m_console, m_input, m_selected, m_username, 5} };
+    codeField->SetHoverColors(Color::Blue, Color::White);
+    layout->AddObject(codeField);
+    m_selectableObjects.emplace_back(codeField);
 
     m_objects.emplace_back(layout);
-
-    layout = new HorizontalLayout{16, 6, Align::Right, Align::Up, Color::Black, 27, 1, m_console, 0};
-    layout->AddObject(new Label{Align::Left, Align::Up, Color::Black, Color::White, 9, 1, m_console, "Password:"});
-    auto passwordField{new InputField{Align::Left, Align::Up, Color::Gray, Color::Black, 18, 1, Color::DarkBlue, Color::White,
-                        m_console, m_input, m_selected, m_password}};
-    passwordField->SetHoverColors(Color::Blue, Color::White);
-    layout->AddObject(passwordField);
-    m_selectableObjects.emplace_back(passwordField);
-
-    m_objects.emplace_back(layout);
-
-    auto loginButton{new Button{25, 10, Align::Left, Align::Up, Color::DarkGray, Color::Green, 5, 1, Color::DarkBlue,
-                        Color::White, m_console, m_input, m_selected, "LOGIN"}};
-    loginButton->SetHoverColors(Color::Blue, Color::White);
-    //loginButton->SetFunctionOnActivate();
-    m_objects.emplace_back(loginButton);
-    m_selectableObjects.emplace_back(loginButton);
-
-    auto registerButton{new Button{36, 10, Align::Left, Align::Up, Color::DarkGray, Color::Cyan, 8, 1, Color::DarkBlue,
-                        Color::White, m_console, m_input, m_selected, "REGISTER"}};
-    registerButton->SetHoverColors(Color::Blue, Color::White);
-    //loginButton->SetFunctionOnActivate();
-    m_objects.emplace_back(registerButton);
-    m_selectableObjects.emplace_back(registerButton);
-
-    userField->SetConections(nullptr, passwordField, nullptr, nullptr);
-    passwordField->SetConections(userField, loginButton, nullptr, nullptr);
-    loginButton->SetConections(passwordField, nullptr, nullptr, registerButton);
-    registerButton->SetConections(passwordField, nullptr, loginButton, nullptr);
-
-    m_selected = userField;
 
     Display();
 }
