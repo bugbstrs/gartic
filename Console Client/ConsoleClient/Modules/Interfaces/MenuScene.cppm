@@ -16,14 +16,6 @@ public:
     ~MenuScene() = default;
 
 private:
-    enum class Options
-    {
-        PLAY,
-        STATS,
-        LOGOUT
-    };
-    Options m_option;
-
     SelectableObject* m_selected;
     String            m_password;
     String            m_username;
