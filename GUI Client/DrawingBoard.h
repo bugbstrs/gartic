@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QMouseEvent>
 #include <qpainter.h>
+#include <qpainterpath.h>
 
 class DrawingBoard : public QWidget
 {
@@ -26,18 +27,10 @@ protected:
 	void mouseReleaseEvent(QMouseEvent* event) override;
 
 private:
-	struct DrawnLine {
-		std::vector<QPointF> pathCoordinates;
-		QColor color;
-		int width;
-	};
-
-private:
 	bool firstPaint = true;
 	bool mouseOverBoard = false;
 	bool drawing = false;
 	QPen pen;
-	DrawnLine currentLine;
-	std::vector<DrawnLine> drawnLines;
-	QPointF lastCoordinates;
+	QPainterPath currentPath;
+	std::vector<std::pair<QPainterPath, QPen>> paths;
 };

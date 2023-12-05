@@ -651,7 +651,7 @@ QPushButton:hover {
                     </font>
                    </property>
                    <property name="text">
-                    <string>YOUR WORD</string>
+                    <string>WORD</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
