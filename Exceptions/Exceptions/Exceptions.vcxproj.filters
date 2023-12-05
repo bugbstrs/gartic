@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
@@ -15,35 +11,64 @@
     <Filter Include="Main">
       <UniqueIdentifier>{83b6be4e-3380-406c-94ab-afef73fad583}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Main\Source Files">
-      <UniqueIdentifier>{16786ba8-2f65-4e84-8d11-56260533cdfb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main\Header Files">
-      <UniqueIdentifier>{bd14fb34-ce9c-4dc7-95e4-672c6fe2f944}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Server\Header Files">
+    <Filter Include="Server\Modules">
       <UniqueIdentifier>{9cc6d326-2f30-4039-afca-a237c2bcc107}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Server\Source Files">
+    <Filter Include="Server\Implementation Units">
       <UniqueIdentifier>{a395e20a-526f-47f4-b61b-8c63ca679f62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\Modules">
+      <UniqueIdentifier>{bd14fb34-ce9c-4dc7-95e4-672c6fe2f944}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\Implementation Units">
+      <UniqueIdentifier>{16786ba8-2f65-4e84-8d11-56260533cdfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CannotFetchQuoteException.cpp">
+      <Filter>Server\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="CannotFetchQuoteException.cppm">
+      <Filter>Server\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="GarticException.cppm">
+      <Filter>Main\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="CannotFetchWordException.cppm">
+      <Filter>Server\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="NotEnoughPlayersException.cppm">
+      <Filter>Server\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="UserAlreadyExistsException.cppm">
+      <Filter>Server\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="UserDoesntExistException.cppm">
+      <Filter>Server\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="CannotFetchWordException.cpp">
+      <Filter>Server\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="NotEnoughPlayersException.cpp">
+      <Filter>Server\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="UserAlreadyExistsException.cpp">
+      <Filter>Server\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="UserDoesntExistException.cpp">
+      <Filter>Server\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="GarticException.cpp">
-      <Filter>Main\Source Files</Filter>
+      <Filter>Main\Implementation Units</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GarticException.h">
-      <Filter>Main\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CannotFetchQuoteException.h">
-      <Filter>Server\Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

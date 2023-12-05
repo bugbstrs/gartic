@@ -159,14 +159,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CannotFetchWordException.cpp" />
+    <ClCompile Include="NotEnoughPlayersException.cpp" />
+    <ClCompile Include="UserAlreadyExistsException.cpp" />
+    <ClCompile Include="UserDoesntExistException.cpp" />
+    <ClCompile Include="CannotFetchQuoteException.cpp" />
+    <ClCompile Include="CannotFetchWordException.cppm" />
+    <ClCompile Include="NotEnoughPlayersException.cppm" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="UserAlreadyExistsException.cppm" />
+    <ClCompile Include="UserDoesntExistException.cppm" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GarticException.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CannotFetchQuoteException.h" />
-    <ClInclude Include="GarticException.h" />
+    <ClCompile Include="CannotFetchQuoteException.cppm">
+      <FileType>Document</FileType>
+    </ClCompile>
+    <ClCompile Include="GarticException.cppm">
+      <FileType>Document</FileType>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
