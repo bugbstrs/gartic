@@ -166,7 +166,6 @@
     <ClCompile Include="CannotFetchQuoteException.cpp" />
     <ClCompile Include="CannotFetchWordException.cppm" />
     <ClCompile Include="NotEnoughPlayersException.cppm" />
-    <ClCompile Include="Source.cpp" />
     <ClCompile Include="UserAlreadyExistsException.cppm" />
     <ClCompile Include="UserDoesntExistException.cppm" />
   </ItemGroup>
