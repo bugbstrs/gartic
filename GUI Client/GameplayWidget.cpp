@@ -24,6 +24,16 @@ void GameplayWidget::OnCanvasCleared()
 	drawingBoard->ClearCanvas();
 }
 
+void GameplayWidget::OnUndoButtonReleased()
+{
+	drawingBoard->UndoLastPath();
+}
+
+void GameplayWidget::OnFillButtonReleased()
+{
+	drawingBoard->Fill();
+}
+
 void GameplayWidget::showEvent(QShowEvent* event) {
 	wordToDraw = findChild<QLabel*>("wordToGuessLabel");
 	drawingBoard = findChild<DrawingBoard*>("drawingBoardCanvas");
@@ -33,6 +43,10 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 	QObject::connect(toolsFrame, &ToolsFrame::OnColorChangedSignal, this, &GameplayWidget::ChangePenColor);
 	QObject::connect(toolsFrame, &ToolsFrame::OnWidthChangedSignal, this, &GameplayWidget::ChangePenWidth);
 	QObject::connect(toolsFrame, &ToolsFrame::OnCanvasClearedSignal, this, &GameplayWidget::OnCanvasCleared);
+	QObject::connect(toolsFrame, &ToolsFrame::OnUndoButtonReleasedSignal, this, &GameplayWidget::OnUndoButtonReleased);
+	QObject::connect(toolsFrame, &ToolsFrame::OnFillButtonReleasedSignal, this, &GameplayWidget::OnFillButtonReleased);
+	
+	chat->SetWordToGuess(wordToDraw->text());
 
 	/*cpr::Response response = cpr::Get(cpr::Url{ "http://localhost:18080/fetchword" });
 	auto word = crow::json::load(response.text);

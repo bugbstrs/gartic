@@ -17,6 +17,8 @@ public:
 	void ChangePenPropertiesTo(QColor color, int width);
 	void ChangePenColor(QColor color);
 	void ChangePenWidth(int width);
+	void UndoLastPath();
+	void Fill();
 	void ClearCanvas();
 
 

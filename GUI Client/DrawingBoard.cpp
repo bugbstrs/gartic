@@ -47,6 +47,16 @@ void DrawingBoard::ChangePenWidth(int width)
     pen.setWidth(width);
 }
 
+void DrawingBoard::UndoLastPath()
+{
+    paths.pop_back();
+    update();
+}
+
+void DrawingBoard::Fill()
+{
+}
+
 void DrawingBoard::ClearCanvas()
 {
     currentPath = QPainterPath();

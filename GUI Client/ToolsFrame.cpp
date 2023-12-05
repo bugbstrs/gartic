@@ -30,6 +30,16 @@ void ToolsFrame::OnCanvasCleared() {
 	emit OnCanvasClearedSignal();
 }
 
+void ToolsFrame::OnUndoButtonReleased()
+{
+	emit OnUndoButtonReleasedSignal();
+}
+
+void ToolsFrame::OnFillButtonReleased()
+{
+	emit OnFillButtonReleasedSignal();
+}
+
 void ToolsFrame::showEvent(QShowEvent* event) {
 	QObject::connect(findChild<QPushButton*>("blackColorButton"), &QPushButton::released, this, &ToolsFrame::OnColorChange);
 	QObject::connect(findChild<QPushButton*>("whiteColorButton"), &QPushButton::released, this, &ToolsFrame::OnColorChange);
@@ -70,4 +80,6 @@ void ToolsFrame::showEvent(QShowEvent* event) {
 	QObject::connect(findChild<QPushButton*>("extraLargeWidthButton"), &QPushButton::released, this, &ToolsFrame::OnWidthChange);
 
 	QObject::connect(findChild<QPushButton*>("clearDrawingBoardButton"), &QPushButton::released, this, &ToolsFrame::OnCanvasClearedSignal);
+	QObject::connect(findChild<QPushButton*>("undoButton"), &QPushButton::released, this, &ToolsFrame::OnUndoButtonReleased);
+	QObject::connect(findChild<QPushButton*>("fillButton"), &QPushButton::released, this, &ToolsFrame::OnFillButtonReleased);
 }

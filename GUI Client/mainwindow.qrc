@@ -2,5 +2,10 @@
     <qresource prefix="/image">
         <file alias="trash">Resource Files/trash.png</file>
         <file alias="black_circle">Resource Files/Circle.png</file>
+        <file alias="undo">Resource Files/undo.png</file>
+        <file alias="fill">Resource Files/fill.png</file>
+    </qresource>
+    <qresource prefix="/background">
+        <file>Resource Files/GarticBackground_2.png</file>
     </qresource>
 </RCC>

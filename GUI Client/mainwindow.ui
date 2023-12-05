@@ -16,6 +16,12 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>640</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -51,6 +57,9 @@
         <width>1920</width>
         <height>1920</height>
        </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
       </property>
       <property name="currentIndex">
        <number>1</number>
@@ -516,53 +525,6 @@ QPushButton:hover {
            </sizepolicy>
           </property>
           <layout class="QGridLayout" name="gridLayout_9">
-           <item row="0" column="1">
-            <widget class="Chat" name="chatFrame">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>240</width>
-               <height>805</height>
-              </size>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_2">
-              <item row="1" column="0">
-               <widget class="ChatWritingBox" name="chatWritingBox">
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;</string>
-                </property>
-                <property name="placeholderText">
-                 <string>Type your answer here...</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="ChatConversation" name="chatConversation">
-                <property name="cursor" stdset="0">
-                 <cursorShape>IBeamCursor</cursorShape>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;</string>
-                </property>
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
            <item row="0" column="0">
             <widget class="QFrame" name="boxesFrame">
              <property name="enabled">
@@ -593,141 +555,6 @@ QPushButton:hover {
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_10">
-              <item row="0" column="0" colspan="2">
-               <widget class="QFrame" name="topBarFrame">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>35</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;</string>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_28">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="timerLabel">
-                   <property name="text">
-                    <string>Timer</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <spacer name="horizontalSpacer_9">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>600</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="0" column="2">
-                  <widget class="QLabel" name="wordToGuessLabel">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>WORD</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="3">
-                  <spacer name="horizontalSpacer_13">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>430</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="1" column="0" colspan="2">
-               <layout class="QGridLayout" name="topPartFrame">
-                <property name="sizeConstraint">
-                 <enum>QLayout::SetMaximumSize</enum>
-                </property>
-                <property name="verticalSpacing">
-                 <number>6</number>
-                </property>
-                <item row="0" column="1">
-                 <widget class="DrawingBoard" name="drawingBoardCanvas" native="true">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>570</height>
-                   </size>
-                  </property>
-                  <property name="cursor">
-                   <cursorShape>CrossCursor</cursorShape>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: white;</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QTableWidget" name="scoreboardTable">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>230</width>
-                    <height>570</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: white;</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
               <item row="2" column="0">
                <widget class="QFrame" name="bottomFrame">
                 <property name="sizePolicy">
@@ -927,8 +754,8 @@ QPushButton:hover {
                     <property name="spacing">
                      <number>0</number>
                     </property>
-                    <item row="1" column="0">
-                     <widget class="QFrame" name="widthSettingsFrame">
+                    <item row="1" column="2">
+                     <widget class="QFrame" name="utilitiesFrame">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                         <horstretch>0</horstretch>
@@ -938,7 +765,7 @@ QPushButton:hover {
                       <property name="maximumSize">
                        <size>
                         <width>200</width>
-                        <height>50</height>
+                        <height>70</height>
                        </size>
                       </property>
                       <property name="frameShape">
@@ -947,15 +774,9 @@ QPushButton:hover {
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
-                      <layout class="QGridLayout" name="gridLayout_29">
-                       <property name="leftMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="verticalSpacing">
-                        <number>0</number>
-                       </property>
-                       <item row="0" column="3">
-                        <widget class="QPushButton" name="largeWidthButton">
+                      <layout class="QHBoxLayout" name="horizontalLayout">
+                       <item>
+                        <widget class="QPushButton" name="fillButton">
                          <property name="sizePolicy">
                           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                            <horstretch>0</horstretch>
@@ -970,22 +791,24 @@ QPushButton:hover {
                          </property>
                          <property name="maximumSize">
                           <size>
-                           <width>50</width>
-                           <height>50</height>
+                           <width>30</width>
+                           <height>30</height>
                           </size>
                          </property>
                          <property name="cursor">
                           <cursorShape>PointingHandCursor</cursorShape>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">background-color: white;</string>
+                          <string notr="true">background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                             stop: 0 #b0b0b0, stop: 1 #595959);
+border-radius: 15px;</string>
                          </property>
                          <property name="text">
                           <string/>
                          </property>
                          <property name="icon">
                           <iconset resource="mainwindow.qrc">
-                           <normaloff>:/image/black_circle</normaloff>:/image/black_circle</iconset>
+                           <normaloff>:/image/fill</normaloff>:/image/fill</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
@@ -995,8 +818,8 @@ QPushButton:hover {
                          </property>
                         </widget>
                        </item>
-                       <item row="0" column="2">
-                        <widget class="QPushButton" name="mediumWidthButton">
+                       <item>
+                        <widget class="QPushButton" name="undoButton">
                          <property name="sizePolicy">
                           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                            <horstretch>0</horstretch>
@@ -1011,92 +834,44 @@ QPushButton:hover {
                          </property>
                          <property name="maximumSize">
                           <size>
-                           <width>50</width>
-                           <height>50</height>
+                           <width>30</width>
+                           <height>30</height>
                           </size>
                          </property>
                          <property name="cursor">
                           <cursorShape>PointingHandCursor</cursorShape>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">background-color: white;</string>
+                          <string notr="true">background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                             stop: 0 #b0b0b0, stop: 1 #595959);
+border-radius: 15px;</string>
                          </property>
                          <property name="text">
                           <string/>
                          </property>
                          <property name="icon">
                           <iconset resource="mainwindow.qrc">
-                           <normaloff>:/image/black_circle</normaloff>:/image/black_circle</iconset>
+                           <normaloff>:/image/undo</normaloff>:/image/undo</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
-                           <width>16</width>
-                           <height>16</height>
+                           <width>20</width>
+                           <height>20</height>
                           </size>
                          </property>
                         </widget>
                        </item>
-                       <item row="0" column="1">
-                        <widget class="QPushButton" name="smallWidthButton">
+                       <item>
+                        <widget class="QPushButton" name="clearDrawingBoardButton">
                          <property name="sizePolicy">
                           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
-                         <property name="minimumSize">
-                          <size>
-                           <width>30</width>
-                           <height>30</height>
-                          </size>
-                         </property>
                          <property name="maximumSize">
                           <size>
-                           <width>50</width>
-                           <height>50</height>
-                          </size>
-                         </property>
-                         <property name="cursor">
-                          <cursorShape>PointingHandCursor</cursorShape>
-                         </property>
-                         <property name="toolTip">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/image/black_circle&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">background-color: white;</string>
-                         </property>
-                         <property name="text">
-                          <string/>
-                         </property>
-                         <property name="icon">
-                          <iconset resource="mainwindow.qrc">
-                           <normaloff>:/image/black_circle</normaloff>:/image/black_circle</iconset>
-                         </property>
-                         <property name="iconSize">
-                          <size>
-                           <width>12</width>
-                           <height>12</height>
-                          </size>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="4">
-                        <widget class="QPushButton" name="extraLargeWidthButton">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="minimumSize">
-                          <size>
                            <width>30</width>
-                           <height>30</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>50</width>
                            <height>50</height>
                           </size>
                          </property>
@@ -1104,19 +879,22 @@ QPushButton:hover {
                           <cursorShape>PointingHandCursor</cursorShape>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">background-color: white;</string>
+                          <string notr="true">background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                             stop: 0 #808080, stop: 1 #404040);
+
+border-radius: 15px;</string>
                          </property>
                          <property name="text">
                           <string/>
                          </property>
                          <property name="icon">
                           <iconset resource="mainwindow.qrc">
-                           <normaloff>:/image/black_circle</normaloff>:/image/black_circle</iconset>
+                           <normaloff>:/image/trash</normaloff>:/image/trash</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
-                           <width>24</width>
-                           <height>24</height>
+                           <width>26</width>
+                           <height>26</height>
                           </size>
                          </property>
                         </widget>
@@ -1124,7 +902,7 @@ QPushButton:hover {
                       </layout>
                      </widget>
                     </item>
-                    <item row="0" column="0" colspan="2">
+                    <item row="0" column="0" colspan="3">
                      <widget class="QFrame" name="colorsFrame">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -1575,8 +1353,8 @@ QPushButton:hover {
                       </layout>
                      </widget>
                     </item>
-                    <item row="1" column="1">
-                     <widget class="QFrame" name="utilitiesFrame">
+                    <item row="1" column="0">
+                     <widget class="QFrame" name="widthSettingsFrame">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                         <horstretch>0</horstretch>
@@ -1585,8 +1363,8 @@ QPushButton:hover {
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>70</width>
-                        <height>70</height>
+                        <width>200</width>
+                        <height>50</height>
                        </size>
                       </property>
                       <property name="frameShape">
@@ -1595,18 +1373,30 @@ QPushButton:hover {
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
-                      <layout class="QGridLayout" name="gridLayout_31">
-                       <item row="0" column="0">
-                        <widget class="QPushButton" name="clearDrawingBoardButton">
+                      <layout class="QGridLayout" name="gridLayout_29">
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="verticalSpacing">
+                        <number>0</number>
+                       </property>
+                       <item row="0" column="3">
+                        <widget class="QPushButton" name="largeWidthButton">
                          <property name="sizePolicy">
                           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
-                         <property name="maximumSize">
+                         <property name="minimumSize">
                           <size>
                            <width>30</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>50</width>
                            <height>50</height>
                           </size>
                          </property>
@@ -1614,20 +1404,145 @@ QPushButton:hover {
                           <cursorShape>PointingHandCursor</cursorShape>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">background-color: gray;
-border-radius: 15px;</string>
+                          <string notr="true">background-color: white;</string>
                          </property>
                          <property name="text">
                           <string/>
                          </property>
                          <property name="icon">
                           <iconset resource="mainwindow.qrc">
-                           <normaloff>:/image/trash</normaloff>:/image/trash</iconset>
+                           <normaloff>:/image/black_circle</normaloff>:/image/black_circle</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
-                           <width>26</width>
-                           <height>26</height>
+                           <width>20</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="2">
+                        <widget class="QPushButton" name="mediumWidthButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>30</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>50</width>
+                           <height>50</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: white;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="mainwindow.qrc">
+                           <normaloff>:/image/black_circle</normaloff>:/image/black_circle</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>16</width>
+                           <height>16</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="1">
+                        <widget class="QPushButton" name="smallWidthButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>30</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>50</width>
+                           <height>50</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="toolTip">
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/image/black_circle&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: white;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="mainwindow.qrc">
+                           <normaloff>:/image/black_circle</normaloff>:/image/black_circle</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>12</width>
+                           <height>12</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="4">
+                        <widget class="QPushButton" name="extraLargeWidthButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>30</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>50</width>
+                           <height>50</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: white;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="mainwindow.qrc">
+                           <normaloff>:/image/black_circle</normaloff>:/image/black_circle</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>24</width>
+                           <height>24</height>
                           </size>
                          </property>
                         </widget>
@@ -1636,6 +1551,191 @@ border-radius: 15px;</string>
                      </widget>
                     </item>
                    </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <layout class="QGridLayout" name="topPartFrame">
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetDefaultConstraint</enum>
+                </property>
+                <property name="verticalSpacing">
+                 <number>6</number>
+                </property>
+                <item row="0" column="1">
+                 <widget class="DrawingBoard" name="drawingBoardCanvas" native="true">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>1000</width>
+                    <height>570</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>CrossCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: white;</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QTableWidget" name="scoreboardTable">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>230</width>
+                    <height>570</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: white;</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="0" column="0">
+               <widget class="QFrame" name="topBarFrame">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>35</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_28">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="timerLabel">
+                   <property name="text">
+                    <string>Timer</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <spacer name="horizontalSpacer_9">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>600</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QLabel" name="wordToGuessLabel">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>cuvant</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3">
+                  <spacer name="horizontalSpacer_13">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>430</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="0" column="1" rowspan="3">
+               <widget class="Chat" name="chatFrame">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>240</width>
+                  <height>870</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_2">
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <item row="1" column="0">
+                  <widget class="ChatWritingBox" name="chatWritingBox">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: white;</string>
+                   </property>
+                   <property name="placeholderText">
+                    <string>Type your answer here...</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="ChatConversation" name="chatConversation">
+                   <property name="cursor" stdset="0">
+                    <cursorShape>IBeamCursor</cursorShape>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: white;</string>
+                   </property>
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
                   </widget>
                  </item>
                 </layout>

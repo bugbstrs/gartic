@@ -17,11 +17,15 @@ public slots:
 	void OnColorChange();
 	void OnWidthChange();
 	void OnCanvasCleared();
+	void OnUndoButtonReleased();
+	void OnFillButtonReleased();
 
 signals:
 	void OnColorChangedSignal(QColor color);
 	void OnWidthChangedSignal(int width);
 	void OnCanvasClearedSignal();
+	void OnUndoButtonReleasedSignal();
+	void OnFillButtonReleasedSignal();
 
 private:
 	QPushButton* button;
