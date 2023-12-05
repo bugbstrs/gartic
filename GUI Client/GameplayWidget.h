@@ -29,6 +29,7 @@ public slots:
 	void OnUndoButtonReleased();
 	void OnFillButtonReleased();
 	void OnCanvasCleared();
+	void OnPencilButtonReleased();
 
 private:
 	QLabel* wordToDraw;

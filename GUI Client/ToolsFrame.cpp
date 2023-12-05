@@ -45,6 +45,11 @@ void ToolsFrame::OnEraserButtonReleased()
 	emit OnEraserButtonReleasedSignal();
 }
 
+void ToolsFrame::OnPencilButtonReleased()
+{
+	emit OnPencilButtonReleasedSignal();
+}
+
 void ToolsFrame::showEvent(QShowEvent* event) {
 	QObject::connect(findChild<QPushButton*>("blackColorButton"), &QPushButton::released, this, &ToolsFrame::OnColorChange);
 	QObject::connect(findChild<QPushButton*>("whiteColorButton"), &QPushButton::released, this, &ToolsFrame::OnColorChange);
@@ -88,4 +93,5 @@ void ToolsFrame::showEvent(QShowEvent* event) {
 	QObject::connect(findChild<QPushButton*>("undoButton"), &QPushButton::released, this, &ToolsFrame::OnUndoButtonReleased);
 	QObject::connect(findChild<QPushButton*>("fillButton"), &QPushButton::released, this, &ToolsFrame::OnFillButtonReleased);
 	QObject::connect(findChild<QPushButton*>("eraserButton"), &QPushButton::released, this, &ToolsFrame::OnEraserButtonReleased);
+	QObject::connect(findChild<QPushButton*>("pencilButton"), &QPushButton::released, this, &ToolsFrame::OnPencilButtonReleased);
 }

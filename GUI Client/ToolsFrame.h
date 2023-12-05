@@ -20,6 +20,7 @@ public slots:
 	void OnUndoButtonReleased();
 	void OnFillButtonReleased();
 	void OnEraserButtonReleased();
+	void OnPencilButtonReleased();
 
 signals:
 	void OnColorChangedSignal(QColor color);
@@ -28,6 +29,7 @@ signals:
 	void OnUndoButtonReleasedSignal();
 	void OnFillButtonReleasedSignal();
 	void OnEraserButtonReleasedSignal();
+	void OnPencilButtonReleasedSignal();
 
 private:
 	QPushButton* button;

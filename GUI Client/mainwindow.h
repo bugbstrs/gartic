@@ -27,7 +27,8 @@ private slots:
     //Drawing scene
     void OnLeaveGameButtonReleased();
     void OnEraserButtonReleased();
-    void OnEraserDisabled();
+    void OnPencilEnabled();
+    void OnFillEnabled();
 
     //Stats scene
     void OnBackToMenuButtonReleased();
@@ -42,5 +43,6 @@ private:
     Ui::MainWindow* ui;
     bool isUserLoggedIn;
     QCursor eraserCursor;
+    QCursor fillCursor;
 };
 #endif // MAINWINDOW_H
