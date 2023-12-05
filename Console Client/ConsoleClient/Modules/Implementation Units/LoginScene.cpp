@@ -4,96 +4,97 @@ import <algorithm>;
 import <print>;
 import <string>;
 
-import InputManager;
+import Label;
+import Button;
+import InputField;
+import HorizontalLayout;
+
+using Color = ColorType;
 
 LoginScene::LoginScene(ConsoleManager* console, InputManager* inputManager) :
 	Scene{ console, inputManager }
 {}
 
-bool LoginScene::Login() const
+void LoginScene::Login()
 {
 	//Init User
-	return true;
+	m_nextScene = const_cast<std::type_info *>(&typeid(MenuScene));
 }
 
-bool LoginScene::Register() const
+void LoginScene::Register()
 {
 	//Init User
-	return false;
+	m_nextScene = const_cast<std::type_info *>(&typeid(MenuScene));
 }
 
 void LoginScene::Display() const
 {
-	//Title
-	m_console->SetColor(ColorType::Cyan, ColorType::Magenta);
-	m_console->WriteHorizontal("GARTIC", 30, 2);
+	for (auto object : m_objects)
+		object->Draw();
 
-	//Username Field
-	m_console->SetColor(ColorType::Black, ColorType::White);
-	m_console->WriteHorizontal("User:", 20, 5);
-
-	m_option == Options::USER ? m_console->SetColor(ColorType::Blue, ColorType::White)
-		: m_console->SetColor(ColorType::Gray, ColorType::Black);
-	m_console->WriteHorizontal("                  ", 28, 5);
-	m_console->WriteHorizontal(m_username, 28, 5);
-
-	//Password Field
-	m_console->SetColor(ColorType::Black, ColorType::White);
-	m_console->WriteHorizontal("Password:", 18, 6);
-
-	if (m_option == Options::PASSWORD)
-		m_console->SetColor(ColorType::Blue, ColorType::White);
-	else
-		m_console->SetColor(ColorType::Gray, ColorType::Black);
-	m_console->WriteHorizontal("                  ", 28, 6);
-	m_console->WriteHorizontal(m_password, 28, 6);
-
-	//Login Button
-	if (m_option == Options::LOGIN)
-		m_console->SetColor(ColorType::Blue, ColorType::White);
-	else
-		m_console->SetColor(ColorType::DarkGray, ColorType::Green);
-
-	m_console->WriteHorizontal("Login", 25, 10);
-
-	//Register Button
-	if (m_option == Options::REGISTER)
-		m_console->SetColor(ColorType::Blue, ColorType::White);
-	else
-		m_console->SetColor(ColorType::DarkGray, ColorType::Cyan);
-
-	m_console->WriteHorizontal("Register", 36, 10);
-
-	//Controls
-	m_console->SetColor(ColorType::Black, ColorType::Gray);
-	m_console->WriteHorizontal("Use right click or arrow keys", 30, 12);
-	m_console->WriteHorizontal("to select options And Enter to confirm", 30, 13);
-
-	//Cursor position
-	m_console->SetCursor(false);
-	if (m_option == Options::USER)
-		m_console->SetCursor(true, 23 + m_textpos, 5);
-	if (m_option == Options::PASSWORD)
-		m_console->SetCursor(true, 23 + m_textpos, 6);
-
-	//Update console
 	m_console->UpdateConsole();
 }
 
 void LoginScene::Input() const
 {
+	m_input->ReadInput();
 
+	for (auto object : m_selectableObjects)
+		object->CheckCursor();
+
+	m_selected->CheckInput();
 }
 
 void LoginScene::Start()
 {
 	m_username = "";
 	m_password = "";
-	m_option = Options::USER;
-	m_textpos = 0;
 	m_nextScene = nullptr;
-
 	m_console->NewConsole(L"Login", 60, 15);
+
+	m_objects.emplace_back(new Label{30, 2, Align::Left, Align::Up, Color::Cyan, Color::Magenta, 6, 1, m_console, "GARTIC"});
+
+	auto layout{new HorizontalLayout{16, 5, Align::Right, Align::Up, Color::Black, 27, 1, m_console, 0}};
+	layout->AddObject(new Label{Align::Left, Align::Up, Color::Black, Color::White, 5, 1, m_console, "User:"});
+	auto userField{new InputField{Align::Left, Align::Up, Color::Gray, Color::Black, 18, 1, Color::DarkBlue, Color::White,
+						m_console, m_input, m_selected, m_username}};
+	userField->SetHoverColors(Color::Blue, Color::White);
+	layout->AddObject(userField);
+	m_selectableObjects.emplace_back(userField);
+
+	m_objects.emplace_back(layout);
+
+	layout = new HorizontalLayout{16, 6, Align::Right, Align::Up, Color::Black, 27, 1, m_console, 0};
+	layout->AddObject(new Label{Align::Left, Align::Up, Color::Black, Color::White, 9, 1, m_console, "Password:"});
+	auto passwordField{new InputField{Align::Left, Align::Up, Color::Gray, Color::Black, 18, 1, Color::DarkBlue, Color::White,
+						m_console, m_input, m_selected, m_password}};
+	passwordField->SetHoverColors(Color::Blue, Color::White);
+	layout->AddObject(passwordField);
+	m_selectableObjects.emplace_back(passwordField);
+
+	m_objects.emplace_back(layout);
+
+	auto loginButton{new Button{25, 10, Align::Left, Align::Up, Color::DarkGray, Color::Green, 5, 1, Color::DarkBlue,
+						Color::White, m_console, m_input, m_selected, "LOGIN"}};
+	loginButton->SetHoverColors(Color::Blue, Color::White);
+	loginButton->SetFunctionOnActivate(std::bind(&LoginScene::Login, this));
+	m_objects.emplace_back(loginButton);
+	m_selectableObjects.emplace_back(loginButton);
+
+	auto registerButton{new Button{35, 10, Align::Left, Align::Up, Color::DarkGray, Color::Cyan, 8, 1, Color::DarkBlue,
+						Color::White, m_console, m_input, m_selected, "REGISTER"}};
+	registerButton->SetHoverColors(Color::Blue, Color::White);
+	registerButton->SetFunctionOnActivate(std::bind(&LoginScene::Register, this));
+	m_objects.emplace_back(registerButton);
+	m_selectableObjects.emplace_back(registerButton);
+
+	userField->SetConections(nullptr, passwordField, nullptr, nullptr);
+	passwordField->SetConections(userField, loginButton, nullptr, nullptr);
+	loginButton->SetConections(passwordField, nullptr, nullptr, registerButton);
+	registerButton->SetConections(passwordField, nullptr, loginButton, nullptr);
+
+	m_selected = userField;
+
 	Display();
 }
 
@@ -101,77 +102,7 @@ void LoginScene::Update()
 {
 	while (m_nextScene == nullptr)
 	{
-		m_input->ReadInput();
-		if (m_input->GetCurrentKeyboardInput())
-		{
-			switch (m_input->ControlKey())
-			{
-			case ControlKeys::UpArrow:
-				if (m_option == Options::PASSWORD)
-				{
-					m_option = Options::USER;
-					m_textpos = std::min((int)m_username.size(), 17);
-				}
-				if (m_option > Options::PASSWORD)
-				{
-					m_option = Options::PASSWORD;
-					m_textpos = std::min((int)m_password.size(), 17);
-				}
-				break;
-			case ControlKeys::DownArrow:
-				if (m_option == Options::USER)
-					m_textpos = std::min((int)m_password.size(), 17);
-				if (m_option <= Options::PASSWORD)
-					m_option = static_cast<Options>(static_cast<int>(m_option) + 1);
-				break;
-			case ControlKeys::LeftArrow:
-				if (m_option == Options::REGISTER)
-					m_option = Options::LOGIN;
-				if (m_option < Options::LOGIN)
-					m_textpos = std::max(m_textpos - 1, 0);
-				break;
-			case ControlKeys::RightArrow:
-				if (m_option == Options::LOGIN)
-					m_option = Options::REGISTER;
-				if (m_option == Options::USER)
-					m_textpos = std::min(m_textpos + 1, std::min((int)m_username.size(), 17));
-				if (m_option == Options::PASSWORD)
-					m_textpos = std::min(m_textpos + 1, std::min((int)m_password.size(), 17));
-				break;
-			case ControlKeys::Enter:
-				if (m_option == Options::LOGIN && Login())
-					m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
-				if (m_option == Options::REGISTER && Register())
-					m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
-				break;
-			default:
-				break;
-			}
-			if (m_input->ControlKey() == ControlKeys::NotControl)
-			{
-				if (m_option == Options::USER)
-				{
-					size_t len{ m_username.size() };
-					m_input->UpdateString(m_username, m_textpos, 18);
-					m_textpos += m_username.size() - len;
-				}
-				if (m_option == Options::PASSWORD)
-				{
-					size_t len{ m_password.size() };
-					m_input->UpdateString(m_password, m_textpos, 18);
-					m_textpos += m_password.size() - len;
-				}
-				m_textpos = std::max(m_textpos, 0);
-				m_textpos = std::min(m_textpos, 17);
-			}
-		}
-
-		if (m_input->GetClickPressed())
-		{
-			//check what object was pressed
-		}
-
-		if (m_input->GetCurrentKeyboardInput() || m_input->GetClickPressed())
-			Display();
+		Input();
+		Display();
 	}
 }
