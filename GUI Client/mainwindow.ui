@@ -764,7 +764,7 @@ QPushButton:hover {
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>200</width>
+                        <width>250</width>
                         <height>70</height>
                        </size>
                       </property>
@@ -775,6 +775,43 @@ QPushButton:hover {
                        <enum>QFrame::Raised</enum>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout">
+                       <item>
+                        <widget class="QPushButton" name="pencilButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>30</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>30</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                             stop: 0 #b0b0b0, stop: 1 #595959);
+border-radius: 15px;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="mainwindow.qrc">
+                           <normaloff>:/image/pencil</normaloff>:/image/pencil</iconset>
+                         </property>
+                        </widget>
+                       </item>
                        <item>
                         <widget class="QPushButton" name="fillButton">
                          <property name="sizePolicy">
@@ -809,6 +846,49 @@ border-radius: 15px;</string>
                          <property name="icon">
                           <iconset resource="mainwindow.qrc">
                            <normaloff>:/image/fill</normaloff>:/image/fill</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>20</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="eraserButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>30</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>30</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                             stop: 0 #b0b0b0, stop: 1 #595959);
+border-radius: 15px;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="mainwindow.qrc">
+                           <normaloff>:/image/eraser</normaloff>:/image/eraser</iconset>
                          </property>
                          <property name="iconSize">
                           <size>

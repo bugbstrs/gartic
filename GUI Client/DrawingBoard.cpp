@@ -15,11 +15,12 @@ void DrawingBoard::mouseMoveEvent(QMouseEvent* event) {
 }
 
 void DrawingBoard::mousePressEvent(QMouseEvent* event) {
-    if (event->button() == Qt::LeftButton) {
+    if (event->button() == Qt::LeftButton && !readyToFill) {
         drawing = true;
         currentPath = QPainterPath(event->pos());
         update();
     }
+    else FloodFill(event->pos(), image.pixelColor(event->pos()), pen.color());
 }
 
 void DrawingBoard::mouseReleaseEvent(QMouseEvent* event) {
@@ -28,6 +29,45 @@ void DrawingBoard::mouseReleaseEvent(QMouseEvent* event) {
         paths.push_back({ currentPath, pen });
         update();
     }
+}
+
+void DrawingBoard::resizeEvent(QResizeEvent* event)
+{
+    QWidget::resizeEvent(event);
+    image = QImage(size(), QImage::Format_ARGB32);
+    image.fill(Qt::white);
+}
+
+void DrawingBoard::FloodFill(QPoint startingPoint, QColor startingColor, QColor colorToBeFilledWith)
+{
+    if (!image.rect().contains(startingPoint))
+        return;
+
+    if (image.pixelColor(startingPoint) != startingColor)
+        return;
+
+    QPoint currentPoint;
+    std::queue<QPoint> pointsQueue;
+    pointsQueue.push(startingPoint);
+
+    while (!pointsQueue.empty()) {
+        currentPoint = pointsQueue.front();
+        pointsQueue.pop();
+
+        if (!image.rect().contains(currentPoint))
+            continue;
+
+        if (image.pixelColor(currentPoint) != startingColor)
+            continue;
+
+        image.setPixelColor(currentPoint, colorToBeFilledWith);
+
+        pointsQueue.push(QPoint(currentPoint.x() + 1, currentPoint.y()));
+        pointsQueue.push(QPoint(currentPoint.x(), currentPoint.y() + 1));
+        pointsQueue.push(QPoint(currentPoint.x() - 1, currentPoint.y()));
+        pointsQueue.push(QPoint(currentPoint.x(), currentPoint.y() - 1));
+    }
+    update();
 }
 
 void DrawingBoard::ChangePenPropertiesTo(QColor color, int width)
@@ -47,6 +87,15 @@ void DrawingBoard::ChangePenWidth(int width)
     pen.setWidth(width);
 }
 
+void DrawingBoard::ToggleEraser(bool value)
+{
+    if (value) {
+        pen.setColor(Qt::white);
+    }
+    readyToFill = false;
+    update();
+}
+
 void DrawingBoard::UndoLastPath()
 {
     paths.pop_back();
@@ -55,12 +104,14 @@ void DrawingBoard::UndoLastPath()
 
 void DrawingBoard::Fill()
 {
+    readyToFill = true;
 }
 
 void DrawingBoard::ClearCanvas()
 {
     currentPath = QPainterPath();
     paths.clear();
+    image.fill(Qt::white);
     update();
 }
 
@@ -70,7 +121,10 @@ void DrawingBoard::paintEvent(QPaintEvent* event) {
         firstPaint = false;
     }
     else {
-        QPainter painter(this);
+        QPainter imagePainter(this);
+        imagePainter.drawImage(0, 0, image);
+
+        QPainter painter(&image);
 
         for (auto& path : paths) {
             painter.setPen(path.second);
