@@ -47,6 +47,12 @@ void DrawingBoard::ChangePenWidth(int width)
     pen.setWidth(width);
 }
 
+void DrawingBoard::ToggleEraser()
+{
+    pen.setColor(Qt::white);
+    update();
+}
+
 void DrawingBoard::UndoLastPath()
 {
     paths.pop_back();

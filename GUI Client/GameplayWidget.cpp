@@ -24,6 +24,11 @@ void GameplayWidget::OnCanvasCleared()
 	drawingBoard->ClearCanvas();
 }
 
+void GameplayWidget::OnEraserButtonReleased()
+{
+	drawingBoard->ToggleEraser();
+}
+
 void GameplayWidget::OnUndoButtonReleased()
 {
 	drawingBoard->UndoLastPath();
@@ -42,9 +47,10 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 
 	QObject::connect(toolsFrame, &ToolsFrame::OnColorChangedSignal, this, &GameplayWidget::ChangePenColor);
 	QObject::connect(toolsFrame, &ToolsFrame::OnWidthChangedSignal, this, &GameplayWidget::ChangePenWidth);
-	QObject::connect(toolsFrame, &ToolsFrame::OnCanvasClearedSignal, this, &GameplayWidget::OnCanvasCleared);
+	QObject::connect(toolsFrame, &ToolsFrame::OnEraserButtonReleasedSignal, this, &GameplayWidget::OnEraserButtonReleased);
 	QObject::connect(toolsFrame, &ToolsFrame::OnUndoButtonReleasedSignal, this, &GameplayWidget::OnUndoButtonReleased);
 	QObject::connect(toolsFrame, &ToolsFrame::OnFillButtonReleasedSignal, this, &GameplayWidget::OnFillButtonReleased);
+	QObject::connect(toolsFrame, &ToolsFrame::OnCanvasClearedSignal, this, &GameplayWidget::OnCanvasCleared);
 	
 	chat->SetWordToGuess(wordToDraw->text());
 

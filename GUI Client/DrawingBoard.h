@@ -17,6 +17,7 @@ public:
 	void ChangePenPropertiesTo(QColor color, int width);
 	void ChangePenColor(QColor color);
 	void ChangePenWidth(int width);
+	void ToggleEraser();
 	void UndoLastPath();
 	void Fill();
 	void ClearCanvas();
@@ -32,6 +33,7 @@ private:
 	bool firstPaint = true;
 	bool mouseOverBoard = false;
 	bool drawing = false;
+	bool eraserEnabled = false;
 	QPen pen;
 	QPainterPath currentPath;
 	std::vector<std::pair<QPainterPath, QPen>> paths;

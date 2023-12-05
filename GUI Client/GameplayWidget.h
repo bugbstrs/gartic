@@ -25,9 +25,10 @@ public:
 
 public slots:
 	void showEvent(QShowEvent* event);
-	void OnCanvasCleared();
+	void OnEraserButtonReleased();
 	void OnUndoButtonReleased();
 	void OnFillButtonReleased();
+	void OnCanvasCleared();
 
 private:
 	QLabel* wordToDraw;

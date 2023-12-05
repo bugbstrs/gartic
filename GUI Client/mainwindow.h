@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <qcursor.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,6 +26,8 @@ private slots:
 
     //Drawing scene
     void OnLeaveGameButtonReleased();
+    void OnEraserButtonReleased();
+    void OnEraserDisabled();
 
     //Stats scene
     void OnBackToMenuButtonReleased();
@@ -38,5 +41,6 @@ private:
     /*std::unique_ptr<Ui::MainWindow> ui = std::make_unique<Ui::MainWindow>();*/
     Ui::MainWindow* ui;
     bool isUserLoggedIn;
+    QCursor eraserCursor;
 };
 #endif // MAINWINDOW_H

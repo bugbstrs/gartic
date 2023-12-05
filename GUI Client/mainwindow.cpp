@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     isUserLoggedIn = false;
+    eraserCursor = QCursor(QPixmap(":/image/eraser_cursor").scaled(25, 25));
+
     //Main menu scene connections
     QObject::connect(ui->playButton, &QPushButton::released, this, &MainWindow::OnPlayButtonReleased);
     QObject::connect(ui->quitButton, &QPushButton::released, this, &MainWindow::OnQuitButtonReleased);
@@ -16,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Game scene connections
     QObject::connect(ui->leaveGameButton, &QPushButton::released, this, &MainWindow::OnLeaveGameButtonReleased);
+    QObject::connect(ui->eraserButton, &QPushButton::released, this, &MainWindow::OnEraserButtonReleased);
+    QObject::connect(ui->pencilButton, &QPushButton::released, this, &MainWindow::OnEraserDisabled);
+    QObject::connect(ui->toolsFrame, &ToolsFrame::OnColorChangedSignal, this, &MainWindow::OnEraserDisabled);
 
     //Stats scene connections
     QObject::connect(ui->backToMenuButton, &QPushButton::released, this, &MainWindow::OnBackToMenuButtonReleased);
@@ -41,10 +46,11 @@ void MainWindow::OnGoToSignUpButtonReleased() { ui->stackedWidget->setCurrentInd
 
 //Game scene events
 void MainWindow::OnLeaveGameButtonReleased() { ui->stackedWidget->setCurrentIndex(0); }
+void MainWindow::OnEraserButtonReleased() { QApplication::setOverrideCursor(eraserCursor); }
+void MainWindow::OnEraserDisabled() { QApplication::restoreOverrideCursor(); }
 
 // Stats scene events
 void MainWindow::OnBackToMenuButtonReleased() { ui->stackedWidget->setCurrentIndex(0); }
-
 
 //Sign Up scene
 void MainWindow::OnGoToLogInFromSignUpButtonReleased() { ui->stackedWidget->setCurrentIndex(4); }
