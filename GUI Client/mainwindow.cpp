@@ -19,6 +19,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Stats scene connections
     QObject::connect(ui->backToMenuButton, &QPushButton::released, this, &MainWindow::OnBackToMenuButtonReleased);
+
+    //Sign Up scene
+    QObject::connect(ui->goToLogInFromSignUpButton, &QPushButton::released, this, &MainWindow::OnGoToLogInFromSignUpButtonReleased);
+
+    //Log In scene
+    QObject::connect(ui->goToSignUpFromLogInButton, &QPushButton::released, this, &MainWindow::OnGoToSignUpFromLogInButtonReleased);
 }
 
 MainWindow::~MainWindow() {
@@ -26,32 +32,23 @@ MainWindow::~MainWindow() {
 }
 
 
-
-
 //Main menu events
-
 void MainWindow::OnPlayButtonReleased() { ui->stackedWidget->setCurrentIndex(1); }
-
 void MainWindow::OnQuitButtonReleased() { QCoreApplication::quit(); }
-
 void MainWindow::OnStatsButtonReleased() { ui->stackedWidget->setCurrentIndex(2); }
-
 void MainWindow::OnGoToLogInButtonReleased() { ui->stackedWidget->setCurrentIndex(4); }
-
 void MainWindow::OnGoToSignUpButtonReleased() { ui->stackedWidget->setCurrentIndex(3); }
 
-
-
-
 //Game scene events
-
 void MainWindow::OnLeaveGameButtonReleased() { ui->stackedWidget->setCurrentIndex(0); }
 
-
-
-
-
 // Stats scene events
-
 void MainWindow::OnBackToMenuButtonReleased() { ui->stackedWidget->setCurrentIndex(0); }
+
+
+//Sign Up scene
+void MainWindow::OnGoToLogInFromSignUpButtonReleased() { ui->stackedWidget->setCurrentIndex(4); }
+
+//Log in scene
+void MainWindow::OnGoToSignUpFromLogInButtonReleased() { ui->stackedWidget->setCurrentIndex(3); }
 

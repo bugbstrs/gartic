@@ -28,7 +28,7 @@ public:
 
 private:
     bool m_isArrowKey;
-    bool m_rightClickPressed;
+    bool m_ClickPressed;
     char m_lastKeyPressed;
 
     bool  IsCursorInConsole();

@@ -4,24 +4,27 @@ import <string>;
 
 using String = std::string;
 
-HorizontalLayout::HorizontalLayout(COORD upLeftCorner, Align align, ColorType backgroundColor,
-								   int16_t maxWidth, int16_t maxHeight, ConsoleManager* cm,
-								   int space) :
-	GUIObject { upLeftCorner, align, backgroundColor, backgroundColor, maxWidth, maxHeight, cm },
-	m_space	  { space																		   }
+HorizontalLayout::HorizontalLayout(COORD upLeftCorner, Align horizontalAlign, Align verticalAlign,
+								   ColorType backgroundColor, int16_t maxWidth, int16_t maxHeight,
+								   ConsoleManager* cm, int space) :
+	GUIObject { upLeftCorner, horizontalAlign, verticalAlign, backgroundColor,
+				backgroundColor, maxWidth, maxHeight, cm					  },
+	m_space	  { space														  }
 {}
 
-HorizontalLayout::HorizontalLayout(int16_t x, int16_t y, Align align, ColorType backgroundColor,
-								   int16_t maxWidth, int16_t maxHeight, ConsoleManager* cm,
-							       int space) :
-	GUIObject { x, y, align, backgroundColor, backgroundColor, maxWidth, maxHeight, cm },
-	m_space   { space																   }
+HorizontalLayout::HorizontalLayout(int16_t x, int16_t y, Align horizontalAlign, Align verticalAlign,
+								   ColorType backgroundColor, int16_t maxWidth, int16_t maxHeight,
+								   ConsoleManager* cm, int space) :
+	GUIObject { x, y, horizontalAlign, verticalAlign, backgroundColor,
+				backgroundColor, maxWidth, maxHeight, cm			  },
+	m_space   { space												  }
 {}
 
-HorizontalLayout::HorizontalLayout(Align align, ColorType backgroundColor, int16_t maxWidth,
-								   int16_t maxHeight, ConsoleManager *cm, int space):
-	GUIObject { align, backgroundColor, backgroundColor, maxWidth, maxHeight, cm },
-	m_space	  { space															 }
+HorizontalLayout::HorizontalLayout(Align horizontalAlign, Align verticalAlign, ColorType backgroundColor,
+								   int16_t maxWidth, int16_t maxHeight, ConsoleManager *cm, int space):
+	GUIObject { horizontalAlign, verticalAlign, backgroundColor,
+				backgroundColor, maxWidth, maxHeight, cm		},
+	m_space	  { space											}
 {}
 
 HorizontalLayout::~HorizontalLayout()

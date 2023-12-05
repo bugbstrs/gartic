@@ -13,9 +13,10 @@ public:
 	DrawingBoard(QWidget* parent = nullptr);
 
 	//Functionality
-	void changePenPropertiesTo(QColor color, int width);
-	void changePenColor(QColor color);
-	void changePenWidth(int width);
+	void ChangePenPropertiesTo(QColor color, int width);
+	void ChangePenColor(QColor color);
+	void ChangePenWidth(int width);
+	void ClearCanvas();
 
 
 protected:
@@ -24,18 +25,19 @@ protected:
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
 
-
 private:
 	struct DrawnLine {
 		std::vector<QPointF> pathCoordinates;
 		QColor color;
 		int width;
 	};
+
+private:
 	bool firstPaint = true;
 	bool mouseOverBoard = false;
 	bool drawing = false;
 	QPen pen;
 	DrawnLine currentLine;
-	std::vector<DrawnLine> coordinates;
+	std::vector<DrawnLine> drawnLines;
 	QPointF lastCoordinates;
 };

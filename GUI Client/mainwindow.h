@@ -29,7 +29,11 @@ private slots:
     //Stats scene
     void OnBackToMenuButtonReleased();
 
-    //SignUp scene
+    //Sign Up scene
+    void OnGoToLogInFromSignUpButtonReleased();
+
+    //Log In scene
+    void OnGoToSignUpFromLogInButtonReleased();
 private:
     /*std::unique_ptr<Ui::MainWindow> ui = std::make_unique<Ui::MainWindow>();*/
     Ui::MainWindow* ui;

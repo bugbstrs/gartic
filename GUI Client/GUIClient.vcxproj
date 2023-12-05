@@ -118,6 +118,8 @@
     <ClCompile Include="Chat.cpp" />
     <ClCompile Include="ChatConversation.cpp" />
     <ClCompile Include="ChatWritingBox.cpp" />
+    <ClCompile Include="LogInManager.cpp" />
+    <ClCompile Include="SignUpManager.cpp" />
     <ClCompile Include="ToolsFrame.cpp" />
     <ClCompile Include="GameplayWidget.cpp" />
     <ClCompile Include="MatchHistoryTable.cpp" />
@@ -148,6 +150,12 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ToolsFrame.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="SignUpManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="LogInManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -1,9 +1,10 @@
 module GUIObject;
 
-GUIObject::GUIObject(COORD upLeftCorner, Align align, ColorType backgroundColor, ColorType textColor,
-                     int16_t maxWidth, int16_t maxHeight, ConsoleManager* cm):
+GUIObject::GUIObject(COORD upLeftCorner, Align horizontalAlign, Align verticalAlign, ColorType backgroundColor,
+                     ColorType textColor, int16_t maxWidth, int16_t maxHeight, ConsoleManager* cm):
     m_upLeftCorner    { upLeftCorner    },
-    m_align           { align           },
+    m_horizontalAlign { horizontalAlign },
+    m_verticalAlign   { verticalAlign   },
     m_backgroundColor { backgroundColor },
     m_textColor       { textColor       },
     m_width           { maxWidth        },
@@ -11,10 +12,11 @@ GUIObject::GUIObject(COORD upLeftCorner, Align align, ColorType backgroundColor,
     m_cm              { cm              }
 {}
 
-GUIObject::GUIObject(int16_t x, int16_t y, Align align, ColorType backgroundColor, ColorType textColor,
-                     int16_t maxWidth, int16_t maxHeight, ConsoleManager* cm):
+GUIObject::GUIObject(int16_t x, int16_t y, Align horizontalAlign, Align verticalAlign, ColorType backgroundColor,
+                     ColorType textColor, int16_t maxWidth, int16_t maxHeight, ConsoleManager* cm):
     m_upLeftCorner    { x, y            },
-    m_align           { align           },
+    m_horizontalAlign { horizontalAlign },
+    m_verticalAlign   { verticalAlign   },
     m_backgroundColor { backgroundColor },
     m_textColor       { textColor       },
     m_width           { maxWidth        },
@@ -22,9 +24,10 @@ GUIObject::GUIObject(int16_t x, int16_t y, Align align, ColorType backgroundColo
     m_cm              { cm              }
 {}
 
-GUIObject::GUIObject(Align align, ColorType backgroundColor, ColorType textColor, int16_t maxWidth,
-                     int16_t maxHeight, ConsoleManager* cm) :
-    m_align           { align           },
+GUIObject::GUIObject(Align horizontalAlign, Align verticalAlign, ColorType backgroundColor, ColorType textColor,
+                     int16_t maxWidth, int16_t maxHeight, ConsoleManager* cm) :
+    m_horizontalAlign { horizontalAlign },
+    m_verticalAlign   { verticalAlign   },
     m_backgroundColor { backgroundColor },
     m_textColor       { textColor       },
     m_width           { maxWidth        },
@@ -59,9 +62,7 @@ void GUIObject::SetColor()
 
 void GUIObject::DrawBackground()
 {
-    String s{""};
-    for (int i{0}; i < m_width; ++i)
-        s += " ";
-    for (int i{0}; i < m_height; ++i)
-        m_cm->WriteHorizontal(s, m_upLeftCorner.X, m_upLeftCorner.Y + i);
+    String s(m_width * m_height, ' ');
+    m_cm->Write(s, m_upLeftCorner.X, m_upLeftCorner.Y,
+                m_width, m_height, m_horizontalAlign, m_verticalAlign);
 }

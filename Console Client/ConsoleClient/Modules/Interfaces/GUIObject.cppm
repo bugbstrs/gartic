@@ -15,12 +15,12 @@ export class GUIObject
 {
 public:
     // Constructors
-    GUIObject(COORD upLeftCorner, Align align, ColorType backgroundColor, ColorType textColor,
+    GUIObject(COORD upLeftCorner, Align horizontalAlign, Align verticalAlign, ColorType backgroundColor,
+              ColorType textColor, int16_t maxWidth, int16_t maxHeight, ConsoleManager* cm);
+    GUIObject(int16_t x, int16_t y, Align horizontalAlign, Align verticalAlign, ColorType backgroundColor,
+              ColorType textColor, int16_t maxWidth, int16_t maxHeight, ConsoleManager* cm);
+    GUIObject(Align horizontalAlign, Align verticalAlign, ColorType backgroundColor, ColorType textColor,
               int16_t maxWidth, int16_t maxHeight, ConsoleManager* cm);
-    GUIObject(int16_t x, int16_t y, Align align, ColorType backgroundColor, ColorType textColor,
-              int16_t maxWidth, int16_t maxHeight, ConsoleManager* cm);
-    GUIObject(Align align, ColorType backgroundColor, ColorType textColor, int16_t maxWidth,
-              int16_t maxHeight, ConsoleManager* cm);
     
     // Destructor
     virtual ~GUIObject() = default;
@@ -35,7 +35,8 @@ public:
     int16_t GetHeight    ();
 
 protected:
-    Align           m_align;
+    Align           m_horizontalAlign;
+    Align           m_verticalAlign;
     ColorType       m_backgroundColor;
     ColorType       m_textColor;
     COORD           m_upLeftCorner;

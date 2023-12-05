@@ -593,6 +593,90 @@ QPushButton:hover {
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_10">
+              <item row="0" column="0" colspan="2">
+               <widget class="QFrame" name="topBarFrame">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>35</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_28">
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="timerLabel">
+                   <property name="text">
+                    <string>Timer</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <spacer name="horizontalSpacer_9">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>600</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QLabel" name="wordToGuessLabel">
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>YOUR WORD</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3">
+                  <spacer name="horizontalSpacer_13">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>430</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </item>
               <item row="1" column="0" colspan="2">
                <layout class="QGridLayout" name="topPartFrame">
                 <property name="sizeConstraint">
@@ -677,6 +761,142 @@ QPushButton:hover {
                  <enum>QFrame::Raised</enum>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_11">
+                 <item row="0" column="3">
+                  <spacer name="horizontalSpacer_10">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>300</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="0" column="5">
+                  <widget class="QFrame" name="buttonsFrame">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>100</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>200</width>
+                     <height>250</height>
+                    </size>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QGridLayout" name="gridLayout_12">
+                    <item row="0" column="3">
+                     <widget class="QPushButton" name="reportButton">
+                      <property name="maximumSize">
+                       <size>
+                        <width>300</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop: 0 #FFA500, stop: 1 #FF0000);
+    border: 2px solid #FFA500;
+    color: white;
+    border-radius: 10px;
+    padding: 7px;
+
+	font-family: &quot;Consolas&quot;;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+QPushButton:checked {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #FFD700, stop: 1 #FFA500);
+    border: 2px solid #FFA500;
+    color: black;
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop: 0 #FF4500, stop: 1 #DC143C);
+    border: 2px solid #FFA500;
+    color: white;
+}
+</string>
+                      </property>
+                      <property name="text">
+                       <string>REPORT</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="3">
+                     <widget class="QPushButton" name="leaveGameButton">
+                      <property name="maximumSize">
+                       <size>
+                        <width>300</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #4CAF50, stop: 1 #2196F3);
+    border: 2px solid #4CAF50;
+	color: white;
+    border-radius: 10px;
+    padding: 7px;
+
+	font-family: &quot;Consolas&quot;;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+QPushButton:checked {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #FFD700, stop: 1 #FFA500);
+    border: 2px solid #FFD700;
+    color: black;
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #6B6B6B, stop: 1 #8B8B8B);
+    border: 2px solid #808080;
+    color: white;
+}
+</string>
+                      </property>
+                      <property name="text">
+                       <string>LEAVE GAME</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
                  <item row="0" column="1">
                   <widget class="ToolsFrame" name="toolsFrame">
                    <property name="sizePolicy">
@@ -688,13 +908,13 @@ QPushButton:hover {
                    <property name="minimumSize">
                     <size>
                      <width>150</width>
-                     <height>100</height>
+                     <height>150</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>500</width>
-                     <height>100</height>
+                     <height>150</height>
                     </size>
                    </property>
                    <property name="styleSheet">
@@ -707,7 +927,7 @@ QPushButton:hover {
                     <property name="spacing">
                      <number>0</number>
                     </property>
-                    <item row="4" column="1">
+                    <item row="1" column="0">
                      <widget class="QFrame" name="widthSettingsFrame">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -717,7 +937,7 @@ QPushButton:hover {
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>16777215</width>
+                        <width>200</width>
                         <height>50</height>
                        </size>
                       </property>
@@ -728,6 +948,12 @@ QPushButton:hover {
                        <enum>QFrame::Raised</enum>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_29">
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="verticalSpacing">
+                        <number>0</number>
+                       </property>
                        <item row="0" column="3">
                         <widget class="QPushButton" name="largeWidthButton">
                          <property name="sizePolicy">
@@ -736,11 +962,36 @@ QPushButton:hover {
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>30</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>50</width>
+                           <height>50</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
                          <property name="styleSheet">
                           <string notr="true">background-color: white;</string>
                          </property>
                          <property name="text">
                           <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="mainwindow.qrc">
+                           <normaloff>:/image/black_circle</normaloff>:/image/black_circle</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>20</width>
+                           <height>20</height>
+                          </size>
                          </property>
                         </widget>
                        </item>
@@ -752,11 +1003,36 @@ QPushButton:hover {
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>30</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>50</width>
+                           <height>50</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
                          <property name="styleSheet">
                           <string notr="true">background-color: white;</string>
                          </property>
                          <property name="text">
                           <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="mainwindow.qrc">
+                           <normaloff>:/image/black_circle</normaloff>:/image/black_circle</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>16</width>
+                           <height>16</height>
+                          </size>
                          </property>
                         </widget>
                        </item>
@@ -768,11 +1044,39 @@ QPushButton:hover {
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>30</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>50</width>
+                           <height>50</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="toolTip">
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/image/black_circle&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                         </property>
                          <property name="styleSheet">
                           <string notr="true">background-color: white;</string>
                          </property>
                          <property name="text">
                           <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="mainwindow.qrc">
+                           <normaloff>:/image/black_circle</normaloff>:/image/black_circle</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>12</width>
+                           <height>12</height>
+                          </size>
                          </property>
                         </widget>
                        </item>
@@ -784,24 +1088,55 @@ QPushButton:hover {
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>30</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>50</width>
+                           <height>50</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
                          <property name="styleSheet">
                           <string notr="true">background-color: white;</string>
                          </property>
                          <property name="text">
                           <string/>
                          </property>
+                         <property name="icon">
+                          <iconset resource="mainwindow.qrc">
+                           <normaloff>:/image/black_circle</normaloff>:/image/black_circle</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>24</width>
+                           <height>24</height>
+                          </size>
+                         </property>
                         </widget>
                        </item>
                       </layout>
                      </widget>
                     </item>
-                    <item row="4" column="0">
+                    <item row="0" column="0" colspan="2">
                      <widget class="QFrame" name="colorsFrame">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>80</height>
+                       </size>
                       </property>
                       <property name="frameShape">
                        <enum>QFrame::StyledPanel</enum>
@@ -1240,228 +1575,68 @@ QPushButton:hover {
                       </layout>
                      </widget>
                     </item>
-                   </layout>
-                  </widget>
-                 </item>
-                 <item row="0" column="5">
-                  <widget class="QFrame" name="buttonsFrame">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>100</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>200</width>
-                     <height>250</height>
-                    </size>
-                   </property>
-                   <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <layout class="QGridLayout" name="gridLayout_12">
-                    <item row="0" column="3">
-                     <widget class="QPushButton" name="reportButton">
+                    <item row="1" column="1">
+                     <widget class="QFrame" name="utilitiesFrame">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
                       <property name="maximumSize">
                        <size>
-                        <width>300</width>
-                        <height>16777215</height>
+                        <width>70</width>
+                        <height>70</height>
                        </size>
                       </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
                       </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton {
-    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                                stop: 0 #FFA500, stop: 1 #FF0000);
-    border: 2px solid #FFA500;
-    color: white;
-    border-radius: 10px;
-    padding: 7px;
-
-	font-family: &quot;Consolas&quot;;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-QPushButton:checked {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #FFD700, stop: 1 #FFA500);
-    border: 2px solid #FFA500;
-    color: black;
-}
-
-QPushButton:hover {
-    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                                stop: 0 #FF4500, stop: 1 #DC143C);
-    border: 2px solid #FFA500;
-    color: white;
-}
-</string>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
                       </property>
-                      <property name="text">
-                       <string>REPORT</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="3">
-                     <widget class="QPushButton" name="leaveGameButton">
-                      <property name="maximumSize">
-                       <size>
-                        <width>300</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #4CAF50, stop: 1 #2196F3);
-    border: 2px solid #4CAF50;
-	color: white;
-    border-radius: 10px;
-    padding: 7px;
-
-	font-family: &quot;Consolas&quot;;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-QPushButton:checked {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #FFD700, stop: 1 #FFA500);
-    border: 2px solid #FFD700;
-    color: black;
-}
-
-QPushButton:hover {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #6B6B6B, stop: 1 #8B8B8B);
-    border: 2px solid #808080;
-    color: white;
-}
-</string>
-                      </property>
-                      <property name="text">
-                       <string>LEAVE GAME</string>
-                      </property>
+                      <layout class="QGridLayout" name="gridLayout_31">
+                       <item row="0" column="0">
+                        <widget class="QPushButton" name="clearDrawingBoardButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>30</width>
+                           <height>50</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: gray;
+border-radius: 15px;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="mainwindow.qrc">
+                           <normaloff>:/image/trash</normaloff>:/image/trash</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>26</width>
+                           <height>26</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                     </item>
                    </layout>
                   </widget>
-                 </item>
-                 <item row="0" column="3">
-                  <spacer name="horizontalSpacer_10">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>300</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item row="0" column="0" colspan="2">
-               <widget class="QFrame" name="topBarFrame">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>35</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: white;</string>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QGridLayout" name="gridLayout_28">
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="timerLabel">
-                   <property name="text">
-                    <string>Timer</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <spacer name="horizontalSpacer_9">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>600</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="0" column="2">
-                  <widget class="QLabel" name="wordToGuessLabel">
-                   <property name="font">
-                    <font>
-                     <pointsize>9</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>YOUR WORD</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="3">
-                  <spacer name="horizontalSpacer_13">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>430</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
                  </item>
                 </layout>
                </widget>
@@ -2122,7 +2297,7 @@ padding: 5px 10px;</string>
             </spacer>
            </item>
            <item row="2" column="1">
-            <widget class="QFrame" name="signUpViewFrame">
+            <widget class="SignUpManager" name="signUpViewFrame">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -2167,7 +2342,7 @@ padding: 5px 10px;</string>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_25">
                  <item row="0" column="0">
-                  <layout class="QHBoxLayout" name="horizontalLayout">
+                  <layout class="QHBoxLayout" name="nameLayout">
                    <property name="spacing">
                     <number>0</number>
                    </property>
@@ -2181,7 +2356,7 @@ padding: 5px 10px;</string>
                     <number>150</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="nameLabel">
+                    <widget class="QLabel" name="nameSignUpLabel">
                      <property name="maximumSize">
                       <size>
                        <width>100</width>
@@ -2204,7 +2379,7 @@ border: 0px; </string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="enterNameInput">
+                    <widget class="QLineEdit" name="enterNameSignUpInput">
                      <property name="maximumSize">
                       <size>
                        <width>200</width>
@@ -2225,7 +2400,7 @@ padding: 5px 10px;
                   </layout>
                  </item>
                  <item row="1" column="0">
-                  <layout class="QHBoxLayout" name="horizontalLayout_2">
+                  <layout class="QHBoxLayout" name="passwordLayout">
                    <property name="spacing">
                     <number>0</number>
                    </property>
@@ -2236,7 +2411,7 @@ padding: 5px 10px;
                     <number>150</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="passwordLabel">
+                    <widget class="QLabel" name="passwordSignUpLabel">
                      <property name="maximumSize">
                       <size>
                        <width>145</width>
@@ -2259,7 +2434,7 @@ border: 0px;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="enterPasswordInput">
+                    <widget class="QLineEdit" name="enterPasswordSignUpInput">
                      <property name="maximumSize">
                       <size>
                        <width>200</width>
@@ -2270,6 +2445,9 @@ border: 0px;</string>
                       <string notr="true">border: 2px solid #000000;
 border-radius: 10px;
 padding: 5px 10px;</string>
+                     </property>
+                     <property name="echoMode">
+                      <enum>QLineEdit::Password</enum>
                      </property>
                      <property name="placeholderText">
                       <string>Enter your password here..</string>
@@ -2380,7 +2558,7 @@ QPushButton:hover {
                      </widget>
                     </item>
                     <item row="0" column="1">
-                     <widget class="QPushButton" name="logInButton">
+                     <widget class="QPushButton" name="goToLogInFromSignUpButton">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -2514,7 +2692,7 @@ padding: 5px 10px;</string>
             </spacer>
            </item>
            <item row="2" column="1">
-            <widget class="QFrame" name="frame_8">
+            <widget class="LogInManager" name="LogInViewFrame">
              <property name="maximumSize">
               <size>
                <width>700</width>
@@ -2565,7 +2743,7 @@ padding: 5px 10px;
                     <number>150</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="label_4">
+                    <widget class="QLabel" name="nameLogInLabel">
                      <property name="maximumSize">
                       <size>
                        <width>100</width>
@@ -2588,7 +2766,7 @@ border: 0px;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="lineEdit">
+                    <widget class="QLineEdit" name="enterNameLogInInput">
                      <property name="maximumSize">
                       <size>
                        <width>200</width>
@@ -2620,7 +2798,7 @@ padding: 5px 10px;
                     <number>150</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="label_5">
+                    <widget class="QLabel" name="passwordLogInLabel">
                      <property name="maximumSize">
                       <size>
                        <width>145</width>
@@ -2643,7 +2821,7 @@ border: 0px;</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="lineEdit_3">
+                    <widget class="QLineEdit" name="enterPasswordLogInInput">
                      <property name="maximumSize">
                       <size>
                        <width>200</width>
@@ -2688,12 +2866,15 @@ padding: 5px 10px;
                 </property>
                 <layout class="QGridLayout" name="gridLayout_33">
                  <item row="0" column="0">
-                  <widget class="QPushButton" name="pushButton">
+                  <widget class="QPushButton" name="logInButton">
                    <property name="maximumSize">
                     <size>
                      <width>300</width>
                      <height>100</height>
                     </size>
+                   </property>
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
                    </property>
                    <property name="styleSheet">
                     <string notr="true">QPushButton {
@@ -2748,7 +2929,7 @@ QPushButton:hover {
                      <number>1</number>
                     </property>
                     <item>
-                     <widget class="QLabel" name="label_6">
+                     <widget class="QLabel" name="noAccountLabel">
                       <property name="maximumSize">
                        <size>
                         <width>155</width>
@@ -2765,12 +2946,15 @@ border: 0px;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton_2">
+                     <widget class="QPushButton" name="goToSignUpFromLogInButton">
                       <property name="maximumSize">
                        <size>
                         <width>70</width>
                         <height>16777215</height>
                        </size>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">QPushButton {
@@ -2867,7 +3051,21 @@ QPushButton:hover {
    <header>ToolsFrame.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>SignUpManager</class>
+   <extends>QFrame</extends>
+   <header>SignUpManager.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LogInManager</class>
+   <extends>QFrame</extends>
+   <header>LogInManager.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="mainwindow.qrc"/>
+ </resources>
  <connections/>
 </ui>

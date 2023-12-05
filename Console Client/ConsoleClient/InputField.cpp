@@ -2,35 +2,40 @@ module InputField;
 
 import <algorithm>;
 
-InputField::InputField(COORD upLeftCorner, Align align, ColorType backgroundColor,
-					   ColorType textColor, int16_t maxWidth, int16_t maxHeight,
+InputField::InputField(COORD upLeftCorner, Align horizontalAlign, Align verticalAlign,
+					   ColorType backgroundColor, ColorType textColor,
+					   int16_t maxWidth, int16_t maxHeight,
 					   ColorType selectedBackgroungColor, ColorType selectedTextColor,
 					   ConsoleManager* cm, InputManager* im,
 					   SelectableObject*& selected, String& text) :
-	SelectableObject { upLeftCorner, align, backgroundColor, textColor, maxWidth  ,
-					   maxHeight, selectedBackgroungColor, selectedTextColor	  ,
-					   cm, im, selected											 },
-	m_text			 { text														 }
+	SelectableObject { upLeftCorner, horizontalAlign, verticalAlign, backgroundColor,
+					   textColor, maxWidth, maxHeight, selectedBackgroungColor,
+					   selectedTextColor, cm, im, selected							  },
+	m_text			 { text															  }
 {}
 
-InputField::InputField(int16_t x, int16_t y, Align align, ColorType backgroundColor,
-					   ColorType textColor, int16_t maxWidth, int16_t maxHeight,
+InputField::InputField(int16_t x, int16_t y, Align horizontalAlign, Align verticalAlign,
+					   ColorType backgroundColor, ColorType textColor,
+					   int16_t maxWidth, int16_t maxHeight,
 					   ColorType selectedBackgroungColor, ColorType selectedTextColor,
 					   ConsoleManager* cm, InputManager* im,
 					   SelectableObject*& selected, String& text) :
-	SelectableObject { x, y, align, backgroundColor, textColor, maxWidth, maxHeight  ,
-					   selectedBackgroungColor, selectedTextColor, cm, im, selected	},
-	m_text			 { text															}
+	SelectableObject { x, y, horizontalAlign, verticalAlign, backgroundColor, textColor,
+					   maxWidth, maxHeight, selectedBackgroungColor, selectedTextColor,
+					   cm, im, selected													},
+	m_text			 { text																}
 {}
 
-InputField::InputField(Align align, ColorType backgroundColor, ColorType textColor,
+InputField::InputField(Align horizontalAlign, Align verticalAlign,
+					   ColorType backgroundColor, ColorType textColor,
 					   int16_t maxWidth, int16_t maxHeight,
 					   ColorType selectedBackgroungColor, ColorType selectedTextColor,
 					   ConsoleManager *cm, InputManager *im,
 					   SelectableObject *&selected, String &text):
-	SelectableObject { align, backgroundColor, textColor, maxWidth, maxHeight		 ,
-					   selectedBackgroungColor, selectedTextColor, cm, im, selected },
-	m_text			 { text															}
+	SelectableObject { horizontalAlign, verticalAlign, backgroundColor, textColor,
+					   maxWidth, maxHeight, selectedBackgroungColor,
+					   selectedTextColor, cm, im, selected						  },
+	m_text			 { text														  }
 {}
 
 void InputField::Draw()
@@ -106,11 +111,6 @@ void InputField::DrawContents()
 		m_cm->SetCursor(true, cursorPos);
 	}
 
-	int index{0};
-	while (index < m_text.size())
-	{
-		m_cm->Write(m_text[index], m_upLeftCorner.X + index % m_width,
-					m_upLeftCorner.Y + index / m_width);
-		++index;
-	}
+	m_cm->Write(m_text, m_upLeftCorner.X, m_upLeftCorner.Y,
+				m_width, m_height, m_horizontalAlign, m_verticalAlign);
 }
