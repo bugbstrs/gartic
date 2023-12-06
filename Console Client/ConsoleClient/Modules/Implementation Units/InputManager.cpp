@@ -2,6 +2,7 @@ module InputManager;
 
 import <cctype>;
 import <conio.h>;
+import <Windows.h>;
 import <winuser.rh>;
 
 import ControlKeys;
@@ -119,8 +120,7 @@ COORD InputManager::CursorPositionInConsole()
     GetCursorPos(&cursorPos);
     ScreenToClient(consoleWindow, &cursorPos);
     
-    COORD font{8,16};
-    //font = GetFontSize();
+    COORD font{ GetFontSize() };
 
     coord.X = cursorPos.x / font.X;
     coord.Y = cursorPos.y / font.Y;
@@ -130,8 +130,8 @@ COORD InputManager::CursorPositionInConsole()
 
 COORD InputManager::GetFontSize()
 {
-    //PCONSOLE_FONT_INFOEX fontInfo;
-    //GetCurrentConsoleFontEx(STD_OUTPUT_HANDLE, FALSE, fontInfo);
-    //return fontInfo->dwFontSize;
-    return {8,16};
+    CONSOLE_FONT_INFOEX cfi;
+    cfi.cbSize = sizeof(cfi);
+    GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+    return cfi.dwFontSize;
 }
