@@ -41,6 +41,19 @@ void ConsoleManager::NewConsole(const LPCWSTR title, int16_t width, int16_t heig
 	SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), mode);
 }
 
+void ConsoleManager::SetConsoleFont(const WString fontName, int16_t width, int16_t height)
+{
+	CONSOLE_FONT_INFOEX cfi;
+	cfi.cbSize = sizeof(cfi);
+	cfi.nFont = 0;
+	cfi.dwFontSize.X = width;
+	cfi.dwFontSize.Y = height;
+	cfi.FontFamily = FF_DONTCARE;
+	cfi.FontWeight = FW_NORMAL;
+	wcscpy_s(cfi.FaceName, fontName.c_str());
+	SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+}
+
 void ConsoleManager::SetTextColor(ColorType color)
 {
 	m_buffers[m_bufferIndex].SetTextColor(color);

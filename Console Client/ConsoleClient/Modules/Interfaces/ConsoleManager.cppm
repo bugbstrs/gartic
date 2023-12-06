@@ -18,6 +18,7 @@ public:
 
 	// Setters
 	void NewConsole			(const LPCWSTR title, int16_t width, int16_t height);
+	void SetConsoleFont		(const WString fontName, int16_t width, int16_t height);
 	void SetTextColor		(ColorType color);
 	void SetBackgroundColor (ColorType color);
 	void SetColor			(ColorType background, ColorType text);
