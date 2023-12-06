@@ -17,8 +17,7 @@ public:
 
 private:
     SelectableObject* m_selected;
-    String            m_password;
-    String            m_username;
+    String            m_lobbyCode;
 
     void Display() const override;
     void Input  () const override;
