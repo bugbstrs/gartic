@@ -52,11 +52,12 @@ void LoginScene::Start()
 	m_username = "";
 	m_password = "";
 	m_nextScene = nullptr;
-	m_console->NewConsole(L"Login", 60, 15);
+	m_console->NewConsole(L"Login", 50, 11);
+	m_console->SetConsoleFont(L"Consolas", 11, 24);
 
-	m_objects.emplace_back(new Label{30, 2, Align::Left, Align::Up, Color::Cyan, Color::Magenta, 6, 1, m_console, "GARTIC"});
+	m_objects.emplace_back(new Label{25, 1, Align::Left, Align::Up, Color::Cyan, Color::Magenta, 6, 1, m_console, "GARTIC"});
 
-	auto layout{new HorizontalLayout{16, 5, Align::Right, Align::Up, Color::Black, 27, 1, m_console, 0}};
+	auto layout{new HorizontalLayout{11, 4, Align::Right, Align::Up, Color::Black, 27, 1, m_console, 0}};
 	layout->AddObject(new Label{Align::Left, Align::Up, Color::Black, Color::White, 5, 1, m_console, "User:"});
 	auto userField{new InputField{Align::Left, Align::Up, Color::Gray, Color::Black, 18, 1, Color::DarkBlue, Color::White,
 						m_console, m_input, m_selected, m_username}};
@@ -66,7 +67,7 @@ void LoginScene::Start()
 
 	m_objects.emplace_back(layout);
 
-	layout = new HorizontalLayout{16, 6, Align::Right, Align::Up, Color::Black, 27, 1, m_console, 0};
+	layout = new HorizontalLayout{11, 5, Align::Right, Align::Up, Color::Black, 27, 1, m_console, 0};
 	layout->AddObject(new Label{Align::Left, Align::Up, Color::Black, Color::White, 9, 1, m_console, "Password:"});
 	auto passwordField{new InputField{Align::Left, Align::Up, Color::Gray, Color::Black, 18, 1, Color::DarkBlue, Color::White,
 						m_console, m_input, m_selected, m_password}};
@@ -76,14 +77,14 @@ void LoginScene::Start()
 
 	m_objects.emplace_back(layout);
 
-	auto loginButton{new Button{25, 10, Align::Left, Align::Up, Color::DarkGray, Color::Green, 5, 1, Color::DarkBlue,
+	auto loginButton{new Button{20, 8, Align::Left, Align::Up, Color::DarkGray, Color::Green, 5, 1, Color::DarkBlue,
 						Color::White, m_console, m_input, m_selected, "LOGIN"}};
 	loginButton->SetHoverColors(Color::Blue, Color::White);
 	loginButton->SetFunctionOnActivate(std::bind(&LoginScene::Login, this));
 	m_objects.emplace_back(loginButton);
 	m_selectableObjects.emplace_back(loginButton);
 
-	auto registerButton{new Button{35, 10, Align::Left, Align::Up, Color::DarkGray, Color::Cyan, 8, 1, Color::DarkBlue,
+	auto registerButton{new Button{30, 8, Align::Left, Align::Up, Color::DarkGray, Color::Cyan, 8, 1, Color::DarkBlue,
 						Color::White, m_console, m_input, m_selected, "REGISTER"}};
 	registerButton->SetHoverColors(Color::Blue, Color::White);
 	registerButton->SetFunctionOnActivate(std::bind(&LoginScene::Register, this));
