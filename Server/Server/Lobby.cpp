@@ -15,19 +15,9 @@ void http::Lobby::LeaveLobby(const Player& playerToLeave)
 	throw UserDoesntExistException("The player is already not in the lobby!");
 }
 
-int http::Lobby::GetPlayersNumber() const noexcept
+GameSettings http::Lobby::GetSettings() const noexcept
 {
-	return m_config.GetPlayersNumber();
-}
-
-int http::Lobby::GetDrawTime() const noexcept
-{
-	return m_config.GetDrawTime();
-}
-
-int http::Lobby::GetRoundsNumber() const noexcept
-{
-	return m_config.GetRoundsNumber();
+	return m_settings;
 }
 
 http::Game* http::Lobby::StartGame()
