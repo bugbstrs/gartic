@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <fstream>
 
 namespace http
 {
@@ -11,14 +12,23 @@ namespace http
 
 		~GameSettings() = default;
 
+		bool GetCustomRounds() const noexcept;
+		int GetRoundsNumber() const noexcept;
+		int GetCustomRoundChance() const noexcept;
+		int GetPlayersNumber() const noexcept;
+		float GetDrawTime() const noexcept;
+
 	private:
 		const std::string kSettingsFile{ "GameSettings.txt" };
 	
 	private:
-		float m_drawTime;
-		int m_roundsNumber;
 		bool m_customRounds;
+		
+		int m_roundsNumber;
 		int m_customRoundChance;
+		int m_playersNumber;
+
+		float m_drawTime;
 	};
 }
 
