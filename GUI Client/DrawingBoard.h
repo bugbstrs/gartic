@@ -6,6 +6,7 @@
 #include <qpainter.h>
 #include <qpainterpath.h>
 #include <queue>
+#include <atomic>
 #include <stack>
 
 class DrawingBoard : public QWidget
@@ -35,8 +36,11 @@ protected:
 
 private:
 	void FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith);
-	void FillTop(QPoint startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith);
-	void FillBottom(QPoint startingPoint,QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith);
+
+	void FillTop(QPoint startingPoint, QPoint pointToExecuteAt, QPoint& globalCurrentPos, QColor startingColor, QColor colorToBeFilledWith);
+	void FillBottom(QPoint startingPoint,QPoint pointToExecuteAt, QPoint&  globalCurrentPos, QColor startingColor, QColor colorToBeFilledWith);
+	void FillLeft(QPoint startingPoint,QPoint pointToExecuteAt, QPoint& globalCurrentPos, QColor startingColor, QColor colorToBeFilledWith);
+	void FillRight(QPoint startingPoint,QPoint pointToExecuteAt, QPoint& globalCurrentPos, QColor startingColor, QColor colorToBeFilledWith);
 
 private:
 	bool firstPaint = true;
