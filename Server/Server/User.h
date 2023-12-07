@@ -10,7 +10,7 @@ namespace http
 	{
 	public:
 		User() = default;
-		User(const std::string& m_username);
+		User(const std::string& newUsername);
 
 		~User() = default;
 
@@ -20,12 +20,12 @@ namespace http
 		void SetActive();
 
 	private:
-		const int kSecondsForBeingActive = 5;
+		const float kSecondsForBeingActive = 5.0;
 
 	private:
 		std::string m_username;
 
-		Time Active;
+		Time m_active;
 	};
 }
 

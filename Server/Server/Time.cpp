@@ -41,6 +41,21 @@ std::function<void()> http::Time::GetMethodToCall() const noexcept
 	return m_toCall;
 }
 
+void http::Time::SetStartTimeStamp(float newTimeStamp)
+{
+	m_startTimeStamp = newTimeStamp;
+}
+
+void http::Time::SetStartValue(float newStartValue)
+{
+	m_startValue = newStartValue;
+}
+
+void http::Time::SetEndValue(float newEndValue)
+{
+	m_endValue = newEndValue;
+}
+
 void http::Time::SetMethodToCall(const std::function<void()>& methodToCall)
 {
 	m_toCall = methodToCall;

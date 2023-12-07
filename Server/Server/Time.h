@@ -21,6 +21,10 @@ namespace http
 
 		std::function<void()> GetMethodToCall() const noexcept;
 
+		void SetStartTimeStamp(float newTimeStamp);
+		void SetStartValue(float newStartValue);
+		void SetEndValue(float newEndValue);
+
 		void SetMethodToCall(const std::function<void()>& methodToCall);
 
 		void Start(float timeStamp, float startValue, float endValue);
