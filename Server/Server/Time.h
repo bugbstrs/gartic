@@ -19,6 +19,8 @@ namespace http
 		float GetStartValue() const noexcept;
 		float GetEndValue() const noexcept;
 
+		int GetServerTime() const noexcept;
+
 		std::function<void()> GetMethodToCall() const noexcept;
 
 		void SetStartTimeStamp(float newTimeStamp);

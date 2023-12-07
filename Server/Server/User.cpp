@@ -18,4 +18,5 @@ Time http::User::GetTime() const noexcept
 void http::User::SetActive()
 {
 	m_active.SetStartValue(kSecondsForBeingActive);
+	m_active.SetStartTimeStamp(m_active.GetServerTime());
 }

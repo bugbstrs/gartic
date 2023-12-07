@@ -36,6 +36,11 @@ float http::Time::GetEndValue() const noexcept
 	return m_endValue;
 }
 
+int http::Time::GetServerTime() const noexcept
+{
+	return static_cast<int>(m_serverTimer.GetElapsedTime().count());
+}
+
 std::function<void()> http::Time::GetMethodToCall() const noexcept
 {
 	return m_toCall;
