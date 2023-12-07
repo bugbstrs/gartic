@@ -29,6 +29,7 @@ private slots:
     void OnEraserButtonReleased();
     void OnPencilEnabled();
     void OnFillEnabled();
+    void OnColorChanged();
 
     //Stats scene
     void OnBackToMenuButtonReleased();
@@ -44,5 +45,7 @@ private:
     bool isUserLoggedIn;
     QCursor eraserCursor;
     QCursor fillCursor;
+    QCursor pencilCursor;
+    QCursor* currentCursor;
 };
 #endif // MAINWINDOW_H
