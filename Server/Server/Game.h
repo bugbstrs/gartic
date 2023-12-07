@@ -4,8 +4,6 @@
 #include "Chat.h"
 #include "Player.h"
 
-import Timer;
-
 namespace http
 {
 	class Game
