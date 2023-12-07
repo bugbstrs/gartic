@@ -2,8 +2,9 @@
 
 #include <vector>
 #include <string>
-#include <array>
 #include <optional>
+#include <cstdlib>
+#include <ctime>
 
 #include "User.h"
 #include "Game.h"
@@ -19,8 +20,10 @@ namespace http
 	public:
 		Lobby() = default;
 
-		void JoinLobby(Player&& newPlayer);
-		void LeaveLobby(const Player& playerToLeave);
+		~Lobby();
+
+		void JoinLobby(User&& newPlayer);
+		void LeaveLobby(const User& playerToLeave);
 
 		std::vector<User> GetPlayers() const noexcept;
 		User* GetLeader() const noexcept;
@@ -28,9 +31,12 @@ namespace http
 		std::string GetCode() const noexcept;
 
 		void SetLeader(const User* newLeader);
-		int SetCode(int newCode);
+		void SetCode(const std::string& newCode);
 
 		Game* StartGame();
+
+	private:
+		std::string GenerateCode();
 
 	private:
 		std::vector<User> m_players;
@@ -39,6 +45,7 @@ namespace http
 
 		GameSettings m_settings;
 
-		std::string m_code;
+		const std::string m_code = GenerateCode();
+		const int kCodeLength{ 11 };
 	};
 }
