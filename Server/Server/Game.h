@@ -53,9 +53,7 @@ namespace http
 
 		int m_roundNumber;
 
-		SpecialRound m_specialRoundType;
-
-		Round m_currRound;
+		SpecialRound m_specialRoundType
 
 		DrawingBoard m_board;
 

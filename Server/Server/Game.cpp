@@ -3,11 +3,16 @@
 using namespace http;
 
 Game::Game(std::vector<Player>&& newPlayers) :
-	//m_timer{ Timer() },
-	m_roundNumber{ 1 },
-	//m_currRound{ Round() },
-	m_players{ std::move(newPlayers) }
-	//m_chat{ Chat() }
+	m_players{ std::move(newPlayers) },
+	m_drawer { m_players[0] },
+	m_status { GameStatus::Waiting },
+	m_remainingTime { Time() },
+	m_chat { Chat() },
+	m_roundNumber { 0 },
+	m_specialRoundType { SpecialRound::None },
+	m_drawingBoard { DrawingBoard() },
+	m_wordToGuess { "" },
+	m_wordToDisplay { "" }
 {
 }
 
