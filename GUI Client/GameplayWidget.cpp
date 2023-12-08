@@ -27,11 +27,14 @@ void GameplayWidget::OnCanvasCleared()
 void GameplayWidget::OnPencilButtonReleased()
 {
 	drawingBoard->ToggleEraser(false);
+	drawingBoard->ToggleFill(false);
+	drawingBoard->EnablePencil();
 }
 
 void GameplayWidget::OnEraserButtonReleased()
 {
 	drawingBoard->ToggleEraser(true);
+	drawingBoard->ToggleFill(false);
 }
 
 void GameplayWidget::OnUndoButtonReleased()
@@ -41,7 +44,8 @@ void GameplayWidget::OnUndoButtonReleased()
 
 void GameplayWidget::OnFillButtonReleased()
 {
-	drawingBoard->Fill();
+	drawingBoard->ToggleEraser(false);
+	drawingBoard->ToggleFill(true);
 }
 
 void GameplayWidget::showEvent(QShowEvent* event) {
@@ -49,6 +53,7 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 	drawingBoard = findChild<DrawingBoard*>("drawingBoardCanvas");
 	toolsFrame = findChild<ToolsFrame*>("toolsFrame");
 	chat = findChild<Chat*>("chatFrame");
+	scoreboardTable = findChild<QListWidget*>("scoreboardTable");
 
 	QObject::connect(toolsFrame, &ToolsFrame::OnColorChangedSignal, this, &GameplayWidget::ChangePenColor);
 	QObject::connect(toolsFrame, &ToolsFrame::OnWidthChangedSignal, this, &GameplayWidget::ChangePenWidth);

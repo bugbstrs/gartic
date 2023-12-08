@@ -7,6 +7,19 @@ DrawingBoard::DrawingBoard(QWidget* parent)
 {
     setMouseTracking(true);
     ChangePenPropertiesTo(Qt::black, 2);
+    undo = false;
+}
+
+void DrawingBoard::mousePressEvent(QMouseEvent* event) {
+    if (event->button() == Qt::LeftButton && !fillEnabled) {
+        drawing = true;
+        currentPath = QPainterPath(event->pos());
+        update();
+    }
+    if (fillEnabled) {
+        QPoint mouseRegisteredPosition = event->pos() + QPoint(-12, 10);
+        FloodFill(mouseRegisteredPosition, mouseRegisteredPosition, image.pixelColor(mouseRegisteredPosition), pen.color());
+    }
 }
 
 void DrawingBoard::mouseMoveEvent(QMouseEvent* event) {
@@ -16,20 +29,18 @@ void DrawingBoard::mouseMoveEvent(QMouseEvent* event) {
     }
 }
 
-void DrawingBoard::mousePressEvent(QMouseEvent* event) {
-    if (event->button() == Qt::LeftButton && !readyToFill) {
-        drawing = true;
-        currentPath = QPainterPath(event->pos());
-        update();
-    }
-    else FloodFill(event->pos(), event->pos(), image.pixelColor(event->pos()), pen.color());
-}
 
 void DrawingBoard::mouseReleaseEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton && drawing) {
         drawing = false;
         paths.push_back({ currentPath, pen });
+        if (paths.size() == 3) {
+            int a = 1;
+        }
         update();
+    }
+    else {
+        erasing = false;
     }
 }
 
@@ -38,6 +49,54 @@ void DrawingBoard::resizeEvent(QResizeEvent* event)
     QWidget::resizeEvent(event);
     image = QImage(size(), QImage::Format_ARGB32);
     image.fill(Qt::white);
+}
+
+void DrawingBoard::ChangePenPropertiesTo(QColor color, int width)
+{
+    pen.setColor(color);
+    pen.setWidth(width);
+    pen.setCapStyle(Qt::RoundCap);
+}
+
+void DrawingBoard::ChangePenColor(QColor color)
+{
+    pen.setColor(color);
+}
+
+void DrawingBoard::ChangePenWidth(int width)
+{
+    pen.setWidth(width);
+}
+
+void DrawingBoard::ToggleEraser(bool value)
+{
+    pen.setColor(Qt::white);
+}
+
+void DrawingBoard::ToggleFill(bool value)
+{
+    fillEnabled = value;
+}
+
+void DrawingBoard::EnablePencil()
+{
+    pen.setColor(Qt::black);
+}
+
+void DrawingBoard::UndoLastPath()
+{
+    if (!paths.empty()) {
+        undo = true;
+        update();
+    }
+}
+
+void DrawingBoard::ClearCanvas()
+{
+    currentPath = QPainterPath();
+    image.fill(Qt::white);
+    paths.clear();
+    update();
 }
 
 void DrawingBoard::FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith)
@@ -65,7 +124,7 @@ void DrawingBoard::FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QCol
     std::thread bottomFill = std::thread(&DrawingBoard::FillBottom, this, startingPoint + QPoint(0, -1), pointToExecuteAt + QPoint(0, -1), std::ref(currentPointBottom), startingColor, colorToBeFilledWith);
 
     std::thread leftFill = std::thread(&DrawingBoard::FillLeft, this, startingPoint + QPoint(-1, 0), pointToExecuteAt + QPoint(-1, 0), std::ref(currentPointLeft), startingColor, colorToBeFilledWith);
-    
+
     std::thread rightFill = std::thread(&DrawingBoard::FillRight, this, startingPoint + QPoint( 1, 0), pointToExecuteAt + QPoint(1, 0), std::ref(currentPointRight),  startingColor, colorToBeFilledWith);*/
 
     //while (true) {
@@ -108,8 +167,8 @@ void DrawingBoard::FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QCol
     //bottomFill.join();
     //leftFill.join();
     //rightFill.join();
-    
-    auto getAvailableDirection = [this, &currentPointTop, &currentPointBottom, &currentPointLeft, &currentPointRight]() -> QPoint&{
+
+    auto getAvailableDirection = [this, &currentPointTop, &currentPointBottom, &currentPointLeft, &currentPointRight]() -> QPoint& {
         if (availableDirections["topDone"])
             return currentPointTop;
         if (availableDirections["bottomDone"])
@@ -156,127 +215,6 @@ void DrawingBoard::FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QCol
     };
 }
 
-void DrawingBoard::FillTop(QPoint startingPoint, QPoint pointToExecuteAt, QPoint& globalCurrentPos, QColor startingColor, QColor colorToBeFilledWith)
-{
-    if (!image.rect().contains(pointToExecuteAt))
-        return;
-
-    if (image.pixelColor(pointToExecuteAt) != startingColor)
-        return;
-
-    QPoint currentPoint;
-    QRect imageRect = image.rect();
-    std::queue<QPoint> pointsQueue;
-    pointsQueue.push(pointToExecuteAt);
-
-    while (!pointsQueue.empty()) {
-        currentPoint = pointsQueue.front();
-        pointsQueue.pop();
-
-        if (image.pixelColor(currentPoint) != startingColor || !imageRect.contains(currentPoint) || image.pixelColor(currentPoint) == colorToBeFilledWith)
-            continue;
-
-        image.setPixelColor(currentPoint, colorToBeFilledWith);
-        globalCurrentPos = currentPoint + QPoint(0, 1);
-        pointsQueue.push(QPoint(currentPoint.x() + 1, currentPoint.y()));
-        pointsQueue.push(QPoint(currentPoint.x() - 1, currentPoint.y()));
-        pointsQueue.push(QPoint(currentPoint.x(), currentPoint.y() + 1));
-        /*pointsQueue.push(QPoint(currentPoint.x(), currentPoint.y() - 1));*/
-    }
-
-    update();
-}
-
-void DrawingBoard::FillBottom(QPoint startingPoint, QPoint pointToExecuteAt, QPoint& globalCurrentPos, QColor startingColor, QColor colorToBeFilledWith)
-{
-    if (!image.rect().contains(pointToExecuteAt))
-        return;
-
-    if (image.pixelColor(pointToExecuteAt) != startingColor)
-        return;
-
-    QPoint currentPoint;
-    QRect imageRect = image.rect();
-    std::queue<QPoint> pointsQueue;
-    pointsQueue.push(pointToExecuteAt);
-
-    while (!pointsQueue.empty()) {
-        currentPoint = pointsQueue.front();
-        pointsQueue.pop();
-
-        if (image.pixelColor(currentPoint) != startingColor || !imageRect.contains(currentPoint) || image.pixelColor(currentPoint) == colorToBeFilledWith)
-            continue;
-
-        image.setPixelColor(currentPoint, colorToBeFilledWith);
-        globalCurrentPos = currentPoint + QPoint(0, -1);
-        pointsQueue.push(QPoint(currentPoint.x() + 1, currentPoint.y()));
-        pointsQueue.push(QPoint(currentPoint.x() - 1, currentPoint.y()));
-        pointsQueue.push(QPoint(currentPoint.x(), currentPoint.y() - 1));
-        /*pointsQueue.push(QPoint(currentPoint.x(), currentPoint.y() + 1));*/
-    }
-    update();
-}
-
-void DrawingBoard::FillLeft(QPoint startingPoint, QPoint pointToExecuteAt, QPoint& globalCurrentPos, QColor startingColor, QColor colorToBeFilledWith)
-{
-    if (!image.rect().contains(pointToExecuteAt))
-        return;
-
-    if (image.pixelColor(pointToExecuteAt) != startingColor)
-        return;
-
-    QPoint currentPoint;
-    QRect imageRect = image.rect();
-    std::queue<QPoint> pointsQueue;
-    pointsQueue.push(pointToExecuteAt);
-
-    while (!pointsQueue.empty()) {
-        currentPoint = pointsQueue.front();
-        pointsQueue.pop();
-
-        if (image.pixelColor(currentPoint) != startingColor || !imageRect.contains(currentPoint) || image.pixelColor(currentPoint) == colorToBeFilledWith)
-            continue;
-
-        image.setPixelColor(currentPoint, colorToBeFilledWith);
-        globalCurrentPos = currentPoint + QPoint(0, -1);
-        pointsQueue.push(QPoint(currentPoint.x(), currentPoint.y() + 1));
-        pointsQueue.push(QPoint(currentPoint.x() - 1, currentPoint.y()));
-        pointsQueue.push(QPoint(currentPoint.x(), currentPoint.y() - 1));
-        /*pointsQueue.push(QPoint(currentPoint.x() + 1, currentPoint.y()));*/
-    }
-    update();
-}
-
-void DrawingBoard::FillRight(QPoint startingPoint, QPoint pointToExecuteAt, QPoint& globalCurrentPos, QColor startingColor, QColor colorToBeFilledWith)
-{
-    if (!image.rect().contains(pointToExecuteAt))
-        return;
-
-    if (image.pixelColor(pointToExecuteAt) != startingColor)
-        return;
-
-    QPoint currentPoint;
-    QRect imageRect = image.rect();
-    std::queue<QPoint> pointsQueue;
-    pointsQueue.push(pointToExecuteAt);
-
-    while (!pointsQueue.empty()) {
-        currentPoint = pointsQueue.front();
-        pointsQueue.pop();
-
-        if (image.pixelColor(currentPoint) != startingColor || !imageRect.contains(currentPoint) || image.pixelColor(currentPoint) == colorToBeFilledWith)
-            continue;
-
-        image.setPixelColor(currentPoint, colorToBeFilledWith);
-        globalCurrentPos = currentPoint + QPoint(0, -1);
-        pointsQueue.push(QPoint(currentPoint.x() + 1, currentPoint.y()));
-        pointsQueue.push(QPoint(currentPoint.x(), currentPoint.y() + 1));
-        pointsQueue.push(QPoint(currentPoint.x(), currentPoint.y() - 1));
-        /*pointsQueue.push(QPoint(currentPoint.x() - 1, currentPoint.y()));*/
-    }
-    update();
-}
-
 void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith, bool& done)
 {
     if (!image.rect().contains(pointToExecuteAt))
@@ -307,49 +245,21 @@ void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, Q
     update();
 }
 
-void DrawingBoard::ChangePenPropertiesTo(QColor color, int width)
+void DrawingBoard::ColorAtPosition(const QPoint& position)
 {
-    pen.setColor(color);
-    pen.setWidth(width);
-    pen.setCapStyle(Qt::RoundCap);
-}
+    int radius = pen.width() / 2;
 
-void DrawingBoard::ChangePenColor(QColor color)
-{
-    pen.setColor(color);
-}
-
-void DrawingBoard::ChangePenWidth(int width)
-{
-    pen.setWidth(width);
-}
-
-void DrawingBoard::ToggleEraser(bool value)
-{
-    if (value) {
-        pen.setColor(Qt::white);
+    for (int y = -radius; y <= radius; ++y) {
+        for (int x = -radius; x <= radius; ++x) {
+            if (x * x + y * y <= radius * radius) {
+                int pixelX = position.x() + x;
+                int pixelY = position.y() + y;
+                if (pixelX >= 0 && pixelX < image.width() && pixelY >= 0 && pixelY < image.height()) {
+                    image.setPixel(pixelX, pixelY, Qt::white);
+                }
+            }
+        }
     }
-    readyToFill = false;
-    update();
-}
-
-void DrawingBoard::UndoLastPath()
-{
-    paths.pop_back();
-    update();
-}
-
-void DrawingBoard::Fill()
-{
-    readyToFill = true;
-}
-
-void DrawingBoard::ClearCanvas()
-{
-    currentPath = QPainterPath();
-    paths.clear();
-    image.fill(Qt::white);
-    update();
 }
 
 void DrawingBoard::paintEvent(QPaintEvent* event) {
@@ -363,9 +273,12 @@ void DrawingBoard::paintEvent(QPaintEvent* event) {
 
         QPainter painter(&image);
 
-        for (auto& path : paths) {
-            painter.setPen(path.second);
-            painter.drawPath(path.first);
+        if (undo) {
+            paths.back().second.setColor(Qt::white);
+            painter.setPen(paths.back().second);
+            painter.drawPath(paths.back().first);
+            paths.pop_back();
+            undo = false;
         }
 
         if (drawing) {

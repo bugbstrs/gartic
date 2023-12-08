@@ -2,6 +2,7 @@
 
 #include <QWidget>
 #include <qlabel.h>
+#include <qlistwidget.h>
 #include "DrawingBoard.h"
 #include "ToolsFrame.h"
 #include "Chat.h"
@@ -36,4 +37,5 @@ private:
 	DrawingBoard* drawingBoard;
 	ToolsFrame* toolsFrame;
 	Chat* chat;
+	QListWidget* scoreboardTable;
 };

@@ -1667,7 +1667,7 @@ border-radius: 15px;</string>
                  </widget>
                 </item>
                 <item row="0" column="0">
-                 <widget class="QTableWidget" name="scoreboardTable">
+                 <widget class="QListWidget" name="scoreboardTable">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
                     <horstretch>0</horstretch>
