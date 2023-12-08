@@ -79,6 +79,11 @@ void ConsoleManager::SetCursor(bool visible, int16_t x, int16_t y)
 	m_buffers[m_bufferIndex].SetCursor(visible, { x,y });
 }
 
+void ConsoleManager::ToggleFullscreen()
+{
+	SendMessage(GetConsoleWindow(), WM_SYSKEYDOWN, VK_RETURN, 0x20000000);
+}
+
 void ConsoleManager::WriteHorizontal(const String& sentence, int16_t x, int16_t y)
 {
 	m_buffers[m_bufferIndex].Write(sentence, x, y);
