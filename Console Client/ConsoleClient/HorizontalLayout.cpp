@@ -51,7 +51,10 @@ void HorizontalLayout::AddObjects(std::vector<GUIObject*> objects)
 void HorizontalLayout::AddObject(GUIObject* object)
 {
 	if (object->GetHeight() > m_height || object->GetWidth() > m_width)
+	{
+		delete object;
 		return;
+	}
 
 	int16_t length{object->GetWidth()};
 
@@ -69,6 +72,12 @@ void HorizontalLayout::AddObject(GUIObject* object)
 
 	m_objects.push_back(object);
 	SetObjectsPosition();
+}
+
+void HorizontalLayout::Clear()
+{
+	for (auto obj : m_objects)
+		delete obj;
 }
 
 void HorizontalLayout::DrawContents()

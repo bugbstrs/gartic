@@ -24,6 +24,7 @@ public:
 
 	void AddObjects (std::vector<GUIObject*> objects);
 	void AddObject	(GUIObject* object);
+	void Clear		();
 
 private:
 	std::vector<GUIObject*> m_objects;
