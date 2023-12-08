@@ -1,10 +1,15 @@
 #pragma once
 
-#include "Round.h"
-#include "Chat.h"
 #include "Player.h"
+#include "GameSettings.h"
+#include "GameStatusEnum.h"
+#include "SpecialRoundsEnum.h"
+#include "Chat.h"
+#include "Round.h"
+#include "DrawingBoard.h"
 
-import Timer;
+#include <unordered_map>
+#include <cmath>
 
 namespace http
 {
@@ -13,23 +18,56 @@ namespace http
 	public:
 		Game(std::vector<Player>&& newPlayers);
 
-		void NextSubRound();
-		void NextRound();
+		~Game() = default;
 
-		//Timer GetTimer() const noexcept;
-		Round GetCurrRound() const noexcept;
+		std::vector<Player> GetPlayers() const noexcept;
+		Player* GetDrawer() const noexcept;
+		GameSettings GetSettings() const noexcept;
+		GameStatus GetStatus() const noexcept;
+		Time GetTime() const noexcept;
 		Chat GetChat() const noexcept;
+		int GetRoundNumber() const noexcept;
+		Round GetCurrRound() const noexcept;
+		DrawingBoard GetBoard() const noexcept;
+		std::string GetWordToGuess() const noexcept;
+		std::string GetWordToDisplay() const noexcept;
+
+		void SetGameStatus(GameStatus newGameStatus);
+		void SetRoundNumber(int newRoundNumber);
+		void SetDrawingBoard(DrawingBoard newDrawingBoard);
+		void SetWordToGuess(const std::string& newWordToGuess);
+
+		void NextDrawer();
+		void NextRound();
+		void RemovePlayer(const std::string& username);
+
+		bool IsCloseEnough(const std::string& currGuess);
 
 	private:
-		//Timer m_timer;
+		const double kTreshold = 0.8;
 
-		int m_roundNumber;
+	private:
+		std::vector<Player*> m_players;
 
-		Round m_currRound;
+		Player* m_drawer;
+
+		GameSettings m_settings;
+
+		GameStatus m_status;
+
+		Time m_remainingTime;
 
 		Chat m_chat;
 
-		std::vector<Player> m_players;
+		int m_roundNumber;
+
+		SpecialRound m_specialRoundType
+
+		DrawingBoard m_board;
+
+		std::string m_wordToGuess;
+
+		std::string m_wordToDisplay;
 	};
 }
 

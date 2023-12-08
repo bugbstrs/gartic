@@ -1,8 +1,9 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 
-#include "UsersEntity.h"
+#include "Time.h"
 
 namespace http
 {
@@ -13,7 +14,7 @@ namespace http
         Player()                                       noexcept;
         Player(const Player& otherPlayer)              noexcept;
         Player(Player&& otherPlayer)                   noexcept;
-        Player(const UsersEntity& user, uint16_t points = 0);
+        Player(const std::string& username, uint16_t points = 0);
 
         ~Player() = default;
 #pragma endregion constructors & destructor
@@ -21,7 +22,16 @@ namespace http
 #pragma region Player
         uint16_t GetPoints() const noexcept;
         std::string GetName() const noexcept;
+        Time GetTime() const noexcept;
+        bool GetGuessed() const noexcept;
 #pragma endregion getters
+
+#pragma region Player
+        void SetPoints(uint16_t newPoints);
+        void SetName(const std::string& newName);
+        void SetTime(const Time& newTime);
+        void SetGuessed(bool newGuessed);
+#pragma endregion setters
 
 #pragma region Player
         void AddPoints(uint16_t noOfPointsToBeAdded) noexcept;
@@ -34,7 +44,12 @@ namespace http
 #pragma endregion overloaded operators
 
     private:
+        std::string m_user;
+
+        Time m_active;
+
         uint16_t m_points;
-        UsersEntity m_user;
+
+        bool m_guessed;
     };
 }

@@ -1,13 +1,14 @@
 #pragma once
 
 #include <vector>
-
-#include <array>
+#include <string>
 #include <optional>
+#include <cstdlib>
+#include <ctime>
 
-#include "LobbyConfig.h"
-#include "Player.h"
+#include "User.h"
 #include "Game.h"
+#include "GameSettings.h"
 
 #include "UserDoesntExistException.h"
 #include "NotEnoughPlayersException.h"
@@ -19,18 +20,32 @@ namespace http
 	public:
 		Lobby() = default;
 
-		void JoinLobby(Player&& newPlayer);
-		void LeaveLobby(const Player& playerToLeave);
+		~Lobby();
 
-		int GetPlayersNumber() const noexcept;
-		int GetDrawTime() const noexcept;
-		int GetRoundsNumber() const noexcept;
+		void JoinLobby(User&& newPlayer);
+		void LeaveLobby(const User& playerToLeave);
+
+		std::vector<User> GetPlayers() const noexcept;
+		User* GetLeader() const noexcept;
+		GameSettings GetSettings() const noexcept;
+		std::string GetCode() const noexcept;
+
+		void SetLeader(const User* newLeader);
+		void SetCode(const std::string& newCode);
 
 		Game* StartGame();
 
 	private:
-		LobbyConfig m_config;
+		std::string GenerateCode();
 
-		std::vector<Player> m_players;
+	private:
+		std::vector<User> m_players;
+
+		User* m_leader;
+
+		GameSettings m_settings;
+
+		const std::string m_code = GenerateCode();
+		const int kCodeLength{ 11 };
 	};
 }
