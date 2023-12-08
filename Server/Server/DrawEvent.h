@@ -21,6 +21,13 @@ namespace http
 
 		int GetWidth() const noexcept;
 
+		void SetX(int newX);
+		void SetY(int newY);
+
+		void SetColor(Color newColor);
+
+		void SetWidth(int newWidth);
+
 	private:
 		CanvasPoints m_canvasPoints;
 
