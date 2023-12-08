@@ -19,8 +19,12 @@ private:
     SelectableObject* m_selected;
     String            m_lobbyCode;
 
-    void Display() const override;
-    void Input  () const override;
-    void Start  ()       override;
-    void Update ()       override;
+    void CreateLobby();
+    void JoinLobby  ();
+    void Logout     ();
+    void Stats      ();
+    void Display    () const override;
+    void Input      () const override;
+    void Start      ()       override;
+    void Update     ()       override;
 };
