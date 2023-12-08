@@ -11,13 +11,16 @@ void InputManager::ReadInput()
 {
     if (IsCursorInConsole())
     {
-        m_cursorPosition    = CursorPositionInConsole();
-        m_ClickPressed = GetAsyncKeyState(VK_RBUTTON) || GetAsyncKeyState(VK_LBUTTON);
+        m_cursorPosition     = CursorPositionInConsole();
+        m_clickHold          = GetAsyncKeyState(VK_RBUTTON) || GetAsyncKeyState(VK_LBUTTON);
+        m_clickPressed       = m_previousClickState && !m_clickHold;
+        m_previousClickState = m_clickHold;
     }
     else
     {
         m_cursorPosition    = { -1, -1 };
-        m_ClickPressed = false;
+        m_clickPressed      = false;
+        m_clickHold         = false;
     }
 
     m_isArrowKey = false;
@@ -55,9 +58,14 @@ void InputManager::UpdateString(String& text, int pos, int maxLength)
     }
 }
 
+bool InputManager::GetClickHold()
+{
+    return m_clickHold;
+}
+
 bool InputManager::GetClickPressed()
 {
-    return m_ClickPressed;
+    return m_clickPressed;
 }
 
 char InputManager::GetCurrentKeyboardInput()

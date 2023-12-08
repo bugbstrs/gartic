@@ -21,14 +21,17 @@ public:
     void UpdateString (String& text, int pos = -1, int maxLength = -1);
 
     // Getters
+    bool        GetClickHold();
     bool        GetClickPressed();
     char        GetCurrentKeyboardInput();
     ControlKeys ControlKey();
     COORD       GetCurrentCursorPosition();
 
 private:
+    bool m_clickHold;
     bool m_isArrowKey;
-    bool m_ClickPressed;
+    bool m_clickPressed;
+    bool m_previousClickState;
     char m_lastKeyPressed;
 
     bool  IsCursorInConsole();
