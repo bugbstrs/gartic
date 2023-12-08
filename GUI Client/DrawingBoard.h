@@ -38,9 +38,10 @@ private:
 	void FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith);
 
 	void FillTop(QPoint startingPoint, QPoint pointToExecuteAt, QPoint& globalCurrentPos, QColor startingColor, QColor colorToBeFilledWith);
-	void FillBottom(QPoint startingPoint,QPoint pointToExecuteAt, QPoint&  globalCurrentPos, QColor startingColor, QColor colorToBeFilledWith);
-	void FillLeft(QPoint startingPoint,QPoint pointToExecuteAt, QPoint& globalCurrentPos, QColor startingColor, QColor colorToBeFilledWith);
-	void FillRight(QPoint startingPoint,QPoint pointToExecuteAt, QPoint& globalCurrentPos, QColor startingColor, QColor colorToBeFilledWith);
+	void FillBottom(QPoint startingPoint, QPoint pointToExecuteAt, QPoint& globalCurrentPos, QColor startingColor, QColor colorToBeFilledWith);
+	void FillLeft(QPoint startingPoint, QPoint pointToExecuteAt, QPoint& globalCurrentPos, QColor startingColor, QColor colorToBeFilledWith);
+	void FillRight(QPoint startingPoint, QPoint pointToExecuteAt, QPoint& globalCurrentPos, QColor startingColor, QColor colorToBeFilledWith);
+	void GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith, bool& done);
 
 private:
 	bool firstPaint = true;
@@ -52,4 +53,5 @@ private:
 	QPainterPath currentPath;
 	std::vector<std::pair<QPainterPath, QPen>> paths;
 	QImage image;
+	std::unordered_map<std::string, bool> availableDirections;
 };
