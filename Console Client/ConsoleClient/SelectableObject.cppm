@@ -34,24 +34,25 @@ public:
     void SetFunctionOnActivate (Function function);
     void SetConections         (SelectableObject* up, SelectableObject* down,
                                 SelectableObject* left, SelectableObject* right);
-
-    virtual void CheckInput () = 0;
-    void CheckCursor        ();
+    virtual void CheckInput    () = 0;
+    void CheckCursor           ();
+    void CanBeSelected         (bool selectable);
+    bool IsSelectable          ();
     
 protected:
+    bool               m_selectable;
+    Function           m_function;
     ColorType          m_selectedBackgroundColor;
     ColorType          m_selectedTextColor;
     ColorType          m_hoverBackgroundColor;
     ColorType          m_hoverTextColor;
-    SelectableObject*& m_selectedObject;
+    InputManager*      m_im;
     SelectableObject*  m_upObject;
     SelectableObject*  m_downObject;
     SelectableObject*  m_leftObject;
     SelectableObject*  m_rightObject;
-    InputManager*      m_im;
-    Function           m_function;
+    SelectableObject*& m_selectedObject;
 
-    bool IsPointInside(COORD point);
-
-    void SetColor() override;
+    bool IsPointInside (COORD point);
+    void SetColor      () override;
 };

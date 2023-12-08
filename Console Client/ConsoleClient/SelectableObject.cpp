@@ -12,7 +12,8 @@ SelectableObject::SelectableObject(COORD upLeftCorner, Align horizontalAlign, Al
     m_selectedObject          { selected                                            },
     m_hoverBackgroundColor    { backgroundColor                                     },
     m_hoverTextColor          { textColor                                           },
-    m_im                      { im                                                  }
+    m_im                      { im                                                  },
+    m_selectable              { true                                                }
 {}
 
 SelectableObject::SelectableObject(int16_t x, int16_t y, Align horizontalAlign, Align verticalAlign,
@@ -27,7 +28,8 @@ SelectableObject::SelectableObject(int16_t x, int16_t y, Align horizontalAlign, 
     m_selectedObject          { selected                                               },
     m_hoverBackgroundColor    { backgroundColor                                        },
     m_hoverTextColor          { textColor                                              },
-    m_im                      { im                                                     }
+    m_im                      { im                                                     },
+    m_selectable              { true                                                   }
 {}
 
 SelectableObject::SelectableObject(Align horizontalAlign, Align verticalAlign, ColorType backgroundColor,
@@ -41,7 +43,8 @@ SelectableObject::SelectableObject(Align horizontalAlign, Align verticalAlign, C
     m_selectedObject          { selected                                         },
     m_hoverBackgroundColor    { backgroundColor                                  },
     m_hoverTextColor          { textColor                                        },
-    m_im                      { im                                               }
+    m_im                      { im                                               },
+    m_selectable              { true                                             }
 {}
 
 void SelectableObject::SetHoverColors(ColorType background, ColorType text)
@@ -73,6 +76,16 @@ void SelectableObject::CheckCursor()
         if (m_function)
             m_function();
     }
+}
+
+void SelectableObject::CanBeSelected(bool selectable)
+{
+    m_selectable = selectable;
+}
+
+bool SelectableObject::IsSelectable()
+{
+    return m_selectable;
 }
 
 bool SelectableObject::IsPointInside(COORD point)
