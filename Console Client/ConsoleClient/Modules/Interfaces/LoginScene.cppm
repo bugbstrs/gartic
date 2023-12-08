@@ -23,7 +23,6 @@ private:
 
     void Login    ();
     void Register ();
-    void Display  () const override;
     void Input    () const override;
     void Start    ()       override;
     void Update   ()       override;

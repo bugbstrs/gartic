@@ -21,7 +21,6 @@ private:
     void SetSettings();
     void HasStarted ();
     void Back       ();
-    void Display    () const override;
     void Input      () const override;
     void Start      ()       override;
     void Update     ()       override;

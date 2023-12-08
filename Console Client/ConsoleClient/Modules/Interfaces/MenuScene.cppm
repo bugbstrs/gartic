@@ -23,7 +23,6 @@ private:
     void JoinLobby  ();
     void Logout     ();
     void Stats      ();
-    void Display    () const override;
     void Input      () const override;
     void Start      ()       override;
     void Update     ()       override;

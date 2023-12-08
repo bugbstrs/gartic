@@ -29,14 +29,6 @@ void LoginScene::Register()
 	m_nextScene = const_cast<std::type_info *>(&typeid(MenuScene));
 }
 
-void LoginScene::Display() const
-{
-	for (auto object : m_objects)
-		object->Draw();
-
-	m_console->UpdateConsole();
-}
-
 void LoginScene::Input() const
 {
 	m_input->ReadInput();

@@ -39,14 +39,6 @@ void LobbyScene::Back()
 	m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
 }
 
-void LobbyScene::Display() const
-{
-	for (auto object : m_objects)
-		object->Draw();
-
-	m_console->UpdateConsole();
-}
-
 void LobbyScene::Input() const
 {
 	m_input->ReadInput();
@@ -54,14 +46,16 @@ void LobbyScene::Input() const
 	for (auto object : m_selectableObjects)
 		object->CheckCursor();
 
-	m_selected->CheckInput();
+	//m_selected->CheckInput();
 }
 
 void LobbyScene::Start()
 {
 	m_nextScene = nullptr;
 	m_console->NewConsole(L"Lobby", 50, 11);
-	m_console->SetConsoleFont(L"Consolas", 11, 24);
+	m_console->SetConsoleFont(L"Consolas", 12, 24);
+
+
 }
 
 void LobbyScene::Update()

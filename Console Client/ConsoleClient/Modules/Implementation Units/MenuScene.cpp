@@ -5,6 +5,7 @@ import <Windows.h>;
 import Label;
 import Button;
 import LoginScene;
+import LobbyScene;
 import InputField;
 import VerticalLayout;
 import HorizontalLayout;
@@ -17,12 +18,12 @@ MenuScene::MenuScene(ConsoleManager* console, InputManager* inputManager) :
 
 void MenuScene::CreateLobby()
 {
-    //m_nextScene = const_cast<std::type_info*>(&typeid(LobbyScene));
+    m_nextScene = const_cast<std::type_info*>(&typeid(LobbyScene));
 }
 
 void MenuScene::JoinLobby()
 {
-    //m_nextScene = const_cast<std::type_info*>(&typeid(LobbyScene));
+    m_nextScene = const_cast<std::type_info*>(&typeid(LobbyScene));
 }
 
 void MenuScene::Logout()
@@ -33,14 +34,6 @@ void MenuScene::Logout()
 void MenuScene::Stats()
 {
     //m_nextScene = const_cast<std::type_info*>(&typeid(StatsScene));
-}
-
-void MenuScene::Display() const
-{
-    for (auto object : m_objects)
-        object->Draw();
-
-    m_console->UpdateConsole();
 }
 
 void MenuScene::Input() const
