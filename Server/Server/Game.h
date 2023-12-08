@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "GameSettings.h"
 #include "GameStatusEnum.h"
+#include "SpecialRoundsEnum.h"
 #include "Chat.h"
 #include "Round.h"
 #include "DrawingBoard.h"
@@ -33,8 +34,12 @@ namespace http
 		void SetDrawingBoard(DrawingBoard newDrawingBoard);
 		void SetWordToGuess(const std::string& newWordToGuess);
 
+		void NextDrawer();
+		void NextRound();
+		void RemovePlayer(const std::string& username);
+
 	private:
-		std::vector<Player> m_players;
+		std::vector<Player*> m_players;
 
 		Player* m_drawer;
 
@@ -47,6 +52,8 @@ namespace http
 		Chat m_chat;
 
 		int m_roundNumber;
+
+		SpecialRound m_specialRoundType;
 
 		Round m_currRound;
 

@@ -4,5 +4,6 @@ enum class GameStatus
 {
 	Drawing,
 	PickingWord,
-	waiting
+	Waiting,
+	SpecialRound
 };
