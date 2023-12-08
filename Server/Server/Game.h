@@ -1,8 +1,11 @@
 #pragma once
 
-#include "Round.h"
-#include "Chat.h"
 #include "Player.h"
+#include "GameSettings.h"
+#include "GameStatusEnum.h"
+#include "Chat.h"
+#include "Round.h"
+#include "DrawingBoard.h"
 
 namespace http
 {
@@ -11,23 +14,47 @@ namespace http
 	public:
 		Game(std::vector<Player>&& newPlayers);
 
-		void NextSubRound();
-		void NextRound();
+		~Game() = default;
 
-		//Timer GetTimer() const noexcept;
-		Round GetCurrRound() const noexcept;
+		std::vector<Player> GetPlayers() const noexcept;
+		Player* GetDrawer() const noexcept;
+		GameSettings GetSettings() const noexcept;
+		GameStatus GetStatus() const noexcept;
+		Time GetTime() const noexcept;
 		Chat GetChat() const noexcept;
+		int GetRoundNumber() const noexcept;
+		Round GetCurrRound() const noexcept;
+		DrawingBoard GetBoard() const noexcept;
+		std::string GetWordToGuess() const noexcept;
+		std::string GetWordToDisplay() const noexcept;
+
+		void SetGameStatus(GameStatus newGameStatus);
+		void SetRoundNumber(int newRoundNumber);
+		void SetDrawingBoard(DrawingBoard newDrawingBoard);
+		void SetWordToGuess(const std::string& newWordToGuess);
 
 	private:
-		//Timer m_timer;
+		std::vector<Player> m_players;
+
+		Player* m_drawer;
+
+		GameSettings m_settings;
+
+		GameStatus m_status;
+
+		Time m_remainingTime;
+
+		Chat m_chat;
 
 		int m_roundNumber;
 
 		Round m_currRound;
 
-		Chat m_chat;
+		DrawingBoard m_board;
 
-		std::vector<Player> m_players;
+		std::string m_wordToGuess;
+
+		std::string m_wordToDisplay;
 	};
 }
 
