@@ -33,9 +33,18 @@ public slots:
 	void OnPencilButtonReleased();
 
 private:
+	struct Player {
+		std::string name;
+		int points;
+	};
+private:
+	void AddPlayers();
+
+private:
 	QLabel* wordToDraw;
 	DrawingBoard* drawingBoard;
 	ToolsFrame* toolsFrame;
 	Chat* chat;
 	QListWidget* scoreboardTable;
+	std::vector<QListWidgetItem> players;
 };

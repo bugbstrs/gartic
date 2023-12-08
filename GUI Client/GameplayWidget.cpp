@@ -31,6 +31,18 @@ void GameplayWidget::OnPencilButtonReleased()
 	drawingBoard->EnablePencil();
 }
 
+void GameplayWidget::AddPlayers()
+{
+	QFont font("Consolas", 16);
+	/*players = { QListWidgetItem("Marcel" + 10) };*/
+	QListWidgetItem* player = new QListWidgetItem(QIcon(":/image/user"), "Marcel" + QString(7, ' ') + QString::number(10));
+	QListWidgetItem* player2 = new QListWidgetItem(QIcon(":/image/user"), "Alex" + QString(7, ' ') + QString::number(7));
+	player->setFont(font);
+	player2->setFont(font);
+	scoreboardTable->addItem(player);
+	scoreboardTable->addItem(player2);
+}
+
 void GameplayWidget::OnEraserButtonReleased()
 {
 	drawingBoard->ToggleEraser(true);
@@ -64,6 +76,7 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 	QObject::connect(toolsFrame, &ToolsFrame::OnPencilButtonReleasedSignal, this, &GameplayWidget::OnPencilButtonReleased);
 	
 	chat->SetWordToGuess(wordToDraw->text());
+	AddPlayers();
 
 	/*cpr::Response response = cpr::Get(cpr::Url{ "http://localhost:18080/fetchword" });
 	auto word = crow::json::load(response.text);

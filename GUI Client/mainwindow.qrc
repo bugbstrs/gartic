@@ -7,6 +7,7 @@
         <file alias="pencil">Resource Files/attribution-pencil.png</file>
         <file alias="eraser_cursor">Resource Files/eraser_cursor.png</file>
         <file alias="fill">Resource Files/fill.png</file>
+        <file alias="user">Resource Files/user.png</file>
     </qresource>
     <qresource prefix="/background">
         <file>Resource Files/GarticBackground_2.png</file>
