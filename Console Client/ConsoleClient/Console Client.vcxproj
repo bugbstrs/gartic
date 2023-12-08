@@ -165,6 +165,8 @@
     <ClCompile Include="InputField.cppm" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="Label.cppm" />
+    <ClCompile Include="LobbyScene.cpp" />
+    <ClCompile Include="LobbyScene.cppm" />
     <ClCompile Include="Modules\Implementation Units\ConsoleBuffer.cpp" />
     <ClCompile Include="Modules\Implementation Units\ConsoleManager.cpp" />
     <ClCompile Include="Modules\Implementation Units\FileHandler.cpp" />
@@ -200,6 +202,8 @@
     <ClCompile Include="SelectableObject.cpp" />
     <ClCompile Include="SelectableObject.cppm" />
     <ClCompile Include="Source Files\Main.cpp" />
+    <ClCompile Include="VerticalLayout.cpp" />
+    <ClCompile Include="VerticalLayout.cppm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -156,5 +156,17 @@
     <ClCompile Include="Button.cpp">
       <Filter>Modules\Implementation Units</Filter>
     </ClCompile>
+    <ClCompile Include="VerticalLayout.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="VerticalLayout.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyScene.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyScene.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

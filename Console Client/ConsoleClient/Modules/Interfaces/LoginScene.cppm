@@ -2,8 +2,8 @@ export module LoginScene;
 
 import <string>;
 
+import Scene;
 import MenuScene;
-export import Scene;
 
 using String = std::string;
 

@@ -18,6 +18,8 @@ void SceneManager::Update()
             m_activeScene = std::make_unique<LoginScene>(m_console, m_input);
         if (nextScene == &typeid(MenuScene))
             m_activeScene = std::make_unique<MenuScene>(m_console, m_input);
+        if (nextScene == &typeid(LobbyScene))
+            m_activeScene = std::make_unique<LobbyScene>(m_console, m_input);
         if (!nextScene)
             m_activeScene = nullptr;
     }
