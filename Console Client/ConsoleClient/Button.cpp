@@ -39,6 +39,9 @@ Button::Button(Align horizontalAlign, Align verticalAlign,
 
 void Button::Draw()
 {
+	if (!m_active)
+		return;
+
 	SetColor();
 
 	DrawBackground();
@@ -57,19 +60,19 @@ void Button::CheckInput()
 					m_function();
 				break;
 			case ControlKeys::UpArrow:
-				if (m_upObject)
+				if (m_upObject && m_upObject->IsActive())
 					m_selectedObject = m_upObject;
 				break;
 			case ControlKeys::DownArrow:
-				if (m_downObject)
+				if (m_downObject && m_downObject->IsActive())
 					m_selectedObject = m_downObject;
 				break;
 			case ControlKeys::LeftArrow:
-				if (m_leftObject)
+				if (m_leftObject && m_leftObject->IsActive())
 					m_selectedObject = m_leftObject;
 				break;
 			case ControlKeys::RightArrow:
-				if (m_rightObject)
+				if (m_rightObject && m_rightObject->IsActive())
 					m_selectedObject = m_rightObject;
 				break;
 			default:

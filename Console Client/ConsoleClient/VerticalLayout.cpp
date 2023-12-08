@@ -31,6 +31,9 @@ VerticalLayout::~VerticalLayout()
 
 void VerticalLayout::Draw()
 {
+	if (!m_active)
+		return;
+
 	SetColor();
 
 	DrawBackground();

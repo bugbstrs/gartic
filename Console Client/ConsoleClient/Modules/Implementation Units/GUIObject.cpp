@@ -9,7 +9,8 @@ GUIObject::GUIObject(COORD upLeftCorner, Align horizontalAlign, Align verticalAl
     m_textColor       { textColor       },
     m_width           { maxWidth        },
     m_height          { maxHeight       },
-    m_cm              { cm              }
+    m_cm              { cm              },
+    m_active          { true            }
 {}
 
 GUIObject::GUIObject(int16_t x, int16_t y, Align horizontalAlign, Align verticalAlign, ColorType backgroundColor,
@@ -21,7 +22,8 @@ GUIObject::GUIObject(int16_t x, int16_t y, Align horizontalAlign, Align vertical
     m_textColor       { textColor       },
     m_width           { maxWidth        },
     m_height          { maxHeight       },
-    m_cm              { cm              }
+    m_cm              { cm              },
+    m_active          { true            }
 {}
 
 GUIObject::GUIObject(Align horizontalAlign, Align verticalAlign, ColorType backgroundColor, ColorType textColor,
@@ -32,12 +34,23 @@ GUIObject::GUIObject(Align horizontalAlign, Align verticalAlign, ColorType backg
     m_textColor       { textColor       },
     m_width           { maxWidth        },
     m_height          { maxHeight       },
-    m_cm              { cm              }
+    m_cm              { cm              },
+    m_active          { true            }
 {}
 
 void GUIObject::InitializeTransform(COORD upLeftCorner)
 {
     m_upLeftCorner = upLeftCorner;
+}
+
+void GUIObject::SetActive(bool active)
+{
+    m_active = active;
+}
+
+bool GUIObject::IsActive()
+{
+    return m_active;
 }
 
 COORD GUIObject::GetUpLeftCorner()

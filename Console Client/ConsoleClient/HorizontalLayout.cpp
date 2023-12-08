@@ -35,6 +35,9 @@ HorizontalLayout::~HorizontalLayout()
 
 void HorizontalLayout::Draw()
 {
+	if (!m_active)
+		return;
+
 	SetColor();
 
 	DrawBackground();

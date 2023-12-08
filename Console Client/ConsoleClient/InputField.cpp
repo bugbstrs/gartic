@@ -46,6 +46,9 @@ InputField::InputField(Align horizontalAlign, Align verticalAlign,
 
 void InputField::Draw()
 {
+	if (!m_active)
+		return;
+
 	SetColor();
 
 	DrawBackground();
@@ -65,14 +68,14 @@ void InputField::CheckInput()
 		if (m_textPos / m_width > 0)
 			m_textPos -= m_width;
 		else
-			if(m_upObject)
+			if(m_upObject && m_upObject->IsActive())
 				m_selectedObject = m_upObject;
 		break;
 	case ControlKeys::DownArrow:
 		if (m_textPos < m_width * (m_height - 1))
 			m_textPos += m_width;
 		else
-			if (m_downObject)
+			if (m_downObject && m_downObject->IsActive())
 				m_selectedObject = m_downObject;
 		break;
 	case ControlKeys::LeftArrow:

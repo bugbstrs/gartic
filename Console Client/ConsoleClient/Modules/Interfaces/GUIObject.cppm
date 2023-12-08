@@ -29,10 +29,11 @@ public:
     virtual void Draw() = 0;
 
     void InitializeTransform(COORD upLeftCorner);
-
-    COORD GetUpLeftCorner();
-    int16_t GetWidth     ();
-    int16_t GetHeight    ();
+    void SetActive          (bool active);
+    bool IsActive           ();
+    COORD GetUpLeftCorner   ();
+    int16_t GetWidth        ();
+    int16_t GetHeight       ();
 
 protected:
     Align           m_horizontalAlign;
@@ -43,6 +44,7 @@ protected:
     int16_t         m_width;
     int16_t         m_height;
     ConsoleManager* m_cm;
+    bool            m_active;
 
     virtual void SetColor      ();
     virtual void DrawContents  () = 0;

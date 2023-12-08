@@ -29,6 +29,9 @@ Label::Label(Align horizontalAlign, Align verticalAlign,
 
 void Label::Draw()
 {
+	if (!m_active)
+		return;
+
 	SetColor();
 
 	DrawBackground();
