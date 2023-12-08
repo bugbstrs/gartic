@@ -27,7 +27,7 @@ namespace http
 		void SetStartValue(float newStartValue);
 		void SetEndValue(float newEndValue);
 
-		void SetMethodToCall(const std::function<void()>& methodToCall);
+		void SetMethodToCall(const std::function<void(const std::string& username)>& methodToCall);
 
 		void Start(float timeStamp, float startValue, float endValue);
 

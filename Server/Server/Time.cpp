@@ -61,7 +61,7 @@ void http::Time::SetEndValue(float newEndValue)
 	m_endValue = newEndValue;
 }
 
-void http::Time::SetMethodToCall(const std::function<void()>& methodToCall)
+void http::Time::SetMethodToCall(const std::function<void(const std::string&)>& methodToCall)
 {
 	m_toCall = methodToCall;
 }

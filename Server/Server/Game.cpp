@@ -14,6 +14,10 @@ Game::Game(std::vector<Player>&& newPlayers) :
 	m_wordToGuess { "" },
 	m_wordToDisplay { "" }
 {
+	for (const auto& player : m_players)
+	{
+		player.GetTime().SetMethodToCall(RemovePlayer());
+	}
 }
 
 std::vector<Player> http::Game::GetPlayers() const noexcept
@@ -149,4 +153,43 @@ void http::Game::RemovePlayer(const std::string& username)
 	}
 
 	m_players.erase(m_players.begin() + indexToRemove);
+}
+
+bool http::Game::IsCloseEnough(const std::string& currGuess)
+{
+	auto tokenize = [](const std::string& str, std::unordered_map<std::string, int>& wordFrequency) {
+		size_t start = 0, end = 0;
+		while ((end = str.find(' ', start)) != std::string::npos) {
+			std::string word = str.substr(start, end - start);
+			wordFrequency[word]++;
+			start = end + 1;
+		}
+		std::string lastWord = str.substr(start);
+		wordFrequency[lastWord]++;
+		};
+
+	std::unordered_map<std::string, int> freq1, freq2;
+	tokenize(str1, freq1);
+	tokenize(str2, freq2);
+
+	double dotProduct = 0.0;
+	for (const auto& entry : freq1) 
+	{
+		dotProduct += entry.second * freq2[entry.first];
+	}
+
+	double mag1 = 0.0, mag2 = 0.0;
+	for (const auto& entry : freq1) 
+	{
+		mag1 += std::pow(entry.second, 2);
+	}
+	
+	for (const auto& entry : freq2) 
+	{
+		mag2 += std::pow(entry.second, 2);
+	}
+
+	double similarity = dotProduct / (std::sqrt(mag1) * std::sqrt(mag2));
+	
+	return similarity >= kThreshold;
 }

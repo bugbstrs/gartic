@@ -8,6 +8,9 @@
 #include "Round.h"
 #include "DrawingBoard.h"
 
+#include <unordered_map>
+#include <cmath>
+
 namespace http
 {
 	class Game
@@ -37,6 +40,11 @@ namespace http
 		void NextDrawer();
 		void NextRound();
 		void RemovePlayer(const std::string& username);
+
+		bool IsCloseEnough(const std::string& currGuess);
+
+	private:
+		const double kTreshold = 0.8;
 
 	private:
 		std::vector<Player*> m_players;
