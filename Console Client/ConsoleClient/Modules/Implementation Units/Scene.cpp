@@ -18,3 +18,11 @@ std::type_info* Scene::SetActive()
 
     return m_nextScene;
 }
+
+void Scene::Display() const
+{
+    for (auto object : m_objects)
+        object->Draw();
+
+    m_console->UpdateConsole();
+}

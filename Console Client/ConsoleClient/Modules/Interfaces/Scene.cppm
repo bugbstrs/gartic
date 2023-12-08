@@ -29,7 +29,7 @@ protected:
     std::vector<SelectableObject*> m_selectableObjects;
     std::vector<GUIObject*>        m_objects;
 
-    virtual void Display () const = 0;
+            void Display () const;
     virtual void Input   () const = 0;
     virtual void Start   ()       = 0;
     virtual void Update  ()       = 0;
