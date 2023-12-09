@@ -1,5 +1,7 @@
 #include "Lobby.h"
 
+import GarticExceptions;
+
 http::Lobby::~Lobby()
 {
 	delete m_leader;
@@ -17,7 +19,7 @@ void http::Lobby::LeaveLobby(const User& playerToLeave)
 		m_players.erase(it);
 	}
 
-	throw UserDoesntExistException("The player is already not in the lobby!");
+	throw GarticException<UserDoesntExistException>("Lobby > LeaveLobby(const User&): The player is already not in the lobby!");
 }
 
 std::vector<User> http::Lobby::GetPlayers() const noexcept
@@ -57,7 +59,7 @@ http::Game* http::Lobby::StartGame()
 		return new Game(m_players);
 	}
 
-	throw NotEnoughPlayersException("There are not enough players to start a game!");
+	throw GarticException<NotEnoughPlayersException>("Lobby > StartGame(): There are not enough players to start a game!");
 }
 
 std::string http::Lobby::GenerateCode()
