@@ -33,14 +33,13 @@ void GameplayWidget::OnPencilButtonReleased()
 
 void GameplayWidget::AddPlayers()
 {
-	QFont font("Consolas", 16);
-	/*players = { QListWidgetItem("Marcel" + 10) };*/
-	QListWidgetItem* player = new QListWidgetItem(QIcon(":/image/user"), "Marcel" + QString(7, ' ') + QString::number(10));
-	QListWidgetItem* player2 = new QListWidgetItem(QIcon(":/image/user"), "Alex" + QString(7, ' ') + QString::number(7));
-	player->setFont(font);
-	player2->setFont(font);
-	scoreboardTable->addItem(player);
-	scoreboardTable->addItem(player2);
+	scoreboardTable->AddPlayer("Marcel", 10);
+	scoreboardTable->AddPlayer("Alex", 45);
+	scoreboardTable->AddPlayer("Multiple", 200);
+	scoreboardTable->AddPlayer("tdennis", 15);
+	scoreboardTable->AddPlayer("koochie", 75);
+	scoreboardTable->AddPlayer("david", 20);
+	scoreboardTable->AddPlayer("MC", 160);
 }
 
 void GameplayWidget::OnEraserButtonReleased()
@@ -65,7 +64,7 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 	drawingBoard = findChild<DrawingBoard*>("drawingBoardCanvas");
 	toolsFrame = findChild<ToolsFrame*>("toolsFrame");
 	chat = findChild<Chat*>("chatFrame");
-	scoreboardTable = findChild<QListWidget*>("scoreboardTable");
+	scoreboardTable = findChild<ScoreboardTable*>("scoreboardTable");
 
 	QObject::connect(toolsFrame, &ToolsFrame::OnColorChangedSignal, this, &GameplayWidget::ChangePenColor);
 	QObject::connect(toolsFrame, &ToolsFrame::OnWidthChangedSignal, this, &GameplayWidget::ChangePenWidth);

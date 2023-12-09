@@ -7,7 +7,13 @@
         <file alias="pencil">Resource Files/attribution-pencil.png</file>
         <file alias="eraser_cursor">Resource Files/eraser_cursor.png</file>
         <file alias="fill">Resource Files/fill.png</file>
-        <file alias="user">Resource Files/user.png</file>
+        <file alias="alien">Resource Files/user-alien.png</file>
+        <file alias="astronaut">Resource Files/user-astronaut.png</file>
+        <file alias="ninja">Resource Files/user-ninja.png</file>
+        <file alias="policeman">Resource Files/user-police.png</file>
+        <file alias="robot">Resource Files/user-robot.png</file>
+        <file alias="cowboy">Resource Files/user-cowboy.png</file>
+        <file alias="king">Resource Files/user-crown.png</file>
     </qresource>
     <qresource prefix="/background">
         <file>Resource Files/GarticBackground_2.png</file>

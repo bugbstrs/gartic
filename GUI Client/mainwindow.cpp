@@ -49,7 +49,10 @@ void MainWindow::OnGoToLogInButtonReleased() { ui->stackedWidget->setCurrentInde
 void MainWindow::OnGoToSignUpButtonReleased() { ui->stackedWidget->setCurrentIndex(3); }
 
 //Game scene events
-void MainWindow::OnLeaveGameButtonReleased() { ui->stackedWidget->setCurrentIndex(0); }
+void MainWindow::OnLeaveGameButtonReleased() { 
+    QApplication::setOverrideCursor(Qt::ArrowCursor);
+    ui->stackedWidget->setCurrentIndex(0); 
+}
 void MainWindow::OnEraserButtonReleased() { QApplication::setOverrideCursor(eraserCursor); }
 void MainWindow::OnFillEnabled() { QApplication::setOverrideCursor(fillCursor); }
 void MainWindow::OnColorChanged()
