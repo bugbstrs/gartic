@@ -6,6 +6,7 @@
 #include "DrawingBoard.h"
 #include "ToolsFrame.h"
 #include "Chat.h"
+#include "ScoreboardTable.h"
 #include <numeric>
 #include <sstream>
 #include <regex>
@@ -45,6 +46,5 @@ private:
 	DrawingBoard* drawingBoard;
 	ToolsFrame* toolsFrame;
 	Chat* chat;
-	QListWidget* scoreboardTable;
-	std::vector<QListWidgetItem> players;
+	ScoreboardTable* scoreboardTable;
 };
