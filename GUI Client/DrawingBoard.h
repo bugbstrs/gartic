@@ -43,9 +43,12 @@ private:
 	bool firstPaint = true;
 	bool mouseOverBoard = false;
 	bool drawing = false;
-	bool fillEnabled;
-	bool undo;
+	bool erasing = false;
+	bool fillEnabled = false;
+	bool undo = false;
 	QPen pen;
+	QColor lastColor;
+	QColor eraserColor;
 	QPoint lastMousePos;
 	QPainterPath currentPath;
 	std::vector<std::pair<QPainterPath, QPen>> paths;

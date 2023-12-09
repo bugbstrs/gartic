@@ -7,7 +7,7 @@ DrawingBoard::DrawingBoard(QWidget* parent)
 {
     setMouseTracking(true);
     ChangePenPropertiesTo(Qt::black, 2);
-    undo = false;
+    eraserColor = Qt::white;
 }
 
 void DrawingBoard::mousePressEvent(QMouseEvent* event) {
@@ -48,6 +48,7 @@ void DrawingBoard::resizeEvent(QResizeEvent* event)
 
 void DrawingBoard::ChangePenPropertiesTo(QColor color, int width)
 {
+    lastColor = color;
     pen.setColor(color);
     pen.setWidth(width);
     pen.setCapStyle(Qt::RoundCap);
@@ -55,6 +56,7 @@ void DrawingBoard::ChangePenPropertiesTo(QColor color, int width)
 
 void DrawingBoard::ChangePenColor(QColor color)
 {
+    lastColor = color;
     pen.setColor(color);
 }
 
@@ -65,7 +67,9 @@ void DrawingBoard::ChangePenWidth(int width)
 
 void DrawingBoard::ToggleEraser(bool value)
 {
-    pen.setColor(Qt::white);
+    if (value)
+        pen.setColor(eraserColor);
+    else pen.setColor(lastColor);
 }
 
 void DrawingBoard::ToggleFill(bool value)
@@ -75,7 +79,7 @@ void DrawingBoard::ToggleFill(bool value)
 
 void DrawingBoard::EnablePencil()
 {
-    pen.setColor(pen.color());
+    pen.setColor(lastColor);
 }
 
 void DrawingBoard::UndoLastPath()
