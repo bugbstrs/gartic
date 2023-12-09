@@ -26,16 +26,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BannedWordsEntity.h" />
-    <ClInclude Include="CannotFetchQuoteException.h" />
-    <ClInclude Include="CannotFetchWordException.h" />
     <ClInclude Include="Chat.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="GarticDatabase.h" />
-    <ClInclude Include="GarticException.h" />
     <ClInclude Include="HttpUtils.h" />
     <ClInclude Include="Lobby.h" />
-    <ClInclude Include="NotEnoughPlayersException.h" />
     <ClInclude Include="OngoingGame.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="QuotesEntity.h" />
@@ -43,23 +39,17 @@
     <ClInclude Include="RouteManager.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="User.h" />
-    <ClInclude Include="UserAlreadyExistsException.h" />
-    <ClInclude Include="UserDoesntExistException.h" />
     <ClInclude Include="UsersEntity.h" />
     <ClInclude Include="WordsEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BannedWordsEntity.cpp" />
-    <ClCompile Include="CannotFetchQuoteException.cpp" />
-    <ClCompile Include="CannotFetchWordException.cpp" />
     <ClCompile Include="Chat.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="GarticDatabase.cpp" />
-    <ClCompile Include="GarticException.cpp" />
     <ClCompile Include="HttpUtils.cpp" />
     <ClCompile Include="Lobby.cpp" />
-    <ClCompile Include="NotEnoughPlayersException.cpp" />
     <ClCompile Include="OngoingGame.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="QuotesEntity.cpp" />
@@ -68,8 +58,6 @@
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="User.cpp" />
-    <ClCompile Include="UserAlreadyExistsException.cpp" />
-    <ClCompile Include="UserDoesntExistException.cpp" />
     <ClCompile Include="UsersEntity.cpp" />
     <ClCompile Include="WordsEntity.cpp" />
   </ItemGroup>

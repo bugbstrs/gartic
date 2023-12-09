@@ -31,9 +31,6 @@
     <Filter Include="Source Files\Logic">
       <UniqueIdentifier>{03533bc1-183f-4e3c-b1ce-28f6c9cb6b91}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Exceptions">
-      <UniqueIdentifier>{d65a0b92-c1ed-4ebb-b911-999f3f25ac0c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Database">
       <UniqueIdentifier>{fefb98f4-bbb3-43b4-bcac-6cfb008ce912}</UniqueIdentifier>
     </Filter>
@@ -45,9 +42,6 @@
     </Filter>
     <Filter Include="Header Files\Route">
       <UniqueIdentifier>{38ed4533-b6ad-407a-b498-0a7350f1a0a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Exceptions">
-      <UniqueIdentifier>{d4e83d7f-30b4-4194-8c09-225f4c65cd83}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -65,21 +59,6 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GarticException.h">
-      <Filter>Header Files\Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="UserAlreadyExistsException.h">
-      <Filter>Header Files\Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="CannotFetchWordException.h">
-      <Filter>Header Files\Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="CannotFetchQuoteException.h">
-      <Filter>Header Files\Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="UserDoesntExistException.h">
-      <Filter>Header Files\Exceptions</Filter>
-    </ClInclude>
     <ClInclude Include="Chat.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
@@ -97,9 +76,6 @@
     </ClInclude>
     <ClInclude Include="Round.h">
       <Filter>Header Files\Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="NotEnoughPlayersException.h">
-      <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="GarticDatabase.h">
       <Filter>Header Files\Database</Filter>
@@ -153,24 +129,6 @@
     </ClCompile>
     <ClCompile Include="Round.cpp">
       <Filter>Source Files\Logic</Filter>
-    </ClCompile>
-    <ClCompile Include="CannotFetchQuoteException.cpp">
-      <Filter>Source Files\Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="CannotFetchWordException.cpp">
-      <Filter>Source Files\Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="NotEnoughPlayersException.cpp">
-      <Filter>Source Files\Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="UserAlreadyExistsException.cpp">
-      <Filter>Source Files\Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="UserDoesntExistException.cpp">
-      <Filter>Source Files\Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="GarticException.cpp">
-      <Filter>Source Files\Exceptions</Filter>
     </ClCompile>
     <ClCompile Include="GarticDatabase.cpp">
       <Filter>Source Files\Database</Filter>

@@ -54,6 +54,9 @@
     <ClCompile Include="UserDoesntExistException.cpp">
       <Filter>Server\Implementation Units</Filter>
     </ClCompile>
+    <ClCompile Include="GarticExceptions.cppm">
+      <Filter>Main\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="GarticException.cpp">

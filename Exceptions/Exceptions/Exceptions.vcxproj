@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CannotFetchWordException.cpp" />
+    <ClCompile Include="GarticExceptions.cppm" />
     <ClCompile Include="NotEnoughPlayersException.cpp" />
     <ClCompile Include="UserAlreadyExistsException.cpp" />
     <ClCompile Include="UserDoesntExistException.cpp" />
