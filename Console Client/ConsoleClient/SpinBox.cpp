@@ -21,7 +21,7 @@ SpinBox::SpinBox(COORD upLeftCorner, Align horizontalAlign, Align verticalAlign,
 			buttonsTextColor, 1, m_height, buttonsSelectedBackgroungColor,
 			buttonsSelectedTextColor, cm, im, selected, ">" };
 	m_right->SetHoverColors(buttonsSelectedBackgroungColor, buttonsSelectedTextColor);
-	m_left->SetFunctionOnActivate(std::bind(&SpinBox::NextOption, this));
+	m_right->SetFunctionOnActivate(std::bind(&SpinBox::NextOption, this));
 
 	m_left->SetConections(nullptr, nullptr, nullptr, m_right);
 	m_right->SetConections(nullptr, nullptr, m_left, nullptr);
@@ -48,7 +48,7 @@ SpinBox::SpinBox(int16_t x, int16_t y, Align horizontalAlign, Align verticalAlig
 			buttonsTextColor, 1, m_height, buttonsSelectedBackgroungColor,
 			buttonsSelectedTextColor, cm, im, selected, ">" };
 	m_right->SetHoverColors(buttonsSelectedBackgroungColor, buttonsSelectedTextColor);
-	m_left->SetFunctionOnActivate(std::bind(&SpinBox::NextOption, this));
+	m_right->SetFunctionOnActivate(std::bind(&SpinBox::NextOption, this));
 
 	m_left->SetConections(nullptr, nullptr, nullptr, m_right);
 	m_right->SetConections(nullptr, nullptr, m_left, nullptr);
@@ -75,7 +75,7 @@ SpinBox::SpinBox(Align horizontalAlign, Align verticalAlign,
 			buttonsTextColor, 1, m_height, buttonsSelectedBackgroungColor,
 			buttonsSelectedTextColor, cm, im, selected, ">" };
 	m_right->SetHoverColors(buttonsSelectedBackgroungColor, buttonsSelectedTextColor);
-	m_left->SetFunctionOnActivate(std::bind(&SpinBox::NextOption, this));
+	m_right->SetFunctionOnActivate(std::bind(&SpinBox::NextOption, this));
 
 	m_left->SetConections(nullptr, nullptr, nullptr, m_right);
 	m_right->SetConections(nullptr, nullptr, m_left, nullptr);
@@ -102,15 +102,34 @@ void SpinBox::Draw()
 	DrawContents();
 }
 
+void SpinBox::InitializeTransform(COORD upLeftCorner)
+{
+	m_upLeftCorner = upLeftCorner;
+	m_left->InitializeTransform(m_upLeftCorner);
+	m_right->InitializeTransform({ static_cast<int16_t>(m_upLeftCorner.X + m_width - 1), m_upLeftCorner.Y });
+}
+
 String SpinBox::GetOption() const
 {
 	return m_options[m_optionSelected];
+}
+
+SelectableObject* SpinBox::GetNextButton() const
+{
+	return m_right;
+}
+
+SelectableObject* SpinBox::GetPreviousButton() const
+{
+	return m_left;
 }
 
 void SpinBox::DrawContents()
 {
 	m_left->Draw();
 	m_right->Draw();
+
+	SetColor();
 
 	m_cm->Write(m_options[m_optionSelected], m_upLeftCorner.X + 1, m_upLeftCorner.Y,
 				m_width - 2, m_height, m_horizontalAlign, m_verticalAlign);

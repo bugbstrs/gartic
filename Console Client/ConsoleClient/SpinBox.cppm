@@ -37,9 +37,12 @@ public:
 	// Destructor
 	~SpinBox();
 
-	void   SetOptions(Options options, int startOption);
-	void   Draw		 () override;
-	String GetOption () const;
+	void			  SetOptions		 (Options options, int startOption);
+	void			  Draw				 () override;
+	void			  InitializeTransform(COORD upLeftCorner) override;
+	String			  GetOption			 () const;
+	SelectableObject* GetNextButton		 () const;
+	SelectableObject* GetPreviousButton	 () const;
 
 private:
 	Options m_options;
