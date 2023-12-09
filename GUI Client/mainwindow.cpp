@@ -57,7 +57,7 @@ void MainWindow::OnEraserButtonReleased() { QApplication::setOverrideCursor(eras
 void MainWindow::OnFillEnabled() { QApplication::setOverrideCursor(fillCursor); }
 void MainWindow::OnColorChanged()
 {
-    if (currentCursor == &eraserCursor)
+    if (QApplication::overrideCursor()->shape() == eraserCursor.shape())
         QApplication::setOverrideCursor(pencilCursor);
 
 }
