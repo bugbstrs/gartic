@@ -1,9 +1,5 @@
 ﻿module LoginScene;
 
-import <algorithm>;
-import <print>;
-import <string>;
-
 import Label;
 import Button;
 import InputField;
@@ -44,6 +40,7 @@ void LoginScene::Start()
 	m_username = "";
 	m_password = "";
 	m_nextScene = nullptr;
+	m_console->SetWindowed();
 	m_console->NewConsole(L"Login", 50, 11);
 	m_console->SetConsoleFont(L"Consolas", 11, 24);
 

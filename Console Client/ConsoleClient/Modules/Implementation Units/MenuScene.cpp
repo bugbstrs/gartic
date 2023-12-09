@@ -50,6 +50,7 @@ void MenuScene::Start()
 {
     m_lobbyCode = "";
     m_nextScene = nullptr;
+    m_console->SetWindowed();
     m_console->NewConsole(L"Menu", 50, 25);
     m_console->SetConsoleFont(L"MS Gothic", 15, 15);
 

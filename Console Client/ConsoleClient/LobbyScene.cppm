@@ -1,7 +1,9 @@
 export module LobbyScene;
 
 import Scene;
+import SpinBox;
 import MenuScene;
+import VerticalLayout;
 
 export class LobbyScene : public Scene
 {
@@ -14,6 +16,10 @@ public:
 
 private:
     SelectableObject* m_selected;
+    VerticalLayout*   m_users;
+    SpinBox*          m_rounds;
+    SpinBox*          m_drawTime;
+    SpinBox*          m_wordCount;
 
     void StartGame  ();
     void GetUsers   ();

@@ -28,12 +28,12 @@ public:
     // Method to override
     virtual void Draw() = 0;
 
-    void InitializeTransform(COORD upLeftCorner);
-    void SetActive          (bool active);
-    bool IsActive           ();
-    COORD GetUpLeftCorner   ();
-    int16_t GetWidth        ();
-    int16_t GetHeight       ();
+    virtual void InitializeTransform(COORD upLeftCorner);
+    void SetActive                  (bool active);
+    bool IsActive                   ();
+    COORD GetUpLeftCorner           ();
+    int16_t GetWidth                ();
+    int16_t GetHeight               ();
 
 protected:
     Align           m_horizontalAlign;
