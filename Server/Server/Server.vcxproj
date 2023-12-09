@@ -77,6 +77,9 @@
     <ProjectReference Include="..\..\DLL\Timer\Timer.vcxproj">
       <Project>{f0b495a8-fdba-4ec7-9d33-9ca6bc783f55}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\Exceptions\Exceptions\Exceptions.vcxproj">
+      <Project>{0fd629ba-9f3c-42c4-96ed-a0aea293a17e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

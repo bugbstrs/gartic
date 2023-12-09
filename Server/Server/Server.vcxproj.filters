@@ -98,9 +98,6 @@
     <ClInclude Include="Round.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
-    <ClInclude Include="LobbyConfig.h">
-      <Filter>Header Files\Logic</Filter>
-    </ClInclude>
     <ClInclude Include="NotEnoughPlayersException.h">
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
@@ -131,6 +128,9 @@
     <ClInclude Include="Time.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="GameSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -152,9 +152,6 @@
       <Filter>Source Files\Logic</Filter>
     </ClCompile>
     <ClCompile Include="Round.cpp">
-      <Filter>Source Files\Logic</Filter>
-    </ClCompile>
-    <ClCompile Include="LobbyConfig.cpp">
       <Filter>Source Files\Logic</Filter>
     </ClCompile>
     <ClCompile Include="CannotFetchQuoteException.cpp">
@@ -201,6 +198,9 @@
     </ClCompile>
     <ClCompile Include="Time.cpp">
       <Filter>Source Files\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSettings.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
