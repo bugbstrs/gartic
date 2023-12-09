@@ -11,6 +11,7 @@ DrawingBoard::DrawingBoard(QWidget* parent)
 }
 
 void DrawingBoard::mousePressEvent(QMouseEvent* event) {
+    images.push_back(image);
     if (event->button() == Qt::LeftButton && !fillEnabled) {
         drawing = true;
         currentPath = QPainterPath(event->pos());
@@ -34,13 +35,7 @@ void DrawingBoard::mouseReleaseEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton && drawing) {
         drawing = false;
         paths.push_back({ currentPath, pen });
-        if (paths.size() == 3) {
-            int a = 1;
-        }
         update();
-    }
-    else {
-        erasing = false;
     }
 }
 
@@ -80,22 +75,24 @@ void DrawingBoard::ToggleFill(bool value)
 
 void DrawingBoard::EnablePencil()
 {
-    pen.setColor(Qt::black);
+    pen.setColor(pen.color());
 }
 
 void DrawingBoard::UndoLastPath()
 {
-    if (!paths.empty()) {
-        undo = true;
-        update();
+    if (!images.empty()) {
+        image = images.back();
+        images.pop_back();
     }
+    else image.fill(Qt::white);
+    update();
 }
 
 void DrawingBoard::ClearCanvas()
 {
     currentPath = QPainterPath();
     image.fill(Qt::white);
-    paths.clear();
+    images.clear();
     update();
 }
 
@@ -245,23 +242,6 @@ void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, Q
     update();
 }
 
-void DrawingBoard::ColorAtPosition(const QPoint& position)
-{
-    int radius = pen.width() / 2;
-
-    for (int y = -radius; y <= radius; ++y) {
-        for (int x = -radius; x <= radius; ++x) {
-            if (x * x + y * y <= radius * radius) {
-                int pixelX = position.x() + x;
-                int pixelY = position.y() + y;
-                if (pixelX >= 0 && pixelX < image.width() && pixelY >= 0 && pixelY < image.height()) {
-                    image.setPixel(pixelX, pixelY, Qt::white);
-                }
-            }
-        }
-    }
-}
-
 void DrawingBoard::paintEvent(QPaintEvent* event) {
     if (firstPaint) {
         setAutoFillBackground(true);
@@ -270,16 +250,7 @@ void DrawingBoard::paintEvent(QPaintEvent* event) {
     else {
         QPainter imagePainter(this);
         imagePainter.drawImage(0, 0, image);
-
         QPainter painter(&image);
-
-        if (undo) {
-            paths.back().second.setColor(Qt::white);
-            painter.setPen(paths.back().second);
-            painter.drawPath(paths.back().first);
-            paths.pop_back();
-            undo = false;
-        }
 
         if (drawing) {
             painter.setPen(pen);

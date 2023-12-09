@@ -38,20 +38,18 @@ protected:
 private:
 	void FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith);
 	void GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith, bool& done);
-	void ColorAtPosition(const QPoint& position);
 
 private:
 	bool firstPaint = true;
 	bool mouseOverBoard = false;
 	bool drawing = false;
-	bool erasing = false;
-	bool eraserEnabled = false;
 	bool fillEnabled;
 	bool undo;
 	QPen pen;
 	QPoint lastMousePos;
 	QPainterPath currentPath;
 	std::vector<std::pair<QPainterPath, QPen>> paths;
+	std::vector<QImage>images;
 	QImage image;
 	std::unordered_map<std::string, bool> availableDirections;
 };
