@@ -7,9 +7,9 @@ MainWindow::MainWindow(QWidget* parent)
 {
     ui->setupUi(this);
     isUserLoggedIn = false;
+    eraserEnabled = false;
     eraserCursor = QCursor(QPixmap(":/image/eraser_cursor").scaled(25, 25));
     fillCursor = QCursor(QPixmap(":/image/fill").scaled(25, 25));
-    currentCursor = QApplication::overrideCursor();
     pencilCursor = Qt::CrossCursor;
 
     //Main menu scene connections
@@ -53,15 +53,24 @@ void MainWindow::OnLeaveGameButtonReleased() {
     QApplication::setOverrideCursor(Qt::ArrowCursor);
     ui->stackedWidget->setCurrentIndex(0); 
 }
-void MainWindow::OnEraserButtonReleased() { QApplication::setOverrideCursor(eraserCursor); }
-void MainWindow::OnFillEnabled() { QApplication::setOverrideCursor(fillCursor); }
+void MainWindow::OnEraserButtonReleased() { 
+    QApplication::setOverrideCursor(eraserCursor); 
+    eraserEnabled = true;
+}
+void MainWindow::OnFillEnabled() { 
+    QApplication::setOverrideCursor(fillCursor); 
+    eraserEnabled = false;
+}
 void MainWindow::OnColorChanged()
 {
-    if (QApplication::overrideCursor()->shape() == eraserCursor.shape())
+    if (eraserEnabled)
         QApplication::setOverrideCursor(pencilCursor);
 
 }
-void MainWindow::OnPencilEnabled() { QApplication::setOverrideCursor(pencilCursor); }
+void MainWindow::OnPencilEnabled() { 
+    QApplication::setOverrideCursor(pencilCursor);
+    eraserEnabled = false;
+}
 
 // Stats scene events
 void MainWindow::OnBackToMenuButtonReleased() { ui->stackedWidget->setCurrentIndex(0); }

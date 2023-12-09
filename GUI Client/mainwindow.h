@@ -43,9 +43,9 @@ private:
     /*std::unique_ptr<Ui::MainWindow> ui = std::make_unique<Ui::MainWindow>();*/
     Ui::MainWindow* ui;
     bool isUserLoggedIn;
+    bool eraserEnabled;
     QCursor eraserCursor;
     QCursor fillCursor;
     QCursor pencilCursor;
-    QCursor* currentCursor;
 };
 #endif // MAINWINDOW_H
