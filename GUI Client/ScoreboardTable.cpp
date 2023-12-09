@@ -4,14 +4,19 @@
 ScoreboardTable::ScoreboardTable(QWidget *parent)
 	: QTableWidget(parent)
 {
-	availableIcons.reserve(7);
+	availableIcons.reserve(12);
 	availableIcons.emplace_back(new QIcon(":/image/alien"), QColor("#32CD32"));
 	availableIcons.emplace_back(new QIcon(":/image/astronaut"), QColor("#FFA500"));
 	availableIcons.emplace_back(new QIcon(":/image/king"), Qt::yellow);
-	availableIcons.emplace_back(new QIcon(":/image/ninja"), QColor("#7a7c7c"));
+	availableIcons.emplace_back(new QIcon(":/image/ninja"), QColor("#C0C0C0"));
 	availableIcons.emplace_back(new QIcon(":/image/policeman"), QColor("#1E90FF"));
 	availableIcons.emplace_back(new QIcon(":/image/robot"), QColor("#FF4500"));
 	availableIcons.emplace_back(new QIcon(":/image/cowboy"), QColor("#A0522D"));
+	availableIcons.emplace_back(new QIcon(":/image/injured"), QColor("#8a2be2"));
+	availableIcons.emplace_back(new QIcon(":/image/doctor"), QColor("#00BFFF"));
+	availableIcons.emplace_back(new QIcon(":/image/chef"), QColor("#696969"));
+	availableIcons.emplace_back(new QIcon(":/image/helmet"), QColor("#3CB371"));
+	availableIcons.emplace_back(new QIcon(":/image/nurse"), QColor("#cb4d7e"));
 	nameFont.setFamily("Consolas");
 	pointsFont.setFamily("Consolas");
 	nameFont.setPixelSize(12);

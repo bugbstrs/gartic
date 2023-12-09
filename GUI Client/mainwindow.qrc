@@ -14,6 +14,11 @@
         <file alias="robot">Resource Files/user-robot.png</file>
         <file alias="cowboy">Resource Files/user-cowboy.png</file>
         <file alias="king">Resource Files/user-crown.png</file>
+        <file alias="injured">Resource Files/user-injured.png</file>
+        <file alias="doctor">Resource Files/user-md.png</file>
+        <file alias="chef">Resource Files/user-chef.png</file>
+        <file alias="helmet">Resource Files/user-helmet-safety.png</file>
+        <file alias="nurse">Resource Files/user-nurse.png</file>
     </qresource>
     <qresource prefix="/background">
         <file>Resource Files/GarticBackground_2.png</file>
