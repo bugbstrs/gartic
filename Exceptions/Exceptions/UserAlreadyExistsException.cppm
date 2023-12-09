@@ -3,7 +3,7 @@ export module UserAlreadyExistsException;
 import <string>;
 import <stdexcept>;
 
-export class UserAlreadyExistsException : std::logic_error
+export class UserAlreadyExistsException : public std::logic_error
 {
 public:
     UserAlreadyExistsException();

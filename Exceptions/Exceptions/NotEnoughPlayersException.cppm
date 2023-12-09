@@ -3,7 +3,7 @@ export module NotEnoughPlayersException;
 import <string>;
 import <stdexcept>;
 
-export class NotEnoughPlayersException : std::logic_error
+export class NotEnoughPlayersException : public std::logic_error
 {
 public:
     NotEnoughPlayersException();

@@ -3,7 +3,7 @@ export module CannotFetchWordException;
 import <string>;
 import <stdexcept>;
 
-export class CannotFetchWordException : std::logic_error
+export class CannotFetchWordException : public std::logic_error
 {
 public:
     CannotFetchWordException();
