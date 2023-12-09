@@ -9,7 +9,9 @@ ToolsFrame::~ToolsFrame()
 
 void ToolsFrame::OnColorChange()
 {
-	emit OnColorChangedSignal(qobject_cast<QPushButton*>(sender())->palette().color(QPalette::Button));
+	QPushButton* senderButton = qobject_cast<QPushButton*>(sender());
+	currentColorView->setStyleSheet(senderButton->styleSheet());
+	emit OnColorChangedSignal(senderButton->palette().color(QPalette::Button));
 }
 
 void ToolsFrame::OnWidthChange()
@@ -51,6 +53,8 @@ void ToolsFrame::OnPencilButtonReleased()
 }
 
 void ToolsFrame::showEvent(QShowEvent* event) {
+	currentColorView = findChild<QWidget*>("currentColor");
+
 	QObject::connect(findChild<QPushButton*>("blackColorButton"), &QPushButton::released, this, &ToolsFrame::OnColorChange);
 	QObject::connect(findChild<QPushButton*>("whiteColorButton"), &QPushButton::released, this, &ToolsFrame::OnColorChange);
 

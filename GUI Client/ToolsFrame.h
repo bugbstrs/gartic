@@ -32,7 +32,7 @@ signals:
 	void OnPencilButtonReleasedSignal();
 
 private:
-	QPushButton* button;
+	QWidget* currentColorView;
 	const QString kSmallWidthButton = "smallWidthButton";
 	const QString kMediumWidthButton = "mediumWidthButton";
 	const QString kLargeWidthButton = "largeWidthButton";
