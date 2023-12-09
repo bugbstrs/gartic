@@ -40,8 +40,10 @@ private:
 	};
 private:
 	void AddPlayers();
+	void ShowWordDependingOnPlayerType();
 
 private:
+	bool isDrawer;
 	QLabel* wordToDraw;
 	DrawingBoard* drawingBoard;
 	ToolsFrame* toolsFrame;

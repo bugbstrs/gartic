@@ -4,6 +4,7 @@ GameplayWidget::GameplayWidget(QWidget *parent)
 	: QWidget(parent),
 	wordToDraw(new QLabel())
 {
+	isDrawer = false;
 }
 
 GameplayWidget::~GameplayWidget()
@@ -49,6 +50,17 @@ void GameplayWidget::AddPlayers()
 	scoreboardTable->AddPlayer("Bendeac", 90);
 }
 
+void GameplayWidget::ShowWordDependingOnPlayerType()
+{
+	chat->SetWordToGuess(QString(wordToDraw->text().length(), '_'));
+	if (!isDrawer) {
+		QString hiddenWord;
+		for (int index = 0; index < wordToDraw->text().size(); index++)
+			hiddenWord += "_ ";
+		wordToDraw->setText(hiddenWord);
+	}
+}
+
 void GameplayWidget::OnEraserButtonReleased()
 {
 	drawingBoard->ToggleEraser(true);
@@ -82,6 +94,7 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 	QObject::connect(toolsFrame, &ToolsFrame::OnPencilButtonReleasedSignal, this, &GameplayWidget::OnPencilButtonReleased);
 	
 	chat->SetWordToGuess(wordToDraw->text());
+	ShowWordDependingOnPlayerType();
 	AddPlayers();
 
 	/*cpr::Response response = cpr::Get(cpr::Url{ "http://localhost:18080/fetchword" });
