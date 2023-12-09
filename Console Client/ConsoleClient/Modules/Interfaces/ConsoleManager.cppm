@@ -24,7 +24,8 @@ public:
 	void SetColor			(ColorType background, ColorType text);
 	void SetCursor			(bool visible, COORD coord = { 0,0 });
 	void SetCursor			(bool visible, int16_t x, int16_t y);
-	void ToggleFullscreen	();
+	void SetFullscreen		();
+	void SetWindowed		();
 
 	// Output related
 	void WriteHorizontal (const String& sentence, int16_t x, int16_t y);

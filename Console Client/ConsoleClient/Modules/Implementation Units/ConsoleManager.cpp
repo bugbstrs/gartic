@@ -79,9 +79,16 @@ void ConsoleManager::SetCursor(bool visible, int16_t x, int16_t y)
 	m_buffers[m_bufferIndex].SetCursor(visible, { x,y });
 }
 
-void ConsoleManager::ToggleFullscreen()
+void ConsoleManager::SetFullscreen()
 {
-	SendMessage(GetConsoleWindow(), WM_SYSKEYDOWN, VK_RETURN, 0x20000000);
+	SetWindowLong(GetConsoleWindow(), GWL_STYLE, GetWindowLong(GetConsoleWindow(), GWL_STYLE) & ~WS_OVERLAPPEDWINDOW);
+	ShowWindow(GetConsoleWindow(), SW_SHOWMAXIMIZED);
+}
+
+void ConsoleManager::SetWindowed()
+{
+	SetWindowLong(GetConsoleWindow(), GWL_STYLE, GetWindowLong(GetConsoleWindow(), GWL_STYLE) | WS_OVERLAPPEDWINDOW);
+	ShowWindow(GetConsoleWindow(), SW_SHOWNORMAL);
 }
 
 void ConsoleManager::WriteHorizontal(const String& sentence, int16_t x, int16_t y)
