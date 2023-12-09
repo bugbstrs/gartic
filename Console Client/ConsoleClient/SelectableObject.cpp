@@ -70,7 +70,7 @@ void SelectableObject::SetConections(SelectableObject* up, SelectableObject* dow
 void SelectableObject::CheckCursor()
 {
     if (IsPointInside(m_im->GetCurrentCursorPosition()) &&
-        m_im->GetClickPressed())
+        m_im->GetClickPressed() && m_selectable)
     {
         m_selectedObject = this;
         if (m_function)
@@ -102,7 +102,7 @@ void SelectableObject::SetColor()
         m_cm->SetColor(m_selectedBackgroundColor, m_selectedTextColor);
     else
     {
-        if (IsPointInside(m_im->GetCurrentCursorPosition()))
+        if (IsPointInside(m_im->GetCurrentCursorPosition()) && m_selectable)
             m_cm->SetColor(m_hoverBackgroundColor, m_hoverTextColor);
         else
             m_cm->SetColor(m_backgroundColor, m_textColor);

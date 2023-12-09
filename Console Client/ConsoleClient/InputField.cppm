@@ -34,6 +34,7 @@ public:
 
 	void Draw		() override;
 	void CheckInput () override;
+
 private:
 	String& m_text;
 	int     m_textPos;
