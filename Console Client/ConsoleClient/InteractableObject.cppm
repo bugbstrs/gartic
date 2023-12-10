@@ -1,7 +1,6 @@
 export module InteractableObject;
 
 export import InputManager;
-export import ColorType;
 export import GUIObject;
 
 export typedef short int16_t;
@@ -23,9 +22,8 @@ public:
 
     void         SetHoverColors (ColorType background, ColorType text);
     virtual void CheckCursor    () = 0;
-    virtual void CheckInput     () = 0;
 
-private:
+protected:
     ColorType     m_hoverBackgroundColor;
     ColorType     m_hoverTextColor;
     InputManager* m_im;
