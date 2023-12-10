@@ -5,7 +5,7 @@ GameplayWidget::GameplayWidget(QWidget *parent)
 	: QWidget(parent),
 	wordToDraw(new QLabel())
 {
-	isDrawer = false;
+	isDrawer = true;
 }
 
 GameplayWidget::~GameplayWidget()
@@ -58,8 +58,15 @@ void GameplayWidget::ShowWordDependingOnPlayerType()
 		for (int index = 0; index < wordToDraw->text().size(); index++)
 			hiddenWord += "_ ";
 		wordToDraw->setText(hiddenWord);
+		toolsFrame->hide();
 		drawingBoard->setDisabled(true);
 	}
+	else {
+		toolsFrame->show();
+		drawingBoard->setDisabled(false);
+		chat->SetWordToGuess(wordToDraw->text());
+	}
+	chat->IsDrawer(isDrawer);
 }
 
 void GameplayWidget::OnEraserButtonReleased()
