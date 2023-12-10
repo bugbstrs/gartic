@@ -189,5 +189,8 @@
     <ClCompile Include="StatsScene.cppm">
       <Filter>Modules\Interfaces</Filter>
     </ClCompile>
+    <ClCompile Include="StatsScene.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

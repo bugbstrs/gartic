@@ -3,6 +3,7 @@ export module SceneManager;
 #pragma region SceneManager
 import ConsoleManager;
 import InputManager;
+import StatsScene;
 import LobbyScene;
 import LoginScene;
 import MenuScene;

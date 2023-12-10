@@ -208,6 +208,7 @@
     <ClCompile Include="Source Files\Main.cpp" />
     <ClCompile Include="SpinBox.cpp" />
     <ClCompile Include="SpinBox.cppm" />
+    <ClCompile Include="StatsScene.cpp" />
     <ClCompile Include="StatsScene.cppm" />
     <ClCompile Include="VerticalLayout.cpp" />
     <ClCompile Include="VerticalLayout.cppm" />

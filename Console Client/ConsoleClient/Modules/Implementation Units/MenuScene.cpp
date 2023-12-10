@@ -6,6 +6,7 @@ import Label;
 import Button;
 import LoginScene;
 import LobbyScene;
+import StatsScene;
 import InputField;
 import VerticalLayout;
 import HorizontalLayout;
@@ -33,7 +34,7 @@ void MenuScene::Logout()
 
 void MenuScene::Stats()
 {
-    //m_nextScene = const_cast<std::type_info*>(&typeid(StatsScene));
+    m_nextScene = const_cast<std::type_info*>(&typeid(StatsScene));
 }
 
 void MenuScene::Input() const
