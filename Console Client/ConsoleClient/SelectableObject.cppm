@@ -1,6 +1,5 @@
 export module SelectableObject;
 
-export import <Windows.h>;
 import <functional>;
 
 export import InputManager;

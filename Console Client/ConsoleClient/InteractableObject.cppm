@@ -21,6 +21,15 @@ public:
 
 	virtual ~InteractableObject() = default;
 
-private:
+    void         SetHoverColors (ColorType background, ColorType text);
+    void         CheckCursor    ();
+    virtual void CheckInput     () = 0;
 
+private:
+    ColorType     m_hoverBackgroundColor;
+    ColorType     m_hoverTextColor;
+    InputManager* m_im;
+
+    bool IsPointInside (COORD point);
+    void SetColor      () override;
 };
