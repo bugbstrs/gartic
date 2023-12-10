@@ -3,15 +3,15 @@ export module SpinBox;
 import <string>;
 import <vector>;
 
+import InteractableObject;
 import SelectableObject;
 import InputManager;
-import GUIObject;
 import Button;
 
 using String = std::string;
 using Options = std::vector<String>;
 
-export class SpinBox : public GUIObject
+export class SpinBox : public InteractableObject
 {
 public:
 	// Constructors
@@ -40,6 +40,7 @@ public:
 	void			  SetOptions		 (Options options, int startOption);
 	void			  Draw				 () override;
 	void			  InitializeTransform(COORD upLeftCorner) override;
+	void			  CheckCursor		 () override;
 	String			  GetOption			 () const;
 	SelectableObject* GetNextButton		 () const;
 	SelectableObject* GetPreviousButton	 () const;

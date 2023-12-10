@@ -6,8 +6,8 @@ SpinBox::SpinBox(COORD upLeftCorner, Align horizontalAlign, Align verticalAlign,
 				 ConsoleManager* cm, InputManager* im, SelectableObject*& selected,
 				 ColorType buttonsBackgroundColor, ColorType buttonsTextColor,
 				 ColorType buttonsSelectedBackgroungColor, ColorType buttonsSelectedTextColor) :
-	GUIObject { upLeftCorner, horizontalAlign, verticalAlign, backgroundColor,
-				textColor, maxWidth, maxHeight, cm							  }
+	InteractableObject { upLeftCorner, horizontalAlign, verticalAlign, backgroundColor,
+						 textColor, maxWidth, maxHeight, cm, im						   }
 {
 	m_left = new Button{ m_upLeftCorner, Align::Center, Align::Center,
 			buttonsBackgroundColor, buttonsTextColor, 1, m_height,
@@ -33,8 +33,8 @@ SpinBox::SpinBox(int16_t x, int16_t y, Align horizontalAlign, Align verticalAlig
 				 ConsoleManager* cm, InputManager* im, SelectableObject*& selected,
 				 ColorType buttonsBackgroundColor, ColorType buttonsTextColor,
 				 ColorType buttonsSelectedBackgroungColor, ColorType buttonsSelectedTextColor) :
-	GUIObject { x, y, horizontalAlign, verticalAlign, backgroundColor,
-				textColor, maxWidth, maxHeight, cm					  }
+	InteractableObject { x, y, horizontalAlign, verticalAlign, backgroundColor,
+						 textColor, maxWidth, maxHeight, cm, im				   }
 {
 	m_left = new Button{ m_upLeftCorner, Align::Center, Align::Center,
 			buttonsBackgroundColor, buttonsTextColor, 1, m_height,
@@ -60,8 +60,8 @@ SpinBox::SpinBox(Align horizontalAlign, Align verticalAlign,
 				 ConsoleManager* cm, InputManager* im, SelectableObject*& selected,
 				 ColorType buttonsBackgroundColor, ColorType buttonsTextColor,
 				 ColorType buttonsSelectedBackgroungColor, ColorType buttonsSelectedTextColor) :
-	GUIObject { horizontalAlign, verticalAlign, backgroundColor,
-				textColor, maxWidth, maxHeight, cm				}
+	InteractableObject { horizontalAlign, verticalAlign, backgroundColor,
+						 textColor, maxWidth, maxHeight, cm, im			 }
 {
 	m_left = new Button{ m_upLeftCorner, Align::Center, Align::Center,
 			buttonsBackgroundColor, buttonsTextColor, 1, m_height,
@@ -107,6 +107,12 @@ void SpinBox::InitializeTransform(COORD upLeftCorner)
 	m_upLeftCorner = upLeftCorner;
 	m_left->InitializeTransform(m_upLeftCorner);
 	m_right->InitializeTransform({ static_cast<int16_t>(m_upLeftCorner.X + m_width - 1), m_upLeftCorner.Y });
+}
+
+void SpinBox::CheckCursor()
+{
+	m_left->CheckCursor();
+	m_right->CheckCursor();
 }
 
 String SpinBox::GetOption() const
