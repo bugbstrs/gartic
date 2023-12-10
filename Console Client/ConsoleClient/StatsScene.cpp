@@ -4,6 +4,8 @@ import <Windows.h>;
 
 import MenuScene;
 
+import Button;
+
 using Color = ColorType;
 
 StatsScene::StatsScene(ConsoleManager* console, InputManager* inputManager) :
@@ -34,8 +36,20 @@ void StatsScene::Start()
 {
     m_nextScene = nullptr;
     m_console->SetWindowed();
-    m_console->NewConsole(L"Menu", 50, 25);
-    m_console->SetConsoleFont(L"MS Gothic", 15, 15);
+    m_console->NewConsole(L"Stats", 50, 25);
+    m_console->SetConsoleFont(L"Consolas", 11, 24);
+
+    // Back Button
+    auto BackButton{ new Button{Align::Center, Align::Center, Color::DarkGray, Color::Green,
+                          8, 3, Color::DarkBlue, Color::White, m_console, m_input, m_selected, "Logout"} };
+    BackButton->SetHoverColors(Color::Blue, Color::White);
+    BackButton->SetFunctionOnActivate(std::bind(&StatsScene::Back, this));
+    m_selectableObjects.emplace_back(BackButton);
+    m_objects.emplace_back(BackButton);
+
+    m_selected = BackButton;
+
+    Display();
 }
 
 void StatsScene::Update()
