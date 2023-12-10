@@ -65,9 +65,9 @@ void LobbyScene::Start()
 	m_objects.emplace_back(m_users);
 
 	// Draw time
-	auto horizontalLayout = new HorizontalLayout{ 40, 5, Align::Right, Align::Up, Color::Black, 20, 3, m_console, 1 };
+	auto horizontalLayout = new HorizontalLayout{ 40, 5, Align::Right, Align::Up, Color::Black, 21, 3, m_console, 1 };
 
-	horizontalLayout->AddObject(new Label{ Align::Left, Align::Center, Color::Black, Color::White,
+	horizontalLayout->AddObject(new Label{ Align::Right, Align::Center, Color::Black, Color::White,
 		9, 3, m_console, "Draw time" });
 
 	m_drawTime = new SpinBox{Align::Left, Align::Center, Color::Gray, Color::Black,
@@ -81,24 +81,36 @@ void LobbyScene::Start()
 	m_objects.emplace_back(horizontalLayout);
 
 	// Rounds
-	m_rounds = new SpinBox{ 40, 9, Align::Left, Align::Center, Color::Gray, Color::Black,
-		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::Blue, Color::Black };
+	horizontalLayout = new HorizontalLayout{ 40, 9, Align::Right, Align::Up, Color::Black, 21, 3, m_console, 1 };
 
+	horizontalLayout->AddObject(new Label{ Align::Right, Align::Center, Color::Black, Color::White,
+		6, 3, m_console, "Rounds" });
+
+	m_rounds = new SpinBox{ Align::Left, Align::Center, Color::Gray, Color::Black,
+		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::Blue, Color::Black };
 	m_rounds->SetOptions({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, 3);
-	m_objects.emplace_back(m_rounds);
+	horizontalLayout->AddObject(m_rounds);
 
 	m_selectableObjects.emplace_back(m_rounds->GetPreviousButton());
 	m_selectableObjects.emplace_back(m_rounds->GetNextButton());
 
-	// Words to choose
-	m_wordCount = new SpinBox{ 40, 13, Align::Left, Align::Center, Color::Gray, Color::Black,
-		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::Blue, Color::Black };
+	m_objects.emplace_back(horizontalLayout);
 
+	// Words to choose
+	horizontalLayout = new HorizontalLayout{ 40, 13, Align::Right, Align::Up, Color::Black, 21, 3, m_console, 1 };
+
+	horizontalLayout->AddObject(new Label{ Align::Right, Align::Center, Color::Black, Color::White,
+		10, 3, m_console, "Word count" });
+
+	m_wordCount = new SpinBox{ Align::Left, Align::Center, Color::Gray, Color::Black,
+		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::Blue, Color::Black };
 	m_wordCount->SetOptions({ "1", "2", "3", "4", "5" }, 2);
-	m_objects.emplace_back(m_wordCount);
+	horizontalLayout->AddObject(m_wordCount);
 
 	m_selectableObjects.emplace_back(m_wordCount->GetPreviousButton());
 	m_selectableObjects.emplace_back(m_wordCount->GetNextButton());
+	
+	m_objects.emplace_back(horizontalLayout);
 
 	// Leave lobby button
 	auto leaveButton = new Button{ 150, 40, Align::Center, Align::Center, Color::Gray, Color::Black, 7, 3,
@@ -108,6 +120,14 @@ void LobbyScene::Start()
 	leaveButton->SetFunctionOnActivate(std::bind(&LobbyScene::Back, this));
 	m_selectableObjects.emplace_back(leaveButton);
 	m_objects.emplace_back(leaveButton);
+
+	// Start button
+	auto startButton = new Button{ 40, 40, Align::Center, Align::Center, Color::DarkGreen, Color::White, 15, 3,
+		Color::Green, Color::White, m_console, m_input, m_selected, "START" };
+	startButton->SetHoverColors(Color::Green, Color::White);
+	startButton->SetFunctionOnActivate(std::bind(&LobbyScene::StartGame, this));
+	m_selectableObjects.emplace_back(startButton);
+	m_objects.emplace_back(startButton);
 }
 
 void LobbyScene::Update()
