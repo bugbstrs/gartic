@@ -3,11 +3,11 @@
 #include <future>
 
 DrawingBoard::DrawingBoard(QWidget* parent)
-    : QWidget{ parent }
+    : QWidget{ parent },
+    eraserColor{Qt::white}
 {
     setMouseTracking(true);
     ChangePenPropertiesTo(Qt::black, 2);
-    eraserColor = Qt::white;
 }
 
 void DrawingBoard::mousePressEvent(QMouseEvent* event) {

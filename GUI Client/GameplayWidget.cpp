@@ -3,9 +3,9 @@
 
 GameplayWidget::GameplayWidget(QWidget *parent)
 	: QWidget{ parent },
-	wordToDraw{ new QLabel() }
+	wordToDraw{ new QLabel{} },
+	isDrawer{ true }
 {
-	isDrawer = true;
 }
 
 GameplayWidget::~GameplayWidget()

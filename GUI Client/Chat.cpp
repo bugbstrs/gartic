@@ -3,8 +3,8 @@
 
 Chat::Chat(QWidget *parent)
 	: QFrame{ parent },
-	chatWritingBox{ new ChatWritingBox() },
-	chatConversation{ new ChatConversation() }
+	chatWritingBox{ new ChatWritingBox{} },
+	chatConversation{ new ChatConversation{} }
 {
 }
 

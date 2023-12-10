@@ -3,14 +3,14 @@
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow{ parent }
-    , ui{ std::make_unique<Ui::MainWindow>() }
+    , ui{ std::make_unique<Ui::MainWindow>() },
+    isUserLoggedIn { false },
+    eraserEnabled { false },
+    pencilCursor { Qt::CrossCursor },
+    eraserCursor { QCursor(QPixmap(":/image/eraser_cursor").scaled(25, 25)) },
+    fillCursor { QCursor(QPixmap(":/image/fill").scaled(25, 25)) }
 {
     ui->setupUi(this);
-    isUserLoggedIn = false;
-    eraserEnabled = false;
-    eraserCursor = QCursor(QPixmap(":/image/eraser_cursor").scaled(25, 25));
-    fillCursor = QCursor(QPixmap(":/image/fill").scaled(25, 25));
-    pencilCursor = Qt::CrossCursor;
 
     //Main menu scene connections
     QObject::connect(ui->playButton, &QPushButton::released, this, &MainWindow::OnPlayButtonReleased);
