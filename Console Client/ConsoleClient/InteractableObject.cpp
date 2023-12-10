@@ -5,11 +5,34 @@ InteractableObject::InteractableObject(COORD upLeftCorner,
             ColorType backgroundColor, ColorType textColor,
             int16_t maxWidth, int16_t maxHeight,
             ConsoleManager* cm, InputManager* im) :
-    GUIObject                 { upLeftCorner, horizontalAlign, verticalAlign, 
-                                backgroundColor, textColor, maxWidth, maxHeight, cm },
-    m_hoverBackgroundColor    { backgroundColor                                     },
-    m_hoverTextColor          { textColor                                           },
-    m_im                      { im                                                  }
+    GUIObject              { upLeftCorner, horizontalAlign, verticalAlign, 
+                             backgroundColor, textColor, maxWidth, maxHeight, cm },
+    m_hoverBackgroundColor { backgroundColor                                     },
+    m_hoverTextColor       { textColor                                           },
+    m_im                   { im                                                  }
+{}
+
+InteractableObject::InteractableObject(int16_t x, int16_t y,
+            Align horizontalAlign, Align verticalAlign,
+            ColorType backgroundColor, ColorType textColor,
+            int16_t maxWidth, int16_t maxHeight,
+            ConsoleManager * cm, InputManager * im) :
+    GUIObject              { x, y, horizontalAlign, verticalAlign, 
+                             backgroundColor, textColor, maxWidth, maxHeight, cm },
+    m_hoverBackgroundColor { backgroundColor                                     },
+    m_hoverTextColor       { textColor                                           },
+    m_im                   { im                                                  }
+{}
+
+InteractableObject::InteractableObject(Align horizontalAlign, Align verticalAlign,
+            ColorType backgroundColor, ColorType textColor,
+            int16_t maxWidth, int16_t maxHeight,
+            ConsoleManager* cm, InputManager* im) :
+    GUIObject              { horizontalAlign, verticalAlign, 
+                             backgroundColor, textColor, maxWidth, maxHeight, cm },
+    m_hoverBackgroundColor { backgroundColor                                     },
+    m_hoverTextColor       { textColor                                           },
+    m_im                   { im                                                  }
 {}
 
 void InteractableObject::SetHoverColors(ColorType background, ColorType text)
