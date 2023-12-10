@@ -1,4 +1,5 @@
 #include "GameplayWidget.h"
+#include <qthread.h>
 
 GameplayWidget::GameplayWidget(QWidget *parent)
 	: QWidget(parent),
@@ -52,12 +53,12 @@ void GameplayWidget::AddPlayers()
 
 void GameplayWidget::ShowWordDependingOnPlayerType()
 {
-	chat->SetWordToGuess(QString(wordToDraw->text().length(), '_'));
 	if (!isDrawer) {
 		QString hiddenWord;
 		for (int index = 0; index < wordToDraw->text().size(); index++)
 			hiddenWord += "_ ";
 		wordToDraw->setText(hiddenWord);
+		drawingBoard->setDisabled(true);
 	}
 }
 
