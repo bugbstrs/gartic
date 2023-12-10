@@ -36,3 +36,53 @@ CheckBox::CheckBox(Align horizontalAlign, Align verticalAlign,
 					   selectedTextColor, cm, im, selected					   },
 	m_text			 { text													   }
 {}
+
+void CheckBox::Draw()
+{
+	if (!m_active)
+		return;
+
+	SetColor();
+
+	DrawBackground();
+
+	DrawContents();
+}
+
+void CheckBox::CheckInput()
+{
+	if (this == m_selectedObject)
+	{
+		switch (m_im->ControlKey())
+		{
+		case ControlKeys::Enter:
+			if (m_function)
+				m_function();
+			break;
+		case ControlKeys::UpArrow:
+			if (m_upObject && m_upObject->IsActive())
+				m_selectedObject = m_upObject;
+			break;
+		case ControlKeys::DownArrow:
+			if (m_downObject && m_downObject->IsActive())
+				m_selectedObject = m_downObject;
+			break;
+		case ControlKeys::LeftArrow:
+			if (m_leftObject && m_leftObject->IsActive())
+				m_selectedObject = m_leftObject;
+			break;
+		case ControlKeys::RightArrow:
+			if (m_rightObject && m_rightObject->IsActive())
+				m_selectedObject = m_rightObject;
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void CheckBox::DrawContents()
+{
+	m_cm->Write(m_text, m_upLeftCorner.X, m_upLeftCorner.Y,
+		m_width, m_height, m_horizontalAlign, m_verticalAlign);
+}
