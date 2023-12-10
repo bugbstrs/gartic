@@ -186,5 +186,8 @@
     <ClCompile Include="InteractableObject.cpp">
       <Filter>Modules\Implementation Units</Filter>
     </ClCompile>
+    <ClCompile Include="StatsScene.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
