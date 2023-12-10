@@ -1,5 +1,23 @@
 module InteractableObject;
 
+InteractableObject::InteractableObject(COORD upLeftCorner,
+            Align horizontalAlign, Align verticalAlign,
+            ColorType backgroundColor, ColorType textColor,
+            int16_t maxWidth, int16_t maxHeight,
+            ConsoleManager* cm, InputManager* im) :
+    GUIObject                 { upLeftCorner, horizontalAlign, verticalAlign, 
+                                backgroundColor, textColor, maxWidth, maxHeight, cm },
+    m_hoverBackgroundColor    { backgroundColor                                     },
+    m_hoverTextColor          { textColor                                           },
+    m_im                      { im                                                  }
+{}
+
+void InteractableObject::SetHoverColors(ColorType background, ColorType text)
+{
+    m_hoverBackgroundColor = background;
+    m_hoverTextColor = text;
+}
+
 bool InteractableObject::IsPointInside(COORD point)
 {
     if (m_upLeftCorner.X <= point.X && m_upLeftCorner.X + m_width > point.X &&

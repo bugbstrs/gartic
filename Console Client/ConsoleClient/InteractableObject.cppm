@@ -22,7 +22,7 @@ public:
 	virtual ~InteractableObject() = default;
 
     void         SetHoverColors (ColorType background, ColorType text);
-    void         CheckCursor    ();
+    virtual void CheckCursor    () = 0;
     virtual void CheckInput     () = 0;
 
 private:
