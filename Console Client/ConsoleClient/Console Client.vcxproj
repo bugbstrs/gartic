@@ -199,6 +199,8 @@
     <ClCompile Include="Modules\Standalone\ControlKeys.cppm" />
     <ClCompile Include="Modules\Standalone\FileType.cppm" />
     <ClCompile Include="Modules\Standalone\GameStatus.cppm" />
+    <ClCompile Include="CheckBox.cpp" />
+    <ClCompile Include="CheckBox.cppm" />
     <ClCompile Include="SelectableObject.cpp" />
     <ClCompile Include="SelectableObject.cppm" />
     <ClCompile Include="Source Files\Main.cpp" />
