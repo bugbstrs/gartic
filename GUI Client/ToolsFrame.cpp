@@ -1,7 +1,7 @@
 #include "ToolsFrame.h"
 
 ToolsFrame::ToolsFrame(QWidget *parent)
-	: QFrame(parent)
+	: QFrame{ parent }
 {}
 
 ToolsFrame::~ToolsFrame()

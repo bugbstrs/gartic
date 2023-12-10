@@ -2,8 +2,8 @@
 #include <qthread.h>
 
 GameplayWidget::GameplayWidget(QWidget *parent)
-	: QWidget(parent),
-	wordToDraw(new QLabel())
+	: QWidget{ parent },
+	wordToDraw{ new QLabel() }
 {
 	isDrawer = true;
 }

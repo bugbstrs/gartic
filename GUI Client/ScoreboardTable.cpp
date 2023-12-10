@@ -2,7 +2,7 @@
 #include <random>
 
 ScoreboardTable::ScoreboardTable(QWidget *parent)
-	: QTableWidget(parent)
+	: QTableWidget{ parent }
 {
 	availableIcons.reserve(12);
 	availableIcons.emplace_back(new QIcon(":/image/alien"), QColor("#32CD32"));

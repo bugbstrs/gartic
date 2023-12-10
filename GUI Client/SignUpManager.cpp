@@ -1,7 +1,7 @@
 #include "SignUpManager.h"
 
 SignUpManager::SignUpManager(QWidget *parent)
-	: QFrame(parent)
+	: QFrame{ parent }
 {}
 
 SignUpManager::~SignUpManager()

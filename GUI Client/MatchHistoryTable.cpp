@@ -1,7 +1,7 @@
 #include "MatchHistoryTable.h"
 
 MatchHistoryTable::MatchHistoryTable(QWidget *parent)
-	: QTableWidget(parent)
+	: QTableWidget{ parent }
 {
 	GetMatchHistoryFromDatabase();
 }

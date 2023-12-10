@@ -2,9 +2,9 @@
 #include <qdatetime.h>
 
 Chat::Chat(QWidget *parent)
-	: QFrame(parent),
-	chatWritingBox(new ChatWritingBox()),
-	chatConversation(new ChatConversation())
+	: QFrame{ parent },
+	chatWritingBox{ new ChatWritingBox() },
+	chatConversation{ new ChatConversation() }
 {
 }
 

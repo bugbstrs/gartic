@@ -1,7 +1,7 @@
 #include "LogInManager.h"
 
 LogInManager::LogInManager(QWidget *parent)
-	: QFrame(parent)
+	: QFrame { parent }
 {}
 
 LogInManager::~LogInManager()

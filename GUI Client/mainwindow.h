@@ -40,8 +40,7 @@ private slots:
     //Log In scene
     void OnGoToSignUpFromLogInButtonReleased();
 private:
-    /*std::unique_ptr<Ui::MainWindow> ui = std::make_unique<Ui::MainWindow>();*/
-    Ui::MainWindow* ui;
+    std::unique_ptr<Ui::MainWindow> ui;
     bool isUserLoggedIn;
     bool eraserEnabled;
     QCursor eraserCursor;

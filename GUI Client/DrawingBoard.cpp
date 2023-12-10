@@ -3,7 +3,7 @@
 #include <future>
 
 DrawingBoard::DrawingBoard(QWidget* parent)
-    : QWidget(parent)
+    : QWidget{ parent }
 {
     setMouseTracking(true);
     ChangePenPropertiesTo(Qt::black, 2);

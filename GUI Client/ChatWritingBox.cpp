@@ -1,7 +1,7 @@
 #include "ChatWritingBox.h"
 
 ChatWritingBox::ChatWritingBox(QWidget *parent)
-	: QLineEdit(parent)
+	: QLineEdit{ parent }
 {
 	connect(this, &ChatWritingBox::returnPressed, this, &ChatWritingBox::OnEnterPressed);
 }

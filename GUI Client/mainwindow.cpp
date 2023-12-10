@@ -2,8 +2,8 @@
 #include "./ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    : QMainWindow{ parent }
+    , ui{ std::make_unique<Ui::MainWindow>() }
 {
     ui->setupUi(this);
     isUserLoggedIn = false;
@@ -37,7 +37,6 @@ MainWindow::MainWindow(QWidget* parent)
 }
 
 MainWindow::~MainWindow() {
-    delete ui;
 }
 
 
