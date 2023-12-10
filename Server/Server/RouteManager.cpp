@@ -15,6 +15,8 @@ void http::RouteManager::Run(GarticStorage& storage)
     CreateLoginRoute(storage);
     CreateRegisterRoute(storage);
     CreateCheckBannedWordRoute(storage);
+    CreatePutWordToGuessRoute(storage);
+    CreateGetWordToDisplayRoute(storage);
 
 	m_app
         .port(18080)
@@ -186,4 +188,52 @@ void http::RouteManager::CreateCheckBannedWordRoute(GarticStorage& storage)
 
         return checkBannedWord ? crow::response(201) : crow::response(403);
     });
+}
+
+void http::RouteManager::CreatePutWordToGuessRoute(GarticStorage& storage)
+{
+    CROW_ROUTE(m_app, "/putwordtoguess")([&storage](const crow::request& request) {
+        char* wordToDisplay = request.url_params.get("word");
+        
+        crow::response response;
+
+        if (wordToDisplay == nullptr)
+        {
+            // todo: log
+            response.code = 400;
+            response.body = crow::json::wvalue({
+                {"found", false}
+                }).dump();
+
+                return response;
+        }
+
+        std::string wordToDiplayString(wordToDisplay);
+        m_game.SetWordToGuess(wordToDisplayString);
+
+        response.body = crow::json::wvalue({
+            {"put", true}
+            }).dump();
+
+            return response;
+        });
+}
+
+void http::RouteManager::CreateGetWordToDisplayRoute(GarticStorage& storage)
+{
+    CROW_ROUTE(m_app, "/fetchwordtodisplay")([&storage]() {
+        std::vector<crow::json::wvalue> word_json;
+
+        try
+        {
+            std::string wordToDisplay = m_game.GetWordToDisplay();
+            word_json.push_back(crow::json::wvalue{ {"word", wordToDisplay} });
+        }
+        catch (CannotFetchWordException& exception)
+        {
+            word_json.push_back(crow::json::wvalue{ {"word", "N/A"} });
+        }
+
+        return crow::json::wvalue{ word_json };
+        });
 }

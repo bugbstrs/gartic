@@ -1,7 +1,7 @@
 #include <crow.h>
 
 #include "GarticDatabase.h"
-#include "OngoingGame.h"
+#include "Game.h"
 
 namespace http
 {
@@ -20,10 +20,12 @@ namespace http
 		void CreateLoginRoute(GarticStorage& storage);
 		void CreateRegisterRoute(GarticStorage& storage);
 		void CreateCheckBannedWordRoute(GarticStorage& storage);
+		void CreatePutWordToGuessRoute(GarticStorage& storage);
+		void CreateGetWordToDisplayRoute(GarticStorage& storage);
 
 	private:
 		crow::SimpleApp m_app;
 
-		OngoingGame m_game;
+		Game m_game;
 	};
 }
