@@ -2,13 +2,15 @@ export module SelectableObject;
 
 import <functional>;
 
-export import InteractableObject;
+export import InputManager;
+export import ColorType;
+export import GUIObject;
 
 export typedef short int16_t;
 
 using Function = std::function<void()>;
 
-export class SelectableObject : public InteractableObject
+export class SelectableObject : public GUIObject
 {
 public:
     // Constructors
@@ -27,24 +29,29 @@ public:
     // Destructor
     virtual ~SelectableObject() = default;
 
-    void SetFunctionOnActivate (Function function);
-    void SetConections         (SelectableObject* up, SelectableObject* down,
-                                SelectableObject* left, SelectableObject* right);
-    virtual void CheckInput    () = 0;
-    virtual void CheckCursor   ();
-    void CanBeSelected         (bool selectable);
-    bool IsSelectable          ();
+    virtual void SetHoverColors (ColorType background, ColorType text);
+    void SetFunctionOnActivate  (Function function);
+    virtual void SetConections  (SelectableObject* up, SelectableObject* down,
+                                 SelectableObject* left, SelectableObject* right);
+    virtual void CheckInput     () = 0;
+    virtual void CheckCursor    ();
+    void CanBeSelected          (bool selectable);
+    bool IsSelectable           ();
     
 protected:
     bool               m_selectable;
     Function           m_function;
     ColorType          m_selectedBackgroundColor;
     ColorType          m_selectedTextColor;
+    ColorType          m_hoverBackgroundColor;
+    ColorType          m_hoverTextColor;
+    InputManager*      m_im;
     SelectableObject*  m_upObject;
     SelectableObject*  m_downObject;
     SelectableObject*  m_leftObject;
     SelectableObject*  m_rightObject;
     SelectableObject*& m_selectedObject;
 
-    void SetColor() override;
+    bool IsPointInside (COORD point);
+    void SetColor      () override;
 };
