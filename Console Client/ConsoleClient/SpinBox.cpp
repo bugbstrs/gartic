@@ -13,14 +13,12 @@ SpinBox::SpinBox(COORD upLeftCorner, Align horizontalAlign, Align verticalAlign,
 			buttonsBackgroundColor, buttonsTextColor, 1, m_height,
 			buttonsSelectedBackgroungColor, buttonsSelectedTextColor,
 			cm, im, selected, "<" };
-	m_left->SetHoverColors(buttonsSelectedBackgroungColor, buttonsSelectedTextColor);
 	m_left->SetFunctionOnActivate(std::bind(&SpinBox::PreviousOption, this));
 
 	m_right = new Button{ static_cast<int16_t>(m_upLeftCorner.X + maxWidth - 1),
 			m_upLeftCorner.Y, Align::Center, Align::Center, buttonsBackgroundColor,
 			buttonsTextColor, 1, m_height, buttonsSelectedBackgroungColor,
 			buttonsSelectedTextColor, cm, im, selected, ">" };
-	m_right->SetHoverColors(buttonsSelectedBackgroungColor, buttonsSelectedTextColor);
 	m_right->SetFunctionOnActivate(std::bind(&SpinBox::NextOption, this));
 
 	m_left->SetConections(nullptr, nullptr, nullptr, m_right);
@@ -40,14 +38,12 @@ SpinBox::SpinBox(int16_t x, int16_t y, Align horizontalAlign, Align verticalAlig
 			buttonsBackgroundColor, buttonsTextColor, 1, m_height,
 			buttonsSelectedBackgroungColor, buttonsSelectedTextColor,
 			cm, im, selected, "<" };
-	m_left->SetHoverColors(buttonsSelectedBackgroungColor, buttonsSelectedTextColor);
 	m_left->SetFunctionOnActivate(std::bind(&SpinBox::PreviousOption, this));
 
 	m_right = new Button{ static_cast<int16_t>(m_upLeftCorner.X + maxWidth - 1),
 			m_upLeftCorner.Y, Align::Center, Align::Center, buttonsBackgroundColor,
 			buttonsTextColor, 1, m_height, buttonsSelectedBackgroungColor,
 			buttonsSelectedTextColor, cm, im, selected, ">" };
-	m_right->SetHoverColors(buttonsSelectedBackgroungColor, buttonsSelectedTextColor);
 	m_right->SetFunctionOnActivate(std::bind(&SpinBox::NextOption, this));
 
 	m_left->SetConections(nullptr, nullptr, nullptr, m_right);
@@ -67,14 +63,12 @@ SpinBox::SpinBox(Align horizontalAlign, Align verticalAlign,
 			buttonsBackgroundColor, buttonsTextColor, 1, m_height,
 			buttonsSelectedBackgroungColor, buttonsSelectedTextColor,
 			cm, im, selected, "<" };
-	m_left->SetHoverColors(buttonsSelectedBackgroungColor, buttonsSelectedTextColor);
 	m_left->SetFunctionOnActivate(std::bind(&SpinBox::PreviousOption, this));
 
 	m_right = new Button{ static_cast<int16_t>(m_upLeftCorner.X + maxWidth - 1),
 			m_upLeftCorner.Y, Align::Center, Align::Center, buttonsBackgroundColor,
 			buttonsTextColor, 1, m_height, buttonsSelectedBackgroungColor,
 			buttonsSelectedTextColor, cm, im, selected, ">" };
-	m_right->SetHoverColors(buttonsSelectedBackgroungColor, buttonsSelectedTextColor);
 	m_right->SetFunctionOnActivate(std::bind(&SpinBox::NextOption, this));
 
 	m_left->SetConections(nullptr, nullptr, nullptr, m_right);
@@ -91,6 +85,12 @@ void SpinBox::SetOptions(Options options, int startOption)
 {
 	m_options = options;
 	m_optionSelected = startOption;
+}
+
+void SpinBox::SetHoverColors(ColorType backgroundColor, ColorType textColor)
+{
+	m_left->SetHoverColors(backgroundColor, textColor);
+	m_right->SetHoverColors(backgroundColor, textColor);
 }
 
 void SpinBox::SetConections(SelectableObject* up, SelectableObject* down,
@@ -134,16 +134,6 @@ void SpinBox::CheckInput()
 String SpinBox::GetOption() const
 {
 	return m_options[m_optionSelected];
-}
-
-SelectableObject* SpinBox::GetNextButton() const
-{
-	return m_right;
-}
-
-SelectableObject* SpinBox::GetPreviousButton() const
-{
-	return m_left;
 }
 
 void SpinBox::DrawContents()
