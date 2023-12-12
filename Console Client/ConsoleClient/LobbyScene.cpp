@@ -50,7 +50,7 @@ void LobbyScene::Input() const
 	for (auto object : m_selectableObjects)
 		object->CheckCursor();
 
-	//m_selected->CheckInput();
+	m_selected->CheckInput();
 }
 
 void LobbyScene::Start()
@@ -60,7 +60,7 @@ void LobbyScene::Start()
 	m_console->SetConsoleFont(L"Consolas", 12, 24);
 	m_console->SetFullscreen();
 
-	// Players display
+	// Users display
 	m_users = new VerticalLayout{ 7, 5, Align::Left, Align::Up, Color::Gray, 20, 36, m_console, 0 };
 	m_objects.emplace_back(m_users);
 
@@ -71,12 +71,11 @@ void LobbyScene::Start()
 		9, 3, m_console, "Draw time" });
 
 	m_drawTime = new SpinBox{Align::Left, Align::Center, Color::Gray, Color::Black,
-		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::Blue, Color::Black};
+		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::DarkBlue, Color::Black};
 	m_drawTime->SetOptions({ "15", "20", "30", "40", "50", "60", "70", "80", "90", "100", "120" }, 5);
+	m_drawTime->SetHoverColors(Color::Blue, Color::Black);
+	m_selectableObjects.emplace_back(m_drawTime);
 	horizontalLayout->AddObject(m_drawTime);
-
-	m_selectableObjects.emplace_back(m_drawTime->GetPreviousButton());
-	m_selectableObjects.emplace_back(m_drawTime->GetNextButton());
 
 	m_objects.emplace_back(horizontalLayout);
 
@@ -87,12 +86,11 @@ void LobbyScene::Start()
 		6, 3, m_console, "Rounds" });
 
 	m_rounds = new SpinBox{ Align::Left, Align::Center, Color::Gray, Color::Black,
-		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::Blue, Color::Black };
+		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::DarkBlue, Color::Black };
 	m_rounds->SetOptions({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, 3);
+	m_rounds->SetHoverColors(Color::Blue, Color::Black);
+	m_selectableObjects.emplace_back(m_rounds);
 	horizontalLayout->AddObject(m_rounds);
-
-	m_selectableObjects.emplace_back(m_rounds->GetPreviousButton());
-	m_selectableObjects.emplace_back(m_rounds->GetNextButton());
 
 	m_objects.emplace_back(horizontalLayout);
 
@@ -103,18 +101,17 @@ void LobbyScene::Start()
 		10, 3, m_console, "Word count" });
 
 	m_wordCount = new SpinBox{ Align::Left, Align::Center, Color::Gray, Color::Black,
-		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::Blue, Color::Black };
+		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::DarkBlue, Color::Black };
 	m_wordCount->SetOptions({ "1", "2", "3", "4", "5" }, 2);
+	m_wordCount->SetHoverColors(Color::Blue, Color::Black);
+	m_selectableObjects.emplace_back(m_wordCount);
 	horizontalLayout->AddObject(m_wordCount);
-
-	m_selectableObjects.emplace_back(m_wordCount->GetPreviousButton());
-	m_selectableObjects.emplace_back(m_wordCount->GetNextButton());
 	
 	m_objects.emplace_back(horizontalLayout);
 
 	// Leave lobby button
 	auto leaveButton = new Button{ 150, 40, Align::Center, Align::Center, Color::Gray, Color::Black, 7, 3,
-		Color::Blue, Color::Black, m_console, m_input, m_selected, "LEAVE" };
+		Color::DarkBlue, Color::Black, m_console, m_input, m_selected, "LEAVE" };
 
 	leaveButton->SetHoverColors(Color::Blue, Color::White);
 	leaveButton->SetFunctionOnActivate(std::bind(&LobbyScene::Back, this));
@@ -123,11 +120,18 @@ void LobbyScene::Start()
 
 	// Start button
 	auto startButton = new Button{ 40, 40, Align::Center, Align::Center, Color::DarkGreen, Color::White, 15, 3,
-		Color::Green, Color::White, m_console, m_input, m_selected, "START" };
+		Color::DarkGreen, Color::White, m_console, m_input, m_selected, "START" };
 	startButton->SetHoverColors(Color::Green, Color::White);
 	startButton->SetFunctionOnActivate(std::bind(&LobbyScene::StartGame, this));
 	m_selectableObjects.emplace_back(startButton);
 	m_objects.emplace_back(startButton);
+
+
+	m_drawTime->SetConections(nullptr, m_rounds, nullptr, nullptr);
+	m_rounds->SetConections(m_drawTime, m_wordCount, nullptr, nullptr);
+	m_wordCount->SetConections(m_rounds, nullptr, nullptr, nullptr);
+
+	m_selected = leaveButton;
 }
 
 void LobbyScene::Update()
