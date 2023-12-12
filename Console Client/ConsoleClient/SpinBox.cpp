@@ -6,8 +6,8 @@ SpinBox::SpinBox(COORD upLeftCorner, Align horizontalAlign, Align verticalAlign,
 				 ConsoleManager* cm, InputManager* im, SelectableObject*& selected,
 				 ColorType buttonsBackgroundColor, ColorType buttonsTextColor,
 				 ColorType buttonsSelectedBackgroungColor, ColorType buttonsSelectedTextColor) :
-	InteractableObject { upLeftCorner, horizontalAlign, verticalAlign, backgroundColor,
-						 textColor, maxWidth, maxHeight, cm, im						   }
+	SelectableObject { upLeftCorner, horizontalAlign, verticalAlign, backgroundColor, textColor,
+					   maxWidth, maxHeight, backgroundColor, textColor, cm, im, selected }
 {
 	m_left = new Button{ m_upLeftCorner, Align::Center, Align::Center,
 			buttonsBackgroundColor, buttonsTextColor, 1, m_height,
@@ -33,8 +33,8 @@ SpinBox::SpinBox(int16_t x, int16_t y, Align horizontalAlign, Align verticalAlig
 				 ConsoleManager* cm, InputManager* im, SelectableObject*& selected,
 				 ColorType buttonsBackgroundColor, ColorType buttonsTextColor,
 				 ColorType buttonsSelectedBackgroungColor, ColorType buttonsSelectedTextColor) :
-	InteractableObject { x, y, horizontalAlign, verticalAlign, backgroundColor,
-						 textColor, maxWidth, maxHeight, cm, im				   }
+	SelectableObject { x, y, horizontalAlign, verticalAlign, backgroundColor, textColor,
+					   maxWidth, maxHeight, backgroundColor, textColor, cm, im, selected }
 {
 	m_left = new Button{ m_upLeftCorner, Align::Center, Align::Center,
 			buttonsBackgroundColor, buttonsTextColor, 1, m_height,
@@ -60,8 +60,8 @@ SpinBox::SpinBox(Align horizontalAlign, Align verticalAlign,
 				 ConsoleManager* cm, InputManager* im, SelectableObject*& selected,
 				 ColorType buttonsBackgroundColor, ColorType buttonsTextColor,
 				 ColorType buttonsSelectedBackgroungColor, ColorType buttonsSelectedTextColor) :
-	InteractableObject { horizontalAlign, verticalAlign, backgroundColor,
-						 textColor, maxWidth, maxHeight, cm, im			 }
+	SelectableObject { horizontalAlign, verticalAlign, backgroundColor, textColor,
+					   maxWidth, maxHeight, backgroundColor, textColor, cm, im, selected }
 {
 	m_left = new Button{ m_upLeftCorner, Align::Center, Align::Center,
 			buttonsBackgroundColor, buttonsTextColor, 1, m_height,
@@ -93,6 +93,13 @@ void SpinBox::SetOptions(Options options, int startOption)
 	m_optionSelected = startOption;
 }
 
+void SpinBox::SetConections(SelectableObject* up, SelectableObject* down,
+							SelectableObject* left, SelectableObject* right)
+{
+	m_left->SetConections(up, down, nullptr, m_right);
+	m_right->SetConections(up, down, m_left, nullptr);
+}
+
 void SpinBox::Draw()
 {
 	SetColor();
@@ -113,6 +120,15 @@ void SpinBox::CheckCursor()
 {
 	m_left->CheckCursor();
 	m_right->CheckCursor();
+}
+
+void SpinBox::CheckInput()
+{
+	if (this == m_selectedObject)
+	{
+		m_selectedObject = m_left;
+		m_left->CheckInput();
+	}
 }
 
 String SpinBox::GetOption() const
