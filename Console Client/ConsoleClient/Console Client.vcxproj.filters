@@ -180,12 +180,6 @@
     <ClCompile Include="CheckBox.cpp">
       <Filter>Modules\Implementation Units</Filter>
     </ClCompile>
-    <ClCompile Include="InteractableObject.cppm">
-      <Filter>Modules\Interfaces</Filter>
-    </ClCompile>
-    <ClCompile Include="InteractableObject.cpp">
-      <Filter>Modules\Implementation Units</Filter>
-    </ClCompile>
     <ClCompile Include="StatsScene.cppm">
       <Filter>Modules\Interfaces</Filter>
     </ClCompile>

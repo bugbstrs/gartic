@@ -163,8 +163,6 @@
     <ClCompile Include="HorizontalLayout.cppm" />
     <ClCompile Include="InputField.cpp" />
     <ClCompile Include="InputField.cppm" />
-    <ClCompile Include="InteractableObject.cpp" />
-    <ClCompile Include="InteractableObject.cppm" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="Label.cppm" />
     <ClCompile Include="LobbyScene.cpp" />
