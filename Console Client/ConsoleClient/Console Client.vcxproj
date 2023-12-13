@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Button.cppm" />
+    <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="Canvas.cppm" />
     <ClCompile Include="HorizontalLayout.cpp" />
     <ClCompile Include="HorizontalLayout.cppm" />
