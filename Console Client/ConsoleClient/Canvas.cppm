@@ -9,14 +9,14 @@ import std;
 export class Canvas
 {
 public:
-	Canvas(uint64_t width, uint64_t heigth, ColorType color);
+	Canvas(uint64_t width, uint64_t height, ColorType color);
 
 	~Canvas() = default;
 
 	void Clear();
 	void Fill(int x, int y);
 	void DrawCircle(int x, int y, ColorType color, int radius);
-	ColorType GetPredominantColor(int x, int y, int width, int heigth) const;
+	ColorType GetPredominantColor(int x, int y, int width, int height) const;
 
 private:
 	std::vector<std::vector<Pixel>> m_canvas;
