@@ -109,6 +109,19 @@ void LobbyScene::Start()
 	
 	m_objects.emplace_back(horizontalLayout);
 
+	// Custom rounds
+	horizontalLayout = new HorizontalLayout{ 40, 17, Align::Right, Align::Up, Color::Black, 21, 3, m_console, 1 };
+
+	horizontalLayout->AddObject(new Label{ Align::Right, Align::Center, Color::Black, Color::White,
+		10, 3, m_console, "Custom rounds" });
+
+	m_customRounds = new CheckBox{ Color::Gray, Color::Green, Color::DarkBlue, 6, 3, m_console, m_input, m_selected };
+	m_customRounds->SetHoverColors(Color::Blue, Color::Black);
+	m_selectableObjects.emplace_back(m_customRounds);
+	horizontalLayout->AddObject(m_customRounds);
+
+	m_objects.emplace_back(horizontalLayout);
+
 	// Leave lobby button
 	auto leaveButton = new Button{ 150, 40, Align::Center, Align::Center, Color::Gray, Color::Black, 7, 3,
 		Color::DarkBlue, Color::Black, m_console, m_input, m_selected, "LEAVE" };
@@ -129,7 +142,8 @@ void LobbyScene::Start()
 
 	m_drawTime->SetConections(nullptr, m_rounds, nullptr, nullptr);
 	m_rounds->SetConections(m_drawTime, m_wordCount, nullptr, nullptr);
-	m_wordCount->SetConections(m_rounds, nullptr, nullptr, nullptr);
+	m_wordCount->SetConections(m_rounds, m_customRounds, nullptr, nullptr);
+	m_customRounds->SetConections(m_wordCount, nullptr, nullptr, nullptr);
 
 	m_selected = leaveButton;
 }

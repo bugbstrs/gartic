@@ -2,6 +2,7 @@ export module LobbyScene;
 
 import Scene;
 import SpinBox;
+import CheckBox;
 import MenuScene;
 import VerticalLayout;
 
@@ -20,6 +21,7 @@ private:
     SpinBox*          m_rounds;
     SpinBox*          m_drawTime;
     SpinBox*          m_wordCount;
+    CheckBox*         m_customRounds;
 
     void StartGame  ();
     void GetUsers   ();
