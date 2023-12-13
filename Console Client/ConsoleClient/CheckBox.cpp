@@ -1,40 +1,35 @@
 module CheckBox;
 
-CheckBox::CheckBox(COORD upLeftCorner, Align horizontalAlign, Align verticalAlign,
-			       ColorType backgroundColor, ColorType textColor,
-			       int16_t maxWidth, int16_t maxHeight,
-			       ColorType selectedBackgroungColor, ColorType selectedTextColor,
-			       ConsoleManager *cm, InputManager *im,
-			       SelectableObject *&selected, String text) :
-	SelectableObject { upLeftCorner, horizontalAlign, verticalAlign,
-					   backgroundColor, textColor, maxWidth,
-					   maxHeight, selectedBackgroungColor, selectedTextColor,
-					   cm, im, selected										 },
-	m_text			 { text													 }
+CheckBox::CheckBox(COORD upLeftCorner,
+			       ColorType backgroundColor, ColorType checkColor,
+			       ColorType selectedColor, int16_t maxWidth, int16_t maxHeight,
+			       ConsoleManager *cm, InputManager *im, SelectableObject *&selected) :
+	SelectableObject { upLeftCorner, Align::Center, Align::Center,
+					   backgroundColor, backgroundColor, maxWidth, maxHeight,
+					   selectedColor, selectedColor, cm, im, selected		 },
+	m_checkColor	 { checkColor											 },
+	m_checked		 { false												 }
 {}
 
-CheckBox::CheckBox(int16_t x, int16_t y, Align horizontalAlign, Align verticalAlign,
-				   ColorType backgroundColor, ColorType textColor,
-				   int16_t maxWidth, int16_t maxHeight,
-				   ColorType selectedBackgroungColor, ColorType selectedTextColor,
-				   ConsoleManager *cm, InputManager *im,
-				   SelectableObject *&selected, String text):
-	SelectableObject { x, y, horizontalAlign, verticalAlign, backgroundColor,
-					   textColor, maxWidth, maxHeight, selectedBackgroungColor,
-					   selectedTextColor, cm, im, selected					   },
-	m_text			 { text													   }
+CheckBox::CheckBox(int16_t x, int16_t y,
+				   ColorType backgroundColor, ColorType checkColor,
+				   ColorType selectedColor, int16_t maxWidth, int16_t maxHeight,
+				   ConsoleManager *cm, InputManager *im, SelectableObject *&selected) :
+	SelectableObject { x, y, Align::Center, Align::Center,
+					   backgroundColor, backgroundColor, maxWidth, maxHeight,
+					   selectedColor, selectedColor, cm, im, selected		 },
+	m_checkColor	 { checkColor											 },
+	m_checked		 { false												 }
 {}
 
-CheckBox::CheckBox(Align horizontalAlign, Align verticalAlign,
-				   ColorType backgroundColor, ColorType textColor,
-				   int16_t maxWidth, int16_t maxHeight,
-				   ColorType selectedBackgroungColor, ColorType selectedTextColor,
-				   ConsoleManager *cm, InputManager *im,
-				   SelectableObject *&selected, String text):
-	SelectableObject { horizontalAlign, verticalAlign, backgroundColor,
-					   textColor, maxWidth, maxHeight, selectedBackgroungColor,
-					   selectedTextColor, cm, im, selected					   },
-	m_text			 { text													   }
+CheckBox::CheckBox(ColorType backgroundColor, ColorType checkColor,
+				   ColorType selectedColor, int16_t maxWidth, int16_t maxHeight,
+				   ConsoleManager *cm, InputManager *im, SelectableObject *&selected) :
+	SelectableObject { Align::Center, Align::Center,
+					   backgroundColor, backgroundColor, maxWidth, maxHeight,
+					   selectedColor, selectedColor, cm, im, selected		 },
+	m_checkColor	 { checkColor											 },
+	m_checked		 { false												 }
 {}
 
 void CheckBox::Draw()
@@ -81,8 +76,27 @@ void CheckBox::CheckInput()
 	}
 }
 
+void CheckBox::SetHoverColors(ColorType background, ColorType text)
+{
+	m_hoverBackgroundColor = m_hoverTextColor = background;
+}
+
+bool CheckBox::IsChecked()
+{
+	return m_checked;
+}
+
 void CheckBox::DrawContents()
 {
-	m_cm->Write(m_text, m_upLeftCorner.X, m_upLeftCorner.Y,
-		m_width, m_height, m_horizontalAlign, m_verticalAlign);
+	if (m_checked)
+	{
+		m_cm->SetColor(m_checkColor, m_checkColor);
+
+		String s((m_width - 2) * (m_height - 2), ' ');
+		COORD startPos{ m_upLeftCorner };
+		++startPos.X;
+		++startPos.Y;
+		m_cm->Write(s, startPos.X, startPos.Y, m_width - 2, m_height - 2,
+					Align::Center, Align::Center);
+	}
 }
