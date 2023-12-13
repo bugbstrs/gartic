@@ -9,7 +9,9 @@ CheckBox::CheckBox(COORD upLeftCorner,
 					   selectedColor, selectedColor, cm, im, selected		 },
 	m_checkColor	 { checkColor											 },
 	m_checked		 { false												 }
-{}
+{
+	m_function = [this]() {m_checked = !m_checked; };
+}
 
 CheckBox::CheckBox(int16_t x, int16_t y,
 				   ColorType backgroundColor, ColorType checkColor,
@@ -20,7 +22,9 @@ CheckBox::CheckBox(int16_t x, int16_t y,
 					   selectedColor, selectedColor, cm, im, selected		 },
 	m_checkColor	 { checkColor											 },
 	m_checked		 { false												 }
-{}
+{
+	m_function = [this]() {m_checked = !m_checked; };
+}
 
 CheckBox::CheckBox(ColorType backgroundColor, ColorType checkColor,
 				   ColorType selectedColor, int16_t maxWidth, int16_t maxHeight,
@@ -30,7 +34,9 @@ CheckBox::CheckBox(ColorType backgroundColor, ColorType checkColor,
 					   selectedColor, selectedColor, cm, im, selected		 },
 	m_checkColor	 { checkColor											 },
 	m_checked		 { false												 }
-{}
+{
+	m_function = [this]() {m_checked = !m_checked; };
+}
 
 void CheckBox::Draw()
 {
@@ -92,11 +98,11 @@ void CheckBox::DrawContents()
 	{
 		m_cm->SetColor(m_checkColor, m_checkColor);
 
-		String s((m_width - 2) * (m_height - 2), ' ');
+		String s((m_width - 4) * (m_height - 2), ' ');
 		COORD startPos{ m_upLeftCorner };
-		++startPos.X;
+		startPos.X += 2;
 		++startPos.Y;
-		m_cm->Write(s, startPos.X, startPos.Y, m_width - 2, m_height - 2,
+		m_cm->Write(s, startPos.X, startPos.Y, m_width - 4, m_height - 2,
 					Align::Center, Align::Center);
 	}
 }
