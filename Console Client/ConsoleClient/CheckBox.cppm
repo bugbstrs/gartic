@@ -9,34 +9,28 @@ using String = std::string;
 export class CheckBox : public SelectableObject
 {
 public:
-	CheckBox(COORD upLeftCorner, Align horizontalAlign, Align verticalAlign,
-		ColorType backgroundColor, ColorType textColor,
-		int16_t maxWidth, int16_t maxHeight,
-		ColorType selectedBackgroungColor, ColorType selectedTextColor,
-		ConsoleManager* cm, InputManager* im,
-		SelectableObject*& selected, String text);
-	CheckBox(int16_t x, int16_t y, Align horizontalAlign, Align verticalAlign,
-		ColorType backgroundColor, ColorType textColor,
-		int16_t maxWidth, int16_t maxHeight,
-		ColorType selectedBackgroungColor, ColorType selectedTextColor,
-		ConsoleManager* cm, InputManager* im,
-		SelectableObject*& selected, String text);
-	CheckBox(Align horizontalAlign, Align verticalAlign,
-		ColorType backgroundColor, ColorType textColor,
-		int16_t maxWidth, int16_t maxHeight,
-		ColorType selectedBackgroungColor, ColorType selectedTextColor,
-		ConsoleManager* cm, InputManager* im,
-		SelectableObject*& selected, String text);
+	CheckBox(COORD upLeftCorner,
+		ColorType backgroundColor, ColorType checkColor,
+		ColorType selectedColor, int16_t maxWidth, int16_t maxHeight,
+		ConsoleManager* cm, InputManager* im, SelectableObject*& selected);
+	CheckBox(int16_t x, int16_t y,
+		ColorType backgroundColor, ColorType checkColor,
+		ColorType selectedColor, int16_t maxWidth, int16_t maxHeight,
+		ConsoleManager* cm, InputManager* im, SelectableObject*& selected);
+	CheckBox(ColorType backgroundColor, ColorType checkColor,
+		ColorType selectedColor, int16_t maxWidth, int16_t maxHeight,
+		ConsoleManager* cm, InputManager* im, SelectableObject*& selected);
 
 	~CheckBox() = default;
 
-	void Draw		() override;
-	void CheckInput	() override;
-	bool IsChecked	();
+	void Draw			() override;
+	void CheckInput		() override;
+	void SetHoverColors	(ColorType background, ColorType text) override;
+	bool IsChecked		();
 
 private:
-	String m_text;
-	bool   m_checked;
+	bool	  m_checked;
+	ColorType m_checkColor;
 
 	void DrawContents() override;
 };
