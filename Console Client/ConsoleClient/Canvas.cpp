@@ -11,25 +11,55 @@ void Canvas::Clear()
 		std::fill(row.begin(), row.end(), Pixel{ m_backgroundColor });
 }
 
-void Canvas::Fill(int x, int y)
+void Canvas::Fill(int x, int y, ColorType color)
+{
+
+}
+
+void Canvas::DrawLine(int x1, int y1, int x2, int y2, ColorType color, int radius)
 {
 
 }
 
 void Canvas::DrawCircle(int x, int y, ColorType color, int radius)
 {
-    for (int i = 0; i <= radius; ++i)
-    {
-        int j = static_cast<int>(std::sqrt(radius * radius - i * i));
+    int i{ 0 }, j{ radius }, d{ 3 - 2 * radius };
 
+    while (i < j)
+    {
         m_canvas[x + i][y + j].SetColor(color);
-        m_canvas[x + j][y + i].SetColor(color);
         m_canvas[x - i][y + j].SetColor(color);
-        m_canvas[x - j][y + i].SetColor(color);
         m_canvas[x + i][y - j].SetColor(color);
-        m_canvas[x + j][y - i].SetColor(color);
         m_canvas[x - i][y - j].SetColor(color);
-        m_canvas[x - j][y - i].SetColor(color);
+        m_canvas[x + i][y + j].SetColor(color);
+        m_canvas[x - i][y + j].SetColor(color);
+        m_canvas[x + i][y - j].SetColor(color);
+        m_canvas[x - i][y - j].SetColor(color);
+
+        if (d < 0)
+            d = d + 4 * i + 6;
+        else
+        {
+            d = d + 4 * (i - j) + 10;
+            j--;
+        }
+        i++;
+
+        if (i <= j)
+        {
+            m_canvas[x + i][y + j].SetColor(color);
+            m_canvas[x - i][y + j].SetColor(color);
+            m_canvas[x + i][y - j].SetColor(color);
+            m_canvas[x - i][y - j].SetColor(color);
+
+            if (i != j)
+            {
+                m_canvas[x + i][y + j].SetColor(color);
+                m_canvas[x - i][y + j].SetColor(color);
+                m_canvas[x + i][y - j].SetColor(color);
+                m_canvas[x - i][y - j].SetColor(color);
+            }
+        }
     }
 }
 
