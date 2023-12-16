@@ -15,8 +15,8 @@ public:
 
 	void Clear					 ();
 	void Fill					 (int x, int y, ColorType color);
-	void DrawLine				 (int x1, int y1, int x2, int y2, ColorType color, int radius);
-	void DrawCircle				 (int x, int y, ColorType color, int radius);
+	void DrawLine				 (int x1, int y1, int x2, int y2, ColorType color, int width);
+	void DrawCircle				 (int x, int y, ColorType color, int radius, bool filled = true);
 	ColorType GetPredominantColor(int x, int y, int width, int height) const;
 
 private:
