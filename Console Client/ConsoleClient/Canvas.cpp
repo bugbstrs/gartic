@@ -119,10 +119,24 @@ void Canvas::DrawCircle(int x, int y, ColorType color, int radius, bool filled)
     }
 }
 
-ColorType Canvas::GetPredominantColor(int x, int y, int width, int height) const
+int Canvas::GetWidth() const
 {
-    if (x < 0 || y < 0 || x + width > m_canvas[0].size() || y + height > m_canvas.size())
-        return ColorType::Black;
+    return m_canvas[0].size();
+}
+
+int Canvas::GetHeight() const
+{
+    return m_canvas.size();
+}
+
+ColorType Canvas::GetSectorColor(int x, int y, int width, int height) const
+{
+    if (x < 0) x = 0;
+    if (x > m_canvas[0].size()) x = m_canvas[0].size();
+    if (y < 0) y = 0;
+    if (y > m_canvas.size()) y = m_canvas.size();
+    if (x + width > m_canvas[0].size()) width = m_canvas[0].size() - x;
+    if (y + height > m_canvas.size()) height = m_canvas.size() - y;
 
     std::unordered_map<ColorType, int> colorCount;
 

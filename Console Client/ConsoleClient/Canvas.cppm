@@ -15,11 +15,13 @@ public:
 
 	~Canvas() = default;
 
-	void Clear					 ();
-	void Fill					 (int x, int y, ColorType color);
-	void DrawLine				 (int x1, int y1, int x2, int y2, ColorType color, int width);
-	void DrawCircle				 (int x, int y, ColorType color, int radius, bool filled = true);
-	ColorType GetPredominantColor(int x, int y, int width, int height) const;
+	void	  Clear			();
+	void	  Fill			(int x, int y, ColorType color);
+	void	  DrawLine		(int x1, int y1, int x2, int y2, ColorType color, int width);
+	void	  DrawCircle	(int x, int y, ColorType color, int radius, bool filled = true);
+	int		  GetWidth		() const;
+	int		  GetHeight		() const;
+	ColorType GetSectorColor(int x, int y, int width, int height) const;
 
 private:
 	std::vector<std::vector<Pixel>> m_canvas;
