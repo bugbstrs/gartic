@@ -1,5 +1,6 @@
 #include "RouteManager.h"
 #include "CreateUserHandler.h"
+#include <regex>
 
 void http::RouteManager::Run(GarticStorage& storage)
 {
@@ -236,4 +237,66 @@ void http::RouteManager::CreateGetWordToDisplayRoute(GarticStorage& storage)
 
         return crow::json::wvalue{ word_json };
         });
+}
+
+std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const crow::request& request)
+{
+    std::optional<crow::response> returnResponse;
+    char* password = request.url_params.get("password");
+    char* username = request.url_params.get("username");
+    crow::response response;
+    std::regex regexFormatSHA256{"[a-f0-9]{64}"};
+    std::regex regexFormatUsername{"^[a-z]+[a-z0-9_-]*[a-z]+$"};
+
+    if (password == nullptr || username == nullptr)
+    {
+        response.code = 400;
+        response.set_header("Content-Type", "application/json");
+        response.body = crow::json::wvalue
+        ({
+            {"code": response.code},
+            {"error": "user or password not provided"}
+        });
+        
+        return response;
+    }
+    
+    // length of SHA256 hash when converted to hex string
+    if (std::strlen(password) != 64 || !std::regex_match(password, regexFormatSHA256))
+    {
+        response.code = 400;
+        response.body = crow::json::wvalue
+        ({
+            {"code", response.code},
+            {"error": "invalid password format! (not hashed or bad hash)"}
+        });
+
+        return response;
+    }
+
+    if (!std::regex_match(username, regexFormatUsername))
+    {
+        response.code = 400;
+        response.body = crow::json::wvalue
+        ({
+            {"code", response.code},
+            {"error": "invalid username format! ((username format description))"}
+        });
+
+        return response;
+    }
+
+    bool foundCredentials = storage.CheckCredentials(String(username), String(password));
+
+    if (!foundCredentials)
+    {
+        response.code = 401;
+        response.body = crow::json::wvalue
+        ({
+            {"code", response.code},
+            {"error": "unauthorized"}
+        });
+    }
+
+    return {};
 }

@@ -2,6 +2,7 @@
 
 #include "GarticDatabase.h"
 #include "Game.h"
+#include <optional>
 
 namespace http
 {
@@ -22,6 +23,8 @@ namespace http
 		void CreateCheckBannedWordRoute(GarticStorage& storage);
 		void CreatePutWordToGuessRoute(GarticStorage& storage);
 		void CreateGetWordToDisplayRoute(GarticStorage& storage);
+
+        std::optional<crow::response> IsRequestAuthenticated(const crow::request& request);
 
 	private:
 		crow::SimpleApp m_app;
