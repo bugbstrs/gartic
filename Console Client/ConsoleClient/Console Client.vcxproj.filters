@@ -201,5 +201,8 @@
     <ClCompile Include="DrawingBoard.cppm">
       <Filter>Modules\Interfaces</Filter>
     </ClCompile>
+    <ClCompile Include="DrawingBoard.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
