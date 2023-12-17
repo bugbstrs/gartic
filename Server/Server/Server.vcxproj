@@ -20,8 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="banned.txt" />
-    <Text Include="Database Files\users.txt" />
-    <Text Include="Database Files\words.txt" />
     <Text Include="quotes.txt" />
   </ItemGroup>
   <ItemGroup>

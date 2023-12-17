@@ -45,12 +45,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Database Files\users.txt">
-      <Filter>Database Files</Filter>
-    </Text>
-    <Text Include="Database Files\words.txt">
-      <Filter>Database Files</Filter>
-    </Text>
     <Text Include="banned.txt">
       <Filter>Database Files</Filter>
     </Text>
