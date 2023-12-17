@@ -38,7 +38,7 @@ public:
 	void   SetOptions		   (Options options, int startOption);
 	void   SetHoverColors	   (ColorType backgroundColor, ColorType textColor) override;
 	void   SetConections	   (SelectableObject* up, SelectableObject* down,
-							    SelectableObject* left, SelectableObject* right);
+							    SelectableObject* left, SelectableObject* right) override;
 	void   Draw				   () override;
 	void   InitializeTransform (COORD upLeftCorner) override;
 	void   CheckCursor		   () override;

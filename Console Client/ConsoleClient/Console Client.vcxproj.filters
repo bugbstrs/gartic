@@ -198,5 +198,8 @@
     <ClCompile Include="Canvas.cpp">
       <Filter>Modules\Implementation Units</Filter>
     </ClCompile>
+    <ClCompile Include="DrawingBoard.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
