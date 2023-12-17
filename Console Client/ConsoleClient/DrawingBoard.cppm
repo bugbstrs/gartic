@@ -27,6 +27,9 @@ public:
 
 private:
 	Canvas m_canvas;
+	int	   m_sectorWidth;
+	int	   m_sectorHeight;
 
 	void DrawContents() override;
+	void SetColor	 (ColorType color);
 };
