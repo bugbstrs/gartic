@@ -12,7 +12,14 @@
 #include <regex>
 #include <string>
 #include <cpr/cpr.h>
+
+#pragma warning(push)
+
+#pragma warning(disable: 4267)
+
 #include "crow.h"
+
+#pragma warning(pop)
 
 class GameplayWidget  : public QWidget
 {
