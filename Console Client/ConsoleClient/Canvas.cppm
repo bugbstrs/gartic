@@ -1,10 +1,12 @@
 export module Canvas;
 
+import <functional>;
 import <cstdint>;
+import <vector>;
+import <thread>;
 
 export import ColorType;
 import Pixel;
-import std;
 
 export class Canvas
 {

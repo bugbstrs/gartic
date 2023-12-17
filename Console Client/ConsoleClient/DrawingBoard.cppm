@@ -8,13 +8,16 @@ export class DrawingBoard : public SelectableObject
 public:
 	DrawingBoard(COORD upLeftCorner, int16_t maxWidth, int16_t maxHeight,
 				 ColorType backgroungColor, ConsoleManager* cm,
-				 InputManager* im, SelectableObject*& selected);
+				 InputManager* im, SelectableObject*& selected,
+				 uint64_t canvasWidth, uint64_t canvasHeight);
 	DrawingBoard(int16_t x, int16_t y, int16_t maxWidth, int16_t maxHeight,
 				 ColorType backgroungColor, ConsoleManager* cm,
-				 InputManager* im, SelectableObject*& selected);
+				 InputManager* im, SelectableObject*& selected,
+				 uint64_t canvasWidth, uint64_t canvasHeight);
 	DrawingBoard(int16_t maxWidth, int16_t maxHeight,
 				 ColorType backgroungColor, ConsoleManager* cm,
-				 InputManager* im, SelectableObject*& selected);
+				 InputManager* im, SelectableObject*& selected,
+				 uint64_t canvasWidth, uint64_t canvasHeight);
 
 	~DrawingBoard() = default;
 
