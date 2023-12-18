@@ -54,7 +54,15 @@ void DrawingBoard::CheckInput()
 
 void DrawingBoard::CheckCursor()
 {
-
+	static COORD prevPoz{ -1,-1 };
+	COORD cursorPos{ m_im->GetCurrentCursorPosition() };
+	if (IsPointInside(cursorPos) &&
+		m_im->GetClickHold() && m_selectable)
+	{
+		if (prevPoz.X != -1)
+			m_canvas.DrawLine(prevPoz.X, prevPoz.Y, cursorPos.X, cursorPos.Y, ColorType::Green, 30);
+		prevPoz = cursorPos;
+	}
 }
 
 void DrawingBoard::DrawContents()
