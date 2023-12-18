@@ -15,7 +15,7 @@ LobbyScene::LobbyScene(ConsoleManager* console, InputManager* inputManager) :
 
 void LobbyScene::StartGame()
 {
-	//m_nextScene = const_cast<std::type_info*>(&typeid(GameScene));
+	m_nextScene = const_cast<std::type_info*>(&typeid(GameScene));
 }
 
 void LobbyScene::GetUsers()
@@ -35,7 +35,7 @@ void LobbyScene::SetSettings()
 
 void LobbyScene::HasStarted()
 {
-	//m_nextScene = const_cast<std::type_info*>(&typeid(GameScene));
+	m_nextScene = const_cast<std::type_info*>(&typeid(GameScene));
 }
 
 void LobbyScene::Back()

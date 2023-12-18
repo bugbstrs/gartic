@@ -7,6 +7,7 @@ import StatsScene;
 import LobbyScene;
 import LoginScene;
 import MenuScene;
+import GameScene;   
 
 import <memory>;
 #pragma endregion imports

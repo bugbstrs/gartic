@@ -22,6 +22,8 @@ void SceneManager::Update()
             m_activeScene = std::make_unique<LobbyScene>(m_console, m_input);
         if (nextScene == &typeid(StatsScene))
             m_activeScene = std::make_unique<StatsScene>(m_console, m_input);
+        if (nextScene == &typeid(GameScene))
+            m_activeScene = std::make_unique<GameScene>(m_console, m_input);
         if (!nextScene)
             m_activeScene = nullptr;
     }

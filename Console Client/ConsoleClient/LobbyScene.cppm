@@ -4,6 +4,7 @@ import Scene;
 import SpinBox;
 import CheckBox;
 import MenuScene;
+import GameScene;
 import VerticalLayout;
 
 export class LobbyScene : public Scene
