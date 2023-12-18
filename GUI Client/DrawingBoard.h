@@ -8,6 +8,7 @@
 #include <queue>
 #include <atomic>
 #include <stack>
+#include <thread>
 
 class DrawingBoard : public QWidget
 {
@@ -38,6 +39,7 @@ protected:
 private:
 	void FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith);
 	void GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith, bool& done);
+	void DrawStartingPixels(QPoint startingPoint, QPoint pointToExecuteAt, int radius, QColor startingColor, QColor colorToBeFilledWith, std::vector <std::thread>& threads);
 
 private:
 	bool firstPaint = true;

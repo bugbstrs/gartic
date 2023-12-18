@@ -1,6 +1,7 @@
 #include "DrawingBoard.h"
 #include <thread>
 #include <future>
+#include <cmath>
 
 DrawingBoard::DrawingBoard(QWidget* parent)
     : QWidget{ parent },
@@ -107,8 +108,6 @@ void DrawingBoard::FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QCol
     bool leftDone = false;
     bool rightDone = false;
 
-    image.setPixelColor(startingPoint, colorToBeFilledWith);
-
     QPoint currentPointTop = pointToExecuteAt + QPoint(0, 1);
     QPoint currentPointBottom = pointToExecuteAt + QPoint(0, -1);
     QPoint currentPointLeft = pointToExecuteAt + QPoint(-1, 0);
@@ -120,23 +119,33 @@ void DrawingBoard::FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QCol
     int radius2 = 26;
 
     std::vector <std::thread> threads;
-
-    // Create the diamond shape
-    for (int i = -radius2; i <= radius2; i++) {
-        for (int j = -radius2; j <= radius2; j++) {
-            int x = centerX + i;
-            int y = centerY + j;
-            if (image.pixelColor(QPoint(x, y)) != startingColor && image.pixelColor(QPoint(x, y)) != colorToBeFilledWith)
-                break;
-            double distance = sqrt(i * i + j * j);
-            QPoint pointToExecuteAt(x, y);
-            if (distance >= radius1 && distance <= radius2) {
-                threads.emplace_back(std::thread(&DrawingBoard::GenericFill, this, QPoint(x, y), std::ref(pointToExecuteAt), startingColor, colorToBeFilledWith, std::ref(availableDirections["topDone"])));
-            }
-        }
-    }
+    DrawStartingPixels(startingPoint, pointToExecuteAt, 25, startingColor, colorToBeFilledWith, threads);
     for (auto& thread : threads) {
         thread.join();
+    }
+    update();
+}
+
+void DrawingBoard::DrawStartingPixels(QPoint startingPoint, QPoint pointToExecuteAt, int radius, QColor startingColor, QColor colorToBeFilledWith, std::vector<std::thread>& threads)
+{
+    if (image.pixelColor(pointToExecuteAt) != startingColor || image.pixelColor(pointToExecuteAt) == colorToBeFilledWith)
+        return;
+
+    double distance = std::sqrt(std::pow(pointToExecuteAt.x() - startingPoint.x(), 2) + std::pow(pointToExecuteAt.y() - startingPoint.y(), 2));
+
+    if (distance <= radius) {
+        if (distance >= radius - 1) {
+            threads.emplace_back(std::thread(&DrawingBoard::GenericFill, this, pointToExecuteAt, std::ref(pointToExecuteAt), startingColor, colorToBeFilledWith, std::ref(availableDirections["topDone"])));
+        }
+        else {
+            image.setPixelColor(pointToExecuteAt, colorToBeFilledWith);
+        }
+
+        // Recursive calls for neighboring pixels
+        DrawStartingPixels(startingPoint, pointToExecuteAt + QPoint(1, 0), radius, startingColor, colorToBeFilledWith, threads);
+        DrawStartingPixels(startingPoint, pointToExecuteAt + QPoint(-1, 0), radius, startingColor, colorToBeFilledWith, threads);
+        DrawStartingPixels(startingPoint, pointToExecuteAt + QPoint(0, 1), radius, startingColor, colorToBeFilledWith, threads);
+        DrawStartingPixels(startingPoint, pointToExecuteAt + QPoint(0, -1), radius, startingColor, colorToBeFilledWith, threads);
     }
 }
 
@@ -167,6 +176,7 @@ void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, Q
     done = true;
     update();
 }
+
 
 void DrawingBoard::paintEvent(QPaintEvent* event) {
     if (firstPaint) {

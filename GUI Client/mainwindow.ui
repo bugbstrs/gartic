@@ -25,6 +25,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
     <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -33,9 +36,10 @@
     </sizepolicy>
    </property>
    <property name="styleSheet">
-    <string notr="true">background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                             stop: 0 #001F33, stop: 1 #003366);
-</string>
+    <string notr="true">background: url(:/background/Background);
+background-position: center;
+background-repeat: no-repeat;
+background-size: stretch;</string>
    </property>
    <layout class="QGridLayout" name="gridLayout_3">
     <item row="0" column="0">
@@ -66,8 +70,7 @@
       </property>
       <widget class="QWidget" name="MainMenuScene">
        <property name="styleSheet">
-        <string notr="true">background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                             stop: 0 #001F33, stop: 1 #003366);
+        <string notr="true">background: transparent
 </string>
        </property>
        <layout class="QGridLayout" name="gridLayout_6">
@@ -75,7 +78,7 @@
          <widget class="QFrame" name="frame_3">
           <property name="styleSheet">
            <string notr="true">QPushButton {
-	background-color: transparent;
+	background: transparent;
 	color: white;
 	font-family: &quot;Consolas&quot;;
     font-size: 12px;
@@ -549,7 +552,7 @@ QPushButton:hover {
               <string notr="true">font-family: 'Comic Sans MS';
 color: red;
 font-size: 16pt;
-background-color: transparent;
+background: transparent;
 
 </string>
              </property>
@@ -1922,6 +1925,9 @@ QPushButton:hover {
                    <property name="styleSheet">
                     <string notr="true">background-color: white;</string>
                    </property>
+                   <property name="maxLength">
+                    <number>200</number>
+                   </property>
                    <property name="placeholderText">
                     <string>Type your answer here...</string>
                    </property>
@@ -2162,7 +2168,7 @@ QPushButton:hover {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: white;
+              <string notr="true">background: white;
 border: 2px solid #000000;
 border-radius: 30px;
 padding: 5px 10px;</string>
@@ -2801,7 +2807,7 @@ padding: 5px 10px;</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: white;
+              <string notr="true">background: white;
 border: 2px solid #000000;
 border-radius: 30px;
 padding: 5px 10px;</string>
@@ -3129,6 +3135,9 @@ QPushButton:hover {
        <layout class="QGridLayout" name="gridLayout_8">
         <item row="0" column="0">
          <widget class="QFrame" name="frame_7">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
           </property>
@@ -3189,7 +3198,7 @@ QPushButton:hover {
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: white;
+              <string notr="true">background: white;
 border: 2px solid #000000;
 border-radius: 30px;
 padding: 5px 10px;

@@ -21,6 +21,6 @@
         <file alias="nurse">Resource Files/user-nurse.png</file>
     </qresource>
     <qresource prefix="/background">
-        <file>Resource Files/GarticBackground_2.png</file>
+        <file alias="Background">Resource Files/GarticBackground.png</file>
     </qresource>
 </RCC>
