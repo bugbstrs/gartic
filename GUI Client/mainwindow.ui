@@ -1980,14 +1980,14 @@ QPushButton:hover {
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>800</width>
-                    <height>500</height>
+                    <width>784</width>
+                    <height>490</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>800</width>
-                    <height>500</height>
+                    <width>784</width>
+                    <height>490</height>
                    </size>
                   </property>
                   <property name="font">
