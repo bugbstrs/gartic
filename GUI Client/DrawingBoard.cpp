@@ -2,13 +2,14 @@
 
 DrawingBoard::DrawingBoard(QWidget* parent)
     : QWidget{ parent },
-    eraserColor{Qt::white}
+    eraserColor { Qt::white }
 {
     setMouseTracking(true);
     ChangePenPropertiesTo(Qt::black, 2);
 }
 
-void DrawingBoard::mousePressEvent(QMouseEvent* event) {
+void DrawingBoard::mousePressEvent(QMouseEvent* event)
+{
     images.push_back(image);
     if (event->button() == Qt::LeftButton && !fillEnabled) {
         drawing = true;
@@ -21,7 +22,8 @@ void DrawingBoard::mousePressEvent(QMouseEvent* event) {
     }
 }
 
-void DrawingBoard::mouseMoveEvent(QMouseEvent* event) {
+void DrawingBoard::mouseMoveEvent(QMouseEvent* event)
+{
     if (drawing) {
         currentPath.lineTo(event->pos());
         update();
@@ -29,7 +31,8 @@ void DrawingBoard::mouseMoveEvent(QMouseEvent* event) {
 }
 
 
-void DrawingBoard::mouseReleaseEvent(QMouseEvent* event) {
+void DrawingBoard::mouseReleaseEvent(QMouseEvent* event)
+{
     if (event->button() == Qt::LeftButton && drawing) {
         drawing = false;
         paths.push_back({ currentPath, pen });
@@ -44,7 +47,7 @@ void DrawingBoard::resizeEvent(QResizeEvent* event)
     image.fill(Qt::white);
 }
 
-void DrawingBoard::ChangePenPropertiesTo(QColor color, int width)
+void DrawingBoard::ChangePenPropertiesTo(QColor color, int width) noexcept
 {
     lastColor = color;
     pen.setColor(color);
@@ -52,35 +55,35 @@ void DrawingBoard::ChangePenPropertiesTo(QColor color, int width)
     pen.setCapStyle(Qt::RoundCap);
 }
 
-void DrawingBoard::ChangePenColor(QColor color)
+void DrawingBoard::ChangePenColor(QColor color) noexcept
 {
     lastColor = color;
     pen.setColor(color);
 }
 
-void DrawingBoard::ChangePenWidth(int width)
+void DrawingBoard::ChangePenWidth(int width) noexcept
 {
     pen.setWidth(width);
 }
 
-void DrawingBoard::ToggleEraser(bool value)
+void DrawingBoard::ToggleEraser(bool value) noexcept
 {
     if (value)
         pen.setColor(eraserColor);
     else pen.setColor(lastColor);
 }
 
-void DrawingBoard::ToggleFill(bool value)
+void DrawingBoard::ToggleFill(bool value) noexcept
 {
     fillEnabled = value;
 }
 
-void DrawingBoard::EnablePencil()
+void DrawingBoard::EnablePencil() noexcept
 {
     pen.setColor(lastColor);
 }
 
-void DrawingBoard::UndoLastPath()
+void DrawingBoard::UndoLastPath() noexcept
 {
     if (!images.empty()) {
         image = images.back();
@@ -90,7 +93,7 @@ void DrawingBoard::UndoLastPath()
     update();
 }
 
-void DrawingBoard::ClearCanvas()
+void DrawingBoard::ClearCanvas() noexcept
 {
     currentPath = QPainterPath();
     image.fill(Qt::white);
@@ -115,8 +118,8 @@ void DrawingBoard::DrawStartingPixels(const QPoint& startingPoint, QPoint pointT
 
     double distance = std::sqrt(std::pow(pointToExecuteAt.x() - startingPoint.x(), 2) + std::pow(pointToExecuteAt.y() - startingPoint.y(), 2));
 
-    if (distance <= circleRadius) {
-        if (distance >= circleRadius - 1) {
+    if (distance <= kCircleRadius) {
+        if (distance >= kCircleRadius - 1) {
             threads.emplace_back(std::thread(&DrawingBoard::GenericFill, this, pointToExecuteAt, std::ref(pointToExecuteAt), startingColor, colorToBeFilledWith));
         }
         else {
@@ -158,7 +161,8 @@ void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, Q
 }
 
 
-void DrawingBoard::paintEvent(QPaintEvent* event) {
+void DrawingBoard::paintEvent(QPaintEvent* event)
+{
     if (firstPaint) {
         setAutoFillBackground(true);
         firstPaint = false;

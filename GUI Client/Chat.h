@@ -9,21 +9,25 @@ class Chat  : public QFrame
 	Q_OBJECT
 
 public:
+
+	//Constructor
 	Chat(QWidget *parent);
+
+	//Destructor
 	~Chat();
 
-	void SetWordToGuess(QString wordToGuess);
-	void IsDrawer(bool isDrawer);
+	//Functionality
+	void SetWordToGuess(QString wordToGuess) noexcept;
+	void SetChatConfigurationAccordingToPlayerType(bool isDrawer) noexcept;
 
 protected:
 	void showEvent(QShowEvent* event) override;
 
 public slots:
-	void OnConversationWaitingForUpdate(const QString& newMessage);
+	void OnConversationWaitingForUpdate(const QString& newMessage) noexcept;
 
 private:
-	bool isDrawer;
-	QString wordToGuess;
-	ChatWritingBox* chatWritingBox;
-	ChatConversation* chatConversation;
+	QString m_wordToGuess				 {};
+	ChatWritingBox* m_chatWritingBox     { new ChatWritingBox{} };
+	ChatConversation* m_chatConversation { new ChatConversation{} };
 };

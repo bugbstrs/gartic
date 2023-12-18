@@ -6,11 +6,7 @@ ChatWritingBox::ChatWritingBox(QWidget *parent)
 	connect(this, &ChatWritingBox::returnPressed, this, &ChatWritingBox::OnEnterPressed);
 }
 
-ChatWritingBox::~ChatWritingBox()
-{
-}
-
-void ChatWritingBox::OnEnterPressed() {
+void ChatWritingBox::OnEnterPressed() noexcept { 
 	emit OnConversationWaitingForUpdateSignal(text());
 	clear();
 }

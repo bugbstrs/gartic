@@ -17,24 +17,25 @@ class DrawingBoard : public QWidget
 public:
 	//Constructors
 	DrawingBoard(QWidget* parent = nullptr);
+	~DrawingBoard() = default;
 
 	//Functionality
-	void ChangePenPropertiesTo(QColor color, int width);
-	void ChangePenColor(QColor color);
-	void ChangePenWidth(int width);
-	void ToggleEraser(bool value);
-	void ToggleFill(bool value);
-	void EnablePencil();
-	void UndoLastPath();
-	void ClearCanvas();
+	void ChangePenPropertiesTo(QColor color, int width) noexcept;
+	void ChangePenColor(QColor color) noexcept;
+	void ChangePenWidth(int width) noexcept;
+	void ToggleEraser(bool value) noexcept;
+	void ToggleFill(bool value) noexcept;
+	void EnablePencil() noexcept;
+	void UndoLastPath() noexcept;
+	void ClearCanvas() noexcept;
 
 
 protected:
-	void paintEvent(QPaintEvent* event);
+	void paintEvent(QPaintEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
-	void resizeEvent(QResizeEvent* event);
+	void resizeEvent(QResizeEvent* event) override;
 
 private:
 	void FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith);
@@ -42,14 +43,12 @@ private:
 	void DrawStartingPixels(const QPoint& startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith, std::vector <std::thread>& threads);
 
 private:
-	bool firstPaint = true;
-	bool mouseOverBoard = false;
-	bool drawing = false;
-	bool erasing = false;
-	bool fillEnabled = false;
-	bool undo = false;
+	const int kCircleRadius { 25 };
 
-	const int circleRadius = 25;
+	bool firstPaint			{ true };
+	bool drawing			{ false };
+	bool fillEnabled		{ false };
+	bool undo				{ false };
 
 	QPen pen;
 

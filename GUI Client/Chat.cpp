@@ -2,43 +2,44 @@
 #include <qdatetime.h>
 
 Chat::Chat(QWidget *parent)
-	: QFrame{ parent },
-	chatWritingBox{ new ChatWritingBox{} },
-	chatConversation{ new ChatConversation{} }
+	: QFrame{ parent }
+{}
+
+Chat::~Chat()
 {
+	delete m_chatConversation;
+	delete m_chatWritingBox;
 }
 
-void Chat::OnConversationWaitingForUpdate(const QString& newMessage) {
+void Chat::OnConversationWaitingForUpdate(const QString& newMessage) noexcept
+{
 	QDateTime currentTime = QDateTime::currentDateTime();
 	QString formattedTime = currentTime.toString("hh:mm");
 	QString formattedMessage;
-	if (newMessage != wordToGuess)
+	if (newMessage != m_wordToGuess)
 		formattedMessage = QString("[%1] <b>You:</b> <b style='color: blue;'>%2</b><br>").arg(formattedTime, newMessage);
 	else {
 		formattedMessage = QString("<b style='color: white; background-color: green; padding: 5px;'> You have guessed the word</b><br>");
-		chatWritingBox->setDisabled(true);
+		m_chatWritingBox->setDisabled(true);
 	}
-    chatConversation->insertHtml(formattedMessage);
+    m_chatConversation->insertHtml(formattedMessage);
 }
 
-Chat::~Chat()
-{}
-
-void Chat::SetWordToGuess(QString wordToGuess)
+void Chat::SetWordToGuess(QString wordToGuess) noexcept
 {
-	this->wordToGuess = wordToGuess;
+	m_wordToGuess = wordToGuess;
 }
 
-void Chat::IsDrawer(bool isDrawer)
+void Chat::SetChatConfigurationAccordingToPlayerType(bool isDrawer) noexcept
 {
 	if (isDrawer)
-		chatWritingBox->setDisabled(true);
+		m_chatWritingBox->setDisabled(true);
 }
 
 void Chat::showEvent(QShowEvent* event)
 {
-	chatWritingBox = findChild<ChatWritingBox*>("chatWritingBox");
-	chatConversation = findChild<ChatConversation*>("chatConversation"); 
-	QObject::connect(chatWritingBox, &ChatWritingBox::OnConversationWaitingForUpdateSignal, this, &Chat::OnConversationWaitingForUpdate);
+	m_chatWritingBox = findChild<ChatWritingBox*>("chatWritingBox");
+	m_chatConversation = findChild<ChatConversation*>("chatConversation"); 
+	QObject::connect(m_chatWritingBox, &ChatWritingBox::OnConversationWaitingForUpdateSignal, this, &Chat::OnConversationWaitingForUpdate);
 	QWidget::showEvent(event);
 }

@@ -78,7 +78,7 @@ void GameplayWidget::ShowWordDependingOnPlayerType()
 		drawingBoard->setDisabled(false);
 		chat->SetWordToGuess(wordToDraw->text());
 	}
-	chat->IsDrawer(isDrawer);
+	chat->SetChatConfigurationAccordingToPlayerType(isDrawer);
 }
 
 void GameplayWidget::AddPlayers()

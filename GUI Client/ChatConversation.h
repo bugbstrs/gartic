@@ -7,6 +7,9 @@ class ChatConversation  : public QTextBrowser
 	Q_OBJECT
 
 public:
+	//Constructor
 	ChatConversation(QWidget *parent = nullptr);
-	~ChatConversation();
+
+	//Destructor
+	~ChatConversation() = default;
 };
