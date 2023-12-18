@@ -63,7 +63,7 @@ void DrawingBoard::DrawContents()
 		for (int j{ 0 }; j < m_canvas.GetWidth(); j += m_sectorWidth)
 		{
 			SetColor(m_canvas.GetSectorColor(j, i, m_sectorWidth, m_sectorHeight));
-			m_cm->Write(' ', j / m_sectorWidth, i / m_sectorHeight);
+			m_cm->Write(' ', j / m_sectorWidth + m_upLeftCorner.X, i / m_sectorHeight + m_upLeftCorner.Y);
 		}
 }
 
