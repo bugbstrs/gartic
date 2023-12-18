@@ -8,10 +8,11 @@ DrawingBoard::DrawingBoard(COORD upLeftCorner,
 	SelectableObject{ upLeftCorner, Align::Center, Align::Center,
 					  ColorType::Black, ColorType::Black, maxWidth, maxHeight,
 					  ColorType::Black, ColorType::Black, cm, im, selected    },
-	m_canvas		{ canvasWidth, canvasHeight, backgroungColor			  },
 	m_sectorWidth	{ static_cast<int>(canvasWidth / maxWidth)				  },
 	m_sectorHeight	{ static_cast<int>(canvasHeight / maxHeight)			  }
-{}
+{
+	m_canvases.emplace(std::move({ canvasWidth, canvasHeight, backgroungColor }));
+}
 
 DrawingBoard::DrawingBoard(int16_t x, int16_t y,
 			int16_t maxWidth, int16_t maxHeight,
@@ -21,10 +22,11 @@ DrawingBoard::DrawingBoard(int16_t x, int16_t y,
 	SelectableObject{ x, y, Align::Center, Align::Center,
 					  ColorType::Black, ColorType::Black, maxWidth, maxHeight,
 					  ColorType::Black, ColorType::Black, cm, im, selected    },
-	m_canvas		{ canvasWidth, canvasHeight, backgroungColor			  },
 	m_sectorWidth	{ static_cast<int>(canvasWidth / maxWidth)				  },
 	m_sectorHeight	{ static_cast<int>(canvasHeight / maxHeight)			  }
-{}
+{
+	//m_canvases.push({ canvasWidth, canvasHeight, backgroungColor });
+}
 
 DrawingBoard::DrawingBoard(int16_t maxWidth,
 			int16_t maxHeight,
@@ -34,10 +36,11 @@ DrawingBoard::DrawingBoard(int16_t maxWidth,
 	SelectableObject{ Align::Center, Align::Center,
 					  ColorType::Black, ColorType::Black, maxWidth, maxHeight,
 					  ColorType::Black, ColorType::Black, cm, im, selected    },
-	m_canvas		{ canvasWidth, canvasHeight, backgroungColor			  },
 	m_sectorWidth	{ static_cast<int>(canvasWidth / maxWidth)				  },
 	m_sectorHeight	{ static_cast<int>(canvasHeight / maxHeight)			  }
-{}
+{
+	//m_canvases.push({ canvasWidth, canvasHeight, backgroungColor });
+}
 
 void DrawingBoard::Draw()
 {
@@ -60,11 +63,15 @@ void DrawingBoard::CheckCursor()
 		m_im->GetClickHold() && m_selectable)
 	{
 		if (prevPoz.X != -1)
-			m_canvas.DrawLine(m_sectorHeight * (prevPoz.Y - m_upLeftCorner.Y) + m_sectorHeight / 2,
+		{
+			Canvas newCanvas{ m_canvases.top() };
+			newCanvas.DrawLine(m_sectorHeight * (prevPoz.Y - m_upLeftCorner.Y) + m_sectorHeight / 2,
 							  m_sectorWidth * (prevPoz.X - m_upLeftCorner.X) + m_sectorWidth / 2,
 							  m_sectorHeight * (cursorPos.Y - m_upLeftCorner.Y) + m_sectorHeight / 2,
 							  m_sectorWidth * (cursorPos.X - m_upLeftCorner.X) + m_sectorWidth / 2,
 							  ColorType::Green, 6);
+			m_canvases.emplace(newCanvas);
+		}
 		prevPoz = cursorPos;
 		return;
 	}
@@ -73,10 +80,10 @@ void DrawingBoard::CheckCursor()
 
 void DrawingBoard::DrawContents()
 {
-	for (int i{ 0 }; i < m_canvas.GetHeight(); i += m_sectorHeight)
-		for (int j{ 0 }; j < m_canvas.GetWidth(); j += m_sectorWidth)
+	for (int i{ 0 }; i < m_canvases.top().GetHeight(); i += m_sectorHeight)
+		for (int j{ 0 }; j < m_canvases.top().GetWidth(); j += m_sectorWidth)
 		{
-			SetColor(m_canvas.GetSectorColor(j, i, m_sectorWidth, m_sectorHeight));
+			SetColor(m_canvases.top().GetSectorColor(j, i, m_sectorWidth, m_sectorHeight));
 			m_cm->Write(' ', j / m_sectorWidth + m_upLeftCorner.X, i / m_sectorHeight + m_upLeftCorner.Y);
 		}
 }

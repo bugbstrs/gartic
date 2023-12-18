@@ -5,6 +5,11 @@ Canvas::Canvas(uint64_t width, uint64_t height, ColorType color) :
 	m_backgroundColor { color											}
 {}
 
+Canvas::Canvas(Canvas& canvas) :
+    m_canvas          { canvas.m_canvas          },
+    m_backgroundColor { canvas.m_backgroundColor }
+{}
+
 void Canvas::Clear()
 {
 	for (auto& row : m_canvas)
@@ -142,10 +147,10 @@ ColorType Canvas::GetSectorColor(int x, int y, int width, int height) const
 
     for (int i{ y }; i < y + height; ++i)
         for (int j{ x }; j < x + width; ++j)
-            colorCount[m_canvas[i][j].GetColor()]++;
+            ++colorCount[m_canvas[i][j].GetColor()];
 
     ColorType predominantColor;
-    int maxCount = 0;
+    int maxCount{ 0 };
 
     for (const auto& pair : colorCount)
         if (pair.second > maxCount)

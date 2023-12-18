@@ -1,5 +1,7 @@
 export module DrawingBoard;
 
+import <stack>;
+
 import SelectableObject;
 import Canvas;
 
@@ -26,7 +28,7 @@ public:
 	void CheckCursor() override;
 
 private:
-	Canvas m_canvas;
+	std::stack<Canvas> m_canvases;
 	int	   m_sectorWidth;
 	int	   m_sectorHeight;
 
