@@ -1,7 +1,4 @@
 #include "DrawingBoard.h"
-#include <thread>
-#include <future>
-#include <cmath>
 
 DrawingBoard::DrawingBoard(QWidget* parent)
     : QWidget{ parent },
@@ -103,53 +100,37 @@ void DrawingBoard::ClearCanvas()
 
 void DrawingBoard::FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith)
 {
-    bool topDone = false;
-    bool bottomDone = false;
-    bool leftDone = false;
-    bool rightDone = false;
-
-    QPoint currentPointTop = pointToExecuteAt + QPoint(0, 1);
-    QPoint currentPointBottom = pointToExecuteAt + QPoint(0, -1);
-    QPoint currentPointLeft = pointToExecuteAt + QPoint(-1, 0);
-    QPoint currentPointRight = pointToExecuteAt + QPoint(1, 0);
-
-    int centerX = startingPoint.x();
-    int centerY = startingPoint.y();
-    int radius1 = 25;
-    int radius2 = 26;
-
     std::vector <std::thread> threads;
-    DrawStartingPixels(startingPoint, pointToExecuteAt, 25, startingColor, colorToBeFilledWith, threads);
+    DrawStartingPixels(startingPoint, pointToExecuteAt, startingColor, colorToBeFilledWith, threads);
     for (auto& thread : threads) {
         thread.join();
     }
     update();
 }
 
-void DrawingBoard::DrawStartingPixels(QPoint startingPoint, QPoint pointToExecuteAt, int radius, QColor startingColor, QColor colorToBeFilledWith, std::vector<std::thread>& threads)
+void DrawingBoard::DrawStartingPixels(const QPoint& startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith, std::vector<std::thread>& threads)
 {
     if (image.pixelColor(pointToExecuteAt) != startingColor || image.pixelColor(pointToExecuteAt) == colorToBeFilledWith)
         return;
 
     double distance = std::sqrt(std::pow(pointToExecuteAt.x() - startingPoint.x(), 2) + std::pow(pointToExecuteAt.y() - startingPoint.y(), 2));
 
-    if (distance <= radius) {
-        if (distance >= radius - 1) {
-            threads.emplace_back(std::thread(&DrawingBoard::GenericFill, this, pointToExecuteAt, std::ref(pointToExecuteAt), startingColor, colorToBeFilledWith, std::ref(availableDirections["topDone"])));
+    if (distance <= circleRadius) {
+        if (distance >= circleRadius - 1) {
+            threads.emplace_back(std::thread(&DrawingBoard::GenericFill, this, pointToExecuteAt, std::ref(pointToExecuteAt), startingColor, colorToBeFilledWith));
         }
         else {
             image.setPixelColor(pointToExecuteAt, colorToBeFilledWith);
         }
 
-        // Recursive calls for neighboring pixels
-        DrawStartingPixels(startingPoint, pointToExecuteAt + QPoint(1, 0), radius, startingColor, colorToBeFilledWith, threads);
-        DrawStartingPixels(startingPoint, pointToExecuteAt + QPoint(-1, 0), radius, startingColor, colorToBeFilledWith, threads);
-        DrawStartingPixels(startingPoint, pointToExecuteAt + QPoint(0, 1), radius, startingColor, colorToBeFilledWith, threads);
-        DrawStartingPixels(startingPoint, pointToExecuteAt + QPoint(0, -1), radius, startingColor, colorToBeFilledWith, threads);
+        DrawStartingPixels(startingPoint, pointToExecuteAt + QPoint(1, 0), startingColor, colorToBeFilledWith, threads);
+        DrawStartingPixels(startingPoint, pointToExecuteAt + QPoint(-1, 0), startingColor, colorToBeFilledWith, threads);
+        DrawStartingPixels(startingPoint, pointToExecuteAt + QPoint(0, 1), startingColor, colorToBeFilledWith, threads);
+        DrawStartingPixels(startingPoint, pointToExecuteAt + QPoint(0, -1), startingColor, colorToBeFilledWith, threads);
     }
 }
 
-void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith, bool& done)
+void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith)
 {
     if (image.pixelColor(pointToExecuteAt) != startingColor)
         return;
@@ -173,7 +154,6 @@ void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, Q
         pointsQueue.push(QPoint(currentPoint.x() - 1, currentPoint.y()));
         pointsQueue.push(QPoint(currentPoint.x() + 1, currentPoint.y()));
     }
-    done = true;
     update();
 }
 

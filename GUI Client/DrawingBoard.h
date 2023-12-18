@@ -38,8 +38,8 @@ protected:
 
 private:
 	void FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith);
-	void GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith, bool& done);
-	void DrawStartingPixels(QPoint startingPoint, QPoint pointToExecuteAt, int radius, QColor startingColor, QColor colorToBeFilledWith, std::vector <std::thread>& threads);
+	void GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith);
+	void DrawStartingPixels(const QPoint& startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith, std::vector <std::thread>& threads);
 
 private:
 	bool firstPaint = true;
@@ -48,12 +48,18 @@ private:
 	bool erasing = false;
 	bool fillEnabled = false;
 	bool undo = false;
+
+	const int circleRadius = 25;
+
 	QPen pen;
+
 	QColor lastColor;
 	QColor eraserColor;
 	QPoint lastMousePos;
+
 	QPainterPath currentPath;
 	std::vector<std::pair<QPainterPath, QPen>> paths;
+
 	std::vector<QImage>images;
 	QImage image;
 	std::unordered_map<std::string, bool> availableDirections;
