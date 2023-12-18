@@ -60,9 +60,15 @@ void DrawingBoard::CheckCursor()
 		m_im->GetClickHold() && m_selectable)
 	{
 		if (prevPoz.X != -1)
-			m_canvas.DrawLine(prevPoz.X, prevPoz.Y, cursorPos.X, cursorPos.Y, ColorType::Green, 30);
+			m_canvas.DrawLine(m_sectorHeight * (prevPoz.Y - m_upLeftCorner.Y) + m_sectorHeight / 2,
+							  m_sectorWidth * (prevPoz.X - m_upLeftCorner.X) + m_sectorWidth / 2,
+							  m_sectorHeight * (cursorPos.Y - m_upLeftCorner.Y) + m_sectorHeight / 2,
+							  m_sectorWidth * (cursorPos.X - m_upLeftCorner.X) + m_sectorWidth / 2,
+							  ColorType::Green, 6);
 		prevPoz = cursorPos;
+		return;
 	}
+	prevPoz = { -1,-1 };
 }
 
 void DrawingBoard::DrawContents()
