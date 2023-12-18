@@ -4,15 +4,22 @@
 GameplayWidget::GameplayWidget(QWidget *parent)
 	: QWidget{ parent },
 	wordToDraw{ new QLabel{} },
-	isDrawer{ true }
-{
-}
+	isDrawer{ true },
+	isEraserEnabled { false },
+	pencilCursor{ Qt::CrossCursor },
+	eraserCursor{ QCursor(QPixmap(":/image/eraser_cursor").scaled(25, 25)) },
+	fillCursor{ QCursor(QPixmap(":/image/fill").scaled(25, 25)) }
+{}
 
 GameplayWidget::~GameplayWidget()
 {}
 
 void GameplayWidget::ChangePenColor(QColor color)
 {
+	if (isEraserEnabled) {
+		drawingBoard->setCursor(pencilCursor);
+		isEraserEnabled = false;
+	}
 	drawingBoard->ChangePenColor(color);
 }
 
@@ -28,27 +35,32 @@ void GameplayWidget::OnCanvasCleared()
 
 void GameplayWidget::OnPencilButtonReleased()
 {
+	isEraserEnabled = false;
+	drawingBoard->setCursor(pencilCursor);
 	drawingBoard->ToggleEraser(false);
 	drawingBoard->ToggleFill(false);
 	drawingBoard->EnablePencil();
 }
 
-void GameplayWidget::AddPlayers()
+void GameplayWidget::OnEraserButtonReleased()
 {
-	scoreboardTable->AddPlayer("Marcel", 10);
-	scoreboardTable->AddPlayer("Alex", 45);
-	scoreboardTable->AddPlayer("Multiple", 200);
-	scoreboardTable->AddPlayer("tdennis", 15);
+	isEraserEnabled = true;
+	drawingBoard->setCursor(eraserCursor);
+	drawingBoard->ToggleEraser(true);
+	drawingBoard->ToggleFill(false);
+}
 
-	scoreboardTable->AddPlayer("koochie", 75);
-	scoreboardTable->AddPlayer("DavidStoik", 20);
-	scoreboardTable->AddPlayer("MC", 160);
-	scoreboardTable->AddPlayer("Dancila", 100);
+void GameplayWidget::OnUndoButtonReleased()
+{
+	drawingBoard->UndoLastPath();
+}
 
-	scoreboardTable->AddPlayer("Ciolacu", 90);
-	scoreboardTable->AddPlayer("Ponta", 90);
-	scoreboardTable->AddPlayer("Micutzu", 90);
-	scoreboardTable->AddPlayer("Bendeac", 90);
+void GameplayWidget::OnFillButtonReleased()
+{
+	isEraserEnabled = false;
+	drawingBoard->setCursor(fillCursor);
+	drawingBoard->ToggleEraser(false);
+	drawingBoard->ToggleFill(true);
 }
 
 void GameplayWidget::ShowWordDependingOnPlayerType()
@@ -69,21 +81,22 @@ void GameplayWidget::ShowWordDependingOnPlayerType()
 	chat->IsDrawer(isDrawer);
 }
 
-void GameplayWidget::OnEraserButtonReleased()
+void GameplayWidget::AddPlayers()
 {
-	drawingBoard->ToggleEraser(true);
-	drawingBoard->ToggleFill(false);
-}
+	scoreboardTable->AddPlayer("Marcel", 10);
+	scoreboardTable->AddPlayer("Alex", 45);
+	scoreboardTable->AddPlayer("Multiple", 200);
+	scoreboardTable->AddPlayer("tdennis", 15);
 
-void GameplayWidget::OnUndoButtonReleased()
-{
-	drawingBoard->UndoLastPath();
-}
+	scoreboardTable->AddPlayer("koochie", 75);
+	scoreboardTable->AddPlayer("DavidStoik", 20);
+	scoreboardTable->AddPlayer("MC", 160);
+	scoreboardTable->AddPlayer("Dancila", 100);
 
-void GameplayWidget::OnFillButtonReleased()
-{
-	drawingBoard->ToggleEraser(false);
-	drawingBoard->ToggleFill(true);
+	scoreboardTable->AddPlayer("Ciolacu", 90);
+	scoreboardTable->AddPlayer("Ponta", 90);
+	scoreboardTable->AddPlayer("Micutzu", 90);
+	scoreboardTable->AddPlayer("Bendeac", 90);
 }
 
 void GameplayWidget::showEvent(QShowEvent* event) {

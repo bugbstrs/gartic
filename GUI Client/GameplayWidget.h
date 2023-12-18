@@ -41,13 +41,14 @@ public slots:
 	void OnPencilButtonReleased();
 
 private:
+	void AddPlayers();
+	void ShowWordDependingOnPlayerType();
+
+private:
 	struct Player {
 		std::string name;
 		int points;
 	};
-private:
-	void AddPlayers();
-	void ShowWordDependingOnPlayerType();
 
 private:
 	bool isDrawer;
@@ -56,4 +57,9 @@ private:
 	ToolsFrame* toolsFrame;
 	Chat* chat;
 	ScoreboardTable* scoreboardTable;
+
+	bool isEraserEnabled;
+	QCursor eraserCursor;
+	QCursor fillCursor;
+	QCursor pencilCursor;
 };

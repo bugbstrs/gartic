@@ -4,11 +4,7 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow{ parent }
     , ui{ std::make_unique<Ui::MainWindow>() },
-    isUserLoggedIn { false },
-    eraserEnabled { false },
-    pencilCursor { Qt::CrossCursor },
-    eraserCursor { QCursor(QPixmap(":/image/eraser_cursor").scaled(25, 25)) },
-    fillCursor { QCursor(QPixmap(":/image/fill").scaled(25, 25)) }
+    isUserLoggedIn { false }
 {
     ui->setupUi(this);
     qApp->setStyleSheet("QScrollBar:vertical {"
@@ -42,10 +38,6 @@ MainWindow::MainWindow(QWidget* parent)
 
     //Game scene connections
     QObject::connect(ui->leaveGameButton, &QPushButton::released, this, &MainWindow::OnLeaveGameButtonReleased);
-    QObject::connect(ui->eraserButton, &QPushButton::released, this, &MainWindow::OnEraserButtonReleased);
-    QObject::connect(ui->pencilButton, &QPushButton::released, this, &MainWindow::OnPencilEnabled);
-    QObject::connect(ui->toolsFrame, &ToolsFrame::OnColorChangedSignal, this, &MainWindow::OnColorChanged);
-    QObject::connect(ui->fillButton, &QPushButton::released, this, &MainWindow::OnFillEnabled);
 
     //Stats scene connections
     QObject::connect(ui->backToMenuButton, &QPushButton::released, this, &MainWindow::OnBackToMenuButtonReleased);
@@ -57,8 +49,7 @@ MainWindow::MainWindow(QWidget* parent)
     QObject::connect(ui->goToSignUpFromLogInButton, &QPushButton::released, this, &MainWindow::OnGoToSignUpFromLogInButtonReleased);
 }
 
-MainWindow::~MainWindow() {
-}
+MainWindow::~MainWindow() {}
 
 
 //Main menu events
@@ -69,28 +60,7 @@ void MainWindow::OnGoToLogInButtonReleased() { ui->stackedWidget->setCurrentInde
 void MainWindow::OnGoToSignUpButtonReleased() { ui->stackedWidget->setCurrentIndex(3); }
 
 //Game scene events
-void MainWindow::OnLeaveGameButtonReleased() { 
-    QApplication::setOverrideCursor(Qt::ArrowCursor);
-    ui->stackedWidget->setCurrentIndex(0); 
-}
-void MainWindow::OnEraserButtonReleased() { 
-    QApplication::setOverrideCursor(eraserCursor); 
-    eraserEnabled = true;
-}
-void MainWindow::OnFillEnabled() { 
-    QApplication::setOverrideCursor(fillCursor); 
-    eraserEnabled = false;
-}
-void MainWindow::OnColorChanged()
-{
-    if (eraserEnabled)
-        QApplication::setOverrideCursor(pencilCursor);
-
-}
-void MainWindow::OnPencilEnabled() { 
-    QApplication::setOverrideCursor(pencilCursor);
-    eraserEnabled = false;
-}
+void MainWindow::OnLeaveGameButtonReleased() { ui->stackedWidget->setCurrentIndex(0); }
 
 // Stats scene events
 void MainWindow::OnBackToMenuButtonReleased() { ui->stackedWidget->setCurrentIndex(0); }
