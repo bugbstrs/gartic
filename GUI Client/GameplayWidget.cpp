@@ -3,9 +3,6 @@
 
 GameplayWidget::GameplayWidget(QWidget *parent)
 	: QWidget{ parent },
-	wordToDraw{ new QLabel{} },
-	isDrawer{ true },
-	isEraserEnabled { false },
 	pencilCursor{ Qt::CrossCursor },
 	eraserCursor{ QCursor(QPixmap(":/image/eraser_cursor").scaled(25, 25)) },
 	fillCursor{ QCursor(QPixmap(":/image/fill").scaled(25, 25)) }

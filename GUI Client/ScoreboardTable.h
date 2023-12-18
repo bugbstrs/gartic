@@ -8,7 +8,7 @@ class ScoreboardTable  : public QTableWidget
 	Q_OBJECT
 
 public:
-	ScoreboardTable(QWidget *parent);
+	ScoreboardTable(QWidget *parent = nullptr);
 	~ScoreboardTable();
 
 	void AddPlayer(const std::string& name, int points);

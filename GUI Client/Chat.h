@@ -11,7 +11,7 @@ class Chat  : public QFrame
 public:
 
 	//Constructor
-	Chat(QWidget *parent);
+	Chat(QWidget *parent = nullptr);
 
 	//Destructor
 	~Chat();

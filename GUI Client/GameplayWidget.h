@@ -51,15 +51,15 @@ private:
 	};
 
 private:
-	bool isDrawer;
-	QLabel* wordToDraw;
-	DrawingBoard* drawingBoard;
-	ToolsFrame* toolsFrame;
-	Chat* chat;
-	ScoreboardTable* scoreboardTable;
+	bool isDrawer					 { true };
+	QLabel* wordToDraw				 { new QLabel{} };
+	DrawingBoard* drawingBoard		 { new DrawingBoard{} };
+	ToolsFrame* toolsFrame			 { new ToolsFrame{} };
+	Chat* chat						 { new Chat{} };
+	ScoreboardTable* scoreboardTable { new ScoreboardTable{} };
 
-	bool isEraserEnabled;
-	QCursor eraserCursor;
-	QCursor fillCursor;
-	QCursor pencilCursor;
+	bool isEraserEnabled			 { false };
+	QCursor eraserCursor			 { QCursor(QPixmap(":/image/eraser_cursor").scaled(25, 25)) };
+	QCursor fillCursor				 { QCursor(QPixmap(":/image/fill").scaled(25, 25)) };
+	QCursor pencilCursor			 { Qt::CrossCursor };
 };
