@@ -11,7 +11,7 @@ DrawingBoard::DrawingBoard(COORD upLeftCorner,
 	m_sectorWidth	{ static_cast<int>(canvasWidth / maxWidth)				  },
 	m_sectorHeight	{ static_cast<int>(canvasHeight / maxHeight)			  }
 {
-	m_canvases.emplace(std::move({ canvasWidth, canvasHeight, backgroungColor }));
+	m_canvases.push({ canvasWidth, canvasHeight, backgroungColor });
 }
 
 DrawingBoard::DrawingBoard(int16_t x, int16_t y,
