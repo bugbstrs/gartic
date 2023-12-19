@@ -112,6 +112,8 @@ void InputField::CheckInput()
 
 void InputField::DrawContents()
 {
+	m_textPos = m_text.size() < m_textPos ? m_text.size() : m_textPos;
+
 	if (this == m_selectedObject)
 	{
 		COORD cursorPos{m_upLeftCorner};

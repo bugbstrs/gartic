@@ -145,7 +145,7 @@ void LobbyScene::Start()
 	m_wordCount->SetConections(m_rounds, m_customRounds, nullptr, nullptr);
 	m_customRounds->SetConections(m_wordCount, nullptr, nullptr, nullptr);
 
-	m_selected = leaveButton;
+	m_selected = startButton;
 }
 
 void LobbyScene::Update()
