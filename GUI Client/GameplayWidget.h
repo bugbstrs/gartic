@@ -29,20 +29,20 @@ public:
 	GameplayWidget(QWidget *parent);
 	~GameplayWidget();
 
-	void ChangePenColor(QColor color);
-	void ChangePenWidth(int width);
+	void ChangePenColor(QColor color) noexcept;
+	void ChangePenWidth(int width) noexcept;
 
 public slots:
-	void showEvent(QShowEvent* event);
-	void OnEraserButtonReleased();
-	void OnUndoButtonReleased();
-	void OnFillButtonReleased();
-	void OnCanvasCleared();
-	void OnPencilButtonReleased();
+	void showEvent(QShowEvent* event) override;
+	void OnEraserButtonReleased() noexcept;
+	void OnUndoButtonReleased() noexcept;
+	void OnFillButtonReleased() noexcept;
+	void OnCanvasCleared()  noexcept;
+	void OnPencilButtonReleased() noexcept;
 
 private:
 	void AddPlayers();
-	void ShowWordDependingOnPlayerType();
+	void ShowWordDependingOnPlayerType() noexcept;
 
 private:
 	struct Player {

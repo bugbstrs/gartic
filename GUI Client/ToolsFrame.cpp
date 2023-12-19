@@ -7,14 +7,14 @@ ToolsFrame::ToolsFrame(QWidget *parent)
 ToolsFrame::~ToolsFrame()
 {}
 
-void ToolsFrame::OnColorChange()
+void ToolsFrame::OnColorChange() noexcept
 {
 	QPushButton* senderButton = qobject_cast<QPushButton*>(sender());
 	currentColorView->setStyleSheet(senderButton->styleSheet());
 	emit OnColorChangedSignal(senderButton->palette().color(QPalette::Button));
 }
 
-void ToolsFrame::OnWidthChange()
+void ToolsFrame::OnWidthChange() noexcept
 {
 	int width;
 	QString buttonName = qobject_cast<QPushButton*>(sender())->objectName();
@@ -28,31 +28,33 @@ void ToolsFrame::OnWidthChange()
 	emit OnWidthChangedSignal(width);
 }
 
-void ToolsFrame::OnCanvasCleared() {
+void ToolsFrame::OnCanvasCleared() noexcept
+{
 	emit OnCanvasClearedSignal();
 }
 
-void ToolsFrame::OnUndoButtonReleased()
+void ToolsFrame::OnUndoButtonReleased() noexcept
 {
 	emit OnUndoButtonReleasedSignal();
 }
 
-void ToolsFrame::OnFillButtonReleased()
+void ToolsFrame::OnFillButtonReleased() noexcept
 {
 	emit OnFillButtonReleasedSignal();
 }
 
-void ToolsFrame::OnEraserButtonReleased()
+void ToolsFrame::OnEraserButtonReleased() noexcept
 {
 	emit OnEraserButtonReleasedSignal();
 }
 
-void ToolsFrame::OnPencilButtonReleased()
+void ToolsFrame::OnPencilButtonReleased() noexcept
 {
 	emit OnPencilButtonReleasedSignal();
 }
 
-void ToolsFrame::showEvent(QShowEvent* event) {
+void ToolsFrame::showEvent(QShowEvent* event) 
+{
 	currentColorView = findChild<QWidget*>("currentColor");
 
 	QObject::connect(findChild<QPushButton*>("blackColorButton"), &QPushButton::released, this, &ToolsFrame::OnColorChange);

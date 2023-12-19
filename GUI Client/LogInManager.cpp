@@ -15,7 +15,7 @@ void LogInManager::showEvent(QShowEvent* event) {
 	QObject::connect(logInButton, &QPushButton::released, this, &LogInManager::OnSignUpCredentialsSent);
 }
 
-void LogInManager::OnSignUpCredentialsSent()
+void LogInManager::OnSignUpCredentialsSent() noexcept  
 {
 	nameInput->clear();
 	passwordInput->clear();

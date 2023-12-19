@@ -17,26 +17,26 @@ public:
 private slots:
 
     //Main menu buttons
-    void OnPlayButtonReleased();
-    void OnQuitButtonReleased();
-    void OnStatsButtonReleased();
-    void OnGoToLogInButtonReleased();
-    void OnGoToSignUpButtonReleased();
+    void OnPlayButtonReleased() noexcept;
+    void OnQuitButtonReleased() noexcept;
+    void OnStatsButtonReleased() noexcept;
+    void OnGoToLogInButtonReleased() noexcept;
+    void OnGoToSignUpButtonReleased() noexcept;
 
     //Drawing scene
-    void OnLeaveGameButtonReleased();
+    void OnLeaveGameButtonReleased() noexcept;
 
     //Stats scene
-    void OnBackToMenuButtonReleased();
+    void OnBackToMenuButtonReleased() noexcept;
 
     //Sign Up scene
-    void OnGoToLogInFromSignUpButtonReleased();
+    void OnGoToLogInFromSignUpButtonReleased() noexcept;
 
     //Log In scene
-    void OnGoToSignUpFromLogInButtonReleased();
+    void OnGoToSignUpFromLogInButtonReleased() noexcept;
 
 private:
     std::unique_ptr<Ui::MainWindow> ui;
-    bool isUserLoggedIn;
+    bool isUserLoggedIn{ false };
 };
 #endif // MAINWINDOW_H

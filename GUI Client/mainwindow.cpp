@@ -3,8 +3,7 @@
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow{ parent }
-    , ui{ std::make_unique<Ui::MainWindow>() },
-    isUserLoggedIn { false }
+    , ui{ std::make_unique<Ui::MainWindow>() }
 {
     ui->setupUi(this);
     qApp->setStyleSheet("QScrollBar:vertical {"
@@ -53,21 +52,21 @@ MainWindow::~MainWindow() {}
 
 
 //Main menu events
-void MainWindow::OnPlayButtonReleased() { ui->stackedWidget->setCurrentIndex(1); }
-void MainWindow::OnQuitButtonReleased() { QCoreApplication::quit(); }
-void MainWindow::OnStatsButtonReleased() { ui->stackedWidget->setCurrentIndex(2); }
-void MainWindow::OnGoToLogInButtonReleased() { ui->stackedWidget->setCurrentIndex(4); }
-void MainWindow::OnGoToSignUpButtonReleased() { ui->stackedWidget->setCurrentIndex(3); }
+void MainWindow::OnPlayButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(1); }
+void MainWindow::OnQuitButtonReleased() noexcept { QCoreApplication::quit(); }
+void MainWindow::OnStatsButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(2); }
+void MainWindow::OnGoToLogInButtonReleased() noexcept{ ui->stackedWidget->setCurrentIndex(4); }
+void MainWindow::OnGoToSignUpButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(3); }
 
 //Game scene events
-void MainWindow::OnLeaveGameButtonReleased() { ui->stackedWidget->setCurrentIndex(0); }
+void MainWindow::OnLeaveGameButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(0); }
 
 // Stats scene events
-void MainWindow::OnBackToMenuButtonReleased() { ui->stackedWidget->setCurrentIndex(0); }
+void MainWindow::OnBackToMenuButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(0); }
 
 //Sign Up scene
-void MainWindow::OnGoToLogInFromSignUpButtonReleased() { ui->stackedWidget->setCurrentIndex(4); }
+void MainWindow::OnGoToLogInFromSignUpButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(4); }
 
 //Log in scene
-void MainWindow::OnGoToSignUpFromLogInButtonReleased() { ui->stackedWidget->setCurrentIndex(3); }
+void MainWindow::OnGoToSignUpFromLogInButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(3); }
 

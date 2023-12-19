@@ -50,16 +50,15 @@ private:
 	bool fillEnabled		{ false };
 	bool undo				{ false };
 
-	QPen pen;
+	QColor lastColor	{};
+	QColor eraserColor	{};
+	QPoint lastMousePos	{};
 
-	QColor lastColor;
-	QColor eraserColor;
-	QPoint lastMousePos;
+	QPen pen										 {};
+	QPainterPath currentPath						 {};
+	std::vector<std::pair<QPainterPath, QPen>> paths {};
 
-	QPainterPath currentPath;
-	std::vector<std::pair<QPainterPath, QPen>> paths;
-
-	std::vector<QImage>images;
-	QImage image;
-	std::unordered_map<std::string, bool> availableDirections;
+	std::vector<QImage>images								  {};
+	QImage image											  {};
+	std::unordered_map<std::string, bool> availableDirections {};
 };

@@ -10,13 +10,13 @@ class SignUpManager  : public QFrame
 
 public:
 	SignUpManager(QWidget *parent);
-	~SignUpManager();
+	~SignUpManager() = default;
 
 public slots:
-	void showEvent(QShowEvent* event);
+	void showEvent(QShowEvent* event) override;
 
 protected:
-	void OnSignUpCredentialsSent();
+	void OnSignUpCredentialsSent() noexcept;
 
 private:
 	QLineEdit* nameInput;

@@ -22,7 +22,7 @@ void MatchHistoryTable::showEvent(QShowEvent * event)
 	}
 }
 
-QString MatchHistoryTable::GetRowInfoForColumnWithIndex(uint16_t index, const Row& row)
+QString MatchHistoryTable::GetRowInfoForColumnWithIndex(uint16_t index, const Row& row) const noexcept
 {
 	if (index == 0)
 		return row.ranking;
@@ -31,7 +31,7 @@ QString MatchHistoryTable::GetRowInfoForColumnWithIndex(uint16_t index, const Ro
 	else return row.date;
 }
 
-void MatchHistoryTable::GetMatchHistoryFromDatabase()
+void MatchHistoryTable::GetMatchHistoryFromDatabase() noexcept
 {
 	for (int row = 0; row < 2; ++row) {
 		matches.push_back(Row("1st", "574", "03/03/2023"));

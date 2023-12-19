@@ -4,9 +4,6 @@ SignUpManager::SignUpManager(QWidget *parent)
 	: QFrame{ parent }
 {}
 
-SignUpManager::~SignUpManager()
-{}
-
 void SignUpManager::showEvent(QShowEvent* event) {
 	nameInput = findChild<QLineEdit*>("enterNameSignUpInput");
 	passwordInput = findChild<QLineEdit*>("enterPasswordSignUpInput");
@@ -15,7 +12,7 @@ void SignUpManager::showEvent(QShowEvent* event) {
 	QObject::connect(signUpButton, &QPushButton::released, this, &SignUpManager::OnSignUpCredentialsSent);
 }
 
-void SignUpManager::OnSignUpCredentialsSent()
+void SignUpManager::OnSignUpCredentialsSent() noexcept
 {
 	nameInput->clear();
 	passwordInput->clear();

@@ -13,14 +13,14 @@ public:
 	~ToolsFrame();
 
 public slots:
-	void showEvent(QShowEvent* event);
-	void OnColorChange();
-	void OnWidthChange();
-	void OnCanvasCleared();
-	void OnUndoButtonReleased();
-	void OnFillButtonReleased();
-	void OnEraserButtonReleased();
-	void OnPencilButtonReleased();
+	void showEvent(QShowEvent* event) override;
+	void OnColorChange() noexcept;
+	void OnWidthChange() noexcept;
+	void OnCanvasCleared() noexcept;
+	void OnUndoButtonReleased() noexcept;
+	void OnFillButtonReleased() noexcept;
+	void OnEraserButtonReleased() noexcept;
+	void OnPencilButtonReleased() noexcept;
 
 signals:
 	void OnColorChangedSignal(QColor color);
@@ -32,9 +32,9 @@ signals:
 	void OnPencilButtonReleasedSignal();
 
 private:
-	QWidget* currentColorView;
-	const QString kSmallWidthButton = "smallWidthButton";
-	const QString kMediumWidthButton = "mediumWidthButton";
-	const QString kLargeWidthButton = "largeWidthButton";
-	const QString kExtraLargeWidthButton = "extraLargeWidthButton";
+	QWidget* currentColorView { new QWidget{} };
+	const QString kSmallWidthButton{ "smallWidthButton" };
+	const QString kMediumWidthButton{ "mediumWidthButton" };
+	const QString kLargeWidthButton{ "largeWidthButton" };
+	const QString kExtraLargeWidthButton{ "extraLargeWidthButton" };
 };

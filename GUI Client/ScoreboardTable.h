@@ -14,8 +14,8 @@ public:
 	void AddPlayer(const std::string& name, int points);
 
 private:
-	std::vector<std::pair<QIcon*, QColor>>availableIcons;
-	QFont nameFont;
-	QFont pointsFont;
-	std::unordered_map<std::string, std::pair<QTableWidgetItem*, QTableWidgetItem*>> players;
+	QFont nameFont																			 {};
+	QFont pointsFont																		 {};
+	std::vector<std::pair<QIcon*, QColor>>availableIcons									 {};
+	std::unordered_map<std::string, std::pair<QTableWidgetItem*, QTableWidgetItem*>> players {};
 };

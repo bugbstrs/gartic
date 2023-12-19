@@ -11,7 +11,7 @@ GameplayWidget::GameplayWidget(QWidget *parent)
 GameplayWidget::~GameplayWidget()
 {}
 
-void GameplayWidget::ChangePenColor(QColor color)
+void GameplayWidget::ChangePenColor(QColor color) noexcept
 {
 	if (isEraserEnabled) {
 		drawingBoard->setCursor(pencilCursor);
@@ -20,17 +20,17 @@ void GameplayWidget::ChangePenColor(QColor color)
 	drawingBoard->ChangePenColor(color);
 }
 
-void GameplayWidget::ChangePenWidth(int width)
+void GameplayWidget::ChangePenWidth(int width) noexcept
 {
 	drawingBoard->ChangePenWidth(width);
 }
 
-void GameplayWidget::OnCanvasCleared()
+void GameplayWidget::OnCanvasCleared() noexcept
 {
 	drawingBoard->ClearCanvas();
 }
 
-void GameplayWidget::OnPencilButtonReleased()
+void GameplayWidget::OnPencilButtonReleased() noexcept
 {
 	isEraserEnabled = false;
 	drawingBoard->setCursor(pencilCursor);
@@ -39,7 +39,7 @@ void GameplayWidget::OnPencilButtonReleased()
 	drawingBoard->EnablePencil();
 }
 
-void GameplayWidget::OnEraserButtonReleased()
+void GameplayWidget::OnEraserButtonReleased() noexcept
 {
 	isEraserEnabled = true;
 	drawingBoard->setCursor(eraserCursor);
@@ -47,12 +47,12 @@ void GameplayWidget::OnEraserButtonReleased()
 	drawingBoard->ToggleFill(false);
 }
 
-void GameplayWidget::OnUndoButtonReleased()
+void GameplayWidget::OnUndoButtonReleased() noexcept
 {
 	drawingBoard->UndoLastPath();
 }
 
-void GameplayWidget::OnFillButtonReleased()
+void GameplayWidget::OnFillButtonReleased() noexcept
 {
 	isEraserEnabled = false;
 	drawingBoard->setCursor(fillCursor);
@@ -60,7 +60,7 @@ void GameplayWidget::OnFillButtonReleased()
 	drawingBoard->ToggleFill(true);
 }
 
-void GameplayWidget::ShowWordDependingOnPlayerType()
+void GameplayWidget::ShowWordDependingOnPlayerType() noexcept
 {
 	if (!isDrawer) {
 		QString hiddenWord;

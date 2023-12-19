@@ -13,13 +13,13 @@ public:
 	~LogInManager();
 
 public slots:
-	void showEvent(QShowEvent* event);
+	void showEvent(QShowEvent* event) override;
 
 protected:
-	void OnSignUpCredentialsSent();
+	void OnSignUpCredentialsSent() noexcept;
 
 private:
-	QLineEdit* nameInput;
-	QLineEdit* passwordInput;
-	QPushButton* logInButton;
+	QLineEdit* nameInput	 { new QLineEdit{} };
+	QLineEdit* passwordInput { new QLineEdit{} };
+	QPushButton* logInButton { new QPushButton{} };
 };

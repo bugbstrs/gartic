@@ -14,7 +14,7 @@ public:
 	~MatchHistoryTable();
 
 protected:
-	void showEvent(QShowEvent* event);
+	void showEvent(QShowEvent* event) override;
 
 private:
 	struct Row {
@@ -29,8 +29,8 @@ private:
 		QString date;
 	};
 
-	QString GetRowInfoForColumnWithIndex(uint16_t index, const Row& row);
-	void GetMatchHistoryFromDatabase();
+	QString GetRowInfoForColumnWithIndex(uint16_t index, const Row& row) const noexcept;
+	void GetMatchHistoryFromDatabase() noexcept;
 private:
-	std::vector <Row> matches;
+	std::vector <Row> matches{};
 };
