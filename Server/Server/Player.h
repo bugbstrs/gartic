@@ -22,7 +22,6 @@ namespace http
 #pragma region Player
         uint16_t GetPoints() const noexcept;
         std::string GetName() const noexcept;
-        Time GetTime() const noexcept;
         bool GetGuessed() const noexcept;
 #pragma endregion getters
 

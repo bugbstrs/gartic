@@ -29,6 +29,6 @@ namespace http
 	private:
 		crow::SimpleApp m_app;
 
-		Game m_game;
+		/*Game m_game;*/
 	};
 }

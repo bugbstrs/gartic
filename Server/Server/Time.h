@@ -1,8 +1,11 @@
 #pragma once
 
 #include <functional>
+#include <chrono>
 
 import Timer;
+
+using namespace std::chrono_literals;
 
 namespace http
 {
@@ -27,7 +30,7 @@ namespace http
 		void SetStartValue(float newStartValue);
 		void SetEndValue(float newEndValue);
 
-		void SetMethodToCall(const std::function<void(const std::string& username)>& methodToCall);
+		void SetMethodToCall(std::function<void()> methodToCall);
 
 		void Start(float timeStamp, float startValue, float endValue);
 

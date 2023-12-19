@@ -5,22 +5,22 @@
 using namespace http;
 
 Player::Player() noexcept :
-    m_username{ "" },
+    m_user{ "" },
     m_points{ 0 }
 {}
 
 Player::Player(const Player& otherPlayer) noexcept :
-    m_username{ otherPlayer.m_username },
+    m_user{ otherPlayer.m_user },
     m_points{ otherPlayer.m_points }
 {}
 
 Player::Player(Player&& otherPlayer) noexcept :
-    m_username{ std::move(otherPlayer.m_username) },
+    m_user{ std::move(otherPlayer.m_user) },
     m_points{ std::move(otherPlayer.m_points) }
 {}
 
 Player::Player(const std::string& username, uint16_t points) :
-    m_username{ username },
+    m_user{ username },
     m_points{ points }
 {}
 
@@ -31,17 +31,12 @@ uint16_t Player::GetPoints() const noexcept
 
 std::string http::Player::GetName() const noexcept
 {
-    return m_username;
+    return m_user;
 }
 
 Time http::Player::GetTime() const noexcept
 {
     return m_active;
-}
-
-bool http::Player::GetGuessed() const noexcept
-{
-    return m_guessed;
 }
 
 void http::Player::SetPoints(uint16_t newPoints)
@@ -51,12 +46,12 @@ void http::Player::SetPoints(uint16_t newPoints)
 
 void http::Player::SetName(const std::string& newName)
 {
-    m_username = newName;
+    m_user = newName;
 }
 
 void http::Player::SetTime(const Time& newTime)
 {
-    m_time = newTime;
+    m_active = newTime;
 }
 
 void http::Player::SetGuessed(bool newGuessed)

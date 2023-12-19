@@ -32,15 +32,15 @@ void http::RouteManager::CreateFetchWordRoute(GarticStorage& storage)
 
         std::string fetchedWord;
         
-        try
-        {
+        //try
+        //{
             fetchedWord = storage.FetchWord();
             word_json.push_back(crow::json::wvalue{ {"word", fetchedWord} });
-        }
+        /*}
         catch (CannotFetchWordException& exception)
         {
             word_json.push_back(crow::json::wvalue{ {"word", "N/A"}});
-        }
+        }*/
 
         return crow::json::wvalue{ word_json };
     });
@@ -53,15 +53,15 @@ void http::RouteManager::CreateFetchQuoteRoute(GarticStorage& storage)
 
         std::string fetchedQuote;
 
-        try
-        {
+        /*try
+        {*/
             fetchedQuote = storage.FetchQuote();
             quote_json.push_back(crow::json::wvalue{ {"quote", fetchedQuote} });
-        }
-        catch (CannotFetchQuoteException& exception)
+        //}
+        /*catch (CannotFetchQuoteException& exception)
         {
             quote_json.push_back(crow::json::wvalue{ {"quote", "N/A"} });
-        };
+        };*/
 
         return crow::json::wvalue{ quote_json };
     });
@@ -165,14 +165,14 @@ void http::RouteManager::CreateRegisterRoute(GarticStorage& storage)
 
         if (password == nullptr || username == nullptr) return crow::response(400);
 
-        try
+        //try
         {
             storage.CreateUser(String(username), String(password));
         }
-        catch (UserAlreadyExistsException& exception)
+       /* catch (UserAlreadyExistsException& exception)
         {
             return crow::response(403);
-        }
+        }*/
 
         return crow::response(201);
     });
@@ -210,7 +210,7 @@ void http::RouteManager::CreatePutWordToGuessRoute(GarticStorage& storage)
         }
 
         std::string wordToDiplayString(wordToDisplay);
-        m_game.SetWordToGuess(wordToDisplayString);
+        //m_game.SetWordToGuess(wordToDisplayString);
 
         response.body = crow::json::wvalue({
             {"put", true}
@@ -225,7 +225,7 @@ void http::RouteManager::CreateGetWordToDisplayRoute(GarticStorage& storage)
     CROW_ROUTE(m_app, "/fetchwordtodisplay")([&storage]() {
         std::vector<crow::json::wvalue> word_json;
 
-        try
+        /*try
         {
             std::string wordToDisplay = m_game.GetWordToDisplay();
             word_json.push_back(crow::json::wvalue{ {"word", wordToDisplay} });
@@ -233,7 +233,7 @@ void http::RouteManager::CreateGetWordToDisplayRoute(GarticStorage& storage)
         catch (CannotFetchWordException& exception)
         {
             word_json.push_back(crow::json::wvalue{ {"word", "N/A"} });
-        }
+        }*/
 
         return crow::json::wvalue{ word_json };
         });
@@ -248,55 +248,57 @@ std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const c
     std::regex regexFormatSHA256{"[a-f0-9]{64}"};
     std::regex regexFormatUsername{"^[a-z]+[a-z0-9_-]*[a-z]+$"};
 
-    if (password == nullptr || username == nullptr)
-    {
-        response.code = 400;
-        response.set_header("Content-Type", "application/json");
-        response.body = crow::json::wvalue
-        ({
-            {"code": response.code},
-            {"error": "user or password not provided"}
-        });
-        
-        return response;
-    }
-    
-    // length of SHA256 hash when converted to hex string
-    if (std::strlen(password) != 64 || !std::regex_match(password, regexFormatSHA256))
-    {
-        response.code = 400;
-        response.body = crow::json::wvalue
-        ({
-            {"code", response.code},
-            {"error": "invalid password format! (not hashed or bad hash)"}
-        });
+    // ToFix
 
-        return response;
-    }
+    //if (password == nullptr || username == nullptr)
+    //{
+    //    response.code = 400;
+    //    response.set_header("Content-Type", "application/json");
+    //    response.body = crow::json::wvalue
+    //    ({
+    //        {"code": response.code},
+    //        {"error": "user or password not provided"}
+    //    });
+    //    
+    //    return response;
+    //}
+    //
+    //// length of SHA256 hash when converted to hex string
+    //if (std::strlen(password) != 64 || !std::regex_match(password, regexFormatSHA256))
+    //{
+    //    response.code = 400;
+    //    response.body = crow::json::wvalue
+    //    ({
+    //        {"code", response.code},
+    //        {"error": "invalid password format! (not hashed or bad hash)"}
+    //    });
 
-    if (!std::regex_match(username, regexFormatUsername))
-    {
-        response.code = 400;
-        response.body = crow::json::wvalue
-        ({
-            {"code", response.code},
-            {"error": "invalid username format! ((username format description))"}
-        });
+    //    return response;
+    //}
 
-        return response;
-    }
+    //if (!std::regex_match(username, regexFormatUsername))
+    //{
+    //    response.code = 400;
+    //    response.body = crow::json::wvalue
+    //    ({
+    //        {"code", response.code},
+    //        {"error": "invalid username format! ((username format description))"}
+    //    });
 
-    bool foundCredentials = storage.CheckCredentials(String(username), String(password));
+    //    return response;
+    //}
 
-    if (!foundCredentials)
-    {
-        response.code = 401;
-        response.body = crow::json::wvalue
-        ({
-            {"code", response.code},
-            {"error": "unauthorized"}
-        });
-    }
+    //bool foundCredentials = storage.CheckCredentials(String(username), String(password));
+
+    //if (!foundCredentials)
+    //{
+    //    response.code = 401;
+    //    response.body = crow::json::wvalue
+    //    ({
+    //        {"code", response.code},
+    //        {"error": "unauthorized"}
+    //    });
+    //}
 
     return {};
 }

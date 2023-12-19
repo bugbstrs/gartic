@@ -15,7 +15,6 @@ namespace http
 		~User() = default;
 
 		std::string GetUsername() const noexcept;
-		Time GetTime() const noexcept;
 
 		void SetActive();
 

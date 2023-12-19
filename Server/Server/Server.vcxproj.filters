@@ -62,13 +62,7 @@
     <ClInclude Include="Lobby.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
-    <ClInclude Include="OngoingGame.h">
-      <Filter>Header Files\Logic</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Header Files\Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="Round.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
     <ClInclude Include="GarticDatabase.h">
@@ -92,14 +86,14 @@
     <ClInclude Include="WordsEntity.h">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
-    <ClInclude Include="User.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Time.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
     <ClInclude Include="GameSettings.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="User.h">
+      <Filter>Header Files\Logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -115,13 +109,7 @@
     <ClCompile Include="Lobby.cpp">
       <Filter>Source Files\Logic</Filter>
     </ClCompile>
-    <ClCompile Include="OngoingGame.cpp">
-      <Filter>Source Files\Logic</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Source Files\Logic</Filter>
-    </ClCompile>
-    <ClCompile Include="Round.cpp">
       <Filter>Source Files\Logic</Filter>
     </ClCompile>
     <ClCompile Include="GarticDatabase.cpp">
