@@ -4,6 +4,7 @@
 #include <crow.h>
 
 #include "Server/RouteManager.h"
+#include "Game.h"
 
 //#define DOCTEST_CONFIG_IMPLEMENT
 //#include "doctest/doctest.h";

@@ -1,5 +1,4 @@
 #include "RouteManager.h"
-#include "CreateUserHandler.h"
 #include <regex>
 
 void http::RouteManager::Run(GarticStorage& storage)
@@ -210,7 +209,7 @@ void http::RouteManager::CreatePutWordToGuessRoute(GarticStorage& storage)
         }
 
         std::string wordToDiplayString(wordToDisplay);
-        //m_game.SetWordToGuess(wordToDisplayString);
+        /*m_game.SetWordToGuess(wordToDisplayString);*/
 
         response.body = crow::json::wvalue({
             {"put", true}
@@ -226,10 +225,10 @@ void http::RouteManager::CreateGetWordToDisplayRoute(GarticStorage& storage)
         std::vector<crow::json::wvalue> word_json;
 
         /*try
-        {
-            std::string wordToDisplay = m_game.GetWordToDisplay();
-            word_json.push_back(crow::json::wvalue{ {"word", wordToDisplay} });
-        }
+        {*/
+            /*std::string wordToDisplay = m_game.GetWordToDisplay();
+            word_json.push_back(crow::json::wvalue{ {"word", wordToDisplay} });*/
+        /*}
         catch (CannotFetchWordException& exception)
         {
             word_json.push_back(crow::json::wvalue{ {"word", "N/A"} });

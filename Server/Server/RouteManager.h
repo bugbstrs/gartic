@@ -1,7 +1,7 @@
 #include <crow.h>
 
 #include "GarticDatabase.h"
-#include "Game.h"
+#include "Lobby.h"
 #include <optional>
 
 namespace http
@@ -28,7 +28,5 @@ namespace http
 
 	private:
 		crow::SimpleApp m_app;
-
-		/*Game m_game;*/
 	};
 }

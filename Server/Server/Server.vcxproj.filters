@@ -95,6 +95,18 @@
     <ClInclude Include="User.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="DrawingBoard.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawEvent.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecialRoundsEnum.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="CanvasPointsEnum.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -141,6 +153,12 @@
     </ClCompile>
     <ClCompile Include="GameSettings.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawingBoard.cpp">
+      <Filter>Source Files\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawEvent.cpp">
+      <Filter>Source Files\Logic</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

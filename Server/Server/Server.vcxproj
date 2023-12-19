@@ -24,7 +24,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BannedWordsEntity.h" />
+    <ClInclude Include="CanvasPointsEnum.h" />
     <ClInclude Include="Chat.h" />
+    <ClInclude Include="DrawEvent.h" />
+    <ClInclude Include="DrawingBoard.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="GarticDatabase.h" />
@@ -33,6 +36,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="QuotesEntity.h" />
     <ClInclude Include="RouteManager.h" />
+    <ClInclude Include="SpecialRoundsEnum.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="UsersEntity.h" />
@@ -41,6 +45,8 @@
   <ItemGroup>
     <ClCompile Include="BannedWordsEntity.cpp" />
     <ClCompile Include="Chat.cpp" />
+    <ClCompile Include="DrawEvent.cpp" />
+    <ClCompile Include="DrawingBoard.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="GarticDatabase.cpp" />

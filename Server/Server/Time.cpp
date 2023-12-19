@@ -7,7 +7,8 @@ Timer http::Time::m_serverTimer(10);
 http::Time::Time(float newStartTimeStamp, float newStartValue, float newEndValue) : 
 	m_startTimeStamp{newStartTimeStamp},
 	m_startValue{newStartValue},
-	m_endValue{newEndValue}
+	m_endValue{newEndValue},
+	m_currentPlayerToRemove{""}
 {
 	m_serverTimer.StartTimer();
 }
@@ -16,7 +17,8 @@ http::Time::Time(const Time& newTime) :
 	m_startTimeStamp{newTime.m_startTimeStamp},
 	m_startValue{newTime.m_startValue},
 	m_endValue{newTime.m_endValue},
-	m_toCall{newTime.m_toCall}
+	m_toCall{newTime.m_toCall},
+	m_currentPlayerToRemove{""}
 {
 	m_serverTimer.StartTimer();
 }
@@ -41,7 +43,7 @@ int http::Time::GetServerTime() const noexcept
 	return static_cast<int>(m_serverTimer.GetElapsedTime().count());
 }
 
-std::function<void()> http::Time::GetMethodToCall() const noexcept
+std::function<void(const std::string&)> http::Time::GetMethodToCall() const noexcept
 {
 	return m_toCall;
 }
@@ -61,9 +63,13 @@ void http::Time::SetEndValue(float newEndValue)
 	m_endValue = newEndValue;
 }
 
-void http::Time::SetMethodToCall(std::function<void()> methodToCall)
+void http::Time::SetMethodToCall(std::function<void(const std::string&)> methodToCall)
 {
 	m_toCall = methodToCall;
+
+	auto myFunction = [this](std::string str) {
+		m_currentPlayerToRemove = str;
+	};
 }
 
 void http::Time::Start(float timeStamp, float startValue, float endValue)
@@ -79,7 +85,7 @@ bool http::Time::Check()
 {
 	if ((m_startValue > m_endValue && static_cast<int>(m_serverTimer.GetElapsedTime().count()) - m_startTimeStamp >= m_endValue) || (m_startValue <= m_endValue && static_cast<int>(m_serverTimer.GetElapsedTime().count()) - m_startTimeStamp >= m_endValue))
 	{
-		m_toCall();
+		m_toCall(m_currentPlayerToRemove);
 		return true;
 	}
 

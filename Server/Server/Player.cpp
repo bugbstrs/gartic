@@ -34,6 +34,11 @@ std::string http::Player::GetName() const noexcept
     return m_user;
 }
 
+bool http::Player::GetGuessed() const noexcept
+{
+    return m_guessed;
+}
+
 Time http::Player::GetTime() const noexcept
 {
     return m_active;

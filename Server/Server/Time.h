@@ -24,13 +24,13 @@ namespace http
 
 		int GetServerTime() const noexcept;
 
-		std::function<void()> GetMethodToCall() const noexcept;
+		std::function<void(const std::string&)> GetMethodToCall() const noexcept;
 
 		void SetStartTimeStamp(float newTimeStamp);
 		void SetStartValue(float newStartValue);
 		void SetEndValue(float newEndValue);
 
-		void SetMethodToCall(std::function<void()> methodToCall);
+		void SetMethodToCall(std::function<void(const std::string&)> methodToCall);
 
 		void Start(float timeStamp, float startValue, float endValue);
 
@@ -41,9 +41,11 @@ namespace http
 		float m_startValue;
 		float m_endValue;
 		
-		std::function<void()> m_toCall;
+		std::function<void(const std::string&)> m_toCall;
 
 		static Timer m_serverTimer;
+
+		std::string m_currentPlayerToRemove;
 	};
 }
 
