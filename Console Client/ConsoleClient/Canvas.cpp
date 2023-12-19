@@ -5,7 +5,7 @@ Canvas::Canvas(uint64_t width, uint64_t height, ColorType color) :
 	m_backgroundColor { color											}
 {}
 
-Canvas::Canvas(Canvas& canvas) :
+Canvas::Canvas(const Canvas& canvas) :
     m_canvas          { canvas.m_canvas          },
     m_backgroundColor { canvas.m_backgroundColor }
 {}

@@ -12,7 +12,7 @@ export class Canvas
 {
 public:
 	Canvas(uint64_t width, uint64_t height, ColorType color);
-	Canvas(Canvas& canvas);
+	Canvas(const Canvas& canvas);
 
 	~Canvas() = default;
 

@@ -11,7 +11,7 @@ DrawingBoard::DrawingBoard(COORD upLeftCorner,
 	m_sectorWidth	{ static_cast<int>(canvasWidth / maxWidth)				  },
 	m_sectorHeight	{ static_cast<int>(canvasHeight / maxHeight)			  }
 {
-	m_canvases.push({ canvasWidth, canvasHeight, backgroungColor });
+	m_canvases.emplace(canvasWidth, canvasHeight, backgroungColor);
 }
 
 DrawingBoard::DrawingBoard(int16_t x, int16_t y,
@@ -25,7 +25,7 @@ DrawingBoard::DrawingBoard(int16_t x, int16_t y,
 	m_sectorWidth	{ static_cast<int>(canvasWidth / maxWidth)				  },
 	m_sectorHeight	{ static_cast<int>(canvasHeight / maxHeight)			  }
 {
-	//m_canvases.push({ canvasWidth, canvasHeight, backgroungColor });
+	m_canvases.emplace(canvasWidth, canvasHeight, backgroungColor);
 }
 
 DrawingBoard::DrawingBoard(int16_t maxWidth,
@@ -39,7 +39,7 @@ DrawingBoard::DrawingBoard(int16_t maxWidth,
 	m_sectorWidth	{ static_cast<int>(canvasWidth / maxWidth)				  },
 	m_sectorHeight	{ static_cast<int>(canvasHeight / maxHeight)			  }
 {
-	//m_canvases.push({ canvasWidth, canvasHeight, backgroungColor });
+	m_canvases.emplace(canvasWidth, canvasHeight, backgroungColor);
 }
 
 void DrawingBoard::Draw()
@@ -80,8 +80,8 @@ void DrawingBoard::CheckCursor()
 
 void DrawingBoard::DrawContents()
 {
-	for (int i{ 0 }; i < m_canvases.top().GetHeight(); i += m_sectorHeight)
-		for (int j{ 0 }; j < m_canvases.top().GetWidth(); j += m_sectorWidth)
+	for (int i{0}; i < m_canvases.top().GetHeight(); i += m_sectorHeight)
+		for (int j{0}; j < m_canvases.top().GetWidth(); j += m_sectorWidth)
 		{
 			SetColor(m_canvases.top().GetSectorColor(j, i, m_sectorWidth, m_sectorHeight));
 			m_cm->Write(' ', j / m_sectorWidth + m_upLeftCorner.X, i / m_sectorHeight + m_upLeftCorner.Y);
