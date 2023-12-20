@@ -57,17 +57,22 @@ void VerticalLayout::AddObject(GUIObject* object)
 
 	int16_t length{ object->GetHeight() };
 
-	for (auto it = m_objects.rbegin(); it != m_objects.rend(); ++it)
+	for (auto it = m_objects.rbegin(); it != m_objects.rend();)
 	{
 		length += (*it)->GetHeight() + m_space;
-		while (length > m_width)
+		if (length > m_height)
 		{
 			if ((*m_objects.begin()) == (*it))
 				length -= (*it)->GetHeight() + m_space;
-			delete (*m_objects.begin());
-			m_objects.erase(m_objects.begin());
+
+			delete (*it);
+			it = decltype(it)(m_objects.erase(std::next(it).base()));
+		} else
+		{
+			++it;
 		}
 	}
+
 
 	m_objects.push_back(object);
 	SetObjectsPosition();

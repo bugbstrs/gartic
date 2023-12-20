@@ -61,15 +61,19 @@ void HorizontalLayout::AddObject(GUIObject* object)
 
 	int16_t length{object->GetWidth()};
 
-	for (auto it = m_objects.rbegin(); it != m_objects.rend(); ++it)
+	for (auto it = m_objects.rbegin(); it != m_objects.rend();)
 	{
 		length += (*it)->GetWidth() + m_space;
-		while (length > m_width)
+		if (length > m_width)
 		{
 			if ((*m_objects.begin()) == (*it))
 				length -= (*it)->GetWidth() + m_space;
-			delete (*m_objects.begin());
-			m_objects.erase(m_objects.begin());
+
+			delete (*it);
+			it = decltype(it)(m_objects.erase(std::next(it).base()));
+		} else
+		{
+			++it;
 		}
 	}
 
