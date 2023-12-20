@@ -15,6 +15,6 @@ public:
 
 private:
 	QFont nameFont{};
-	std::vector<std::pair<QIcon*, QColor>>availableIcons{};
+	std::vector<std::pair<QIcon*, QColor>> availableIcons{};
 	std::unordered_map<std::string, QTableWidgetItem*> players{};
 };

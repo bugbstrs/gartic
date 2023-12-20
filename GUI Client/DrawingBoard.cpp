@@ -5,7 +5,7 @@ DrawingBoard::DrawingBoard(QWidget* parent)
     eraserColor { Qt::white }
 {
     setMouseTracking(true);
-    ChangePenPropertiesTo(Qt::black, 2);
+    ChangePenPropertiesTo(Qt::black, 4);
 }
 
 void DrawingBoard::mousePressEvent(QMouseEvent* event)
