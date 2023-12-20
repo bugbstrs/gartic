@@ -23,4 +23,9 @@
     <qresource prefix="/background">
         <file alias="Background">Resource Files/GarticBackground.png</file>
     </qresource>
+    <qresource prefix="/settings">
+        <file alias="circle_settings">Resource Files/circle_settings.png</file>
+        <file alias="words_number">Resource Files/quiz.png</file>
+        <file alias="time_settings">Resource Files/alarm-clock.png</file>
+    </qresource>
 </RCC>
