@@ -81,7 +81,7 @@ void DrawingBoard::CheckCursor()
 	static COORD prevPoz{ -1,-1 };
 	COORD cursorPos{ m_im->GetCurrentCursorPosition() };
 	if (IsPointInside(cursorPos) &&
-		m_im->GetClickHold() && m_selectable)
+		m_im->GetClickHold())
 	{
 		if (prevPoz.X != -1)
 		{

@@ -172,12 +172,18 @@ void ConsoleManager::Write(const String &sentence, int16_t x, int16_t y, int16_t
 	{
 		if (line.size() + word.size() <= width)
 		{
+			if (!line.empty() && line.size() + word.size() == width && word != " ")
+			{
+				lines.push_back(line);
+				line.clear();
+			}
+
 			if (!line.empty() && line.back() != ' ')
 				line.push_back(' ');
 
 			line.append(word);
 		} else
-		if (word.size() > width) // The word is bigger than the width
+		if (word.size() > width)
 		{
 			if (!line.empty())
 			{
