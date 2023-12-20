@@ -28,11 +28,17 @@ void GameScene::GetChat()
 
 void GameScene::SendMessage()
 {
+	if (m_message.empty())
+		return;
+
+
 	//send message to server
+
+
 	Color color = m_lastChatColor ? Color::Gray : Color::White;
 	m_lastChatColor = !m_lastChatColor;
 	m_chat->AddObject(new Label{Align::Left, Align::Up, color, Color::Black, 20,
-					  static_cast<int16_t>((m_message.size() + 5) / 20 + 1), m_console, "You: " + m_message});
+					  static_cast<int16_t>((m_message.size() + 4) / 20 + 2), m_console, "You: " + m_message});
 
 	m_message.clear();
 }
@@ -73,11 +79,11 @@ void GameScene::Start()
 	m_objects.emplace_back(m_drawingBoard);
 
 	// Users layout
-	m_users = new VerticalLayout{2, 5, Align::Center, Align::Up, Color::White, 20, 70, m_console, 1};
+	m_users = new VerticalLayout{2, 5, Align::Center, Align::Up, Color::White, 20, 70, m_console, 0};
 	m_objects.emplace_back(m_users);
 
 	// Chat layout
-	m_chat = new VerticalLayout{138, 5, Align::Center, Align::Up, Color::White, 20, 77, m_console, 1};
+	m_chat = new VerticalLayout{138, 5, Align::Center, Align::Up, Color::White, 20, 77, m_console, 0};
 	m_objects.emplace_back(m_chat);
 
 	// Chatbox
