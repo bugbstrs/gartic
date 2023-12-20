@@ -73,6 +73,9 @@
     <ClCompile Include="LobbyTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DrawingBoard.h">
@@ -106,6 +109,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="LobbyTable.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="SceneManager.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
