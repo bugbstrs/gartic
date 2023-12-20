@@ -17,11 +17,15 @@ public:
 private slots:
 
     //Main menu buttons
-    void OnPlayButtonReleased() noexcept;
+    void OnCreateLobbyButtonReleased() noexcept;
     void OnQuitButtonReleased() noexcept;
     void OnStatsButtonReleased() noexcept;
     void OnGoToLogInButtonReleased() noexcept;
     void OnGoToSignUpButtonReleased() noexcept;
+
+    //Lobby scene
+    void OnStartGameButtonReleased() noexcept;
+    void OnExitLobbyButtonReleased() noexcept;
 
     //Drawing scene
     void OnLeaveGameButtonReleased() noexcept;

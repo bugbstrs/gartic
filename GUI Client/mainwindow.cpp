@@ -29,11 +29,15 @@ MainWindow::MainWindow(QWidget* parent)
         "    subcontrol-origin: margin;"
         "}");
     //Main menu scene connections
-    QObject::connect(ui->playButton, &QPushButton::released, this, &MainWindow::OnPlayButtonReleased);
+    QObject::connect(ui->createLobbyButton, &QPushButton::released, this, &MainWindow::OnCreateLobbyButtonReleased);
     QObject::connect(ui->quitButton, &QPushButton::released, this, &MainWindow::OnQuitButtonReleased);
     QObject::connect(ui->statsButton, &QPushButton::released, this, &MainWindow::OnStatsButtonReleased);
     QObject::connect(ui->goToLogInButton, &QPushButton::released, this, &MainWindow::OnGoToLogInButtonReleased);
     QObject::connect(ui->goToSignUpButton, &QPushButton::released, this, &MainWindow::OnGoToSignUpButtonReleased);
+
+    //Lobby scene
+    QObject::connect(ui->startGameButton, &QPushButton::released, this, &MainWindow::OnStartGameButtonReleased);
+    QObject::connect(ui->exitLobbyButton, &QPushButton::released, this, &MainWindow::OnExitLobbyButtonReleased);
 
     //Game scene connections
     QObject::connect(ui->leaveGameButton, &QPushButton::released, this, &MainWindow::OnLeaveGameButtonReleased);
@@ -52,11 +56,23 @@ MainWindow::~MainWindow() {}
 
 
 //Main menu events
-void MainWindow::OnPlayButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(1); }
+void MainWindow::OnCreateLobbyButtonReleased() noexcept { 
+    ui->lobbyTable->AddPlayer("Gigel");
+    ui->lobbyTable->AddPlayer("Frone");
+    ui->lobbyTable->AddPlayer("Alex");
+    ui->lobbyTable->AddPlayer("Andrei");
+    ui->lobbyTable->AddPlayer("Bambi");
+    ui->lobbyTable->AddPlayer("Turcu");
+    ui->stackedWidget->setCurrentWidget(ui->LobbyScene); 
+}
 void MainWindow::OnQuitButtonReleased() noexcept { QCoreApplication::quit(); }
-void MainWindow::OnStatsButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(2); }
-void MainWindow::OnGoToLogInButtonReleased() noexcept{ ui->stackedWidget->setCurrentIndex(4); }
-void MainWindow::OnGoToSignUpButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(3); }
+void MainWindow::OnStatsButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->StatsScene); }
+void MainWindow::OnGoToLogInButtonReleased() noexcept{ ui->stackedWidget->setCurrentWidget(ui->LogInScene); }
+void MainWindow::OnGoToSignUpButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->SignUpScene); }
+
+void MainWindow::OnStartGameButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->GameplayScene); }
+
+void MainWindow::OnExitLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }
 
 //Game scene events
 void MainWindow::OnLeaveGameButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(0); }

@@ -94,6 +94,8 @@ void GameplayWidget::AddPlayers()
 	scoreboardTable->AddPlayer("Ponta", 90);
 	scoreboardTable->AddPlayer("Micutzu", 90);
 	scoreboardTable->AddPlayer("Bendeac", 90);
+
+	scoreboardTable->model()->sort(1, Qt::DescendingOrder);
 }
 
 void GameplayWidget::showEvent(QShowEvent* event) {
