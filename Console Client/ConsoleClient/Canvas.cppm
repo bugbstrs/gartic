@@ -26,5 +26,7 @@ public:
 
 private:
 	std::vector<std::vector<Pixel>> m_canvas;
-	ColorType m_backgroundColor;
+	ColorType						m_backgroundColor;
+
+	Pixel& At(int x, int y);
 };

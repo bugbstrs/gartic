@@ -65,7 +65,7 @@ void Canvas::DrawLine(int x1, int y1, int x2, int y2, ColorType color, int width
     {
         for (int i = -width / 2; i < width / 2; ++i)
             for (int j = -width / 2; j < width / 2; ++j)
-                m_canvas[x1 + i][y1 + j].SetColor(color);
+                At(y1 + j, x1 + i).SetColor(color);
 
         int err2 = 2 * err;
         if (err2 > -dy) 
@@ -82,7 +82,7 @@ void Canvas::DrawLine(int x1, int y1, int x2, int y2, ColorType color, int width
 
     for (int i = -width / 2; i < width / 2; ++i)
         for (int j = -width / 2; j < width / 2; ++j)
-            m_canvas[x2 + i][y2 + j].SetColor(color);
+            At(y2 + j, x2 + i).SetColor(color);
 }
 
 void Canvas::DrawCircle(int x, int y, ColorType color, int radius, bool filled)
@@ -91,10 +91,10 @@ void Canvas::DrawCircle(int x, int y, ColorType color, int radius, bool filled)
 
     while (i <= j)
     {
-        m_canvas[x + i][y + j].SetColor(color);
-        m_canvas[x - i][y + j].SetColor(color);
-        m_canvas[x + i][y - j].SetColor(color);
-        m_canvas[x - i][y - j].SetColor(color);
+        At(x + i, y + j).SetColor(color);
+        At(x - i, y + j).SetColor(color);
+        At(x + i, y - j).SetColor(color);
+        At(x - i, y - j).SetColor(color);
         if (filled)
         {
             DrawLine(x - i, y - j, x - i, y + j, color, 1);
@@ -102,10 +102,10 @@ void Canvas::DrawCircle(int x, int y, ColorType color, int radius, bool filled)
         }
         if (i != j)
         {
-            m_canvas[x + j][y + i].SetColor(color);
-            m_canvas[x - j][y + i].SetColor(color);
-            m_canvas[x + j][y - i].SetColor(color);
-            m_canvas[x - j][y - i].SetColor(color);
+            At(x + j, y + i).SetColor(color);
+            At(x - j, y + i).SetColor(color);
+            At(x + j, y - i).SetColor(color);
+            At(x - j, y - i).SetColor(color);
             if (filled)
             {
                 DrawLine(x - j, y - i, x - j, y + i, color, 1);
@@ -118,9 +118,9 @@ void Canvas::DrawCircle(int x, int y, ColorType color, int radius, bool filled)
         else
         {
             d = d + 4 * (i - j) + 10;
-            j--;
+            --j;
         }
-        i++;
+        ++i;
     }
 }
 
@@ -160,4 +160,16 @@ ColorType Canvas::GetSectorColor(int x, int y, int width, int height) const
         }
 
     return predominantColor;
+}
+
+Pixel &Canvas::At(int x, int y)
+{
+    if (x < 0) x = 0;
+    if (y < 0) y = 0;
+    if (x >= m_canvas.size())
+        x = m_canvas.size() - 1;
+    if (y >= m_canvas[0].size())
+        y = m_canvas[0].size() - 1;
+
+    return m_canvas[x][y];
 }

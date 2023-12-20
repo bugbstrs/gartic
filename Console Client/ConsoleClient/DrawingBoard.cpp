@@ -90,10 +90,10 @@ void DrawingBoard::CheckCursor()
 				isWaitingToSave = false;
 				m_canvases.emplace(m_canvases.top());
 			}
-			m_canvases.top().DrawLine(m_sectorHeight * (prevPoz.Y - m_upLeftCorner.Y) + m_sectorHeight / 2,
-							  m_sectorWidth * (prevPoz.X - m_upLeftCorner.X) + m_sectorWidth / 2,
-							  m_sectorHeight * (cursorPos.Y - m_upLeftCorner.Y) + m_sectorHeight / 2,
+			m_canvases.top().DrawLine(m_sectorWidth * (prevPoz.X - m_upLeftCorner.X) + m_sectorWidth / 2,
+							  m_sectorHeight * (prevPoz.Y - m_upLeftCorner.Y) + m_sectorHeight / 2,
 							  m_sectorWidth * (cursorPos.X - m_upLeftCorner.X) + m_sectorWidth / 2,
+							  m_sectorHeight * (cursorPos.Y - m_upLeftCorner.Y) + m_sectorHeight / 2,
 							  ColorType::Green, 6);
 		}
 		prevPoz = cursorPos;
