@@ -17,6 +17,9 @@ namespace http
 		std::string GetUsername() const noexcept;
 
 		void SetActive();
+		// TODO: implement
+		bool operator == (const User& u1) { return true; }
+		User operator = (const User& u1) { return *this; }
 
 	private:
 		const float kSecondsForBeingActive = 5.0;
