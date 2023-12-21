@@ -98,17 +98,17 @@ void http::Game::NextDrawer()
 		return;
 	}
 
-	auto drawerIt = std::find(m_players.begin(), m_players.end(), m_drawer);
+	auto drawerIt = std::find(m_players.rbegin(), m_players.rend(), m_drawer);
 
-	//if (drawerIt == m_players.rbegin())
-	//{
-	//	NextRound();
-	//	m_drawer = m_players[0];
-	//}
-	//else
-	//{
-	//	m_drawer = m_players[m_players.begin() + drawerIt];
-	//}
+	if (drawerIt == m_players.rbegin())
+	{
+		NextRound();
+		m_drawer = m_players[0];
+	}
+	else
+	{
+		m_drawer = m_players[m_players.rbegin() - drawerIt];
+	}
 }
 
 void Game::NextRound()

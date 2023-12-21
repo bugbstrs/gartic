@@ -17,7 +17,6 @@ namespace http
 		std::string GetUsername() const noexcept;
 
 		void SetActive();
-		// TODO: implement
 		bool operator == (const User& u1);
 		User operator = (const User& u1);
 

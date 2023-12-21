@@ -50,10 +50,20 @@ void http::Lobby::SetLeader(const User* newLeader)
 
 http::Game* http::Lobby::StartGame()
 {
-	/*if (m_players.size() > 2)
+	if (m_players.size() > 2)
 	{
-		return new Game(m_players);
-	}*/
+		std::vector<Player*> playersVector;
+		std::string currUsername;
+
+		for (const auto& player : m_players)
+		{
+			currUsername = player.GetUsername();
+
+			playersVector.push_back(new Player(currUsername));
+		}
+
+		return new Game(std::move(playersVector));
+	}
 
 	//throw GarticException<NotEnoughPlayersException>("Lobby > StartGame(): There are not enough players to start a game!");
 	return {};
