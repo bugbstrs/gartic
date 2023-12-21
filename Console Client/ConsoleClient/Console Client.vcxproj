@@ -161,6 +161,8 @@
     <ClCompile Include="Button.cppm" />
     <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="Canvas.cppm" />
+    <ClCompile Include="ColorDisplay.cpp" />
+    <ClCompile Include="ColorDisplay.cppm" />
     <ClCompile Include="DrawingBoard.cpp" />
     <ClCompile Include="DrawingBoard.cppm" />
     <ClCompile Include="HorizontalLayout.cpp" />

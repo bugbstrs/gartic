@@ -204,5 +204,11 @@
     <ClCompile Include="DrawingBoard.cpp">
       <Filter>Modules\Implementation Units</Filter>
     </ClCompile>
+    <ClCompile Include="ColorDisplay.cppm">
+      <Filter>Modules\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorDisplay.cpp">
+      <Filter>Modules\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
