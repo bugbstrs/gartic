@@ -36,6 +36,8 @@ namespace http
 
 		bool Check();
 
+		Time operator = (const Time& t1);
+
 	private:
 		float m_startTimeStamp;
 		float m_startValue;

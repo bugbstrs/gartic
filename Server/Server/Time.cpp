@@ -91,3 +91,16 @@ bool http::Time::Check()
 
 	return false;
 }
+
+Time http::Time::operator=(const Time& t1)
+{
+	this->m_startTimeStamp = t1.m_startTimeStamp;
+	this->m_startValue = t1.m_startValue;
+	this->m_endValue = t1.m_endValue;
+
+	SetMethodToCall(t1.m_toCall);
+
+	this->m_currentPlayerToRemove = t1.m_currentPlayerToRemove;
+
+	return *this;
+}

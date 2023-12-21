@@ -18,8 +18,8 @@ namespace http
 
 		void SetActive();
 		// TODO: implement
-		bool operator == (const User& u1) { return true; }
-		User operator = (const User& u1) { return *this; }
+		bool operator == (const User& u1);
+		User operator = (const User& u1);
 
 	private:
 		const float kSecondsForBeingActive = 5.0;
