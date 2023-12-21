@@ -10,7 +10,9 @@ DrawingBoard::DrawingBoard(COORD upLeftCorner,
 					  Color::Black, Color::Black, cm, im, selected    },
 	m_sectorWidth	{ static_cast<int>(canvasWidth / maxWidth)		  },
 	m_sectorHeight	{ static_cast<int>(canvasHeight / maxHeight)	  },
-	m_option		{ false											  }
+	m_option		{ Option::draw									  },
+	m_color			{ Color::Black									  },
+	m_penWidth		{ 6												  }
 {
 	m_canvases.emplace(canvasWidth, canvasHeight, backgroungColor);
 	m_selectable = false;
@@ -26,7 +28,9 @@ DrawingBoard::DrawingBoard(int16_t x, int16_t y,
 					  Color::Black, Color::Black, cm, im, selected    },
 	m_sectorWidth	{ static_cast<int>(canvasWidth / maxWidth)		  },
 	m_sectorHeight	{ static_cast<int>(canvasHeight / maxHeight)	  },
-	m_option		{ false											  }
+	m_option		{ Option::draw									  },
+	m_color			{ Color::Black									  },
+	m_penWidth		{ 6												  }
 {
 	m_canvases.emplace(canvasWidth, canvasHeight, backgroungColor);
 	m_selectable = false;
@@ -42,7 +46,9 @@ DrawingBoard::DrawingBoard(int16_t maxWidth,
 					  Color::Black, Color::Black, cm, im, selected    },
 	m_sectorWidth	{ static_cast<int>(canvasWidth / maxWidth)		  },
 	m_sectorHeight	{ static_cast<int>(canvasHeight / maxHeight)	  },
-	m_option		{ false											  }
+	m_option		{ Option::draw									  },
+	m_color			{ Color::Black									  },
+	m_penWidth		{ 6												  }
 {
 	m_canvases.emplace(canvasWidth, canvasHeight, backgroungColor);
 	m_selectable = false;
@@ -60,9 +66,19 @@ void DrawingBoard::Clear()
 		m_canvases.pop();
 }
 
-bool &DrawingBoard::GetOption()
+void DrawingBoard::SetOption(Option option)
 {
-	return m_option;
+	m_option = option;
+}
+
+void DrawingBoard::SetPenWidth(int width)
+{
+	m_penWidth = width;
+}
+
+void DrawingBoard::SetDrawColor(Color color)
+{
+	m_color = color;
 }
 
 void DrawingBoard::Draw()
@@ -80,25 +96,32 @@ void DrawingBoard::CheckCursor()
 	static bool isWaitingToSave{ true };
 	static COORD prevPoz{ -1,-1 };
 	COORD cursorPos{ m_im->GetCurrentCursorPosition() };
-	if (IsPointInside(cursorPos) &&
-		m_im->GetClickHold())
+	if (IsPointInside(cursorPos))
 	{
-		if (prevPoz.X != -1)
+		if (m_im->GetClickPressed() && m_option == Option::fill)
 		{
-			if (isWaitingToSave)
-			{
-				isWaitingToSave = false;
-				m_canvases.emplace(m_canvases.top());
-			}
-			m_canvases.top().DrawLine(m_sectorWidth * (prevPoz.X - m_upLeftCorner.X) + m_sectorWidth / 2,
-							  m_sectorHeight * (prevPoz.Y - m_upLeftCorner.Y) + m_sectorHeight / 2,
-							  m_sectorWidth * (cursorPos.X - m_upLeftCorner.X) + m_sectorWidth / 2,
-							  m_sectorHeight * (cursorPos.Y - m_upLeftCorner.Y) + m_sectorHeight / 2,
-							  ColorType::Green, 6);
+			//fill
 		}
-		prevPoz = cursorPos;
-		return;
+		if (m_im->GetClickHold() && m_option == Option::draw)
+		{
+			if (prevPoz.X != -1)
+			{
+				if (isWaitingToSave)
+				{
+					isWaitingToSave = false;
+					m_canvases.emplace(m_canvases.top());
+				}
+				m_canvases.top().DrawLine(m_sectorWidth * (prevPoz.X - m_upLeftCorner.X) + m_sectorWidth / 2,
+										  m_sectorHeight * (prevPoz.Y - m_upLeftCorner.Y) + m_sectorHeight / 2,
+										  m_sectorWidth * (cursorPos.X - m_upLeftCorner.X) + m_sectorWidth / 2,
+										  m_sectorHeight * (cursorPos.Y - m_upLeftCorner.Y) + m_sectorHeight / 2,
+										  m_color, m_penWidth);
+			}
+			prevPoz = cursorPos;
+			return;
+		}
 	}
+	
 	if (prevPoz.X != -1)
 		isWaitingToSave = true;
 
