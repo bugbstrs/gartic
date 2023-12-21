@@ -93,6 +93,21 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(chatbox);
 	m_objects.emplace_back(chatbox);
 
+	// Colors
+	auto colors = new VerticalLayout{15, 77, Align::Left, Align::Up, Color::Black, 95, 11, m_console, 1};
+	m_objects.emplace_back(colors);
+	auto row1 = new HorizontalLayout{Align::Left, Align::Up, Color::Black, 95, 5, m_console, 1};
+	colors->AddObject(row1);
+	auto row2 = new HorizontalLayout{Align::Left, Align::Up, Color::Black, 95, 5, m_console, 1};
+	colors->AddObject(row2);
+	//row1->AddObject(new Button{Align::Left, Align::Up, Color::Black, Color::Black, 5, 5, Color::})
+
+	// Width
+
+
+	// Draw options
+
+
 	// Leave button
 	auto leaveButton = new Button{2, 83, Align::Center, Align::Center, Color::Blue, Color::White, 11, 5,
 							Color::DarkBlue, Color::White, m_console, m_input, m_selected, "LEAVE"};

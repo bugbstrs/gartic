@@ -2,6 +2,7 @@ export module GameScene;
 
 import <string>;
 
+import HorizontalLayout;
 import VerticalLayout;
 import DrawingBoard;
 import InputField;
@@ -20,6 +21,9 @@ public:
 	~GameScene() = default;
 
 private:
+	SelectableObject *m_selectedDrawOptionButton;
+	SelectableObject *m_selectedColorButton;
+	SelectableObject *m_selectedWidthButton;
 	SelectableObject *m_selected;
 	VerticalLayout	 *m_users;
 	VerticalLayout   *m_chat;
