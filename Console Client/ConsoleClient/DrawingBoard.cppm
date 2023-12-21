@@ -25,17 +25,26 @@ public:
 
 	~DrawingBoard() = default;
 
-	void Undo		();
-	void Clear		();
-	bool &GetOption ();
-	void Draw		() override;
-	void CheckInput	() override;
-	void CheckCursor() override;
+	enum class Option
+	{
+		draw,
+		fill
+	};
+
+	void Undo		 ();
+	void Clear		 ();
+	void SetOption	 (Option option);
+	void SetPenWidth (int width);
+	void SetDrawColor(Color color);
+	void Draw		 () override;
+	void CheckInput	 () override;
+	void CheckCursor () override;
 
 private:
 	std::stack<Canvas> m_canvases;
+	Option			   m_option;
 	Color			   m_color;
-	bool			   m_option;// false = pen | true = fill
+	int				   m_penWidth;
 	int				   m_sectorWidth;
 	int				   m_sectorHeight;
 
