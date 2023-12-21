@@ -14,7 +14,7 @@ public:
 
 	~ColorDisplay() = default;
 
-	void SetColor(ColorType color);
+	void SetDisplayColor(ColorType color);
 
 	void Draw() override;
 

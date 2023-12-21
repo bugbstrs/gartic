@@ -15,7 +15,19 @@ ColorDisplay::ColorDisplay(ColorType color, int16_t maxWidth, int16_t maxHeight,
 	GUIObject { Align::Left, Align::Up, color, color, maxWidth, maxHeight, cm }
 {}
 
-void ColorDisplay::SetColor(ColorType color)
+void ColorDisplay::SetDisplayColor(ColorType color)
 {
 	m_backgroundColor = m_textColor = color;
 }
+
+void ColorDisplay::Draw()
+{
+	if (!m_active)
+		return;
+	
+	SetColor();
+
+	DrawBackground();
+}
+
+void ColorDisplay::DrawContents(){}//needs to be overrided
