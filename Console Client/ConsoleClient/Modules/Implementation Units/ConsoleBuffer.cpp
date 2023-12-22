@@ -23,21 +23,21 @@ ConsoleBuffer::~ConsoleBuffer()
 	CloseHandle(m_buffer);
 }
 
-void ConsoleBuffer::SetBackgroundColor(ColorType color)
+void ConsoleBuffer::SetBackgroundColor(int color)
 {
 	m_color %= 16;
-	m_color += 16 * (int)color;
+	m_color += 16 * color;
 }
 
-void ConsoleBuffer::SetColor(ColorType background, ColorType text)
+void ConsoleBuffer::SetColor(int background, int text)
 {
-	m_color = 16 * (int)background + (int)text;
+	m_color = 16 * background + text;
 }
 
-void ConsoleBuffer::SetTextColor(ColorType color)
+void ConsoleBuffer::SetTextColor(int color)
 {
 	m_color = m_color / 16 * 16;
-	m_color += (int)color;
+	m_color += color;
 }
 
 void ConsoleBuffer::SetCursor(bool visible, COORD coord)
@@ -55,7 +55,7 @@ void ConsoleBuffer::Clear()
 	{
 		for (int16_t y{ 0 }; y < m_height; ++y)
 		{
-			m_charInfoBuffer[x + y * m_width].Attributes = (int)ColorType::Black;
+			m_charInfoBuffer[x + y * m_width].Attributes = ColorType::Black;
 			m_charInfoBuffer[x + y * m_width].Char.AsciiChar = ' ';
 		}
 	}

@@ -19,9 +19,9 @@ public:
 	~ConsoleBuffer();
 
 	// Setters
-	void SetBackgroundColor (ColorType color);
-	void SetColor			(ColorType background, ColorType text);
-	void SetTextColor		(ColorType color);
+	void SetBackgroundColor (int color);
+	void SetColor			(int background, int text);
+	void SetTextColor		(int color);
 	void SetCursor			(bool visible, COORD coord);
 
 	// Output related
