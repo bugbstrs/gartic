@@ -4,15 +4,12 @@ using namespace http;
 
 Game::Game(std::vector<Player*>&& newPlayers) :
 	m_players{ std::move(newPlayers) },
-	m_drawer { m_players[0] },
 	m_status { GameStatus::Waiting },
 	m_remainingTime { Time() },
 	m_chat { Chat(m_players) },
 	m_roundNumber { 0 },
-	m_specialRoundType { SpecialRound::None },
 	m_board { DrawingBoard(m_players) },
-	m_wordToGuess { "" },
-	m_wordToDisplay { "" }
+	m_round {}
 {
 	for (auto& player : m_players)
 	{
@@ -24,11 +21,6 @@ Game::Game(std::vector<Player*>&& newPlayers) :
 const std::vector<Player*>& http::Game::GetPlayers() const noexcept
 {
 	return m_players;
-}
-
-const Player* http::Game::GetDrawer() const noexcept
-{
-	return m_drawer;
 }
 
 GameSettings http::Game::GetSettings() const noexcept
@@ -51,14 +43,9 @@ DrawingBoard http::Game::GetBoard() const noexcept
 	return m_board;
 }
 
-const std::string& http::Game::GetWordToGuess() const noexcept
+Round http::Game::GetRound() const noexcept
 {
-	return m_wordToGuess;
-}
-
-const std::string& http::Game::GetWordToDisplay() const noexcept
-{
-	return m_wordToDisplay;
+	return m_round;
 }
 
 void http::Game::SetGameStatus(GameStatus newGameStatus)
@@ -76,16 +63,6 @@ void http::Game::SetDrawingBoard(DrawingBoard newDrawingBoard)
 	m_board = newDrawingBoard;
 }
 
-void http::Game::SetWordToGuess(const std::string& newWordToGuess)
-{
-	m_wordToGuess = newWordToGuess;
-}
-
-void http::Game::SetDrawer(Player* newDrawer)
-{
-	m_drawer = newDrawer;
-}
-
 Chat Game::GetChat() const noexcept
 {
 	return m_chat;
@@ -94,26 +71,6 @@ Chat Game::GetChat() const noexcept
 int http::Game::GetRoundNumber() const noexcept
 {
 	return m_roundNumber;
-}
-
-void http::Game::NextDrawer()
-{
-	if (m_drawer == nullptr)
-	{
-		return;
-	}
-
-	auto drawerIt = std::find(m_players.rbegin(), m_players.rend(), m_drawer);
-
-	if (drawerIt == m_players.rbegin())
-	{
-		NextRound();
-		m_drawer = m_players[0];
-	}
-	else
-	{
-		m_drawer = m_players[m_players.rbegin() - drawerIt];
-	}
 }
 
 void Game::NextRound()
@@ -131,12 +88,11 @@ void Game::NextRound()
 
 		int randomRoundIndex = rand();
 
-		m_specialRoundType = (SpecialRound)randomRoundIndex;
+		/*m_specialRoundType = (RoundType)randomRoundIndex;
 
-		m_status = GameStatus::SpecialRound;
+		m_status = GameStatus::SpecialRound;*/
 	}
 }
-
 
 void http::Game::RemovePlayer(const std::string& username)
 {
@@ -156,43 +112,4 @@ void http::Game::RemovePlayer(const std::string& username)
 	}
 
 	m_players.erase(m_players.begin() + indexToRemove);
-}
-
-bool http::Game::IsCloseEnough(const std::string& currGuess)
-{
-	auto tokenize = [](const std::string& str, std::unordered_map<std::string, int>& wordFrequency) {
-		size_t start = 0, end = 0;
-		while ((end = str.find(' ', start)) != std::string::npos) {
-			std::string word = str.substr(start, end - start);
-			wordFrequency[word]++;
-			start = end + 1;
-		}
-		std::string lastWord = str.substr(start);
-		wordFrequency[lastWord]++;
-		};
-
-	std::unordered_map<std::string, int> freq1, freq2;
-	tokenize(m_wordToGuess, freq1);
-	tokenize(currGuess, freq2);
-
-	double dotProduct = 0.0;
-	for (const auto& entry : freq1) 
-	{
-		dotProduct += entry.second * freq2[entry.first];
-	}
-
-	double mag1 = 0.0, mag2 = 0.0;
-	for (const auto& entry : freq1) 
-	{
-		mag1 += std::pow(entry.second, 2);
-	}
-	
-	for (const auto& entry : freq2) 
-	{
-		mag2 += std::pow(entry.second, 2);
-	}
-
-	double similarity = dotProduct / (std::sqrt(mag1) * std::sqrt(mag2));
-	
-	return similarity >= Game::kTreshold;
 }

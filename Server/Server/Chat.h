@@ -15,16 +15,23 @@ namespace http
 	class Chat
 	{
 	public:
-		//Chat() = default;
 		Chat(const std::vector<Player*>& players);
 
+		void VerifyMessage(const String& username, const String& message);
 		void AddMessage(const String& username, const String& message);
 
 		const StringVector& GetAndDeleteMessages(const String& username);
 
 		const ChatMap& GetChat() const noexcept;
 
+		bool IsCloseEnough(const std::string& currGuess);
+
+	private:
+		static inline double kTreshold = 0.8;
+
 	private:
 		ChatMap m_messages;
+
+		String m_wordToGuess;
 	};
 }
