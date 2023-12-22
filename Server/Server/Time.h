@@ -24,7 +24,7 @@ namespace http
 
 		int GetServerTime() const noexcept;
 
-		std::function<void(const std::string&)> GetMethodToCall() const noexcept;
+		const std::function<void(const std::string&)>& GetMethodToCall() const noexcept;
 
 		void SetStartTimeStamp(float newTimeStamp);
 		void SetStartValue(float newStartValue);

@@ -21,12 +21,12 @@ Game::Game(std::vector<Player*>&& newPlayers) :
 	}
 }
 
-std::vector<Player*> http::Game::GetPlayers() const noexcept
+const std::vector<Player*>& http::Game::GetPlayers() const noexcept
 {
 	return m_players;
 }
 
-Player* http::Game::GetDrawer() const noexcept
+const Player* http::Game::GetDrawer() const noexcept
 {
 	return m_drawer;
 }
@@ -51,12 +51,12 @@ DrawingBoard http::Game::GetBoard() const noexcept
 	return m_board;
 }
 
-std::string http::Game::GetWordToGuess() const noexcept
+const std::string& http::Game::GetWordToGuess() const noexcept
 {
 	return m_wordToGuess;
 }
 
-std::string http::Game::GetWordToDisplay() const noexcept
+const std::string& http::Game::GetWordToDisplay() const noexcept
 {
 	return m_wordToDisplay;
 }
@@ -79,6 +79,11 @@ void http::Game::SetDrawingBoard(DrawingBoard newDrawingBoard)
 void http::Game::SetWordToGuess(const std::string& newWordToGuess)
 {
 	m_wordToGuess = newWordToGuess;
+}
+
+void http::Game::SetDrawer(Player* newDrawer)
+{
+	m_drawer = newDrawer;
 }
 
 Chat Game::GetChat() const noexcept

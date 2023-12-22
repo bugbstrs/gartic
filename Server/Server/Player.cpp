@@ -29,7 +29,7 @@ uint16_t Player::GetPoints() const noexcept
     return m_points;
 }
 
-std::string http::Player::GetName() const noexcept
+const std::string& http::Player::GetName() const noexcept
 {
     return m_user;
 }

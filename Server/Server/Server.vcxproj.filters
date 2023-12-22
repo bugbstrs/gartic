@@ -43,6 +43,9 @@
     <Filter Include="Header Files\Route">
       <UniqueIdentifier>{38ed4533-b6ad-407a-b498-0a7350f1a0a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Logic\Enums">
+      <UniqueIdentifier>{629291b4-c6ad-491b-af4d-c19b42538e35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="banned.txt">
@@ -101,11 +104,11 @@
     <ClInclude Include="DrawEvent.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
-    <ClInclude Include="SpecialRoundsEnum.h">
-      <Filter>Header Files\Logic</Filter>
-    </ClInclude>
     <ClInclude Include="CanvasPointsEnum.h">
-      <Filter>Header Files\Logic</Filter>
+      <Filter>Header Files\Logic\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecialRoundsEnum.h">
+      <Filter>Header Files\Logic\Enums</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

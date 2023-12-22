@@ -7,7 +7,12 @@ http::User::User(const std::string& newUsername):
 {
 }
 
-std::string http::User::GetUsername() const noexcept
+void http::User::SetUsername(const std::string& newUsername)
+{
+	m_username = newUsername;
+}
+
+const std::string& http::User::GetUsername() const noexcept
 {
 	return m_username;
 }

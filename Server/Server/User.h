@@ -14,7 +14,9 @@ namespace http
 
 		~User() = default;
 
-		std::string GetUsername() const noexcept;
+		void SetUsername(const std::string& newUsername);
+
+		const std::string& GetUsername() const noexcept;
 
 		void SetActive();
 		bool operator == (const User& u1);

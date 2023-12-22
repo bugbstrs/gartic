@@ -12,7 +12,7 @@ namespace http
 
 		void AddMessage(const std::pair<std::string, std::string>& messages);
 
-		std::vector<std::pair<std::string, std::string>> GetChat() const noexcept;
+		const std::vector<std::pair<std::string, std::string>>& GetChat() const noexcept;
 
 	private:
 		std::vector<std::pair<std::string, std::string>> m_messages;

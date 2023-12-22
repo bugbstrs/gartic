@@ -14,7 +14,7 @@ namespace http
 
 		~DrawingBoard() = default;
 
-		std::vector<std::pair<std::string, std::vector<DrawEvent>>> GetEvents() const noexcept;
+		const std::vector<std::pair<std::string, std::vector<DrawEvent>>>& GetEvents() const noexcept;
 
 		void Fill(int x, int y, Color color);
 

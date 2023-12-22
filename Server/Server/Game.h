@@ -21,21 +21,22 @@ namespace http
 
 		~Game() = default;
 
-		std::vector<Player*> GetPlayers() const noexcept;
-		Player* GetDrawer() const noexcept;
+		const std::vector<Player*>& GetPlayers() const noexcept;
+		const Player* GetDrawer() const noexcept;
 		GameSettings GetSettings() const noexcept;
 		GameStatus GetStatus() const noexcept;
 		Time GetTime() const noexcept;
 		Chat GetChat() const noexcept;
 		int GetRoundNumber() const noexcept;
 		DrawingBoard GetBoard() const noexcept;
-		std::string GetWordToGuess() const noexcept;
-		std::string GetWordToDisplay() const noexcept;
+		const std::string& GetWordToGuess() const noexcept;
+		const std::string& GetWordToDisplay() const noexcept;
 
 		void SetGameStatus(GameStatus newGameStatus);
 		void SetRoundNumber(int newRoundNumber);
 		void SetDrawingBoard(DrawingBoard newDrawingBoard);
 		void SetWordToGuess(const std::string& newWordToGuess);
+		void SetDrawer(Player* newDrawer);
 
 		void NextDrawer();
 		void NextRound();

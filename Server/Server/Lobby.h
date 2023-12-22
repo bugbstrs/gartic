@@ -25,10 +25,10 @@ namespace http
 		void JoinLobby(User&& newPlayer);
 		void LeaveLobby(const User& playerToLeave);
 
-		std::vector<User> GetPlayers() const noexcept;
-		User* GetLeader() const noexcept;
+		const std::vector<User>& GetPlayers() const noexcept;
+		const User* GetLeader() const noexcept;
 		GameSettings GetSettings() const noexcept;
-		std::string GetCode() const noexcept;
+		const std::string& GetCode() const noexcept;
 
 		void SetLeader(const User* newLeader);
 

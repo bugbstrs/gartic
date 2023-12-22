@@ -23,12 +23,12 @@ void http::Lobby::LeaveLobby(const User& playerToLeave)
 	throw GarticException<UserDoesntExistException>("Lobby > LeaveLobby(const User&): The player is already not in the lobby!");*/
 }
 
-std::vector<User> http::Lobby::GetPlayers() const noexcept
+const std::vector<User>& http::Lobby::GetPlayers() const noexcept
 {
 	return m_players;
 }
 
-User* http::Lobby::GetLeader() const noexcept
+const User* http::Lobby::GetLeader() const noexcept
 {
 	return m_leader;
 }
@@ -38,7 +38,7 @@ GameSettings http::Lobby::GetSettings() const noexcept
 	return m_settings;
 }
 
-std::string http::Lobby::GetCode() const noexcept
+const std::string& http::Lobby::GetCode() const noexcept
 {
 	return m_code;
 }

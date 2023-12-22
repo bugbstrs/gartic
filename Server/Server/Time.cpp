@@ -43,7 +43,7 @@ int http::Time::GetServerTime() const noexcept
 	return static_cast<int>(m_serverTimer.GetElapsedTime().count());
 }
 
-std::function<void(const std::string&)> http::Time::GetMethodToCall() const noexcept
+const std::function<void(const std::string&)>& http::Time::GetMethodToCall() const noexcept
 {
 	return m_toCall;
 }
