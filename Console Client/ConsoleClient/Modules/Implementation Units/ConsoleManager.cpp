@@ -1,5 +1,6 @@
 module ConsoleManager;
 
+import <cmath>;
 import <print>;
 import <string>;
 import <vector>;
@@ -11,11 +12,12 @@ import ColorType;
 
 using Words = std::vector<std::string>;
 
-ConsoleManager::ConsoleManager()
-{
-	m_buffers = nullptr;
-	m_bufferIndex = 0;
-}
+ConsoleManager::ConsoleManager() :
+	m_buffers{nullptr},
+	m_bufferIndex{0},
+	m_colorTable{0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,
+				 0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000}
+{}
 
 ConsoleManager::~ConsoleManager()
 {
@@ -56,17 +58,17 @@ void ConsoleManager::SetConsoleFont(const WString fontName, int16_t width, int16
 
 void ConsoleManager::SetTextColor(ColorType color)
 {
-	m_buffers[m_bufferIndex].SetTextColor(color);
+	m_buffers[m_bufferIndex].SetTextColor(FindNearestColor(color));
 }
 
 void ConsoleManager::SetBackgroundColor(ColorType color)
 {
-	m_buffers[m_bufferIndex].SetBackgroundColor(color);
+	m_buffers[m_bufferIndex].SetBackgroundColor(FindNearestColor(color));
 }
 
 void ConsoleManager::SetColor(ColorType background, ColorType text)
 {
-	m_buffers[m_bufferIndex].SetColor(background, text);
+	m_buffers[m_bufferIndex].SetColor(FindNearestColor(background), FindNearestColor(text));
 }
 
 void ConsoleManager::SetCursor(bool visible, COORD coord)
@@ -89,6 +91,46 @@ void ConsoleManager::SetWindowed()
 {
 	SetWindowLong(GetConsoleWindow(), GWL_STYLE, GetWindowLong(GetConsoleWindow(), GWL_STYLE) | WS_OVERLAPPEDWINDOW);
 	ShowWindow(GetConsoleWindow(), SW_SHOWNORMAL);
+}
+
+void ConsoleManager::AddColorToPalette(ColorType color)
+{
+	for (int i{1}; i < 16; ++i)
+	{
+		if (m_colorTable[i] == 0x00000000)
+			m_colorTable[i] = color;
+		if (m_colorTable[i] == color)
+			break;
+	}
+	CONSOLE_SCREEN_BUFFER_INFOEX info;
+	info.cbSize = sizeof(CONSOLE_SCREEN_BUFFER_INFOEX);
+	GetConsoleScreenBufferInfoEx(GetStdHandle(STD_OUTPUT_HANDLE), &info);
+	for (int i = 0; i < 16; ++i)
+	{
+		info.ColorTable[i] = m_colorTable[i];
+	}
+	info.srWindow.Bottom++;
+	SetConsoleScreenBufferInfoEx(GetStdHandle(STD_OUTPUT_HANDLE), &info);
+}
+
+void ConsoleManager::AddColorsToPalette(std::initializer_list<ColorType> colors)
+{
+	for (ColorType color : colors)
+		AddColorToPalette(color);
+}
+
+void ConsoleManager::ResetColorsPalette()
+{
+	for (auto &color : m_colorTable)
+		color = 0x00000000;
+	CONSOLE_SCREEN_BUFFER_INFOEX info;
+	info.cbSize = sizeof(CONSOLE_SCREEN_BUFFER_INFOEX);
+	GetConsoleScreenBufferInfoEx(GetStdHandle(STD_OUTPUT_HANDLE), &info);
+	for (int i = 0; i < 16; ++i)
+	{
+		info.ColorTable[i] = m_colorTable[i];
+	}
+	SetConsoleScreenBufferInfoEx(GetStdHandle(STD_OUTPUT_HANDLE), &info);
 }
 
 void ConsoleManager::WriteHorizontal(const String& sentence, int16_t x, int16_t y)
@@ -356,4 +398,31 @@ void ConsoleManager::UpdateConsole()
 void ConsoleManager::ClearBuffer()
 {
 	m_buffers[m_bufferIndex].Clear();
+}
+
+int ConsoleManager::FindNearestColor(ColorType color)
+{
+	int nearestColor{0};
+	float minDistance{99999};
+
+	for (int i{0}; i < 16; ++i)
+	{
+		int r1{(color & 0xFF)};
+		int g1{((color >> 8) & 0xFF)};
+		int b1{((color >> 16) & 0xFF)};
+
+		int r2{(m_colorTable[i] & 0xFF)};
+		int g2{((m_colorTable[i] >> 8) & 0xFF)};
+		int b2{((m_colorTable[i] >> 16) & 0xFF)};
+
+		double distance{sqrt(pow(r1 - r2, 2) + pow(g1 - g2, 2) + pow(b1 - b2, 2))};
+
+		if (distance < minDistance)
+		{
+			minDistance = distance;
+			nearestColor = i;
+		}
+	}
+
+	return nearestColor;
 }
