@@ -105,11 +105,11 @@ void ConsoleManager::AddColorToPalette(ColorType color)
 	CONSOLE_SCREEN_BUFFER_INFOEX info;
 	info.cbSize = sizeof(CONSOLE_SCREEN_BUFFER_INFOEX);
 	GetConsoleScreenBufferInfoEx(GetStdHandle(STD_OUTPUT_HANDLE), &info);
-	for (int i = 0; i < 16; ++i)
+	for (int i{0}; i < 16; ++i)
 	{
 		info.ColorTable[i] = m_colorTable[i];
 	}
-	info.srWindow.Bottom++;
+	++info.srWindow.Bottom;
 	SetConsoleScreenBufferInfoEx(GetStdHandle(STD_OUTPUT_HANDLE), &info);
 }
 
@@ -126,10 +126,11 @@ void ConsoleManager::ResetColorsPalette()
 	CONSOLE_SCREEN_BUFFER_INFOEX info;
 	info.cbSize = sizeof(CONSOLE_SCREEN_BUFFER_INFOEX);
 	GetConsoleScreenBufferInfoEx(GetStdHandle(STD_OUTPUT_HANDLE), &info);
-	for (int i = 0; i < 16; ++i)
+	for (int i{0}; i < 16; ++i)
 	{
 		info.ColorTable[i] = m_colorTable[i];
 	}
+	++info.srWindow.Bottom;
 	SetConsoleScreenBufferInfoEx(GetStdHandle(STD_OUTPUT_HANDLE), &info);
 }
 
