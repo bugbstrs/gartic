@@ -262,7 +262,24 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 
 	// Draw options
-
+	auto HLayout = new HorizontalLayout{101, 80, Align::Left, Align::Up, Color::Black, 31, 5, m_console, 1};
+	m_objects.emplace_back(HLayout);
+	HLayout->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
+					Color::White, Color::Black, m_console, m_input, m_selectedColorButton, "pen"});
+	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetOption(DrawingBoard::Option::draw); });
+	m_selectableObjects.emplace_back(aux);
+	HLayout->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
+					Color::White, Color::Black, m_console, m_input, m_selectedColorButton, "fill"});
+	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetOption(DrawingBoard::Option::fill); });
+	m_selectableObjects.emplace_back(aux);
+	HLayout->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
+					Color::White, Color::Black, m_console, m_input, m_selectedColorButton, "undo"});
+	aux->SetFunctionOnActivate([this](){ m_drawingBoard->Undo(); });
+	m_selectableObjects.emplace_back(aux);
+	HLayout->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
+					Color::White, Color::Black, m_console, m_input, m_selectedColorButton, "clear"});
+	aux->SetFunctionOnActivate([this](){ m_drawingBoard->Clear(); });
+	m_selectableObjects.emplace_back(aux);
 
 	// Leave button
 	auto leaveButton = new Button{2, 83, Align::Center, Align::Center, Color::Blue, Color::White, 11, 5,
