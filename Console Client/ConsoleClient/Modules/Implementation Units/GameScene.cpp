@@ -100,6 +100,10 @@ void GameScene::Start()
 	m_timer = new Label{2, 2, Align::Left, Align::Up, Color::Black, Color::White, 9, 1, m_console, "time: "};
 	m_objects.emplace_back(m_timer);
 
+	// Game state
+	m_gameState = new Label{70, 2, Align::Center, Align::Up, Color::Black, Color::White, 20, 1, m_console, "Waiting"};
+	m_objects.emplace_back(m_gameState);
+
 	// Color display
 	m_colorDisplay = new ColorDisplay{24, 79, Color::Black, 7, 7, m_console};
 	m_objects.emplace_back(m_colorDisplay);

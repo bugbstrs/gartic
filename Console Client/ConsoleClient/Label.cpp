@@ -27,6 +27,11 @@ Label::Label(Align horizontalAlign, Align verticalAlign,
 	m_text	  { text												}
 {}
 
+void Label::UpdateText(const String &text)
+{
+	m_text = text;
+}
+
 void Label::Draw()
 {
 	if (!m_active)

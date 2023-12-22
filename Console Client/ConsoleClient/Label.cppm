@@ -20,7 +20,8 @@ public:
 	// Destructor
 	~Label() = default;
 
-	void Draw() override;
+	void UpdateText	(const String &text);
+	void Draw		() override;
 
 private:
 	String m_text;
