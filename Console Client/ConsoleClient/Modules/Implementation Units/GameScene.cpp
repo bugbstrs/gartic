@@ -101,12 +101,12 @@ void GameScene::Start()
 	m_objects.emplace_back(m_colorDisplay);
 
 	// Colors
-	auto colors = new VerticalLayout{33, 77, Align::Left, Align::Up, Color::Black, 95, 11, m_console, 1};
-	m_objects.emplace_back(colors);
+	auto VLayout = new VerticalLayout{33, 77, Align::Left, Align::Up, Color::Black, 95, 11, m_console, 1};
+	m_objects.emplace_back(VLayout);
 	auto row1 = new HorizontalLayout{Align::Left, Align::Up, Color::Black, 95, 5, m_console, 1};
-	colors->AddObject(row1);
+	VLayout->AddObject(row1);
 	auto row2 = new HorizontalLayout{Align::Left, Align::Up, Color::Black, 95, 5, m_console, 1};
-	colors->AddObject(row2);
+	VLayout->AddObject(row2);
 	auto aux = new Button{Align::Center, Align::Center, Color::White, Color::White, 5, 5,
 					Color::White, Color::White, m_console, m_input, m_selectedColorButton, ""};
 	aux->SetFunctionOnActivate([this]()
@@ -238,7 +238,28 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 
 	// Width
-
+	VLayout = new VerticalLayout{85, 77, Align::Left, Align::Up, Color::Black, 11, 11, m_console, 1};
+	m_objects.emplace_back(VLayout);
+	row1 = new HorizontalLayout{Align::Left, Align::Up, Color::Black, 11, 5, m_console, 1};
+	VLayout->AddObject(row1);
+	row2 = new HorizontalLayout{Align::Left, Align::Up, Color::Black, 11, 5, m_console, 1};
+	VLayout->AddObject(row2);
+	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGray, Color::Black, 5, 5,
+					Color::DarkGray, Color::Black, m_console, m_input, m_selectedColorButton, "4"});
+	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetPenWidth(4); });
+	m_selectableObjects.emplace_back(aux);
+	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGray, Color::Black, 5, 5,
+					Color::DarkGray, Color::Black, m_console, m_input, m_selectedColorButton, "10"});
+	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetPenWidth(10); });
+	m_selectableObjects.emplace_back(aux);
+	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGray, Color::Black, 5, 5,
+					Color::DarkGray, Color::Black, m_console, m_input, m_selectedColorButton, "18"});
+	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetPenWidth(18); });
+	m_selectableObjects.emplace_back(aux);
+	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGray, Color::Black, 5, 5,
+					Color::DarkGray, Color::Black, m_console, m_input, m_selectedColorButton, "26"});
+	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetPenWidth(26); });
+	m_selectableObjects.emplace_back(aux);
 
 	// Draw options
 

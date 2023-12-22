@@ -12,7 +12,7 @@ DrawingBoard::DrawingBoard(COORD upLeftCorner,
 	m_sectorHeight	{ static_cast<int>(canvasHeight / maxHeight)	  },
 	m_option		{ Option::draw									  },
 	m_color			{ Color::Black									  },
-	m_penWidth		{ 6												  }
+	m_penWidth		{ 4												  }
 {
 	m_canvases.emplace(canvasWidth, canvasHeight, backgroungColor);
 	m_selectable = false;
@@ -30,7 +30,7 @@ DrawingBoard::DrawingBoard(int16_t x, int16_t y,
 	m_sectorHeight	{ static_cast<int>(canvasHeight / maxHeight)	  },
 	m_option		{ Option::draw									  },
 	m_color			{ Color::Black									  },
-	m_penWidth		{ 6												  }
+	m_penWidth		{ 4												  }
 {
 	m_canvases.emplace(canvasWidth, canvasHeight, backgroungColor);
 	m_selectable = false;
@@ -48,7 +48,7 @@ DrawingBoard::DrawingBoard(int16_t maxWidth,
 	m_sectorHeight	{ static_cast<int>(canvasHeight / maxHeight)	  },
 	m_option		{ Option::draw									  },
 	m_color			{ Color::Black									  },
-	m_penWidth		{ 6												  }
+	m_penWidth		{ 4												  }
 {
 	m_canvases.emplace(canvasWidth, canvasHeight, backgroungColor);
 	m_selectable = false;
