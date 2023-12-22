@@ -56,6 +56,8 @@ void LobbyScene::Input() const
 void LobbyScene::Start()
 {
 	m_nextScene = nullptr;
+	m_console->ResetColorsPalette();
+	m_console->AddColorsToPalette({White, Black, Gray, DarkBlue, Blue, DarkGray, Green, DarkGreen});
 	m_console->NewConsole(L"Lobby", 160, 45);
 	m_console->SetConsoleFont(L"Consolas", 12, 24);
 	m_console->SetFullscreen();
@@ -133,7 +135,7 @@ void LobbyScene::Start()
 
 	// Start button
 	auto startButton = new Button{ 40, 40, Align::Center, Align::Center, Color::DarkGreen, Color::White, 15, 3,
-		Color::DarkGreen, Color::White, m_console, m_input, m_selected, "START" };
+		Color::Green, Color::White, m_console, m_input, m_selected, "START" };
 	startButton->SetHoverColors(Color::Green, Color::White);
 	startButton->SetFunctionOnActivate(std::bind(&LobbyScene::StartGame, this));
 	m_selectableObjects.emplace_back(startButton);

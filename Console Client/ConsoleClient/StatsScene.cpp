@@ -36,6 +36,8 @@ void StatsScene::Start()
 {
     m_nextScene = nullptr;
     m_console->SetWindowed();
+    m_console->ResetColorsPalette();
+    m_console->AddColorsToPalette({White, Black, DarkBlue, DarkGray, Green, Blue});
     m_console->NewConsole(L"Stats", 50, 25);
     m_console->SetConsoleFont(L"Consolas", 11, 24);
 

@@ -51,12 +51,14 @@ void MenuScene::Start()
 {
     m_lobbyCode = "";
     m_nextScene = nullptr;
+    m_console->ResetColorsPalette();
+    m_console->AddColorsToPalette({Cyan, Purple, White, Black, DarkGray, DarkBlue, Blue, Green});
     m_console->SetWindowed();
     m_console->NewConsole(L"Menu", 50, 25);
     m_console->SetConsoleFont(L"MS Gothic", 15, 15);
 
 
-    m_objects.emplace_back(new Label{23, 2, Align::Left, Align::Up, Color::Cyan, Color::Magenta, 6, 1, m_console, "GARTIC"});
+    m_objects.emplace_back(new Label{23, 2, Align::Left, Align::Up, Color::Cyan, Color::Purple, 6, 1, m_console, "GARTIC"});
 
 
     auto createLobbyButton{ new Button{20, 6, Align::Center, Align::Center, Color::DarkGray, Color::Green,

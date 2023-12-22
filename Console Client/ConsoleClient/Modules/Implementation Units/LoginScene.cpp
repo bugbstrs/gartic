@@ -40,11 +40,13 @@ void LoginScene::Start()
 	m_username = "";
 	m_password = "";
 	m_nextScene = nullptr;
+	m_console->ResetColorsPalette();
+	m_console->AddColorsToPalette({Cyan, Purple, White, Black, Gray, DarkBlue, Blue, DarkGray, Green});
 	m_console->SetWindowed();
 	m_console->NewConsole(L"Login", 50, 11);
 	m_console->SetConsoleFont(L"Consolas", 11, 24);
 
-	m_objects.emplace_back(new Label{25, 1, Align::Left, Align::Up, Color::Cyan, Color::Magenta, 6, 1, m_console, "GARTIC"});
+	m_objects.emplace_back(new Label{25, 1, Align::Left, Align::Up, Color::Cyan, Color::Purple, 6, 1, m_console, "GARTIC"});
 
 	auto layout{new HorizontalLayout{11, 4, Align::Right, Align::Up, Color::Black, 27, 1, m_console, 0}};
 	layout->AddObject(new Label{Align::Left, Align::Up, Color::Black, Color::White, 5, 1, m_console, "User:"});
