@@ -1,5 +1,7 @@
 export module ConsoleManager;
 
+import <initializer_list>;
+
 export import ColorType;
 import ConsoleBuffer;
 import Align;
@@ -26,6 +28,9 @@ public:
 	void SetCursor			(bool visible, int16_t x, int16_t y);
 	void SetFullscreen		();
 	void SetWindowed		();
+	void AddColorToPalette	(ColorType color);
+	void AddColorsToPalette	(std::initializer_list<ColorType> colors);
+	void ResetColorsPalette	();
 
 	// Output related
 	void WriteHorizontal (const String& sentence, int16_t x, int16_t y);
@@ -43,6 +48,8 @@ public:
 private:
 	ConsoleBuffer* m_buffers;
 	bool		   m_bufferIndex;
+	COLORREF	   m_colorTable[16];
 
-	void ClearBuffer();
+	void ClearBuffer		();
+	int  FindNearestColor	(ColorType color);
 };
