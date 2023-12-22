@@ -32,7 +32,7 @@ public:
 	void ChangePenColor(QColor color) noexcept;
 	void ChangePenWidth(int width) noexcept;
 
-	void SetIconsAndNamesForPlayers();
+	void SetGameSettings(std::tuple<int, int, int> gameSettings);
 
 public slots:
 	void showEvent(QShowEvent* event) override;
@@ -54,6 +54,10 @@ private:
 	};
 
 private:
+	int drawTime{};
+	int rounds{};
+	int wordsCount{};
+
 	bool isDrawer					 { true };
 	QLabel* wordToDraw				 { new QLabel{} };
 	DrawingBoard* drawingBoard		 { new DrawingBoard{} };

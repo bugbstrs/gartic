@@ -2,10 +2,7 @@
 #include <qthread.h>
 
 GameplayWidget::GameplayWidget(QWidget *parent)
-	: QWidget{ parent },
-	pencilCursor{ Qt::CrossCursor },
-	eraserCursor{ QCursor(QPixmap(":/image/eraser_cursor").scaled(25, 25)) },
-	fillCursor{ QCursor(QPixmap(":/image/fill").scaled(25, 25)) }
+	: QWidget{ parent }
 {}
 
 GameplayWidget::~GameplayWidget()
@@ -23,6 +20,13 @@ void GameplayWidget::ChangePenColor(QColor color) noexcept
 void GameplayWidget::ChangePenWidth(int width) noexcept
 {
 	drawingBoard->ChangePenWidth(width);
+}
+
+void GameplayWidget::SetGameSettings(std::tuple<int, int, int> gameSettings)
+{
+	drawTime = std::get<0>(gameSettings);
+	rounds = std::get<1>(gameSettings);
+	wordsCount = std::get<2>(gameSettings);
 }
 
 void GameplayWidget::OnCanvasCleared() noexcept

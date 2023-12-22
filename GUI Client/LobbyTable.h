@@ -10,7 +10,7 @@ class LobbyTable  : public QTableWidget
 
 public:
 	//Constructor
-	LobbyTable(QWidget *parent);
+	LobbyTable(QWidget *parent = nullptr);
 	
 	//Destructor
 	~LobbyTable();
