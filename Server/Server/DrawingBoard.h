@@ -16,14 +16,14 @@ namespace http
 
 		~DrawingBoard() = default;
 
-		void Draw(const std::string& username, const DrawEvent& currEvent);
+		void Draw(const std::string& username, DrawEvent* currEvent);
 
-		const std::unordered_map<std::string, std::vector<DrawEvent>>& GetAllEvents() const noexcept;
+		const std::unordered_map<std::string, std::vector<DrawEvent*>>& GetAllEvents() const noexcept;
 		
-		const std::vector<DrawEvent>& GetAndDeleteEvents(const std::string& username);
+		const std::vector<DrawEvent*>& GetAndDeleteEvents(const std::string& username);
 
 	private:
-		std::unordered_map<std::string, std::vector<DrawEvent>> m_events;
+		std::unordered_map<std::string, std::vector<DrawEvent*>> m_events;
 	};
 }
 
