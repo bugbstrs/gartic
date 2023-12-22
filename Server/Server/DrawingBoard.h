@@ -5,21 +5,22 @@
 #include <unordered_map>
 
 #include "DrawEvent.h"
+#include "Player.h"
 
 namespace http
 {
 	class DrawingBoard
 	{
 	public:
-		DrawingBoard() = default;
+		DrawingBoard(const std::vector<Player*>& players);
 
 		~DrawingBoard() = default;
 
-		const std::unordered_map<std::string, std::vector<DrawEvent>>& GetEvents() const noexcept;
+		void Draw(const std::string& username, const DrawEvent& currEvent);
 
-		void Fill(int x, int y, Color color);
-
-		void Draw(int x, int y, Color color, int width);
+		const std::unordered_map<std::string, std::vector<DrawEvent>>& GetAllEvents() const noexcept;
+		
+		const std::vector<DrawEvent>& GetAndDeleteEvents(const std::string& username);
 
 	private:
 		std::unordered_map<std::string, std::vector<DrawEvent>> m_events;

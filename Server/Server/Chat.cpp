@@ -2,11 +2,11 @@
 
 #include <format>
 
-http::Chat::Chat(const std::vector<Player*>& players): 
+http::Chat::Chat(const std::vector<Player*>& players)
 {
-	for (auto player : players)
+	for (const auto& player : players)
 	{
-		m_message[player->GetName()] = {};
+		m_messages[player->GetName()] = {};
 	}
 }
 
@@ -21,7 +21,7 @@ void http::Chat::AddMessage(const String& username, const String& message)
 	}
 }
 
-const StringVector& http::Chat::GetMessages(const String& username)
+const StringVector& http::Chat::GetAndDeleteMessages(const String& username)
 {
 	if (m_messages.find(username) != m_messages.end())
 	{

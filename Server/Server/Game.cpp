@@ -7,10 +7,10 @@ Game::Game(std::vector<Player*>&& newPlayers) :
 	m_drawer { m_players[0] },
 	m_status { GameStatus::Waiting },
 	m_remainingTime { Time() },
-	m_chat { Chat() },
+	m_chat { Chat(m_players) },
 	m_roundNumber { 0 },
 	m_specialRoundType { SpecialRound::None },
-	m_board { DrawingBoard() },
+	m_board { DrawingBoard(m_players) },
 	m_wordToGuess { "" },
 	m_wordToDisplay { "" }
 {

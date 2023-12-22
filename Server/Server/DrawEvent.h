@@ -28,6 +28,9 @@ namespace http
 
 		void SetWidth(int newWidth);
 
+		bool operator==(const DrawEvent& e2) { return true; };
+		DrawEvent& operator=(const DrawEvent& e2) { return *this; };
+
 	private:
 		CanvasPoints m_canvasPoints;
 

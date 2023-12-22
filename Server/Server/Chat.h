@@ -15,11 +15,12 @@ namespace http
 	class Chat
 	{
 	public:
+		//Chat() = default;
 		Chat(const std::vector<Player*>& players);
 
 		void AddMessage(const String& username, const String& message);
 
-		const StringVector& GetMessages(const String& username);
+		const StringVector& GetAndDeleteMessages(const String& username);
 
 		const ChatMap& GetChat() const noexcept;
 
