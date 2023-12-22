@@ -18,7 +18,7 @@ void http::Lobby::LeaveLobby(const User& playerToLeave)
 	if (auto it{ std::find(m_players.begin(), m_players.end(), playerToLeave) }; it != m_players.end())
 	{
 		m_players.erase(it);
-	}
+	}	
 /*
 	throw GarticException<UserDoesntExistException>("Lobby > LeaveLobby(const User&): The player is already not in the lobby!");*/
 }

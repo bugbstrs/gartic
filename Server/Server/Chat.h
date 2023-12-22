@@ -4,6 +4,10 @@
 #include <string>
 #include <unordered_map>
 
+using String = std::string;
+using StringVector = std::vector<String>;
+using ChatMap = std::unordered_map<String, StringVector>;
+
 namespace http
 {
 	class Chat
@@ -11,11 +15,13 @@ namespace http
 	public:
 		Chat() = default;
 
-		void AddMessage(const std::string& username, const std::string& message);
+		void AddMessage(const String& username, const String& message);
 
-		const std::unordered_map<std::string, std::vector<std::string>>& GetChat() const noexcept;
+		const StringVector& GetMessages(const String& username);
+
+		const ChatMap& GetChat() const noexcept;
 
 	private:
-		std::unordered_map<std::string, std::vector<std::string>> m_messages;
+		ChatMap m_messages;
 	};
 }
