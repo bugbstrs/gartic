@@ -73,7 +73,7 @@
     <ClCompile Include="LobbyTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
+    <ClCompile Include="LobbyFrame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -111,7 +111,7 @@
     <QtMoc Include="LobbyTable.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="SceneManager.h">
+    <QtMoc Include="LobbyFrame.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

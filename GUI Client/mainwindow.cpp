@@ -70,12 +70,19 @@ void MainWindow::OnStatsButtonReleased() noexcept { ui->stackedWidget->setCurren
 void MainWindow::OnGoToLogInButtonReleased() noexcept{ ui->stackedWidget->setCurrentWidget(ui->LogInScene); }
 void MainWindow::OnGoToSignUpButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->SignUpScene); }
 
-void MainWindow::OnStartGameButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->GameplayScene); }
+void MainWindow::OnStartGameButtonReleased() noexcept { 
+    ui->scoreboardTable->AddPlayersToScoreboard(std::move(ui->lobbyTable->GetTakenAvatars()));
+    ui->stackedWidget->setCurrentWidget(ui->GameplayScene);
+}
 
 void MainWindow::OnExitLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }
 
 //Game scene events
-void MainWindow::OnLeaveGameButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(0); }
+void MainWindow::OnLeaveGameButtonReleased() noexcept { 
+    ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); 
+    ui->scoreboardTable->ClearScoreboard();
+    ui->lobbyTable->ClearLobby();
+}
 
 // Stats scene events
 void MainWindow::OnBackToMenuButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(0); }

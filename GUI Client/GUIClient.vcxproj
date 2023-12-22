@@ -118,9 +118,9 @@
     <ClCompile Include="Chat.cpp" />
     <ClCompile Include="ChatConversation.cpp" />
     <ClCompile Include="ChatWritingBox.cpp" />
+    <ClCompile Include="LobbyFrame.cpp" />
     <ClCompile Include="LobbyTable.cpp" />
     <ClCompile Include="LogInManager.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ScoreboardTable.cpp" />
     <ClCompile Include="SignUpManager.cpp" />
     <ClCompile Include="ToolsFrame.cpp" />
@@ -170,7 +170,7 @@
     <QtMoc Include="LobbyTable.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="SceneManager.h" />
+    <QtMoc Include="LobbyFrame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

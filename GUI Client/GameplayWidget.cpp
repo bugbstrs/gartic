@@ -80,21 +80,6 @@ void GameplayWidget::ShowWordDependingOnPlayerType() noexcept
 
 void GameplayWidget::AddPlayers()
 {
-	scoreboardTable->AddPlayer("Marcel", 10);
-	scoreboardTable->AddPlayer("Alex", 45);
-	scoreboardTable->AddPlayer("Multiple", 200);
-	scoreboardTable->AddPlayer("tdennis", 15);
-
-	scoreboardTable->AddPlayer("koochie", 75);
-	scoreboardTable->AddPlayer("DavidStoik", 20);
-	scoreboardTable->AddPlayer("MC", 160);
-	scoreboardTable->AddPlayer("Dancila", 100);
-
-	scoreboardTable->AddPlayer("Ciolacu", 90);
-	scoreboardTable->AddPlayer("Ponta", 90);
-	scoreboardTable->AddPlayer("Micutzu", 90);
-	scoreboardTable->AddPlayer("Bendeac", 90);
-
 	scoreboardTable->model()->sort(1, Qt::DescendingOrder);
 }
 

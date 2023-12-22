@@ -11,11 +11,13 @@ public:
 	ScoreboardTable(QWidget *parent = nullptr);
 	~ScoreboardTable();
 
-	void AddPlayer(const std::string& name, int points);
+	void AddPlayersToScoreboard(std::vector <std::tuple<QIcon, QString, QColor>> takenAvatars);
+	void AddPointsToPlayerWithIndex(uint8_t index);
 
+	void ClearScoreboard();
 private:
 	QFont nameFont																			 {};
 	QFont pointsFont																		 {};
-	std::vector<std::pair<QIcon*, QColor>>availableIcons									 {};
-	std::unordered_map<std::string, std::pair<QTableWidgetItem*, QTableWidgetItem*>> players {};
+	//std::vector <std::tuple<QIcon, QString, QColor, int>> players							 {};
+	std::vector <std::pair<QTableWidgetItem*, QTableWidgetItem*>> players					 {};
 };

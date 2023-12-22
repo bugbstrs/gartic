@@ -23,6 +23,7 @@ public:
 	void ChangePenPropertiesTo(QColor color, int width) noexcept;
 	void ChangePenColor(QColor color) noexcept;
 	void ChangePenWidth(int width) noexcept;
+
 	void ToggleEraser(bool value) noexcept;
 	void ToggleFill(bool value) noexcept;
 	void EnablePencil() noexcept;

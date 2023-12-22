@@ -43,7 +43,7 @@ background-size: stretch;</string>
    </property>
    <layout class="QGridLayout" name="gridLayout_3">
     <item row="0" column="0">
-     <widget class="SceneManager" name="stackedWidget">
+     <widget class="QStackedWidget" name="stackedWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
         <horstretch>0</horstretch>
@@ -66,7 +66,7 @@ background-size: stretch;</string>
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="MainMenuScene">
        <property name="styleSheet">
@@ -520,7 +520,7 @@ QPushButton:hover {
       <widget class="QWidget" name="LobbyScene">
        <layout class="QGridLayout" name="gridLayout_36">
         <item row="0" column="0">
-         <widget class="QFrame" name="frame">
+         <widget class="LobbyFrame" name="frame">
           <property name="styleSheet">
            <string notr="true">background: transparent;</string>
           </property>
@@ -756,7 +756,7 @@ background: white;</string>
                        </widget>
                       </item>
                       <item>
-                       <widget class="QComboBox" name="comboBox_2">
+                       <widget class="QComboBox" name="roundsComboBox">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                           <horstretch>0</horstretch>
@@ -897,7 +897,7 @@ QComboBox QAbstractItemView::item:hover {
                        </widget>
                       </item>
                       <item>
-                       <widget class="QComboBox" name="comboBox_3">
+                       <widget class="QComboBox" name="wordCountComboBox">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                           <horstretch>0</horstretch>
@@ -1022,7 +1022,7 @@ QComboBox QAbstractItemView::item:hover {
                        </widget>
                       </item>
                       <item>
-                       <widget class="QComboBox" name="comboBox">
+                       <widget class="QComboBox" name="drawtimeComboBox">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                           <horstretch>0</horstretch>
@@ -1161,8 +1161,8 @@ background: white;</string>
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>72</width>
-                     <height>72</height>
+                     <width>56</width>
+                     <height>56</height>
                     </size>
                    </property>
                    <property name="showGrid">
@@ -1184,7 +1184,7 @@ background: white;</string>
                     <bool>false</bool>
                    </attribute>
                    <attribute name="verticalHeaderDefaultSectionSize">
-                    <number>80</number>
+                    <number>60</number>
                    </attribute>
                    <attribute name="verticalHeaderStretchLastSection">
                     <bool>false</bool>
@@ -2342,7 +2342,7 @@ border-radius: 15px;</string>
                           <cursorShape>PointingHandCursor</cursorShape>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">background-color: #fe7025;</string>
+                          <string notr="true">background-color: #ff7931;</string>
                          </property>
                          <property name="text">
                           <string/>
@@ -2437,7 +2437,7 @@ border-radius: 15px;</string>
                           <cursorShape>PointingHandCursor</cursorShape>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">background-color: #025f37;</string>
+                          <string notr="true">background-color: #004619;</string>
                          </property>
                          <property name="text">
                           <string/>
@@ -4493,9 +4493,9 @@ padding: 5px 10px;</string>
    <header>LobbyTable.h</header>
   </customwidget>
   <customwidget>
-   <class>SceneManager</class>
-   <extends>QStackedWidget</extends>
-   <header>SceneManager.h</header>
+   <class>LobbyFrame</class>
+   <extends>QFrame</extends>
+   <header>LobbyFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

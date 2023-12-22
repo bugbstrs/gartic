@@ -32,8 +32,11 @@ public:
 	void ChangePenColor(QColor color) noexcept;
 	void ChangePenWidth(int width) noexcept;
 
+	void SetIconsAndNamesForPlayers();
+
 public slots:
 	void showEvent(QShowEvent* event) override;
+
 	void OnEraserButtonReleased() noexcept;
 	void OnUndoButtonReleased() noexcept;
 	void OnFillButtonReleased() noexcept;
