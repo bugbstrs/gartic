@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <unordered_map>
 
 namespace http
 {
@@ -10,11 +11,11 @@ namespace http
 	public:
 		Chat() = default;
 
-		void AddMessage(const std::pair<std::string, std::string>& messages);
+		void AddMessage(const std::string& username, const std::string& message);
 
-		const std::vector<std::pair<std::string, std::string>>& GetChat() const noexcept;
+		const std::unordered_map<std::string, std::vector<std::string>>& GetChat() const noexcept;
 
 	private:
-		std::vector<std::pair<std::string, std::string>> m_messages;
+		std::unordered_map<std::string, std::vector<std::string>> m_messages;
 	};
 }

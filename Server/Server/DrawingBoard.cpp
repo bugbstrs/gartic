@@ -2,7 +2,7 @@
 
 using namespace http;
 
-const std::vector<std::pair<std::string, std::vector<DrawEvent>>>& http::DrawingBoard::GetEvents() const noexcept
+const std::unordered_map<std::string, std::vector<DrawEvent>>& http::DrawingBoard::GetEvents() const noexcept
 {
     return m_events;
 }

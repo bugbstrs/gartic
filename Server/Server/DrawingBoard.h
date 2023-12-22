@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <unordered_map>
 
 #include "DrawEvent.h"
 
@@ -14,14 +15,14 @@ namespace http
 
 		~DrawingBoard() = default;
 
-		const std::vector<std::pair<std::string, std::vector<DrawEvent>>>& GetEvents() const noexcept;
+		const std::unordered_map<std::string, std::vector<DrawEvent>>& GetEvents() const noexcept;
 
 		void Fill(int x, int y, Color color);
 
 		void Draw(int x, int y, Color color, int width);
 
 	private:
-		std::vector<std::pair<std::string, std::vector<DrawEvent>>> m_events;
+		std::unordered_map<std::string, std::vector<DrawEvent>> m_events;
 	};
 }
 
