@@ -66,7 +66,7 @@ background-size: stretch;</string>
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="MainMenuScene">
        <property name="styleSheet">
@@ -140,12 +140,25 @@ QPushButton:hover {
                 <property name="sizeHint" stdset="0">
                  <size>
                   <width>20</width>
-                  <height>50</height>
+                  <height>20</height>
                  </size>
                 </property>
                </spacer>
               </item>
-              <item row="3" column="0">
+              <item row="5" column="0">
+               <spacer name="verticalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="4" column="0">
                <widget class="QPushButton" name="quitButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -288,20 +301,7 @@ QPushButton:hover {
                 </property>
                </widget>
               </item>
-              <item row="4" column="0">
-               <spacer name="verticalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="2" column="0">
+              <item row="3" column="0">
                <widget class="QPushButton" name="statsButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -355,6 +355,60 @@ QPushButton:hover {
                 </property>
                 <property name="text">
                  <string>STATS</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QPushButton" name="pushButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>300</width>
+                  <height>70</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>300</width>
+                  <height>70</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #4CAF50, stop: 1 #2196F3);
+    color: white;
+    border: 2px solid #4CAF50;
+    border-radius: 30px;
+    padding: 5px 10px;
+
+	font-family: &quot;Consolas&quot;;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+QPushButton:checked {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #FFD700, stop: 1 #FFA500);
+    border: 2px solid #FFD700;
+    color: black;
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #6B6B6B, stop: 1 #8B8B8B);
+    border: 2px solid #808080;
+    color: white;
+}
+</string>
+                </property>
+                <property name="text">
+                 <string>JOIN LOBBY</string>
                 </property>
                </widget>
               </item>

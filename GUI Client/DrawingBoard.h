@@ -24,14 +24,18 @@ public:
 	void ChangePenColor(QColor color) noexcept;
 	void ChangePenWidth(int width) noexcept;
 
+	void SetIsChoosingWord(bool value);
+
 	void ToggleEraser(bool value) noexcept;
 	void ToggleFill(bool value) noexcept;
 	void EnablePencil() noexcept;
 	void UndoLastPath() noexcept;
 	void ClearCanvas() noexcept;
 
+	void ResetBoard();
 
 protected:
+	void showEvent(QShowEvent* event) override;
 	void paintEvent(QPaintEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void mousePressEvent(QMouseEvent* event) override;
@@ -44,8 +48,11 @@ private:
 	void DrawStartingPixels(const QPoint& startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith, std::vector <std::thread>& threads);
 
 private:
+	const QColor kDefaultPenColor{ Qt::black };
+	const int kDefaultPenWidth { 4 };
 	const int kCircleRadius { 25 };
 
+	bool isChoosingWord		{ false };
 	bool firstPaint			{ true };
 	bool drawing			{ false };
 	bool fillEnabled		{ false };
@@ -53,7 +60,6 @@ private:
 
 	QColor lastColor	{};
 	QColor eraserColor	{};
-	QPoint lastMousePos	{};
 
 	QPen pen										 {};
 	QPainterPath currentPath						 {};
@@ -61,5 +67,4 @@ private:
 
 	std::vector<QImage>images								  {};
 	QImage image											  {};
-	std::unordered_map<std::string, bool> availableDirections {};
 };

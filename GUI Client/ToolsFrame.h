@@ -12,6 +12,8 @@ public:
 	ToolsFrame(QWidget *parent = nullptr);
 	~ToolsFrame();
 
+	void ResetCurrentColorView();
+
 public slots:
 	void showEvent(QShowEvent* event) override;
 	void OnColorChange() noexcept;

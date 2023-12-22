@@ -10,6 +10,8 @@ DrawingBoard::DrawingBoard(QWidget* parent)
 
 void DrawingBoard::mousePressEvent(QMouseEvent* event)
 {
+    if (isChoosingWord)
+        return;
     images.push_back(image);
     if (event->button() == Qt::LeftButton && !fillEnabled) {
         drawing = true;
@@ -66,6 +68,11 @@ void DrawingBoard::ChangePenWidth(int width) noexcept
     pen.setWidth(width);
 }
 
+void DrawingBoard::SetIsChoosingWord(bool value)
+{
+    isChoosingWord = value;
+}
+
 void DrawingBoard::ToggleEraser(bool value) noexcept
 {
     if (value)
@@ -99,6 +106,22 @@ void DrawingBoard::ClearCanvas() noexcept
     image.fill(Qt::white);
     images.clear();
     update();
+}
+
+void DrawingBoard::ResetBoard()
+{
+    isChoosingWord = false;
+    firstPaint = false;
+    drawing = false;
+    fillEnabled = false;
+    undo = false;
+    lastColor = kDefaultPenColor;
+
+    ChangePenPropertiesTo(kDefaultPenColor, kDefaultPenWidth);
+    currentPath = QPainterPath();
+    paths.clear();
+    image.fill(Qt::white);
+    images.clear();
 }
 
 void DrawingBoard::FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith)
@@ -160,6 +183,10 @@ void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, Q
     update();
 }
 
+
+void DrawingBoard::showEvent(QShowEvent* event)
+{
+}
 
 void DrawingBoard::paintEvent(QPaintEvent* event)
 {

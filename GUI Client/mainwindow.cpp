@@ -81,7 +81,8 @@ void MainWindow::OnExitLobbyButtonReleased() noexcept { ui->stackedWidget->setCu
 //Game scene events
 void MainWindow::OnLeaveGameButtonReleased() noexcept { 
     ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); 
-    ui->scoreboardTable->ClearScoreboard();
+    
+    ui->gameplayWidget->Clear();
     ui->lobbyTable->ClearLobby();
 }
 

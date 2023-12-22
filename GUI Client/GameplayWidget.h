@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <qlabel.h>
 #include <qlistwidget.h>
+#include <qboxlayout.h>
 #include "DrawingBoard.h"
 #include "ToolsFrame.h"
 #include "Chat.h"
@@ -33,6 +34,8 @@ public:
 	void ChangePenWidth(int width) noexcept;
 
 	void SetGameSettings(std::tuple<int, int, int> gameSettings);
+	
+	void Clear() noexcept;
 
 public slots:
 	void showEvent(QShowEvent* event) override;
@@ -45,7 +48,8 @@ public slots:
 
 private:
 	void AddPlayers();
-	void ShowWordDependingOnPlayerType() noexcept;
+	void AddWordOption(const std::string& word);
+	void ShowWordDependingOnPlayerType(const QString& word) noexcept;
 
 private:
 	struct Player {
@@ -54,9 +58,9 @@ private:
 	};
 
 private:
-	int drawTime{};
-	int rounds{};
-	int wordsCount{};
+	int drawTime					 {};
+	int rounds						 {};
+	int wordsCount					 {};
 
 	bool isDrawer					 { true };
 	QLabel* wordToDraw				 { new QLabel{} };
@@ -69,4 +73,8 @@ private:
 	QCursor eraserCursor			 { QCursor(QPixmap(":/image/eraser_cursor").scaled(25, 25)) };
 	QCursor fillCursor				 { QCursor(QPixmap(":/image/fill").scaled(25, 25)) };
 	QCursor pencilCursor			 { Qt::CrossCursor };
+
+	QWidget* backgroundForWords				{ new QWidget{} };
+	QHBoxLayout* wordsToChooseLayout		{ new QHBoxLayout{} };
+	std::vector<QPushButton*> wordsToChoose {};
 };

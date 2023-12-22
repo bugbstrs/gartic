@@ -7,6 +7,11 @@ ToolsFrame::ToolsFrame(QWidget *parent)
 ToolsFrame::~ToolsFrame()
 {}
 
+void ToolsFrame::ResetCurrentColorView()
+{
+	currentColorView->setStyleSheet("background: black");
+}
+
 void ToolsFrame::OnColorChange() noexcept
 {
 	QPushButton* senderButton = qobject_cast<QPushButton*>(sender());

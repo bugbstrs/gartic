@@ -27,5 +27,6 @@
         <file alias="circle_settings">Resource Files/circle_settings.png</file>
         <file alias="words_number">Resource Files/quiz.png</file>
         <file alias="time_settings">Resource Files/alarm-clock.png</file>
+        <file alias="WordsBackground">Resource Files/hatching-2460786_640.png</file>
     </qresource>
 </RCC>
