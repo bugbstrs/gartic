@@ -8,24 +8,24 @@ http::Lobby::~Lobby()
 	delete m_leader;
 }
 
-void http::Lobby::JoinLobby(User&& newPlayer)
+void http::Lobby::JoinLobby(User&& newUser)
 {
-	m_players.push_back(std::move(newPlayer));
+	m_users.push_back(std::move(newUser));
 }
 
-void http::Lobby::LeaveLobby(const User& playerToLeave)
+void http::Lobby::LeaveLobby(const User& userToLeave)
 {
-	if (auto it{ std::find(m_players.begin(), m_players.end(), playerToLeave) }; it != m_players.end())
+	if (auto it{ std::find(m_users.begin(), m_users.end(), userToLeave) }; it != m_users.end())
 	{
-		m_players.erase(it);
+		m_users.erase(it);
 	}	
 /*
 	throw GarticException<UserDoesntExistException>("Lobby > LeaveLobby(const User&): The player is already not in the lobby!");*/
 }
 
-const std::vector<User>& http::Lobby::GetPlayers() const noexcept
+const std::vector<User>& http::Lobby::GetUsers() const noexcept
 {
-	return m_players;
+	return m_users;
 }
 
 const User* http::Lobby::GetLeader() const noexcept
@@ -50,14 +50,14 @@ void http::Lobby::SetLeader(const User* newLeader)
 
 http::Game* http::Lobby::StartGame()
 {
-	if (m_players.size() > 2)
+	if (m_users.size() > 2)
 	{
 		std::vector<Player*> playersVector;
 		std::string currUsername;
 
-		for (const auto& player : m_players)
+		for (const auto& user : m_users)
 		{
-			currUsername = player.GetUsername();
+			currUsername = user.GetUsername();
 
 			playersVector.push_back(new Player(currUsername));
 		}
@@ -69,7 +69,7 @@ http::Game* http::Lobby::StartGame()
 	return {};
 }
 
-std::string http::Lobby::GenerateCode()
+const std::string& http::Lobby::GenerateCode()
 {
 	std::string characters{ "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" };
 	size_t charactersLength{ characters.size() };
@@ -77,7 +77,7 @@ std::string http::Lobby::GenerateCode()
 	srand(static_cast<unsigned int>(time(nullptr)));
 
 	std::string randomCode;
-	for (int i = 0; i < kCodeLength; ++i) {
+	for (int i{ 0 }; i < kCodeLength; ++i) {
 		int randomIndex = rand() % charactersLength;
 		randomCode += characters[randomIndex];
 	}

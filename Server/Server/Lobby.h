@@ -22,10 +22,10 @@ namespace http
 
 		~Lobby();
 
-		void JoinLobby(User&& newPlayer);
-		void LeaveLobby(const User& playerToLeave);
+		void JoinLobby(User&& newUser);
+		void LeaveLobby(const User& userToLeave);
 
-		const std::vector<User>& GetPlayers() const noexcept;
+		const std::vector<User>& GetUsers() const noexcept;
 		const User* GetLeader() const noexcept;
 		GameSettings GetSettings() const noexcept;
 		const std::string& GetCode() const noexcept;
@@ -35,16 +35,16 @@ namespace http
 		Game* StartGame();
 
 	private:
-		std::string GenerateCode();
+		const std::string& GenerateCode();
 
 	private:
-		std::vector<User> m_players;
+		std::vector<User> m_users;
 
 		User* m_leader;
 
 		GameSettings m_settings;
 
-		const std::string m_code = GenerateCode();
+		const std::string m_code{ GenerateCode() };
 		const int kCodeLength{ 11 };
 	};
 }

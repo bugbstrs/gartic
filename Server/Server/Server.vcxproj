@@ -24,7 +24,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BannedWordsEntity.h" />
-    <ClInclude Include="CanvasPointsEnum.h" />
     <ClInclude Include="Chat.h" />
     <ClInclude Include="Clear.h" />
     <ClInclude Include="DrawEvent.h" />
@@ -32,14 +31,16 @@
     <ClInclude Include="Fill.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameSettings.h" />
+    <ClInclude Include="GameStatusEnum.h" />
     <ClInclude Include="GarticDatabase.h" />
     <ClInclude Include="HttpUtils.h" />
     <ClInclude Include="KeepDraw.h" />
     <ClInclude Include="Lobby.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="QuotesEntity.h" />
+    <ClInclude Include="Round.h" />
     <ClInclude Include="RouteManager.h" />
-    <ClInclude Include="SpecialRoundsEnum.h" />
+    <ClInclude Include="RoundTypeEnum.h" />
     <ClInclude Include="StartDraw.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Undo.h" />
@@ -61,6 +62,7 @@
     <ClCompile Include="Lobby.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="QuotesEntity.cpp" />
+    <ClCompile Include="Round.cpp" />
     <ClCompile Include="RouteManager.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="StartDraw.cpp" />

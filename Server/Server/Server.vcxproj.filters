@@ -101,10 +101,7 @@
     <ClInclude Include="User.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
-    <ClInclude Include="CanvasPointsEnum.h">
-      <Filter>Header Files\Logic\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="SpecialRoundsEnum.h">
+    <ClInclude Include="RoundTypeEnum.h">
       <Filter>Header Files\Logic\Enums</Filter>
     </ClInclude>
     <ClInclude Include="DrawEvent.h">
@@ -129,6 +126,12 @@
       <Filter>Header Files\Logic\Draw</Filter>
     </ClInclude>
     <ClInclude Include="GameSettings.h">
+      <Filter>Header Files\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStatusEnum.h">
+      <Filter>Header Files\Logic\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="Round.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -195,6 +198,9 @@
     </ClCompile>
     <ClCompile Include="DrawingBoard.cpp">
       <Filter>Source Files\Logic\Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="Round.cpp">
+      <Filter>Source Files\Logic</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

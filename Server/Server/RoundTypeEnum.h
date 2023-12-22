@@ -1,11 +1,11 @@
 #pragma once
 
-enum class SpecialRound
+enum class RoundType
 {
+	Normal,
 	RandomColors,
 	FogOfWar,
 	FadingColors,
 	Bariers,
-	CantStop,
-	None
+	CantStop
 };
