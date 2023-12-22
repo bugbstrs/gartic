@@ -26,11 +26,13 @@ private:
 	SelectableObject *m_selectedColorButton;
 	SelectableObject *m_selectedWidthButton;
 	SelectableObject *m_selected;
+	HorizontalLayout *m_wordsToChoose;
 	VerticalLayout	 *m_users;
 	VerticalLayout   *m_chat;
 	DrawingBoard	 *m_drawingBoard;
 	ColorDisplay	 *m_colorDisplay;
 	String			  m_message;
+	Label			 *m_displayWord;
 	Label			 *m_gameState;
 	Label			 *m_timer;
 	bool			  m_lastChatColor;//For alternating colors on chat

@@ -104,6 +104,14 @@ void GameScene::Start()
 	m_gameState = new Label{70, 2, Align::Center, Align::Up, Color::Black, Color::White, 20, 1, m_console, "Waiting"};
 	m_objects.emplace_back(m_gameState);
 
+	// Word
+	m_displayWord = new Label{70, 4, Align::Center, Align::Up, Color::Black, Color::White, 20, 1, m_console, "CUVANT"};
+	m_objects.emplace_back(m_gameState);
+
+	// Words to choose
+	auto HLayout = new HorizontalLayout{40, 37, Align::Center, Align::Up, Color::White, 80, 5, m_console, 2};
+	m_objects.emplace_back(HLayout);
+
 	// Color display
 	m_colorDisplay = new ColorDisplay{24, 79, Color::Black, 7, 7, m_console};
 	m_objects.emplace_back(m_colorDisplay);
@@ -270,7 +278,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 
 	// Draw options
-	auto HLayout = new HorizontalLayout{105, 80, Align::Left, Align::Up, Color::Black, 31, 5, m_console, 1};
+	HLayout = new HorizontalLayout{105, 80, Align::Left, Align::Up, Color::Black, 31, 5, m_console, 1};
 	m_objects.emplace_back(HLayout);
 	HLayout->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
 					Color::White, Color::Black, m_console, m_input, m_selectedColorButton, "pen"});
