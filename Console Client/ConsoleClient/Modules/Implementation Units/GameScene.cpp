@@ -90,11 +90,15 @@ void GameScene::Start()
 	m_objects.emplace_back(m_chat);
 
 	// Chatbox
-	auto chatbox = new InputField{138, 83, Align::Left, Align::Up, Color::Gray, Color::Black, 20, 5,
-								 Color::Gray, Color::Black, m_console, m_input, m_selected, m_message, 100};
+	auto chatbox = new InputField{138, 83, Align::Left, Align::Up, Color::DarkGray, Color::Black, 20, 5,
+								 Color::DarkGray, Color::Black, m_console, m_input, m_selected, m_message, 100};
 	chatbox->SetFunctionOnActivate(std::bind(&GameScene::SendMessage, this));
 	m_selectableObjects.emplace_back(chatbox);
 	m_objects.emplace_back(chatbox);
+
+	// Timer
+	m_timer = new Label{2, 2, Align::Left, Align::Up, Color::Black, Color::White, 9, 1, m_console, "time: "};
+	m_objects.emplace_back(m_timer);
 
 	// Color display
 	m_colorDisplay = new ColorDisplay{24, 79, Color::Black, 7, 7, m_console};
@@ -238,7 +242,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 
 	// Width
-	VLayout = new VerticalLayout{85, 77, Align::Left, Align::Up, Color::Black, 11, 11, m_console, 1};
+	VLayout = new VerticalLayout{87, 77, Align::Left, Align::Up, Color::Black, 11, 11, m_console, 1};
 	m_objects.emplace_back(VLayout);
 	row1 = new HorizontalLayout{Align::Left, Align::Up, Color::Black, 11, 5, m_console, 1};
 	VLayout->AddObject(row1);
@@ -262,7 +266,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 
 	// Draw options
-	auto HLayout = new HorizontalLayout{101, 80, Align::Left, Align::Up, Color::Black, 31, 5, m_console, 1};
+	auto HLayout = new HorizontalLayout{105, 80, Align::Left, Align::Up, Color::Black, 31, 5, m_console, 1};
 	m_objects.emplace_back(HLayout);
 	HLayout->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
 					Color::White, Color::Black, m_console, m_input, m_selectedColorButton, "pen"});

@@ -31,6 +31,7 @@ private:
 	DrawingBoard	 *m_drawingBoard;
 	ColorDisplay	 *m_colorDisplay;
 	String			  m_message;
+	Label			 *m_timer;
 	bool			  m_lastChatColor;//For alternating colors on chat
 
 	void GetPlayers		();
