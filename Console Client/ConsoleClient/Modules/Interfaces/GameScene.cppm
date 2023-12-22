@@ -4,6 +4,7 @@ import <string>;
 
 import HorizontalLayout;
 import VerticalLayout;
+import ColorDisplay;
 import DrawingBoard;
 import InputField;
 import MenuScene;
@@ -28,6 +29,7 @@ private:
 	VerticalLayout	 *m_users;
 	VerticalLayout   *m_chat;
 	DrawingBoard	 *m_drawingBoard;
+	ColorDisplay	 *m_colorDisplay;
 	String			  m_message;
 	bool			  m_lastChatColor;//For alternating colors on chat
 

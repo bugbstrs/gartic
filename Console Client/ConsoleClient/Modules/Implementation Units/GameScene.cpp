@@ -35,7 +35,7 @@ void GameScene::SendMessage()
 	//send message to server
 
 
-	Color color = m_lastChatColor ? Color::Gray : Color::White;
+	Color color = m_lastChatColor ? Color::DarkGray : Color::White;
 	m_lastChatColor = !m_lastChatColor;
 	m_chat->AddObject(new Label{Align::Left, Align::Up, color, Color::Black, 20,
 					  static_cast<int16_t>((m_message.size() + 4) / 20 + 2), m_console, "You: " + m_message});
@@ -96,31 +96,82 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(chatbox);
 	m_objects.emplace_back(chatbox);
 
+	// Color display
+	m_colorDisplay = new ColorDisplay{24, 79, Color::Red, 7, 7, m_console};
+	m_objects.emplace_back(m_colorDisplay);
+
 	// Colors
-	auto colors = new VerticalLayout{15, 77, Align::Left, Align::Up, Color::Black, 95, 11, m_console, 1};
+	auto colors = new VerticalLayout{33, 77, Align::Left, Align::Up, Color::Black, 95, 11, m_console, 1};
 	m_objects.emplace_back(colors);
 	auto row1 = new HorizontalLayout{Align::Left, Align::Up, Color::Black, 95, 5, m_console, 1};
 	colors->AddObject(row1);
 	auto row2 = new HorizontalLayout{Align::Left, Align::Up, Color::Black, 95, 5, m_console, 1};
 	colors->AddObject(row2);
-	row1->AddObject(new Button{Align::Center, Align::Center, Color::White, Color::White, 5, 5,
-					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
-	row1->AddObject(new Button{Align::Center, Align::Center, Color::Gray, Color::Gray, 5, 5,
-					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
-	row1->AddObject(new Button{Align::Center, Align::Center, Color::Red, Color::Red, 5, 5,
-					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
-	row1->AddObject(new Button{Align::Center, Align::Center, Color::Brown, Color::Brown, 5, 5,
-					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
-	row1->AddObject(new Button{Align::Center, Align::Center, Color::White, Color::White, 5, 5,
-					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
-	row1->AddObject(new Button{Align::Center, Align::Center, Color::White, Color::White, 5, 5,
-					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
-	row1->AddObject(new Button{Align::Center, Align::Center, Color::White, Color::White, 5, 5,
-					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
-	row1->AddObject(new Button{Align::Center, Align::Center, Color::White, Color::White, 5, 5,
-					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
-	row2->AddObject(new Button{Align::Center, Align::Center, Color::Black, Color::White, 5, 5,
+	auto aux = new Button{Align::Center, Align::Center, Color::White, Color::White, 5, 5,
+					Color::White, Color::White, m_console, m_input, m_selectedColorButton, ""};
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::White); });
+	m_selectableObjects.emplace_back(aux);
+	row1->AddObject(aux);
+	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::Pink, Color::Pink, 5, 5,
+					Color::Pink, Color::Pink, m_console, m_input, m_selectedColorButton, ""});
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::Pink); });
+	m_selectableObjects.emplace_back(aux);
+	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::Red, Color::Red, 5, 5,
+					Color::Red, Color::Red, m_console, m_input, m_selectedColorButton, ""});
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::Red); });
+	m_selectableObjects.emplace_back(aux);
+	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::Orange, Color::Orange, 5, 5,
+					Color::Orange, Color::Orange, m_console, m_input, m_selectedColorButton, ""});
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::Orange); });
+	m_selectableObjects.emplace_back(aux);
+	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::Yellow, Color::Yellow, 5, 5,
+					Color::Yellow, Color::Yellow, m_console, m_input, m_selectedColorButton, ""});
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::Yellow); });
+	m_selectableObjects.emplace_back(aux);
+	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::Green, Color::Green, 5, 5,
+					Color::Green, Color::Green, m_console, m_input, m_selectedColorButton, ""});
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::Green); });
+	m_selectableObjects.emplace_back(aux);
+	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::Blue, Color::Blue, 5, 5,
+					Color::Blue, Color::Blue, m_console, m_input, m_selectedColorButton, ""});
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::Blue); });
+	m_selectableObjects.emplace_back(aux);
+	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::Cyan, Color::Cyan, 5, 5,
+					Color::Cyan, Color::Cyan, m_console, m_input, m_selectedColorButton, ""});
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::Cyan); });
+	m_selectableObjects.emplace_back(aux);
+	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::Black, Color::White, 5, 5,
 					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, "BLACK"});
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::Black); });
+	m_selectableObjects.emplace_back(aux);
+	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGray, Color::DarkGray, 5, 5,
+					Color::DarkGray, Color::DarkGray, m_console, m_input, m_selectedColorButton, ""});
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::DarkGray); });
+	m_selectableObjects.emplace_back(aux);
+	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkRed, Color::DarkRed, 5, 5,
+					Color::DarkRed, Color::DarkRed, m_console, m_input, m_selectedColorButton, ""});
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::DarkRed); });
+	m_selectableObjects.emplace_back(aux);
+	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkBrown, Color::DarkBrown, 5, 5,
+					Color::DarkBrown, Color::DarkBrown, m_console, m_input, m_selectedColorButton, ""});
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::DarkBrown); });
+	m_selectableObjects.emplace_back(aux);
+	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkPink, Color::DarkPink, 5, 5,
+					Color::DarkPink, Color::DarkPink, m_console, m_input, m_selectedColorButton, ""});
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::DarkPink); });
+	m_selectableObjects.emplace_back(aux);
+	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGreen, Color::DarkGreen, 5, 5,
+					Color::DarkGreen, Color::DarkGreen, m_console, m_input, m_selectedColorButton, ""});
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::DarkGreen); });
+	m_selectableObjects.emplace_back(aux);
+	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkBlue, Color::DarkBlue, 5, 5,
+					Color::DarkBlue, Color::DarkBlue, m_console, m_input, m_selectedColorButton, ""});
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::DarkBlue); });
+	m_selectableObjects.emplace_back(aux);
+	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::Purple, Color::Purple, 5, 5,
+					Color::Purple, Color::Purple, m_console, m_input, m_selectedColorButton, ""});
+	aux->SetFunctionOnActivate([this](){m_colorDisplay->SetDisplayColor(Color::Purple); });
+	m_selectableObjects.emplace_back(aux);
 
 	// Width
 
