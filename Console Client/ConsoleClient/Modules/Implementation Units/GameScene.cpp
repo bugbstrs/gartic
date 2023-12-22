@@ -69,6 +69,9 @@ void GameScene::Start()
 	m_message = "";
 	m_lastChatColor = false;
 	m_console->SetWindowed();
+	m_console->ResetColorsPalette();
+	m_console->AddColorsToPalette({White, Black, DarkGray, Red, DarkRed, Orange, Yellow, Green, DarkGreen,
+								  Cyan, Blue, DarkBlue, Purple, Pink, DarkPink, DarkBrown});
 	m_console->NewConsole(L"Game", 160, 90);
 	m_console->SetConsoleFont(L"MS Gothic", 12, 12);
 	m_console->SetFullscreen();
@@ -100,7 +103,24 @@ void GameScene::Start()
 	colors->AddObject(row1);
 	auto row2 = new HorizontalLayout{Align::Left, Align::Up, Color::Black, 95, 5, m_console, 1};
 	colors->AddObject(row2);
-	//row1->AddObject(new Button{Align::Left, Align::Up, Color::Black, Color::Black, 5, 5, Color::})
+	row1->AddObject(new Button{Align::Center, Align::Center, Color::White, Color::White, 5, 5,
+					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
+	row1->AddObject(new Button{Align::Center, Align::Center, Color::Gray, Color::Gray, 5, 5,
+					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
+	row1->AddObject(new Button{Align::Center, Align::Center, Color::Red, Color::Red, 5, 5,
+					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
+	row1->AddObject(new Button{Align::Center, Align::Center, Color::Brown, Color::Brown, 5, 5,
+					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
+	row1->AddObject(new Button{Align::Center, Align::Center, Color::White, Color::White, 5, 5,
+					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
+	row1->AddObject(new Button{Align::Center, Align::Center, Color::White, Color::White, 5, 5,
+					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
+	row1->AddObject(new Button{Align::Center, Align::Center, Color::White, Color::White, 5, 5,
+					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
+	row1->AddObject(new Button{Align::Center, Align::Center, Color::White, Color::White, 5, 5,
+					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, ""});
+	row2->AddObject(new Button{Align::Center, Align::Center, Color::Black, Color::White, 5, 5,
+					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, "BLACK"});
 
 	// Width
 
