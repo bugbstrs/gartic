@@ -46,6 +46,12 @@
     <Filter Include="Header Files\Logic\Enums">
       <UniqueIdentifier>{629291b4-c6ad-491b-af4d-c19b42538e35}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Logic\Draw">
+      <UniqueIdentifier>{0beee238-1913-4f74-bbab-6bddf7f4fc08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Logic\Draw">
+      <UniqueIdentifier>{d7afad5b-f88b-4524-a2d7-1ca2e32a13c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="banned.txt">
@@ -92,16 +98,7 @@
     <ClInclude Include="Time.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
-    <ClInclude Include="GameSettings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="User.h">
-      <Filter>Header Files\Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawingBoard.h">
-      <Filter>Header Files\Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawEvent.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
     <ClInclude Include="CanvasPointsEnum.h">
@@ -109,6 +106,30 @@
     </ClInclude>
     <ClInclude Include="SpecialRoundsEnum.h">
       <Filter>Header Files\Logic\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawEvent.h">
+      <Filter>Header Files\Logic\Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawingBoard.h">
+      <Filter>Header Files\Logic\Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="Clear.h">
+      <Filter>Header Files\Logic\Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="Fill.h">
+      <Filter>Header Files\Logic\Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="KeepDraw.h">
+      <Filter>Header Files\Logic\Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="StartDraw.h">
+      <Filter>Header Files\Logic\Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="Undo.h">
+      <Filter>Header Files\Logic\Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSettings.h">
+      <Filter>Header Files\Logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -154,14 +175,26 @@
     <ClCompile Include="Time.cpp">
       <Filter>Source Files\Logic</Filter>
     </ClCompile>
+    <ClCompile Include="Clear.cpp">
+      <Filter>Source Files\Logic\Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="Fill.cpp">
+      <Filter>Source Files\Logic\Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="KeepDraw.cpp">
+      <Filter>Source Files\Logic\Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="StartDraw.cpp">
+      <Filter>Source Files\Logic\Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="Undo.cpp">
+      <Filter>Source Files\Logic\Draw</Filter>
+    </ClCompile>
     <ClCompile Include="GameSettings.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Logic</Filter>
     </ClCompile>
     <ClCompile Include="DrawingBoard.cpp">
-      <Filter>Source Files\Logic</Filter>
-    </ClCompile>
-    <ClCompile Include="DrawEvent.cpp">
-      <Filter>Source Files\Logic</Filter>
+      <Filter>Source Files\Logic\Draw</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
