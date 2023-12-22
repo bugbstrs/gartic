@@ -2,9 +2,23 @@
 
 #include <format>
 
+http::Chat::Chat(const std::vector<Player*>& players): 
+{
+	for (auto player : players)
+	{
+		m_message[player->GetName()] = {};
+	}
+}
+
 void http::Chat::AddMessage(const String& username, const String& message)
 {
-	m_messages[username].push_back(std::format("{}: {}", username, message));
+	for (auto [currUsername, currMessage] : m_messages)
+	{
+		if (currUsername != username)
+		{
+			m_messages[currUsername].push_back(std::format("{}: {}", username, message));
+		}
+	}
 }
 
 const StringVector& http::Chat::GetMessages(const String& username)
