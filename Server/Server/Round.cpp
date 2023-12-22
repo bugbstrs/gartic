@@ -2,7 +2,7 @@
 
 using namespace http;
 
-http::Round::Round(RoundType newType, const std::string& newWordToGuess, const std::string& newWordToDisplay, Player* newDrawer, const std::vector<Player*>& newPlayers) :
+http::Round::Round(RoundType newType, const String& newWordToGuess, const String& newWordToDisplay, Player* newDrawer, const std::vector<Player*>& newPlayers) :
 	m_type{ newType },
 	m_wordToGuess{ newWordToGuess },
 	m_wordToDisplay{ newWordToDisplay },
@@ -32,15 +32,15 @@ void http::Round::NextDrawer()
 
 RoundType http::Round::GetRoundType() const noexcept
 {
-	return m_roundType;
+	return m_type;
 }
 
-const std::string& http::Round::GetWordToGuess() const noexcept
+const String& http::Round::GetWordToGuess() const noexcept
 {
 	return m_wordToGuess;
 }
 
-const std::string& http::Round::GetWordToDisplay() const noexcept
+const String& http::Round::GetWordToDisplay() const noexcept
 {
 	return m_wordToDisplay;
 }
@@ -52,15 +52,15 @@ Player* http::Round::GetDrawer()
 
 void http::Round::SetRoundType(RoundType newRoundType)
 {
-	m_roundType = newRoundType;
+	m_type = newRoundType;
 }
 
-void http::Round::SetWordToGuess(const std::string& newWordToGuess)
+void http::Round::SetWordToGuess(const String& newWordToGuess)
 {
 	m_wordToGuess = newWordToGuess;
 }
 
-void http::Round::SetWordToDisplay(const std::string& newWordToDisplay)
+void http::Round::SetWordToDisplay(const String& newWordToDisplay)
 {
 	m_wordToDisplay = newWordToDisplay;
 }
