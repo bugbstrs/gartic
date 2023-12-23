@@ -29,8 +29,11 @@ private:
 		QString date;
 	};
 
+private:
 	QString GetRowInfoForColumnWithIndex(uint16_t index, const Row& row) const noexcept;
 	void GetMatchHistoryFromDatabase() noexcept;
+
 private:
+	bool firstShow{ true };
 	std::vector <Row> matches{};
 };

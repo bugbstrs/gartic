@@ -46,10 +46,10 @@ MainWindow::MainWindow(QWidget* parent)
     QObject::connect(ui->backToMenuButton, &QPushButton::released, this, &MainWindow::OnBackToMenuButtonReleased);
 
     //Sign Up scene
-    QObject::connect(ui->goToLogInFromSignUpButton, &QPushButton::released, this, &MainWindow::OnGoToLogInFromSignUpButtonReleased);
+    QObject::connect(ui->goToLogInFromSignUpButton, &QPushButton::released, this, &MainWindow::OnGoToSignUpFromLogInButtonReleased);
 
     //Log In scene
-    QObject::connect(ui->goToSignUpFromLogInButton, &QPushButton::released, this, &MainWindow::OnGoToSignUpFromLogInButtonReleased);
+    QObject::connect(ui->goToSignUpFromLogInButton, &QPushButton::released, this, &MainWindow::OnGoToLogInFromSignUpButtonReleased);
 }
 
 MainWindow::~MainWindow() {}
@@ -87,11 +87,11 @@ void MainWindow::OnLeaveGameButtonReleased() noexcept {
 }
 
 // Stats scene events
-void MainWindow::OnBackToMenuButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(0); }
+void MainWindow::OnBackToMenuButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }
 
 //Sign Up scene
-void MainWindow::OnGoToLogInFromSignUpButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(4); }
+void MainWindow::OnGoToLogInFromSignUpButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->SignUpScene); }
 
 //Log in scene
-void MainWindow::OnGoToSignUpFromLogInButtonReleased() noexcept { ui->stackedWidget->setCurrentIndex(3); }
+void MainWindow::OnGoToSignUpFromLogInButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->LogInScene); }
 

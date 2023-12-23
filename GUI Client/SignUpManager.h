@@ -19,6 +19,7 @@ protected:
 	void OnSignUpCredentialsSent() noexcept;
 
 private:
+	bool firstShow{ true };
 	QLineEdit* nameInput;
 	QLineEdit* passwordInput;
 	QPushButton* signUpButton;

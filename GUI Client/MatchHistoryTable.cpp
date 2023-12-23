@@ -3,7 +3,7 @@
 MatchHistoryTable::MatchHistoryTable(QWidget *parent)
 	: QTableWidget{ parent }
 {
-	GetMatchHistoryFromDatabase();
+	GetMatchHistoryFromDatabase(); 
 }
 
 MatchHistoryTable::~MatchHistoryTable()
@@ -11,14 +11,17 @@ MatchHistoryTable::~MatchHistoryTable()
 
 void MatchHistoryTable::showEvent(QShowEvent * event)
 {
-	setColumnCount(3);
-	setRowCount(2);
-	for (int row = 0; row < 2; ++row) {
-		for (int col = 0; col < 3; ++col) {
-			QTableWidgetItem* item = new QTableWidgetItem(GetRowInfoForColumnWithIndex(col, matches[row]));
-			item->setTextAlignment(Qt::AlignCenter);
-			setItem(row, col, item);
+	if (firstShow) {
+		setColumnCount(3);
+		setRowCount(2);
+		for (int row = 0; row < 2; ++row) {
+			for (int col = 0; col < 3; ++col) {
+				QTableWidgetItem* item = new QTableWidgetItem(GetRowInfoForColumnWithIndex(col, matches[row]));
+				item->setTextAlignment(Qt::AlignCenter);
+				setItem(row, col, item);
+			}
 		}
+		firstShow = false;
 	}
 }
 
