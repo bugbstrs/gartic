@@ -29,9 +29,9 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	RouteManager manager;
+	RouteManager manager(storage);
 
-	manager.Run(storage);
+	manager.Run();
 
 	return 0;
 }

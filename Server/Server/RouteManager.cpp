@@ -3,22 +3,26 @@
 
 import GarticExceptions;
 
-void http::RouteManager::Run(GarticStorage& storage)
+http::RouteManager::RouteManager(GarticStorage& storage):
+    m_storage{storage}
+{}
+
+void http::RouteManager::Run()
 {
 	CROW_ROUTE(m_app, "/")([]() {
 		return "This is an example app of crow and sql-orm";
 	});
 
-    CreateFetchWordRoute(storage);
-    CreateFetchQuoteRoute(storage);
-    CreateFetchAllWordsRoute(storage);
-    CreateFetchAllUsersRoute(storage);
-    CreateFetchTop5UsersRoute(storage);
-    CreateLoginRoute(storage);
-    CreateRegisterRoute(storage);
-    CreateCheckBannedWordRoute(storage);
-    CreatePutWordToGuessRoute(storage);
-    CreateGetWordToDisplayRoute(storage);
+    CreateFetchWordRoute();
+    CreateFetchQuoteRoute();
+    CreateFetchAllWordsRoute();
+    CreateFetchAllUsersRoute();
+    CreateFetchTop5UsersRoute();
+    CreateLoginRoute();
+    CreateRegisterRoute();
+    CreateCheckBannedWordRoute();
+    CreatePutWordToGuessRoute();
+    CreateGetWordToDisplayRoute();
 
 	m_app
         .port(18080)
@@ -26,16 +30,16 @@ void http::RouteManager::Run(GarticStorage& storage)
         .run();
 }
 
-void http::RouteManager::CreateFetchWordRoute(GarticStorage& storage)
+void http::RouteManager::CreateFetchWordRoute()
 {
-    CROW_ROUTE(m_app, "/fetchword")([&storage]() {
+    CROW_ROUTE(m_app, "/fetchword")([this]() {
         std::vector<crow::json::wvalue> word_json;
 
         std::string fetchedWord;
         
         try
         {
-            fetchedWord = storage.FetchWord();
+            fetchedWord = m_storage.FetchWord();
             word_json.push_back(crow::json::wvalue{ {"word", fetchedWord} });
         }
         catch (CannotFetchWordException& exception)
@@ -47,16 +51,16 @@ void http::RouteManager::CreateFetchWordRoute(GarticStorage& storage)
     });
 }
 
-void http::RouteManager::CreateFetchQuoteRoute(GarticStorage& storage)
+void http::RouteManager::CreateFetchQuoteRoute()
 {
-    CROW_ROUTE(m_app, "/fetchquote")([&storage]() {
+    CROW_ROUTE(m_app, "/fetchquote")([this]() {
         std::vector<crow::json::wvalue> quote_json;
 
         std::string fetchedQuote;
 
         try
         {
-            fetchedQuote = storage.FetchQuote();
+            fetchedQuote = m_storage.FetchQuote();
             quote_json.push_back(crow::json::wvalue{ {"quote", fetchedQuote} });
         }
         catch (CannotFetchQuoteException& exception)
@@ -68,12 +72,12 @@ void http::RouteManager::CreateFetchQuoteRoute(GarticStorage& storage)
     });
 }
 
-void http::RouteManager::CreateFetchAllWordsRoute(GarticStorage& storage)
+void http::RouteManager::CreateFetchAllWordsRoute()
 {
-    CROW_ROUTE(m_app, "/fetchallwords")([&storage]() {
+    CROW_ROUTE(m_app, "/fetchallwords")([this]() {
         std::vector<crow::json::wvalue> words_json;
 
-        WordVector allWords = storage.FetchAllWords();
+        WordVector allWords = m_storage.FetchAllWords();
 
         for (const auto& word : allWords)
         {
@@ -84,12 +88,12 @@ void http::RouteManager::CreateFetchAllWordsRoute(GarticStorage& storage)
     });
 }
 
-void http::RouteManager::CreateFetchAllUsersRoute(GarticStorage& storage)
+void http::RouteManager::CreateFetchAllUsersRoute()
 {
-    CROW_ROUTE(m_app, "/fetchallusers")([&storage]() {
+    CROW_ROUTE(m_app, "/fetchallusers")([this]() {
         std::vector<crow::json::wvalue> users_json;
 
-        UserVector allUsers = storage.FetchAllUsers();
+        UserVector allUsers = m_storage.FetchAllUsers();
 
         for (const auto& user : allUsers)
         {
@@ -104,12 +108,12 @@ void http::RouteManager::CreateFetchAllUsersRoute(GarticStorage& storage)
     });
 }
 
-void http::RouteManager::CreateFetchTop5UsersRoute(GarticStorage& storage)
+void http::RouteManager::CreateFetchTop5UsersRoute()
 {
-    CROW_ROUTE(m_app, "/fetchtopusers")([&storage]() {
+    CROW_ROUTE(m_app, "/fetchtopusers")([this]() {
         std::vector<crow::json::wvalue> top_users_json;
 
-        UserVector topUsers = storage.FetchTop5Users();
+        UserVector topUsers = m_storage.FetchTop5Users();
 
         for (const auto& user : topUsers)
         {
@@ -124,9 +128,9 @@ void http::RouteManager::CreateFetchTop5UsersRoute(GarticStorage& storage)
     });
 }
 
-void http::RouteManager::CreateLoginRoute(GarticStorage& storage)
+void http::RouteManager::CreateLoginRoute()
 {
-    CROW_ROUTE(m_app, "/login")([&storage](const crow::request& request) {
+    CROW_ROUTE(m_app, "/login")([this](const crow::request& request) {
         char* password = request.url_params.get("password");
         char* username = request.url_params.get("username");
 
@@ -144,7 +148,7 @@ void http::RouteManager::CreateLoginRoute(GarticStorage& storage)
             return response;
         }
 
-        bool foundCredentials = storage.CheckCredentials(String(username), String(password));
+        bool foundCredentials = m_storage.CheckCredentials(String(username), String(password));
 
         response.code = foundCredentials ? 200 : 401;
         response.body = crow::json::wvalue({
@@ -155,9 +159,9 @@ void http::RouteManager::CreateLoginRoute(GarticStorage& storage)
     });
 }
 
-void http::RouteManager::CreateRegisterRoute(GarticStorage& storage)
+void http::RouteManager::CreateRegisterRoute()
 {
-    CROW_ROUTE(m_app, "/register")([&storage](const crow::request& request) {
+    CROW_ROUTE(m_app, "/register")([this](const crow::request& request) {
         char* password = request.url_params.get("password");
         char* username = request.url_params.get("username");
 
@@ -168,7 +172,7 @@ void http::RouteManager::CreateRegisterRoute(GarticStorage& storage)
 
         try
         {
-            storage.CreateUser(String(username), String(password));
+            m_storage.CreateUser(String(username), String(password));
         }
         catch (UserAlreadyExistsException& exception)
         {
@@ -179,22 +183,22 @@ void http::RouteManager::CreateRegisterRoute(GarticStorage& storage)
     });
 }
 
-void http::RouteManager::CreateCheckBannedWordRoute(GarticStorage& storage)
+void http::RouteManager::CreateCheckBannedWordRoute()
 {
-    CROW_ROUTE(m_app, "/bannedword")([&storage](const crow::request& request) {
+    CROW_ROUTE(m_app, "/bannedword")([this](const crow::request& request) {
         char* word = request.url_params.get("name");
 
         if (word == nullptr) return crow::response(400);
 
-        bool checkBannedWord = storage.CheckBannedWord(String(word));
+        bool checkBannedWord = m_storage.CheckBannedWord(String(word));
 
         return checkBannedWord ? crow::response(201) : crow::response(403);
     });
 }
 
-void http::RouteManager::CreatePutWordToGuessRoute(GarticStorage& storage)
+void http::RouteManager::CreatePutWordToGuessRoute()
 {
-    CROW_ROUTE(m_app, "/putwordtoguess")([&storage](const crow::request& request) {
+    CROW_ROUTE(m_app, "/putwordtoguess")([this](const crow::request& request) {
         char* wordToDisplay = request.url_params.get("word");
         
         crow::response response;
@@ -221,9 +225,9 @@ void http::RouteManager::CreatePutWordToGuessRoute(GarticStorage& storage)
         });
 }
 
-void http::RouteManager::CreateGetWordToDisplayRoute(GarticStorage& storage)
+void http::RouteManager::CreateGetWordToDisplayRoute()
 {
-    CROW_ROUTE(m_app, "/fetchwordtodisplay")([&storage]() {
+    CROW_ROUTE(m_app, "/fetchwordtodisplay")([this]() {
         std::vector<crow::json::wvalue> word_json;
 
         try
@@ -240,7 +244,7 @@ void http::RouteManager::CreateGetWordToDisplayRoute(GarticStorage& storage)
         });
 }
 
-std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const crow::request& request, GarticStorage& storage)
+std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const crow::request& request)
 {
     std::optional<crow::response> returnResponse;
     char* password = request.url_params.get("password");
@@ -287,7 +291,7 @@ std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const c
         return response;
     }
 
-    bool foundCredentials = storage.CheckCredentials(String(username), String(password));
+    bool foundCredentials = m_storage.CheckCredentials(String(username), String(password));
 
     if (!foundCredentials)
     {
