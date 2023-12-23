@@ -15,7 +15,6 @@ DrawingBoard::DrawingBoard(COORD upLeftCorner,
 	m_penWidth		{ 4												  }
 {
 	m_canvases.emplace(canvasWidth, canvasHeight, backgroungColor);
-	m_selectable = false;
 }
 
 DrawingBoard::DrawingBoard(int16_t x, int16_t y,
@@ -33,7 +32,6 @@ DrawingBoard::DrawingBoard(int16_t x, int16_t y,
 	m_penWidth		{ 4												  }
 {
 	m_canvases.emplace(canvasWidth, canvasHeight, backgroungColor);
-	m_selectable = false;
 }
 
 DrawingBoard::DrawingBoard(int16_t maxWidth,
@@ -51,7 +49,6 @@ DrawingBoard::DrawingBoard(int16_t maxWidth,
 	m_penWidth		{ 4												  }
 {
 	m_canvases.emplace(canvasWidth, canvasHeight, backgroungColor);
-	m_selectable = false;
 }
 
 void DrawingBoard::Undo()
@@ -93,6 +90,8 @@ void DrawingBoard::CheckInput(){} // Needs to be overrided
 
 void DrawingBoard::CheckCursor()
 {
+	if (!m_selectable)
+		return;
 	static bool isWaitingToSave{ true };
 	static COORD prevPoz{ -1,-1 };
 	COORD cursorPos{ m_im->GetCurrentCursorPosition() };
@@ -101,7 +100,7 @@ void DrawingBoard::CheckCursor()
 		if (m_im->GetClickPressed() && m_option == Option::fill)
 		{
 			//fill
-		}
+		}else
 		if (m_im->GetClickHold() && m_option == Option::draw)
 		{
 			if (prevPoz.X != -1)

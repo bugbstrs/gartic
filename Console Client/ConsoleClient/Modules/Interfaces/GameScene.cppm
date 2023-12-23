@@ -35,6 +35,7 @@ private:
 	Label			 *m_displayWord;
 	Label			 *m_gameState;
 	Label			 *m_timer;
+	Label			 *m_round;
 	bool			  m_lastChatColor;//For alternating colors on chat
 
 	void GetPlayers		();

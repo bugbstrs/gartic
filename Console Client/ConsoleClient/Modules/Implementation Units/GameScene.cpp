@@ -100,16 +100,21 @@ void GameScene::Start()
 	m_timer = new Label{2, 2, Align::Left, Align::Up, Color::Black, Color::White, 9, 1, m_console, "time: "};
 	m_objects.emplace_back(m_timer);
 
+	// Round
+	m_round = new Label{122, 2, Align::Right, Align::Up, Color::Black, Color::White, 14, 1, m_console, "round 10 of 10"};
+	m_objects.emplace_back(m_round);
+
 	// Game state
-	m_gameState = new Label{70, 2, Align::Center, Align::Up, Color::Black, Color::White, 20, 1, m_console, "Waiting"};
+	m_gameState = new Label{143, 2, Align::Right, Align::Up, Color::Black, Color::White, 15, 1, m_console, "Waiting"};
 	m_objects.emplace_back(m_gameState);
 
 	// Word
-	m_displayWord = new Label{70, 4, Align::Center, Align::Up, Color::Black, Color::White, 20, 1, m_console, "CUVANT"};
-	m_objects.emplace_back(m_gameState);
+	m_displayWord = new Label{70, 2, Align::Center, Align::Up, Color::Black, Color::White, 20, 1, m_console, "CUVANT"};
+	m_objects.emplace_back(m_displayWord);
 
 	// Words to choose
 	auto HLayout = new HorizontalLayout{40, 37, Align::Center, Align::Up, Color::White, 80, 5, m_console, 2};
+	HLayout->SetActive(false);
 	m_objects.emplace_back(HLayout);
 
 	// Color display
@@ -261,19 +266,19 @@ void GameScene::Start()
 	row2 = new HorizontalLayout{Align::Left, Align::Up, Color::Black, 11, 5, m_console, 1};
 	VLayout->AddObject(row2);
 	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGray, Color::Black, 5, 5,
-					Color::DarkGray, Color::Black, m_console, m_input, m_selectedColorButton, "4"});
+					Color::DarkGray, Color::Black, m_console, m_input, m_selectedWidthButton, "4"});
 	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetPenWidth(4); });
 	m_selectableObjects.emplace_back(aux);
 	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGray, Color::Black, 5, 5,
-					Color::DarkGray, Color::Black, m_console, m_input, m_selectedColorButton, "10"});
+					Color::DarkGray, Color::Black, m_console, m_input, m_selectedWidthButton, "10"});
 	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetPenWidth(10); });
 	m_selectableObjects.emplace_back(aux);
 	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGray, Color::Black, 5, 5,
-					Color::DarkGray, Color::Black, m_console, m_input, m_selectedColorButton, "18"});
+					Color::DarkGray, Color::Black, m_console, m_input, m_selectedWidthButton, "18"});
 	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetPenWidth(18); });
 	m_selectableObjects.emplace_back(aux);
 	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGray, Color::Black, 5, 5,
-					Color::DarkGray, Color::Black, m_console, m_input, m_selectedColorButton, "26"});
+					Color::DarkGray, Color::Black, m_console, m_input, m_selectedWidthButton, "26"});
 	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetPenWidth(26); });
 	m_selectableObjects.emplace_back(aux);
 
@@ -281,19 +286,19 @@ void GameScene::Start()
 	HLayout = new HorizontalLayout{105, 80, Align::Left, Align::Up, Color::Black, 31, 5, m_console, 1};
 	m_objects.emplace_back(HLayout);
 	HLayout->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
-					Color::White, Color::Black, m_console, m_input, m_selectedColorButton, "pen"});
+					Color::White, Color::Black, m_console, m_input, m_selectedDrawOptionButton, "pen"});
 	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetOption(DrawingBoard::Option::draw); });
 	m_selectableObjects.emplace_back(aux);
 	HLayout->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
-					Color::White, Color::Black, m_console, m_input, m_selectedColorButton, "fill"});
+					Color::White, Color::Black, m_console, m_input, m_selectedDrawOptionButton, "fill"});
 	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetOption(DrawingBoard::Option::fill); });
 	m_selectableObjects.emplace_back(aux);
 	HLayout->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
-					Color::White, Color::Black, m_console, m_input, m_selectedColorButton, "undo"});
+					Color::White, Color::Black, m_console, m_input, m_selectedDrawOptionButton, "undo"});
 	aux->SetFunctionOnActivate([this](){ m_drawingBoard->Undo(); });
 	m_selectableObjects.emplace_back(aux);
 	HLayout->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
-					Color::White, Color::Black, m_console, m_input, m_selectedColorButton, "clear"});
+					Color::White, Color::Black, m_console, m_input, m_selectedDrawOptionButton, "clear"});
 	aux->SetFunctionOnActivate([this](){ m_drawingBoard->Clear(); });
 	m_selectableObjects.emplace_back(aux);
 
