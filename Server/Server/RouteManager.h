@@ -24,7 +24,7 @@ namespace http
 		void CreatePutWordToGuessRoute(GarticStorage& storage);
 		void CreateGetWordToDisplayRoute(GarticStorage& storage);
 
-        std::optional<crow::response> IsRequestAuthenticated(const crow::request& request);
+        std::optional<crow::response> IsRequestAuthenticated(const crow::request& request, GarticStorage& storage);
 
 	private:
 		crow::SimpleApp m_app;

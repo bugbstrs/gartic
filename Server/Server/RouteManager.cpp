@@ -238,7 +238,7 @@ void http::RouteManager::CreateGetWordToDisplayRoute(GarticStorage& storage)
         });
 }
 
-std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const crow::request& request)
+std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const crow::request& request, GarticStorage& storage)
 {
     std::optional<crow::response> returnResponse;
     char* password = request.url_params.get("password");
@@ -247,57 +247,55 @@ std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const c
     std::regex regexFormatSHA256{"[a-f0-9]{64}"};
     std::regex regexFormatUsername{"^[a-z]+[a-z0-9_-]*[a-z]+$"};
 
-    // ToFix
+    if (password == nullptr || username == nullptr)
+    {
+        response.code = 400;
+        response.set_header("Content-Type", "application/json");
+        response.body = crow::json::wvalue
+        ({
+            {"code", response.code},
+            {"error", "user or password not provided"}
+        }).dump();
+        
+        return response;
+    }
+    
+    // length of SHA256 hash when converted to hex string
+    if (std::strlen(password) != 64 || !std::regex_match(password, regexFormatSHA256))
+    {
+        response.code = 400;
+        response.body = crow::json::wvalue
+        ({
+            {"code", response.code},
+            {"error", "invalid password format! (not hashed or bad hash)"}
+        }).dump();
 
-    //if (password == nullptr || username == nullptr)
-    //{
-    //    response.code = 400;
-    //    response.set_header("Content-Type", "application/json");
-    //    response.body = crow::json::wvalue
-    //    ({
-    //        {"code": response.code},
-    //        {"error": "user or password not provided"}
-    //    });
-    //    
-    //    return response;
-    //}
-    //
-    //// length of SHA256 hash when converted to hex string
-    //if (std::strlen(password) != 64 || !std::regex_match(password, regexFormatSHA256))
-    //{
-    //    response.code = 400;
-    //    response.body = crow::json::wvalue
-    //    ({
-    //        {"code", response.code},
-    //        {"error": "invalid password format! (not hashed or bad hash)"}
-    //    });
+        return response;
+    }
 
-    //    return response;
-    //}
+    if (!std::regex_match(username, regexFormatUsername))
+    {
+        response.code = 400;
+        response.body = crow::json::wvalue
+        ({
+            {"code", response.code},
+            {"error", "invalid username format! ((username format description))"}
+        }).dump();
 
-    //if (!std::regex_match(username, regexFormatUsername))
-    //{
-    //    response.code = 400;
-    //    response.body = crow::json::wvalue
-    //    ({
-    //        {"code", response.code},
-    //        {"error": "invalid username format! ((username format description))"}
-    //    });
+        return response;
+    }
 
-    //    return response;
-    //}
+    bool foundCredentials = storage.CheckCredentials(String(username), String(password));
 
-    //bool foundCredentials = storage.CheckCredentials(String(username), String(password));
-
-    //if (!foundCredentials)
-    //{
-    //    response.code = 401;
-    //    response.body = crow::json::wvalue
-    //    ({
-    //        {"code", response.code},
-    //        {"error": "unauthorized"}
-    //    });
-    //}
+    if (!foundCredentials)
+    {
+        response.code = 401;
+        response.body = crow::json::wvalue
+        ({
+            {"code", response.code},
+            {"error", "unauthorized"}
+        }).dump();
+    }
 
     return {};
 }
