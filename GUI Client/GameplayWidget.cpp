@@ -83,7 +83,7 @@ void GameplayWidget::ShowWordDependingOnPlayerType(const QString& word) noexcept
 			hiddenWord += "_ ";
 		wordToDraw->setText(hiddenWord);
 		toolsFrame->hide();
-		drawingBoard->setDisabled(true);
+		
 		chat->SetWordToGuess(word);
 	}
 	else {
@@ -92,6 +92,12 @@ void GameplayWidget::ShowWordDependingOnPlayerType(const QString& word) noexcept
 		drawingBoard->setDisabled(false);
 	}
 	chat->SetChatConfigurationAccordingToPlayerType(isDrawer);
+}
+
+void GameplayWidget::BackgroundChangeForGuessersOnDrawerPickingWord()
+{
+	drawingBoard->setDisabled(true);
+	backgroundForGuesser->hide();
 }
 
 void GameplayWidget::AddPlayers()
@@ -138,7 +144,7 @@ void GameplayWidget::AddWordOption(const std::string& word)
 		for (auto& button : wordsToChoose) {
 			button->hide();
 		}
-		backgroundForWords->hide(); 
+		backgroundForDrawer->hide(); 
 		drawingBoard->SetIsChoosingWord(false);
 	});
 
@@ -148,12 +154,16 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 
 	if (firstShow) {
 		wordToDraw = findChild<QLabel*>("wordToGuessLabel");
+		timerLabel = findChild<QLabel*>("timerLabel");
+		roundsLabel = findChild<QLabel*>("roundsLabel");
 		drawingBoard = findChild<DrawingBoard*>("drawingBoardCanvas");
 		toolsFrame = findChild<ToolsFrame*>("toolsFrame");
 		chat = findChild<Chat*>("chatFrame");
 		scoreboardTable = findChild<ScoreboardTable*>("scoreboardTable");
-		backgroundForWords = new QWidget(drawingBoard);
-		wordsToChooseLayout = new QHBoxLayout(backgroundForWords);
+		backgroundForDrawer = new QWidget(drawingBoard);
+		backgroundForGuesser = new QWidget(drawingBoard);
+		wordsToChooseLayout = new QHBoxLayout(backgroundForDrawer);
+		waitingForWordToBepickedLayout = new QHBoxLayout(backgroundForGuesser);
 
 		QObject::connect(toolsFrame, &ToolsFrame::OnColorChangedSignal, this, &GameplayWidget::ChangePenColor);
 		QObject::connect(toolsFrame, &ToolsFrame::OnWidthChangedSignal, this, &GameplayWidget::ChangePenWidth);
@@ -163,12 +173,10 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 		QObject::connect(toolsFrame, &ToolsFrame::OnCanvasClearedSignal, this, &GameplayWidget::OnCanvasCleared);
 		QObject::connect(toolsFrame, &ToolsFrame::OnPencilButtonReleasedSignal, this, &GameplayWidget::OnPencilButtonReleased);
 
-		backgroundForWords->setGeometry(0, 0, drawingBoard->width(), drawingBoard->height()); 
-		backgroundForWords->setStyleSheet(
-			"background-image: url(:/settings/WordsBackground);"
-			"background-position: center;"
-			"background-repeat: no-repeat;"
-		);
+		timerLabel->setText(QString::number(drawTime));
+		roundsLabel->setText(QString("Round 1 of ") + QString::number(rounds));
+		backgroundForDrawer->setGeometry(0, 0, drawingBoard->width(), drawingBoard->height()); 
+		backgroundForGuesser->setGeometry(0, 0, drawingBoard->width(), drawingBoard->height());
 
 		firstShow = false;
 	}
@@ -177,15 +185,36 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 
 	if (isDrawer) {
 		drawingBoard->SetIsChoosingWord(true);
-
+		backgroundForDrawer->setStyleSheet(
+			"background-image: url(:/settings/WordsBackground);"
+			"background-position: center;"
+			"background-repeat: no-repeat;"
+		);
 		AddWordOption("cuvant");
 		AddWordOption("mere");
 		AddWordOption("prune");
 		AddWordOption("cirese");
 		AddWordOption("pere");
-		backgroundForWords->show();
+		backgroundForDrawer->show();
 	}
-	else ShowWordDependingOnPlayerType("Cuvant");
+	else {
+		QLabel* waitingTextLabel { new QLabel()};
+		waitingTextLabel->setStyleSheet("QLabel {"
+			"  text-align: center;"
+			"  font-size: 24px;"
+			"  font-family: Consolas, monospace;"
+			"}");
+		waitingTextLabel->setText(QString("Waiting for ") + QString(scoreboardTable->itemAt(0, 0)->text()) + QString(" to choose a word..."));
+		drawingBoard->SetIsChoosingWord(true);
+		backgroundForGuesser->setStyleSheet(
+			"background-color: grey;"
+		);
+		waitingForWordToBepickedLayout->addWidget(waitingTextLabel);
+		waitingForWordToBepickedLayout->setAlignment(Qt::AlignCenter);
+		backgroundForGuesser->setLayout(waitingForWordToBepickedLayout);
+		backgroundForGuesser->show();
+		ShowWordDependingOnPlayerType("Cuvant");
+	}
 
 	/*cpr::Response response = cpr::Get(cpr::Url{ "http://localhost:18080/fetchword" });
 	auto word = crow::json::load(response.text);

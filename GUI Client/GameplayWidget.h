@@ -50,6 +50,7 @@ private:
 	void AddPlayers();
 	void AddWordOption(const std::string& word);
 	void ShowWordDependingOnPlayerType(const QString& word) noexcept;
+	void BackgroundChangeForGuessersOnDrawerPickingWord();
 
 private:
 	struct Player {
@@ -65,6 +66,8 @@ private:
 	bool firstShow					 { true };
 	bool isDrawer					 { true };
 	QLabel* wordToDraw				 { new QLabel{} };
+	QLabel* timerLabel				 { new QLabel{} };
+	QLabel* roundsLabel				 { new QLabel{} };
 	DrawingBoard* drawingBoard		 { new DrawingBoard{} };
 	ToolsFrame* toolsFrame			 { new ToolsFrame{} };
 	Chat* chat						 { new Chat{} };
@@ -72,10 +75,12 @@ private:
 
 	bool isEraserEnabled			 { false };
 	QCursor eraserCursor			 { QCursor(QPixmap(":/image/eraser_cursor").scaled(25, 25)) };
-	QCursor fillCursor				 { QCursor(QPixmap(":/image/fill").scaled(25, 25)) };
+	QCursor fillCursor				 { QCursor(QPixmap(":/image/fill_cursor").scaled(25, 25)) };
 	QCursor pencilCursor			 { Qt::CrossCursor };
 
-	QWidget* backgroundForWords				{ new QWidget{} };
-	QHBoxLayout* wordsToChooseLayout		{ new QHBoxLayout{} };
-	std::vector<QPushButton*> wordsToChoose {};
+	QWidget* backgroundForDrawer					{ new QWidget{} };
+	QWidget* backgroundForGuesser					{ new QWidget{} };
+	QHBoxLayout* wordsToChooseLayout				{ new QHBoxLayout{} };
+	QHBoxLayout* waitingForWordToBepickedLayout		{ new QHBoxLayout{} };
+	std::vector<QPushButton*> wordsToChoose			{};
 };

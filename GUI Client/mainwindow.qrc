@@ -5,8 +5,6 @@
         <file alias="undo">Resource Files/undo.png</file>
         <file alias="eraser">Resource Files/eraser.png</file>
         <file alias="pencil">Resource Files/attribution-pencil.png</file>
-        <file alias="eraser_cursor">Resource Files/eraser_cursor.png</file>
-        <file alias="fill">Resource Files/fill.png</file>
         <file alias="alien">Resource Files/user-alien.png</file>
         <file alias="astronaut">Resource Files/user-astronaut.png</file>
         <file alias="ninja">Resource Files/user-ninja.png</file>
@@ -19,6 +17,9 @@
         <file alias="chef">Resource Files/user-chef.png</file>
         <file alias="helmet">Resource Files/user-helmet-safety.png</file>
         <file alias="nurse">Resource Files/user-nurse.png</file>
+        <file alias="eraser_cursor">Resource Files/eraser_cursor.png</file>
+        <file alias="fill_cursor">Resource Files/fill_cursor.png</file>
+        <file alias="fill">Resource Files/fill.png</file>
     </qresource>
     <qresource prefix="/background">
         <file alias="Background">Resource Files/GarticBackground.png</file>
@@ -28,5 +29,6 @@
         <file alias="words_number">Resource Files/quiz.png</file>
         <file alias="time_settings">Resource Files/alarm-clock.png</file>
         <file alias="WordsBackground">Resource Files/hatching-2460786_640.png</file>
+        <file alias="timer_clock">Resource Files/timer_clock.png</file>
     </qresource>
 </RCC>
