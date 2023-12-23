@@ -8,11 +8,14 @@ LogInManager::~LogInManager()
 {}
 
 void LogInManager::showEvent(QShowEvent* event) {
-	nameInput = findChild<QLineEdit*>("enterNameLogInInput");
-	passwordInput = findChild<QLineEdit*>("enterPasswordLogInInput");
-	logInButton = findChild<QPushButton*>("logInButton");
+	if (firstShow) {
+		nameInput = findChild<QLineEdit*>("enterNameLogInInput");
+		passwordInput = findChild<QLineEdit*>("enterPasswordLogInInput");
+		logInButton = findChild<QPushButton*>("logInButton");
 
-	QObject::connect(logInButton, &QPushButton::released, this, &LogInManager::OnSignUpCredentialsSent);
+		QObject::connect(logInButton, &QPushButton::released, this, &LogInManager::OnSignUpCredentialsSent);
+		firstShow = false;
+	}
 }
 
 void LogInManager::OnSignUpCredentialsSent() noexcept  

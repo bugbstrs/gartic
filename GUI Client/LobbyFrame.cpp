@@ -14,7 +14,11 @@ std::tuple<int, int, int> LobbyFrame::GetGameSettings()
 
 void LobbyFrame::showEvent(QShowEvent * event)
 {
-	drawTimeComboBox = findChild<QComboBox*>("drawTimeComboBox");
-	roundsComboBox = findChild<QComboBox*>("roundsComboBox");
-	wordCountComboBox = findChild<QComboBox*>("wordCountComboBox");
+	if (firstShow) {
+		drawTimeComboBox = findChild<QComboBox*>("drawTimeComboBox");
+		roundsComboBox = findChild<QComboBox*>("roundsComboBox");
+		wordCountComboBox = findChild<QComboBox*>("wordCountComboBox");
+
+		firstShow = false;
+	}
 }

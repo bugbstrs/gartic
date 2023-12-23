@@ -16,6 +16,7 @@ public:
 	void showEvent(QShowEvent* event) override;
 
 private:
+	bool firstShow{ true };
 	QComboBox* drawTimeComboBox{ new QComboBox{} };
 	QComboBox* roundsComboBox{ new QComboBox{} };
 	QComboBox* wordCountComboBox{ new QComboBox{} };

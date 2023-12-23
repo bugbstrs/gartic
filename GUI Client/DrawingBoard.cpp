@@ -181,12 +181,6 @@ void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, Q
     update();
 }
 
-
-void DrawingBoard::showEvent(QShowEvent* event)
-{
-    isChoosingWord = true;
-}
-
 void DrawingBoard::paintEvent(QPaintEvent* event)
 {
     if (firstPaint) {

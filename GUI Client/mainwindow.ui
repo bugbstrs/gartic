@@ -66,7 +66,7 @@ background-size: stretch;</string>
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="MainMenuScene">
        <property name="styleSheet">
@@ -3991,7 +3991,7 @@ QPushButton:hover {
 </string>
                       </property>
                       <property name="text">
-                       <string>LOG IN</string>
+                       <string>Log In</string>
                       </property>
                      </widget>
                     </item>
