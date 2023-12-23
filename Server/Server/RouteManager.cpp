@@ -1,6 +1,8 @@
 #include "RouteManager.h"
 #include <regex>
 
+import GarticExceptions;
+
 void http::RouteManager::Run(GarticStorage& storage)
 {
 	CROW_ROUTE(m_app, "/")([]() {
@@ -31,15 +33,15 @@ void http::RouteManager::CreateFetchWordRoute(GarticStorage& storage)
 
         std::string fetchedWord;
         
-        //try
-        //{
+        try
+        {
             fetchedWord = storage.FetchWord();
             word_json.push_back(crow::json::wvalue{ {"word", fetchedWord} });
-        /*}
+        }
         catch (CannotFetchWordException& exception)
         {
             word_json.push_back(crow::json::wvalue{ {"word", "N/A"}});
-        }*/
+        }
 
         return crow::json::wvalue{ word_json };
     });
@@ -52,15 +54,15 @@ void http::RouteManager::CreateFetchQuoteRoute(GarticStorage& storage)
 
         std::string fetchedQuote;
 
-        /*try
-        {*/
+        try
+        {
             fetchedQuote = storage.FetchQuote();
             quote_json.push_back(crow::json::wvalue{ {"quote", fetchedQuote} });
-        //}
-        /*catch (CannotFetchQuoteException& exception)
+        }
+        catch (CannotFetchQuoteException& exception)
         {
             quote_json.push_back(crow::json::wvalue{ {"quote", "N/A"} });
-        };*/
+        };
 
         return crow::json::wvalue{ quote_json };
     });
@@ -164,14 +166,14 @@ void http::RouteManager::CreateRegisterRoute(GarticStorage& storage)
 
         if (password == nullptr || username == nullptr) return crow::response(400);
 
-        //try
+        try
         {
             storage.CreateUser(String(username), String(password));
         }
-       /* catch (UserAlreadyExistsException& exception)
+        catch (UserAlreadyExistsException& exception)
         {
             return crow::response(403);
-        }*/
+        }
 
         return crow::response(201);
     });
@@ -224,15 +226,15 @@ void http::RouteManager::CreateGetWordToDisplayRoute(GarticStorage& storage)
     CROW_ROUTE(m_app, "/fetchwordtodisplay")([&storage]() {
         std::vector<crow::json::wvalue> word_json;
 
-        /*try
-        {*/
-            /*std::string wordToDisplay = m_game.GetWordToDisplay();
-            word_json.push_back(crow::json::wvalue{ {"word", wordToDisplay} });*/
-        /*}
+        try
+        {
+            //std::string wordToDisplay = m_game.GetWordToDisplay();
+            //word_json.push_back(crow::json::wvalue{ {"word", wordToDisplay} });
+        }
         catch (CannotFetchWordException& exception)
         {
             word_json.push_back(crow::json::wvalue{ {"word", "N/A"} });
-        }*/
+        }
 
         return crow::json::wvalue{ word_json };
         });
