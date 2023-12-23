@@ -145,7 +145,9 @@ void LobbyScene::Start()
 	m_drawTime->SetConections(nullptr, m_rounds, nullptr, nullptr);
 	m_rounds->SetConections(m_drawTime, m_wordCount, nullptr, nullptr);
 	m_wordCount->SetConections(m_rounds, m_customRounds, nullptr, nullptr);
-	m_customRounds->SetConections(m_wordCount, nullptr, nullptr, nullptr);
+	m_customRounds->SetConections(m_wordCount, startButton, nullptr, nullptr);
+	startButton->SetConections(m_customRounds, nullptr, nullptr, leaveButton);
+	leaveButton->SetConections(nullptr, nullptr, startButton, nullptr);
 
 	m_selected = startButton;
 }
