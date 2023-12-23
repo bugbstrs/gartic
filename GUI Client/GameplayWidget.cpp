@@ -35,6 +35,7 @@ void GameplayWidget::Clear() noexcept
 	isEraserEnabled = false;
 	wordToDraw->clear();
 	scoreboardTable->ClearScoreboard();
+	drawingBoard->setCursor(pencilCursor);
 	drawingBoard->ResetBoard();
 	toolsFrame->ResetCurrentColorView();
 }
@@ -144,39 +145,47 @@ void GameplayWidget::AddWordOption(const std::string& word)
 }
 
 void GameplayWidget::showEvent(QShowEvent* event) {
-	wordToDraw = findChild<QLabel*>("wordToGuessLabel");
-	drawingBoard = findChild<DrawingBoard*>("drawingBoardCanvas");
-	toolsFrame = findChild<ToolsFrame*>("toolsFrame");
-	chat = findChild<Chat*>("chatFrame");
-	scoreboardTable = findChild<ScoreboardTable*>("scoreboardTable");
-	backgroundForWords = new QWidget(drawingBoard);
-	wordsToChooseLayout = new QHBoxLayout(backgroundForWords);
 
-	QObject::connect(toolsFrame, &ToolsFrame::OnColorChangedSignal, this, &GameplayWidget::ChangePenColor);
-	QObject::connect(toolsFrame, &ToolsFrame::OnWidthChangedSignal, this, &GameplayWidget::ChangePenWidth);
-	QObject::connect(toolsFrame, &ToolsFrame::OnEraserButtonReleasedSignal, this, &GameplayWidget::OnEraserButtonReleased);
-	QObject::connect(toolsFrame, &ToolsFrame::OnUndoButtonReleasedSignal, this, &GameplayWidget::OnUndoButtonReleased);
-	QObject::connect(toolsFrame, &ToolsFrame::OnFillButtonReleasedSignal, this, &GameplayWidget::OnFillButtonReleased);
-	QObject::connect(toolsFrame, &ToolsFrame::OnCanvasClearedSignal, this, &GameplayWidget::OnCanvasCleared);
-	QObject::connect(toolsFrame, &ToolsFrame::OnPencilButtonReleasedSignal, this, &GameplayWidget::OnPencilButtonReleased);
-	
-	AddPlayers();
+	if (firstShow) {
+		wordToDraw = findChild<QLabel*>("wordToGuessLabel");
+		drawingBoard = findChild<DrawingBoard*>("drawingBoardCanvas");
+		toolsFrame = findChild<ToolsFrame*>("toolsFrame");
+		chat = findChild<Chat*>("chatFrame");
+		scoreboardTable = findChild<ScoreboardTable*>("scoreboardTable");
+		backgroundForWords = new QWidget(drawingBoard);
+		wordsToChooseLayout = new QHBoxLayout(backgroundForWords);
 
-	drawingBoard->SetIsChoosingWord(true);
-	backgroundForWords->setGeometry(0, 0, drawingBoard->width(), drawingBoard->height());
-	
-	AddWordOption("cuvant");
-	AddWordOption("mere");
-	AddWordOption("prune");
-	AddWordOption("cirese");
-	AddWordOption("pere");
-	backgroundForWords->setStyleSheet(
+		QObject::connect(toolsFrame, &ToolsFrame::OnColorChangedSignal, this, &GameplayWidget::ChangePenColor);
+		QObject::connect(toolsFrame, &ToolsFrame::OnWidthChangedSignal, this, &GameplayWidget::ChangePenWidth);
+		QObject::connect(toolsFrame, &ToolsFrame::OnEraserButtonReleasedSignal, this, &GameplayWidget::OnEraserButtonReleased);
+		QObject::connect(toolsFrame, &ToolsFrame::OnUndoButtonReleasedSignal, this, &GameplayWidget::OnUndoButtonReleased);
+		QObject::connect(toolsFrame, &ToolsFrame::OnFillButtonReleasedSignal, this, &GameplayWidget::OnFillButtonReleased);
+		QObject::connect(toolsFrame, &ToolsFrame::OnCanvasClearedSignal, this, &GameplayWidget::OnCanvasCleared);
+		QObject::connect(toolsFrame, &ToolsFrame::OnPencilButtonReleasedSignal, this, &GameplayWidget::OnPencilButtonReleased);
+
+		backgroundForWords->setGeometry(0, 0, drawingBoard->width(), drawingBoard->height()); 
+		backgroundForWords->setStyleSheet(
 			"background-image: url(:/settings/WordsBackground);"
 			"background-position: center;"
 			"background-repeat: no-repeat;"
-			);
-	backgroundForWords->show();
+		);
 
+		firstShow = false;
+	}
+
+	AddPlayers();
+
+	if (isDrawer) {
+		drawingBoard->SetIsChoosingWord(true);
+
+		AddWordOption("cuvant");
+		AddWordOption("mere");
+		AddWordOption("prune");
+		AddWordOption("cirese");
+		AddWordOption("pere");
+		backgroundForWords->show();
+	}
+	else ShowWordDependingOnPlayerType("Cuvant");
 
 	/*cpr::Response response = cpr::Get(cpr::Url{ "http://localhost:18080/fetchword" });
 	auto word = crow::json::load(response.text);

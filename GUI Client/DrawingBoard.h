@@ -32,7 +32,7 @@ public:
 	void UndoLastPath() noexcept;
 	void ClearCanvas() noexcept;
 
-	void ResetBoard();
+	void ResetBoard() noexcept;
 
 protected:
 	void showEvent(QShowEvent* event) override;
@@ -56,7 +56,6 @@ private:
 	bool firstPaint			{ true };
 	bool drawing			{ false };
 	bool fillEnabled		{ false };
-	bool undo				{ false };
 
 	QColor lastColor	{};
 	QColor eraserColor	{};

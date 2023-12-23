@@ -62,6 +62,7 @@ private:
 	int rounds						 {};
 	int wordsCount					 {};
 
+	bool firstShow					 { true };
 	bool isDrawer					 { true };
 	QLabel* wordToDraw				 { new QLabel{} };
 	DrawingBoard* drawingBoard		 { new DrawingBoard{} };

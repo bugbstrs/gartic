@@ -23,6 +23,7 @@ void Chat::OnConversationWaitingForUpdate(const QString& newMessage) noexcept
 		m_chatWritingBox->setDisabled(true);
 	}
     m_chatConversation->insertHtml(formattedMessage);
+	m_chatConversation->moveCursor(QTextCursor::End);
 }
 
 void Chat::SetWordToGuess(QString wordToGuess) noexcept
@@ -38,8 +39,11 @@ void Chat::SetChatConfigurationAccordingToPlayerType(bool isDrawer) noexcept
 
 void Chat::showEvent(QShowEvent* event)
 {
-	m_chatWritingBox = findChild<ChatWritingBox*>("chatWritingBox");
-	m_chatConversation = findChild<ChatConversation*>("chatConversation"); 
-	QObject::connect(m_chatWritingBox, &ChatWritingBox::OnConversationWaitingForUpdateSignal, this, &Chat::OnConversationWaitingForUpdate);
-	QWidget::showEvent(event);
+	if (firstShow) {
+		m_chatWritingBox = findChild<ChatWritingBox*>("chatWritingBox");
+		m_chatConversation = findChild<ChatConversation*>("chatConversation");
+		QObject::connect(m_chatWritingBox, &ChatWritingBox::OnConversationWaitingForUpdateSignal, this, &Chat::OnConversationWaitingForUpdate);
+		/*QWidget::showEvent(event);*/
+		firstShow = false;
+	}
 }

@@ -34,6 +34,7 @@ signals:
 	void OnPencilButtonReleasedSignal();
 
 private:
+	bool firstShow{ true };
 	QWidget* currentColorView { new QWidget{} };
 	const QString kSmallWidthButton{ "smallWidthButton" };
 	const QString kMediumWidthButton{ "mediumWidthButton" };

@@ -108,13 +108,11 @@ void DrawingBoard::ClearCanvas() noexcept
     update();
 }
 
-void DrawingBoard::ResetBoard()
+void DrawingBoard::ResetBoard() noexcept
 {
     isChoosingWord = false;
-    firstPaint = false;
     drawing = false;
     fillEnabled = false;
-    undo = false;
     lastColor = kDefaultPenColor;
 
     ChangePenPropertiesTo(kDefaultPenColor, kDefaultPenWidth);
@@ -186,6 +184,7 @@ void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, Q
 
 void DrawingBoard::showEvent(QShowEvent* event)
 {
+    isChoosingWord = true;
 }
 
 void DrawingBoard::paintEvent(QPaintEvent* event)

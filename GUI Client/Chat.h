@@ -27,6 +27,7 @@ public slots:
 	void OnConversationWaitingForUpdate(const QString& newMessage) noexcept;
 
 private:
+	bool firstShow{ true };
 	QString m_wordToGuess				 {};
 	ChatWritingBox* m_chatWritingBox     { new ChatWritingBox{} };
 	ChatConversation* m_chatConversation { new ChatConversation{} };
