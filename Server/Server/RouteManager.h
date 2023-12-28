@@ -44,9 +44,11 @@ namespace http
 		void FetchGameStatusRoute();
 		void FetchRoundNumberRoute();
 		void FetchDrawerRoute();
+		void FetchNWordsRoute();
+		void FetchDrawingBoard();
+		void FetchWordToDisplayRoute();
 
 		void PutWordToGuessRoute();
-		void GetWordToDisplayRoute();
 
 	private:
 		crow::SimpleApp m_app;
