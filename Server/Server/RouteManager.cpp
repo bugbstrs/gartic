@@ -614,6 +614,34 @@ void http::RouteManager::FetchDrawingBoard()
 		});
 }
 
+void http::RouteManager::FetchWordToGuessRoute()
+{
+	CROW_ROUTE(m_app, "/fetchwordtoguess")([this](const crow::request& request) {
+		char* username = request.url_params.get("username");
+		char* password = request.url_params.get("password");
+
+		std::vector<crow::json::wvalue> word_json;
+
+		std::string usernameString(username);
+		std::string passwordString(password);
+
+		std::string wordToGuess;
+
+		if (m_storage.CheckCredentials(usernameString, passwordString))
+		{
+			wordToGuess = m_gartic.GetGame(usernameString)->GetRound().GetWordToGuess();
+
+			word_json.push_back(crow::json::wvalue{ {"word_to_guess", wordToGuess} });
+		}
+		else
+		{
+			word_json.push_back(crow::json::wvalue{ {"word_to_guess", "N/A"} });
+		}
+
+		return crow::json::wvalue{ word_json };
+		});
+}
+
 void http::RouteManager::FetchWordToDisplayRoute()
 {
 	CROW_ROUTE(m_app, "/fetchwordtodisplay")([this](const crow::request& request) {
@@ -631,14 +659,74 @@ void http::RouteManager::FetchWordToDisplayRoute()
 		{
 			wordToDisplay = m_gartic.GetGame(usernameString)->GetRound().GetWordToDisplay();
 
-			word_json.push_back(crow::json::wvalue{ {"word", wordToDisplay} });
+			word_json.push_back(crow::json::wvalue{ {"word_to_display", wordToDisplay} });
 		}
 		else
 		{
-			word_json.push_back(crow::json::wvalue{ {"word", "N/A"} });
+			word_json.push_back(crow::json::wvalue{ {"word_to_display", "N/A"} });
 		}
 
 		return crow::json::wvalue{ word_json };
+		});
+}
+
+void http::RouteManager::FetchMessagesRoute()
+{
+	CROW_ROUTE(m_app, "/fetchmessages")([this](const crow::request& request) {
+		char* username = request.url_params.get("username");
+		char* password = request.url_params.get("password");
+
+		std::vector<crow::json::wvalue> messages_json;
+
+		std::string usernameString(username);
+		std::string passwordString(password);
+
+		std::vector<std::string> messages;
+
+		if (m_storage.CheckCredentials(usernameString, passwordString))
+		{
+			messages = m_gartic.GetGame(usernameString)->GetChat().GetAndDeleteMessages(usernameString);
+
+			for (int i{ 0 }; i < messages.size(); i++)
+			{
+				messages_json.push_back(crow::json::wvalue{ {std::format("message_no{}", i), messages[i]}});
+			}
+		}
+		else
+		{
+			messages_json.push_back(crow::json::wvalue{ {"messages", "N/A"} });
+		}
+
+		return crow::json::wvalue{ messages_json };
+		});
+}
+
+void http::RouteManager::FetchIsCloseEnoughRoute()
+{
+	CROW_ROUTE(m_app, "/fetchmessages")([this](const crow::request& request) {
+		char* username = request.url_params.get("username");
+		char* password = request.url_params.get("password");
+		char* currGuess = request.url_params.get("guess");
+
+		std::vector<crow::json::wvalue> messages_json;
+
+		std::string usernameString(username);
+		std::string passwordString(password);
+
+		std::vector<std::string> messages;
+
+		if (m_storage.CheckCredentials(usernameString, passwordString))
+		{
+			bool isClose = m_gartic.GetGame(usernameString)->GetChat().IsCloseEnough(currGuess);
+
+			messages_json.push_back(crow::json::wvalue{ {"close_enough", currGuess ? "true" : "false"} });
+		}
+		else
+		{
+			messages_json.push_back(crow::json::wvalue{ {"close_enough", "N/A"} });
+		}
+
+		return crow::json::wvalue{ messages_json };
 		});
 }
 
@@ -647,14 +735,14 @@ void http::RouteManager::PutWordToGuessRoute()
 	CROW_ROUTE(m_app, "/putwordtoguess")([this](const crow::request& request) {
 		char* username = request.url_params.get("username");
 		char* password = request.url_params.get("password");
-		char* wordToDisplay = request.url_params.get("word");
+		char* wordToGuess = request.url_params.get("word");
 		
 		std::string usernameString(username);
 		std::string passwordString(password);
 
 		crow::response response;
 
-		if (wordToDisplay == nullptr)
+		if (wordToGuess == nullptr)
 		{
 			// todo: log
 			response.code = 400;
@@ -676,8 +764,53 @@ void http::RouteManager::PutWordToGuessRoute()
 				return response;
 		}
 
-		std::string wordToDiplayString(wordToDisplay);
-		m_gartic.GetGame(usernameString)->GetRound().SetWordToDisplay(wordToDiplayString);
+		std::string wordToDiplayString(wordToGuess);
+		m_gartic.GetGame(usernameString)->GetRound().SetWordToGuess(wordToDiplayString);
+
+		response.body = crow::json::wvalue({
+			{"put", true}
+			}).dump();
+
+			return response;
+		});
+}
+
+void http::RouteManager::PutMessageInChatRoute()
+{
+	CROW_ROUTE(m_app, "/putwordtoguess")([this](const crow::request& request) {
+		char* username = request.url_params.get("username");
+		char* password = request.url_params.get("password");
+		char* message = request.url_params.get("message");
+
+		std::string usernameString(username);
+		std::string passwordString(password);
+
+		crow::response response;
+
+		if (message == nullptr)
+		{
+			// todo: log
+			response.code = 400;
+			response.body = crow::json::wvalue({
+				{"found", false}
+				}).dump();
+
+				return response;
+		}
+
+		if (!m_storage.CheckCredentials(usernameString, passwordString))
+		{
+			// todo: log
+			response.code = 401;
+			response.body = crow::json::wvalue({
+				{"no_user", false}
+				}).dump();
+
+				return response;
+		}
+
+		std::string messageString(message);
+		m_gartic.GetGame(usernameString)->GetChat().AddMessage(usernameString, messageString);
 
 		response.body = crow::json::wvalue({
 			{"put", true}

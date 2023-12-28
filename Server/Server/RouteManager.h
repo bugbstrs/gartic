@@ -46,9 +46,13 @@ namespace http
 		void FetchDrawerRoute();
 		void FetchNWordsRoute();
 		void FetchDrawingBoard();
+		void FetchWordToGuessRoute();
 		void FetchWordToDisplayRoute();
+		void FetchMessagesRoute();
+		void FetchIsCloseEnoughRoute();
 
 		void PutWordToGuessRoute();
+		void PutMessageInChatRoute();
 
 	private:
 		crow::SimpleApp m_app;
