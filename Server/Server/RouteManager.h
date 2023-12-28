@@ -10,22 +10,25 @@ namespace http
 	class RouteManager
 	{
 	public:
+		// Constructors
         RouteManager() = delete;
         RouteManager(GarticStorage& storage, GarticManager& manager);
+
+		// Route creation
 		void Run();
 
 	private:
 		// Database related
-		void CreateFetchWordRoute();
-		void CreateFetchQuoteRoute();
-		void CreateFetchAllWordsRoute();
-		void CreateFetchAllUsersRoute();
-		void CreateFetchTop5UsersRoute();
-		void CreateLoginRoute();
-		void CreateRegisterRoute();
-		void CreateCheckBannedWordRoute();
-		void CreatePutWordToGuessRoute();
-		void CreateGetWordToDisplayRoute();
+		void FetchWordRoute();
+		void FetchQuoteRoute();
+		void FetchAllWordsRoute();
+		void FetchAllUsersRoute();
+		void FetchTop5UsersRoute();
+		void LoginRoute();
+		void RegisterRoute();
+		void CheckBannedWordRoute();
+		void PutWordToGuessRoute();
+		void GetWordToDisplayRoute();
 
         std::optional<crow::response> IsRequestAuthenticated(const crow::request& request);
 
@@ -35,10 +38,14 @@ namespace http
 		
 		// Lobby
 		void FetchCodeRoute();
-		void FetchUsers();
-		void FetchSettings();
+		void FetchUsersRoute();
+		void FetchSettingsRoute();
 
 		// Game
+		void FetchPlayersRoute();
+		void FetchGameStatusRoute();
+		void FetchRoundNumberRoute();
+		void FetchDrawerRoute();
 
 	private:
 		crow::SimpleApp m_app;
