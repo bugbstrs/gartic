@@ -1,4 +1,6 @@
 #include "RouteManager.h"
+
+#include <sstream>
 #include <regex>
 
 import GarticExceptions;
@@ -14,16 +16,16 @@ void http::RouteManager::Run()
 		return "This is an example app of crow and sql-orm";
 		});
 
-	CreateFetchWordRoute();
-	CreateFetchQuoteRoute();
-	CreateFetchAllWordsRoute();
-	CreateFetchAllUsersRoute();
-	CreateFetchTop5UsersRoute();
-	CreateLoginRoute();
-	CreateRegisterRoute();
-	CreateCheckBannedWordRoute();
-	CreatePutWordToGuessRoute();
-	CreateGetWordToDisplayRoute();
+	FetchWordRoute();
+	FetchQuoteRoute();
+	FetchAllWordsRoute();
+	FetchAllUsersRoute();
+	FetchTop5UsersRoute();
+	LoginRoute();
+	RegisterRoute();
+	CheckBannedWordRoute();
+	PutWordToGuessRoute();
+	GetWordToDisplayRoute();
 
 	m_app
 		.port(18080)
@@ -31,7 +33,7 @@ void http::RouteManager::Run()
 		.run();
 }
 
-void http::RouteManager::CreateFetchWordRoute()
+void http::RouteManager::FetchWordRoute()
 {
 	CROW_ROUTE(m_app, "/fetchword")([this]() {
 		std::vector<crow::json::wvalue> word_json;
@@ -52,7 +54,7 @@ void http::RouteManager::CreateFetchWordRoute()
 		});
 }
 
-void http::RouteManager::CreateFetchQuoteRoute()
+void http::RouteManager::FetchQuoteRoute()
 {
 	CROW_ROUTE(m_app, "/fetchquote")([this]() {
 		std::vector<crow::json::wvalue> quote_json;
@@ -73,7 +75,7 @@ void http::RouteManager::CreateFetchQuoteRoute()
 		});
 }
 
-void http::RouteManager::CreateFetchAllWordsRoute()
+void http::RouteManager::FetchAllWordsRoute()
 {
 	CROW_ROUTE(m_app, "/fetchallwords")([this]() {
 		std::vector<crow::json::wvalue> words_json;
@@ -89,7 +91,7 @@ void http::RouteManager::CreateFetchAllWordsRoute()
 		});
 }
 
-void http::RouteManager::CreateFetchAllUsersRoute()
+void http::RouteManager::FetchAllUsersRoute()
 {
 	CROW_ROUTE(m_app, "/fetchallusers")([this]() {
 		std::vector<crow::json::wvalue> users_json;
@@ -109,7 +111,7 @@ void http::RouteManager::CreateFetchAllUsersRoute()
 		});
 }
 
-void http::RouteManager::CreateFetchTop5UsersRoute()
+void http::RouteManager::FetchTop5UsersRoute()
 {
 	CROW_ROUTE(m_app, "/fetchtopusers")([this]() {
 		std::vector<crow::json::wvalue> top_users_json;
@@ -129,7 +131,7 @@ void http::RouteManager::CreateFetchTop5UsersRoute()
 		});
 }
 
-void http::RouteManager::CreateLoginRoute()
+void http::RouteManager::LoginRoute()
 {
 	CROW_ROUTE(m_app, "/login")([this](const crow::request& request) {
 		char* password = request.url_params.get("password");
@@ -160,7 +162,7 @@ void http::RouteManager::CreateLoginRoute()
 		});
 }
 
-void http::RouteManager::CreateRegisterRoute()
+void http::RouteManager::RegisterRoute()
 {
 	CROW_ROUTE(m_app, "/register")([this](const crow::request& request) {
 		char* password = request.url_params.get("password");
@@ -184,7 +186,7 @@ void http::RouteManager::CreateRegisterRoute()
 		});
 }
 
-void http::RouteManager::CreateCheckBannedWordRoute()
+void http::RouteManager::CheckBannedWordRoute()
 {
 	CROW_ROUTE(m_app, "/bannedword")([this](const crow::request& request) {
 		char* word = request.url_params.get("name");
@@ -197,55 +199,7 @@ void http::RouteManager::CreateCheckBannedWordRoute()
 		});
 }
 
-void http::RouteManager::CreatePutWordToGuessRoute()
-{
-	CROW_ROUTE(m_app, "/putwordtoguess")([this](const crow::request& request) {
-		char* wordToDisplay = request.url_params.get("word");
-
-		crow::response response;
-
-		if (wordToDisplay == nullptr)
-		{
-			// todo: log
-			response.code = 400;
-			response.body = crow::json::wvalue({
-				{"found", false}
-				}).dump();
-
-				return response;
-		}
-
-		std::string wordToDiplayString(wordToDisplay);
-		/*m_game.SetWordToGuess(wordToDisplayString);*/
-
-		response.body = crow::json::wvalue({
-			{"put", true}
-			}).dump();
-
-			return response;
-		});
-}
-
-void http::RouteManager::CreateGetWordToDisplayRoute()
-{
-	CROW_ROUTE(m_app, "/fetchwordtodisplay")([this]() {
-		std::vector<crow::json::wvalue> word_json;
-
-		try
-		{
-			//std::string wordToDisplay = m_game.GetWordToDisplay();
-			//word_json.push_back(crow::json::wvalue{ {"word", wordToDisplay} });
-		}
-		catch (CannotFetchWordException& exception)
-		{
-			word_json.push_back(crow::json::wvalue{ {"word", "N/A"} });
-		}
-
-		return crow::json::wvalue{ word_json };
-		});
-}
-
-std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const crow::request& request)
+std::optional<crow::response> http::RouteManager::IsRequestAuthenticatedRoute(const crow::request& request)
 {
 	std::optional<crow::response> returnResponse;
 	char* password = request.url_params.get("password");
@@ -406,7 +360,7 @@ void http::RouteManager::FetchCodeRoute()
 
 		std::string fetchedCode;
 
-		if (!m_storage.CheckCredentials(usernameString, passwordString))
+		if (m_storage.CheckCredentials(usernameString, passwordString))
 		{
 			fetchedCode = m_gartic.GetLobby(std::string(username))->GetCode();
 			code_json.push_back(crow::json::wvalue{ {"code", fetchedCode} });
@@ -420,7 +374,7 @@ void http::RouteManager::FetchCodeRoute()
 		});
 }
 
-void http::RouteManager::FetchUsers()
+void http::RouteManager::FetchUsersRoute()
 {
 	CROW_ROUTE(m_app, "/fetchusers")([this](const crow::request& request) {
 		char* username = request.url_params.get("username");
@@ -433,7 +387,7 @@ void http::RouteManager::FetchUsers()
 		
 		std::vector<crow::json::wvalue> users_json;
 
-		if (!m_storage.CheckCredentials(usernameString, passwordString))
+		if (m_storage.CheckCredentials(usernameString, passwordString))
 		{
 			fetchedUsers = m_gartic.GetLobby(std::string(username))->GetUsers();
 			for (const auto& user : fetchedUsers)
@@ -450,7 +404,7 @@ void http::RouteManager::FetchUsers()
 		});
 }
 
-void http::RouteManager::FetchSettings()
+void http::RouteManager::FetchSettingsRoute()
 {
 	CROW_ROUTE(m_app, "/fetchsettings")([this](const crow::request& request) {
 		char* username = request.url_params.get("username");
@@ -478,5 +432,194 @@ void http::RouteManager::FetchSettings()
 		}
 
 		return crow::json::wvalue{ settings_json };
+		});
+}
+
+void http::RouteManager::FetchPlayersRoute()
+{
+	CROW_ROUTE(m_app, "/fetchplayers")([this](const crow::request& request) {
+		char* username = request.url_params.get("username");
+		char* password = request.url_params.get("password");
+
+		std::string usernameString(username);
+		std::string passwordString(password);
+
+		std::vector<Player*> fetchedPlayers;
+
+		std::vector<crow::json::wvalue> players_json;
+
+		if (m_storage.CheckCredentials(usernameString, passwordString))
+		{
+			fetchedPlayers = m_gartic.GetGame(usernameString)->GetPlayers();
+			for (const auto& player : fetchedPlayers)
+			{
+				players_json.push_back(crow::json::wvalue{ {"username", player->GetName()} });
+			}
+		}
+		else
+		{
+			players_json.push_back(crow::json::wvalue{ {"username", "N/A"} });
+		}
+
+		return crow::json::wvalue{ players_json };
+		});
+}
+
+void http::RouteManager::FetchGameStatusRoute()
+{
+	CROW_ROUTE(m_app, "/fetchplayers")([this](const crow::request& request) {
+		char* username = request.url_params.get("username");
+		char* password = request.url_params.get("password");
+
+		std::string usernameString(username);
+		std::string passwordString(password);
+
+		GameStatus fetchedStatus;
+
+		std::vector<crow::json::wvalue> status_json;
+
+		if (m_storage.CheckCredentials(usernameString, passwordString))
+		{
+			fetchedStatus = m_gartic.GetGame(usernameString)->GetStatus();
+
+			std::string statusString = GameStatusWrapper::ToString(fetchedStatus);
+
+			status_json.push_back(crow::json::wvalue{ {"game_status", statusString} });
+		}
+		else
+		{
+			status_json.push_back(crow::json::wvalue{ {"game_status", "N/A"} });
+		}
+
+		return crow::json::wvalue{ status_json };
+		});
+}
+
+void http::RouteManager::FetchRoundNumberRoute()
+{
+	CROW_ROUTE(m_app, "/fetchroundnumber")([this](const crow::request& request) {
+		char* username = request.url_params.get("username");
+		char* password = request.url_params.get("password");
+
+		std::string usernameString(username);
+		std::string passwordString(password);
+
+		int fetchedNumber;
+
+		std::vector<crow::json::wvalue> roundNumber_json;
+
+		if (m_storage.CheckCredentials(usernameString, passwordString))
+		{
+			fetchedNumber = m_gartic.GetGame(usernameString)->GetRoundNumber();
+
+			roundNumber_json.push_back(crow::json::wvalue{ {"round_number", std::to_string(fetchedNumber)}});
+		}
+		else
+		{
+			roundNumber_json.push_back(crow::json::wvalue{ {"round_number", "N/A"} });
+		}
+
+		return crow::json::wvalue{ roundNumber_json };
+		});
+}
+
+void http::RouteManager::FetchDrawerRoute()
+{
+	CROW_ROUTE(m_app, "/fetchdrawer")([this](const crow::request& request) {
+		char* username = request.url_params.get("username");
+		char* password = request.url_params.get("password");
+
+		std::string usernameString(username);
+		std::string passwordString(password);
+
+		Player* fetchedDrawer;
+
+		std::vector<crow::json::wvalue> drawer_json;
+
+		if (m_storage.CheckCredentials(usernameString, passwordString))
+		{
+			fetchedDrawer = m_gartic.GetGame(usernameString)->GetRound().GetDrawer();
+
+			drawer_json.push_back(crow::json::wvalue{ {"drawer", fetchedDrawer->GetName()}});
+		}
+		else
+		{
+			drawer_json.push_back(crow::json::wvalue{ {"drawer", "N/A"} });
+		}
+
+		return crow::json::wvalue{ drawer_json };
+		});
+}
+
+void http::RouteManager::PutWordToGuessRoute()
+{
+	CROW_ROUTE(m_app, "/putwordtoguess")([this](const crow::request& request) {
+		char* username = request.url_params.get("username");
+		char* password = request.url_params.get("password");
+		char* wordToDisplay = request.url_params.get("word");
+		
+		std::string usernameString(username);
+		std::string passwordString(password);
+
+		crow::response response;
+
+		if (wordToDisplay == nullptr)
+		{
+			// todo: log
+			response.code = 400;
+			response.body = crow::json::wvalue({
+				{"found", false}
+				}).dump();
+
+				return response;
+		}
+		
+		if (!m_storage.CheckCredentials(usernameString, passwordString))
+		{
+			// todo: log
+			response.code = 401;
+			response.body = crow::json::wvalue({
+				{"no_user", false}
+				}).dump();
+
+				return response;
+		}
+
+		std::string wordToDiplayString(wordToDisplay);
+		m_gartic.GetGame(usernameString)->GetRound().SetWordToDisplay(wordToDiplayString);
+
+		response.body = crow::json::wvalue({
+			{"put", true}
+			}).dump();
+
+			return response;
+		});
+}
+
+void http::RouteManager::GetWordToDisplayRoute()
+{
+	CROW_ROUTE(m_app, "/fetchwordtodisplay")([this](const crow::request& request) {
+		char* username = request.url_params.get("username");
+		char* password = request.url_params.get("password");
+		
+		std::vector<crow::json::wvalue> word_json;
+
+		std::string usernameString(username);
+		std::string passwordString(password);
+
+		std::string wordToDisplay;
+
+		if (m_storage.CheckCredentials(usernameString, passwordString))
+		{
+			wordToDisplay = m_gartic.GetGame(usernameString)->GetRound().GetWordToDisplay();
+
+			word_json.push_back(crow::json::wvalue{ {"word", wordToDisplay} });
+		}
+		else
+		{
+			word_json.push_back(crow::json::wvalue{ {"word", "N/A"} });
+		}
+
+		return crow::json::wvalue{ word_json };
 		});
 }

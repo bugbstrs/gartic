@@ -27,10 +27,8 @@ namespace http
 		void LoginRoute();
 		void RegisterRoute();
 		void CheckBannedWordRoute();
-		void PutWordToGuessRoute();
-		void GetWordToDisplayRoute();
 
-        std::optional<crow::response> IsRequestAuthenticated(const crow::request& request);
+        std::optional<crow::response> IsRequestAuthenticatedRoute(const crow::request& request);
 
 		// Logic related
 		void CreateLobbyRoute();
@@ -46,6 +44,9 @@ namespace http
 		void FetchGameStatusRoute();
 		void FetchRoundNumberRoute();
 		void FetchDrawerRoute();
+
+		void PutWordToGuessRoute();
+		void GetWordToDisplayRoute();
 
 	private:
 		crow::SimpleApp m_app;
