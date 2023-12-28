@@ -10,9 +10,12 @@ namespace http
         // Inherited via DrawEvent
         const std::string& Serialize() override;
 
+        void Deserialize(const std::string&) override;
+
     private:
         int m_x;
         int m_y;
+
     };
 }
 

@@ -6,3 +6,7 @@ const std::string& http::Clear::Serialize()
 {
     return std::format("{}: None", "Clear");
 }
+
+void http::Clear::Deserialize(const std::string&)
+{
+}
