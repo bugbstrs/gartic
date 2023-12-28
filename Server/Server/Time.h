@@ -3,7 +3,7 @@
 #include <functional>
 #include <chrono>
 
-import Timer;
+//import Timer;
 
 using namespace std::chrono_literals;
 
@@ -45,7 +45,7 @@ namespace http
 		
 		std::function<void(const std::string&)> m_toCall;
 
-		static Timer m_serverTimer;
+		//static Timer m_serverTimer;
 
 		std::string m_currentPlayerToRemove;
 	};

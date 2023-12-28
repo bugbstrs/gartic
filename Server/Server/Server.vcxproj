@@ -33,6 +33,7 @@
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="GameStatusEnum.h" />
     <ClInclude Include="GarticDatabase.h" />
+    <ClInclude Include="GarticManager.h" />
     <ClInclude Include="HttpUtils.h" />
     <ClInclude Include="KeepDraw.h" />
     <ClInclude Include="Lobby.h" />
@@ -57,6 +58,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="GarticDatabase.cpp" />
+    <ClCompile Include="GarticManager.cpp" />
     <ClCompile Include="HttpUtils.cpp" />
     <ClCompile Include="KeepDraw.cpp" />
     <ClCompile Include="Lobby.cpp" />

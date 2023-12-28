@@ -10,37 +10,35 @@
 #include "Game.h"
 #include "GameSettings.h"
 
-//#include "UserDoesntExistException.h"
-//#include "NotEnoughPlayersException.h"
-
 namespace http
 {
 	class Lobby
 	{
 	public:
 		Lobby() = default;
+		Lobby(const String& username);
 
 		~Lobby();
 
-		void JoinLobby(User&& newUser);
-		void LeaveLobby(const User& userToLeave);
+		void AddUser(std::shared_ptr<User> newUser);
+		void RemoveUser(std::shared_ptr<User> userToLeave);
 
-		const std::vector<User>& GetUsers() const noexcept;
-		const User* GetLeader() const noexcept;
+		const std::vector<std::shared_ptr<User>>& GetUsers() const noexcept;
+		std::shared_ptr<User> GetLeader() const noexcept;
 		GameSettings GetSettings() const noexcept;
 		const std::string& GetCode() const noexcept;
 
-		void SetLeader(const User* newLeader);
+		void SetLeader(std::shared_ptr<User> newLeader);
 
-		Game* StartGame();
+		std::shared_ptr<Game> StartGame();
 
 	private:
 		const std::string& GenerateCode();
 
 	private:
-		std::vector<User> m_users;
+		std::vector<std::shared_ptr<User>> m_users;
 
-		User* m_leader;
+		std::shared_ptr<User> m_leader;
 
 		GameSettings m_settings;
 

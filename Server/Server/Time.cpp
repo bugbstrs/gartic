@@ -2,7 +2,7 @@
 
 using namespace http;
 
-Timer http::Time::m_serverTimer(10);
+//Timer http::Time::m_serverTimer(10);
 
 http::Time::Time(float newStartTimeStamp, float newStartValue, float newEndValue) : 
 	m_startTimeStamp{newStartTimeStamp},
@@ -10,7 +10,7 @@ http::Time::Time(float newStartTimeStamp, float newStartValue, float newEndValue
 	m_endValue{newEndValue},
 	m_currentPlayerToRemove{""}
 {
-	m_serverTimer.StartTimer();
+	/*m_serverTimer.StartTimer();*/
 }
 
 http::Time::Time(const Time& newTime) :
@@ -20,7 +20,7 @@ http::Time::Time(const Time& newTime) :
 	m_toCall{newTime.m_toCall},
 	m_currentPlayerToRemove{""}
 {
-	m_serverTimer.StartTimer();
+	//m_serverTimer.StartTimer();
 }
 
 float http::Time::GetStartTimeStamp() const noexcept
@@ -40,7 +40,9 @@ float http::Time::GetEndValue() const noexcept
 
 int http::Time::GetServerTime() const noexcept
 {
-	return static_cast<int>(m_serverTimer.GetElapsedTime().count());
+	//return static_cast<int>(m_serverTimer.GetElapsedTime().count());
+
+	return 0;
 }
 
 const std::function<void(const std::string&)>& http::Time::GetMethodToCall() const noexcept
@@ -79,15 +81,13 @@ void http::Time::Start(float timeStamp, float startValue, float endValue)
 	m_endValue = endValue;
 }
 
-// Momentan avem si constructor si start dar trebuie sa vedem la care sa renuntam ulterior in implementare
-
 bool http::Time::Check()
 {
-	if ((m_startValue > m_endValue && static_cast<int>(m_serverTimer.GetElapsedTime().count()) - m_startTimeStamp >= m_endValue) || (m_startValue <= m_endValue && static_cast<int>(m_serverTimer.GetElapsedTime().count()) - m_startTimeStamp >= m_endValue))
-	{
-		m_toCall(m_currentPlayerToRemove);
-		return true;
-	}
+	//if ((m_startValue > m_endValue && static_cast<int>(m_serverTimer.GetElapsedTime().count()) - m_startTimeStamp >= m_endValue) || (m_startValue <= m_endValue && static_cast<int>(m_serverTimer.GetElapsedTime().count()) - m_startTimeStamp >= m_endValue))
+	//{
+	//	m_toCall(m_currentPlayerToRemove);
+	//	return true;
+	//}
 
 	return false;
 }

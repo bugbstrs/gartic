@@ -3,17 +3,22 @@
 import GarticExceptions;
 using namespace http;
 
+http::Lobby::Lobby(const String& username)
+{
+	m_leader = std::make_shared<User>(User(username));
+	m_users.push_back(m_leader);
+}
+
 http::Lobby::~Lobby()
 {
-	delete m_leader;
 }
 
-void http::Lobby::JoinLobby(User&& newUser)
+void http::Lobby::AddUser(std::shared_ptr<User> newUser)
 {
-	m_users.push_back(std::move(newUser));
+	m_users.push_back(newUser);
 }
 
-void http::Lobby::LeaveLobby(const User& userToLeave)
+void http::Lobby::RemoveUser(std::shared_ptr<User> userToLeave)
 {
 	if (auto it{ std::find(m_users.begin(), m_users.end(), userToLeave) }; it != m_users.end())
 	{
@@ -23,12 +28,12 @@ void http::Lobby::LeaveLobby(const User& userToLeave)
 	throw GarticException<UserDoesntExistException>("Lobby > LeaveLobby(const User&): The player is already not in the lobby!");*/
 }
 
-const std::vector<User>& http::Lobby::GetUsers() const noexcept
+const std::vector<std::shared_ptr<User>>& http::Lobby::GetUsers() const noexcept
 {
 	return m_users;
 }
 
-const User* http::Lobby::GetLeader() const noexcept
+std::shared_ptr<User> http::Lobby::GetLeader() const noexcept
 {
 	return m_leader;
 }
@@ -43,12 +48,12 @@ const std::string& http::Lobby::GetCode() const noexcept
 	return m_code;
 }
 
-void http::Lobby::SetLeader(const User* newLeader)
+void http::Lobby::SetLeader(std::shared_ptr<User> newLeader)
 {
-	m_leader = new User(*newLeader);
+	m_leader = newLeader;
 }
 
-http::Game* http::Lobby::StartGame()
+std::shared_ptr<http::Game> http::Lobby::StartGame()
 {
 	if (m_users.size() > 2)
 	{
@@ -57,12 +62,12 @@ http::Game* http::Lobby::StartGame()
 
 		for (const auto& user : m_users)
 		{
-			currUsername = user.GetUsername();
+			currUsername = user->GetUsername();
 
 			playersVector.push_back(new Player(currUsername));
 		}
 
-		return new Game(std::move(playersVector));
+		return std::make_shared<Game>(std::move(playersVector));
 	}
 
 	//throw GarticException<NotEnoughPlayersException>("Lobby > StartGame(): There are not enough players to start a game!");
