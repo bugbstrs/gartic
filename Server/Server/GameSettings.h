@@ -10,8 +10,6 @@ namespace http
 	public:
 		GameSettings();
 
-		~GameSettings() = default;
-
 		bool GetCustomRounds() const noexcept;
 		int GetRoundsNumber() const noexcept;
 		int GetCustomRoundChance() const noexcept;

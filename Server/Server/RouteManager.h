@@ -32,6 +32,13 @@ namespace http
 		// Logic related
 		void CreateLobbyRoute();
 		void CreateGameRoute();
+		
+		// Lobby
+		void FetchCodeRoute();
+		void FetchUsers();
+		void FetchSettings();
+
+		// Game
 
 	private:
 		crow::SimpleApp m_app;

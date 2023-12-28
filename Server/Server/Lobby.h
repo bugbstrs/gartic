@@ -25,7 +25,7 @@ namespace http
 
 		const std::vector<std::shared_ptr<User>>& GetUsers() const noexcept;
 		std::shared_ptr<User> GetLeader() const noexcept;
-		GameSettings GetSettings() const noexcept;
+		const GameSettings& GetSettings() const noexcept;
 		const std::string& GetCode() const noexcept;
 
 		void SetLeader(std::shared_ptr<User> newLeader);
