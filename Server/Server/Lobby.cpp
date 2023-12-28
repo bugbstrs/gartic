@@ -74,7 +74,7 @@ std::shared_ptr<http::Game> http::Lobby::StartGame()
 	return {};
 }
 
-const std::string& http::Lobby::GenerateCode()
+const String& http::Lobby::GenerateCode()
 {
 	std::string characters{ "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" };
 	size_t charactersLength{ characters.size() };

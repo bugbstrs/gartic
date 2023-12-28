@@ -9,9 +9,20 @@ void http::GarticManager::CreateLobby(const String& username)
 	m_lobby = std::make_shared<Lobby>(username);
 }
 
-void http::GarticManager::CreateGame()
+void http::GarticManager::CreateGame(const String& username)
 {
-	m_game = m_lobby->StartGame();
+	if (m_lobby->GetUsers()[0]->GetUsername() == username)
+	{
+		m_game = m_lobby->StartGame();
+	}
+}
+
+void http::GarticManager::AddPlayerInLobby(const String& username, const String& code)
+{
+	if (m_lobby->GetCode() == code)
+	{
+		m_lobby->AddUser(std::make_shared<User>(username));
+	}
 }
 
 std::shared_ptr<Game> http::GarticManager::GetGame(const String& username) const noexcept

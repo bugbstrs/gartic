@@ -33,7 +33,7 @@ namespace http
 		std::shared_ptr<Game> StartGame();
 
 	private:
-		const std::string& GenerateCode();
+		const String& GenerateCode();
 
 	private:
 		std::vector<std::shared_ptr<User>> m_users;
@@ -42,7 +42,7 @@ namespace http
 
 		GameSettings m_settings;
 
-		const std::string m_code{ GenerateCode() };
+		const String m_code{ GenerateCode() };
 		const int kCodeLength{ 11 };
 	};
 }

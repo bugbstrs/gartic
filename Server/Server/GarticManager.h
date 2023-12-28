@@ -16,7 +16,9 @@ namespace http
 		GarticManager() = default;
 
 		void CreateLobby(const String& username);
-		void CreateGame();
+		void CreateGame(const String& username);
+
+		void AddPlayerInLobby(const String& username, const String& code);
 
 		std::shared_ptr<Game> GetGame(const String& username) const noexcept;
 		std::shared_ptr<Lobby> GetLobby(const String& username) const noexcept;

@@ -3,7 +3,7 @@
 #include <memory>
 #include <crow.h>
 
-#include "Server/RouteManager.h"
+#include "RouteManager.h"
 #include "Game.h"
 
 using namespace http;
@@ -18,7 +18,9 @@ int main()
 		return -1;
 	}
 
-	RouteManager manager(storage);
+	GarticManager garticManager;
+
+	RouteManager manager(storage, garticManager);
 
 	manager.Run();
 

@@ -3,8 +3,9 @@
 
 import GarticExceptions;
 
-http::RouteManager::RouteManager(GarticStorage& storage):
-    m_storage{storage}
+http::RouteManager::RouteManager(GarticStorage& storage, GarticManager& manager):
+    m_storage{storage},
+    m_gartic{manager}
 {}
 
 void http::RouteManager::Run()
@@ -304,4 +305,90 @@ std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const c
     }
 
     return {};
+}
+
+void http::RouteManager::CreateLobbyRoute()
+{
+    CROW_ROUTE(m_app, "/createlobby")([this](const crow::request& request) {
+        char* username = request.url_params.get("username");
+        char* password = request.url_params.get("password");
+
+        crow::response response;
+
+        if (username == nullptr)
+        {
+            // todo: log
+            response.code = 400;
+            response.body = crow::json::wvalue({
+                {"found", false}
+                }).dump();
+
+                return response;
+        }
+
+        std::string usernameString(username);
+        std::string passwordString(password);
+
+        if (!m_storage.CheckCredentials(usernameString, passwordString))
+        {
+            // todo: log
+            response.code = 401;
+            response.body = crow::json::wvalue({
+                {"no_user", false}
+                }).dump();
+
+                return response;
+        }
+
+        m_gartic.CreateLobby(usernameString);
+
+        response.body = crow::json::wvalue({
+            {"put", true}
+            }).dump();
+
+            return response;
+        });
+}
+
+void http::RouteManager::CreateGameRoute()
+{
+    CROW_ROUTE(m_app, "/creategame")([this](const crow::request& request) {
+        char* username = request.url_params.get("username");
+        char* password = request.url_params.get("password");
+
+        crow::response response;
+
+        if (username == nullptr)
+        {
+            // todo: log
+            response.code = 400;
+            response.body = crow::json::wvalue({
+                {"found", false}
+                }).dump();
+
+                return response;
+        }
+
+        std::string usernameString(username);
+        std::string passwordString(password);
+
+        if (!m_storage.CheckCredentials(usernameString, passwordString))
+        {
+            // todo: log
+            response.code = 401;
+            response.body = crow::json::wvalue({
+                {"no_user", false}
+                }).dump();
+
+                return response;
+        }
+
+        m_gartic.CreateGame(usernameString);
+
+        response.body = crow::json::wvalue({
+            {"put", true}
+            }).dump();
+
+            return response;
+        });
 }
