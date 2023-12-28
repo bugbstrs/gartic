@@ -701,35 +701,6 @@ void http::RouteManager::FetchMessagesRoute()
 		});
 }
 
-void http::RouteManager::FetchIsCloseEnoughRoute()
-{
-	CROW_ROUTE(m_app, "/fetchmessages")([this](const crow::request& request) {
-		char* username = request.url_params.get("username");
-		char* password = request.url_params.get("password");
-		char* currGuess = request.url_params.get("guess");
-
-		std::vector<crow::json::wvalue> messages_json;
-
-		std::string usernameString(username);
-		std::string passwordString(password);
-
-		std::vector<std::string> messages;
-
-		if (m_storage.CheckCredentials(usernameString, passwordString))
-		{
-			bool isClose = m_gartic.GetGame(usernameString)->GetChat().IsCloseEnough(currGuess);
-
-			messages_json.push_back(crow::json::wvalue{ {"close_enough", currGuess ? "true" : "false"} });
-		}
-		else
-		{
-			messages_json.push_back(crow::json::wvalue{ {"close_enough", "N/A"} });
-		}
-
-		return crow::json::wvalue{ messages_json };
-		});
-}
-
 void http::RouteManager::PutWordToGuessRoute()
 {
 	CROW_ROUTE(m_app, "/putwordtoguess")([this](const crow::request& request) {
@@ -810,7 +781,7 @@ void http::RouteManager::PutMessageInChatRoute()
 		}
 
 		std::string messageString(message);
-		m_gartic.GetGame(usernameString)->GetChat().AddMessage(usernameString, messageString);
+		m_gartic.GetGame(usernameString)->GetChat().VerifyMessage(usernameString, messageString);
 
 		response.body = crow::json::wvalue({
 			{"put", true}

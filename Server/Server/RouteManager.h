@@ -49,7 +49,6 @@ namespace http
 		void FetchWordToGuessRoute();
 		void FetchWordToDisplayRoute();
 		void FetchMessagesRoute();
-		void FetchIsCloseEnoughRoute();
 
 		void PutWordToGuessRoute();
 		void PutMessageInChatRoute();
