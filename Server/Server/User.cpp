@@ -20,7 +20,7 @@ const std::string& http::User::GetUsername() const noexcept
 void http::User::SetActive()
 {
 	m_active.SetStartValue(kSecondsForBeingActive);
-	m_active.SetStartTimeStamp(m_active.GetServerTime());
+	m_active.SetStartTimeStamp(static_cast<float>(m_active.GetServerTime()));
 }
 
 bool http::User::operator==(const User& u1)

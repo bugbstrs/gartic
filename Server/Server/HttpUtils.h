@@ -1,7 +1,8 @@
 #pragma once
-#include<vector>;
-#include<string>;
-#include<unordered_map>;
+
+#include<vector>
+#include<string>
+#include<unordered_map>
 
 using String = std::string;
 using StringMap = std::unordered_map<String, String>;

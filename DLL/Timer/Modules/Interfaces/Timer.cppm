@@ -26,45 +26,45 @@ export const int defaultResolution = 12;
 #pragma endregion constants
 
 #pragma region Timer
-export class __declspec(dllexport) Timer
+export class Timer
 {
 #pragma region Timer
 public:
     #pragma region Timer
-    Timer ();
-    Timer (uint16_t totalMinutes, Milliseconds timerResolution = 1ms);
-    Timer (uint16_t initialMinutes, uint16_t remainingMinutes, Milliseconds timerResolution = 1ms);
-    Timer (const Timer& newTimer);
+    __declspec(dllexport) Timer ();
+    __declspec(dllexport) Timer (uint16_t totalMinutes, Milliseconds timerResolution = 1ms);
+    __declspec(dllexport) Timer (uint16_t initialMinutes, uint16_t remainingMinutes, Milliseconds timerResolution = 1ms);
+    __declspec(dllexport) Timer (const Timer& newTimer);
     
     ~Timer ();
     #pragma endregion constructors & destructor
 
     #pragma region Timer
-    void SetCallback        (TimerCallback callback);
-    void SetInitialTime     (uint16_t minutes);
-    void SetRemainingTime   (uint16_t minutes);
-    void SetTimeoutCallback (TimerCallback timeoutCallback);
-    void SetTimerResolution (uint32_t milliseconds);
+    __declspec(dllexport) void SetCallback        (TimerCallback callback);
+    __declspec(dllexport) void SetInitialTime     (uint16_t minutes);
+    __declspec(dllexport) void SetRemainingTime   (uint16_t minutes);
+    __declspec(dllexport) void SetTimeoutCallback (TimerCallback timeoutCallback);
+    __declspec(dllexport) void SetTimerResolution (uint32_t milliseconds);
     #pragma endregion setters
     
     #pragma region Timer
-    double       GetRemainingTimePercentage () const;
-    Milliseconds GetElapsedTime             () const;
-    Milliseconds GetInitialTime             () const;
-    Milliseconds GetRemainingTime           () const;
-    Milliseconds GetTimerResolution         () const;
+    __declspec(dllexport) double       GetRemainingTimePercentage () const;
+    __declspec(dllexport) Milliseconds GetElapsedTime             () const;
+    __declspec(dllexport) Milliseconds GetInitialTime             () const;
+    __declspec(dllexport) Milliseconds GetRemainingTime           () const;
+    __declspec(dllexport) Milliseconds GetTimerResolution         () const;
     #pragma endregion getters
 
     #pragma region Timer
-    void ResetTimer     ();
-    void StartTimer     ();
-    void StartTimerFrom (Milliseconds customStartTime);
-    void StopTimer      ();
+    __declspec(dllexport) void ResetTimer     ();
+    __declspec(dllexport) void StartTimer     ();
+    __declspec(dllexport) void StartTimerFrom (Milliseconds customStartTime);
+    __declspec(dllexport) void StopTimer      ();
     #pragma endregion timer flow: start, stop, reset, starttimerfrom
     
     #pragma region Timer
-    bool IsTimeExpired ()  const;
-    void Run           ();
+    __declspec(dllexport) bool IsTimeExpired ()  const;
+    __declspec(dllexport) void Run           ();
     #pragma endregion functionality
 #pragma endregion public members
 #pragma region Timer

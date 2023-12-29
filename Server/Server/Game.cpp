@@ -84,7 +84,8 @@ void Game::NextRound()
 		auto							   count = isWordsEntity ? m_db.count<WordsEntity>() : m_db.count<QuotesEntity>();
 		std::uniform_int_distribution<int> distribution(0, count - 1);*/
 
-		srand(time(0));
+        // remove srand
+		srand(static_cast<unsigned int>(time(0)));
 
 		int randomRoundIndex = rand();
 

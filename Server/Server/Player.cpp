@@ -1,6 +1,6 @@
 #include "Player.h"
 
-#include <cstdint>;
+#include <cstdint>
 
 using namespace http;
 
