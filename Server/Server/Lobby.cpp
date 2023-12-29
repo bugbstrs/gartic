@@ -10,8 +10,7 @@ http::Lobby::Lobby(const String& username)
 }
 
 http::Lobby::~Lobby()
-{
-}
+{}
 
 void http::Lobby::AddUser(std::shared_ptr<User> newUser)
 {
@@ -23,9 +22,10 @@ void http::Lobby::RemoveUser(std::shared_ptr<User> userToLeave)
 	if (auto it{ std::find(m_users.begin(), m_users.end(), userToLeave) }; it != m_users.end())
 	{
 		m_users.erase(it);
+        return;
 	}	
-/*
-	throw GarticException<UserDoesntExistException>("Lobby > LeaveLobby(const User&): The player is already not in the lobby!");*/
+
+	throw GarticException<UserDoesntExistException>("Lobby > LeaveLobby(const User&): The player is already not in the lobby!");
 }
 
 const std::vector<std::shared_ptr<User>>& http::Lobby::GetUsers() const noexcept

@@ -1,5 +1,7 @@
 #include "DrawingBoard.h"
 
+import GarticExceptions;
+
 using namespace http;
 
 http::DrawingBoard::DrawingBoard(const std::vector<Player*>& players)
@@ -37,5 +39,5 @@ const std::vector<DrawEvent*>& http::DrawingBoard::GetAndDeleteEvents(const std:
 		return eventsToReturn;
 	}
 
-	//throw GarticException<UserDoesntExistException>("Chat > GetMessages(const std::string&): The given username doesn't exist!");
+	throw GarticException<UserDoesntExistException>("Chat > GetMessages(const std::string&): The given username doesn't exist!");
 }

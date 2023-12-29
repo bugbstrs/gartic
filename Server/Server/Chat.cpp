@@ -2,6 +2,8 @@
 
 #include <format>
 
+import GarticExceptions;
+
 using namespace http;
 
 http::Chat::Chat(const std::vector<Player*>& players)
@@ -51,7 +53,7 @@ const StringVector& http::Chat::GetAndDeleteMessages(const String& username)
 		return messagesToReturn;
 	}
 
-	//throw GarticException<UserDoesntExistException>("Chat > GetMessages(const std::string&): The given username doesn't exist!");
+	throw GarticException<UserDoesntExistException>("Chat > GetMessages(const std::string&): The given username doesn't exist!");
 }
 
 const ChatMap& http::Chat::GetChat() const noexcept
