@@ -31,9 +31,12 @@ void http::RouteManager::Run()
 
 void http::RouteManager::FetchWordRoute()
 {
-	CROW_ROUTE(m_app, "/fetchword")([this]() {
-		std::vector<crow::json::wvalue> word_json;
+	CROW_ROUTE(m_app, "/fetchword")([this](const crow::request& request) {
+        auto isAuthenticated = IsRequestAuthenticated(request);
 
+        if (isAuthenticated) return isAuthenticated;
+    
+		std::vector<crow::json::wvalue> word_json;
 		std::string fetchedWord;
 
 		try
@@ -53,22 +56,46 @@ void http::RouteManager::FetchWordRoute()
 void http::RouteManager::FetchQuoteRoute()
 {
 	CROW_ROUTE(m_app, "/fetchquote")([this]() {
-		std::vector<crow::json::wvalue> quote_json;
-
-		std::string fetchedQuote;
+        crow::response response;
+        response.set_header("Content-Type", "application/json");
 
 		try
 		{
-			fetchedQuote = m_storage.FetchQuote();
-			quote_json.push_back(crow::json::wvalue{ {"quote", fetchedQuote} });
+			std::string fetchedQuote = m_storage.FetchQuote();
+
+            response.code = 200;
+            response.body = crow::json::wvalue
+            {{
+                "code", response.code,
+                "quote", fetchedQuote
+            }}.dump();
+
+            return response;
 		}
 		catch (CannotFetchQuoteException& exception)
 		{
-			quote_json.push_back(crow::json::wvalue{ {"quote", "N/A"} });
+            response.code = 500;
+            response.body = crow::json::wvalue
+            {{
+                "code", response.code,
+                "quote", "N/A",
+                "error", "Couldn't fetch quote from database!"
+            }}.dump();
+
+			return response;
 		};
 
-		return crow::json::wvalue{ quote_json };
-		});
+        // should never reach this point
+        response.code = 500;
+        response.body = crow::json::wvalue
+        {{
+            "code", response.code,
+            "quote", "N/A",
+            "error", "Server unhandled error!"
+        }}.dump();
+
+        return response;
+	});
 }
 
 void http::RouteManager::FetchAllWordsRoute()
@@ -195,7 +222,7 @@ void http::RouteManager::CheckBannedWordRoute()
 		});
 }
 
-std::optional<crow::response> http::RouteManager::IsRequestAuthenticatedRoute(const crow::request& request)
+std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const crow::request& request)
 {
 	std::optional<crow::response> returnResponse;
 	char* password = request.url_params.get("password");

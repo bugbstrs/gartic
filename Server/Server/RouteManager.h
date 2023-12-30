@@ -28,7 +28,7 @@ namespace http
 		void RegisterRoute();
 		void CheckBannedWordRoute();
 
-        std::optional<crow::response> IsRequestAuthenticatedRoute(const crow::request& request);
+        std::optional<crow::response> IsRequestAuthenticated(const crow::request& request);
 
 		// Logic related
 		void CreateLobbyRoute();
