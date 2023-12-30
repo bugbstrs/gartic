@@ -161,53 +161,62 @@ void http::RouteManager::FetchAllUsersRoute()
 
 void http::RouteManager::FetchTop5UsersRoute()
 {
-	CROW_ROUTE(m_app, "/fetchtopusers")([this]() {
-		std::vector<crow::json::wvalue> top_users_json;
+	CROW_ROUTE(m_app, "/fetchtopusers")([this](const crow::request& request) {
+        if (IsRequestAuthenticated(request)) return IsRequestAuthenticated(request).value();
 
-		UserVector topUsers = m_storage.FetchTop5Users();
+        crow::response response;
+        response.set_header("Content-Type", "application/json");
+        
+        try
+        {
+            std::vector<crow::json::wvalue> top_users_json;
 
-		for (const auto& user : topUsers)
-		{
-			top_users_json.push_back(crow::json::wvalue{
-				{ "username",     user.GetUsername()    },
-				{ "points",       user.GetPoints()      },
-				{ "games played", user.GetGamesPlayed() }
-			});
-		}
+            UserVector topUsers = m_storage.FetchTop5Users();
 
-		return crow::json::wvalue{ top_users_json };
-		});
+            response.code = topUsers.size() == 5 ? 200 : 206;
+
+            for (const auto& user : topUsers)
+            {
+                top_users_json.push_back(crow::json::wvalue{
+                    { "username",     user.GetUsername()    },
+                    { "points",       user.GetPoints()      },
+                    { "games played", user.GetGamesPlayed() }
+                });
+            }
+
+            response.body = crow::json::wvalue
+            {{
+                {"code", response.code},
+                {"users", top_users_json}
+            }}.dump();
+            
+            return response;
+        }
+        catch (GarticException<NotEnoughScoresRegisteredException>& exception)
+        {
+            response.code = 204;
+            response.body = crow::json::wvalue
+            {{
+                {"code", response.code},
+                {"users", std::vector<crow::json::wvalue>{}}
+            }}.dump();
+            
+            return response;
+        }
+    });
 }
 
 void http::RouteManager::LoginRoute()
 {
 	CROW_ROUTE(m_app, "/login")([this](const crow::request& request) {
-		char* password = request.url_params.get("password");
-		char* username = request.url_params.get("username");
+        if (IsRequestAuthenticated(request)) return IsRequestAuthenticated(request).value();
+        
+        crow::response response;
 
-		crow::response response;
-		response.set_header("Content-Type", "application/json");
+        response.code = 200;
 
-		if (password == nullptr || username == nullptr)
-		{
-			// todo: log
-			response.code = 400;
-			response.body = crow::json::wvalue({
-				{"found", false}
-				}).dump();
-
-				return response;
-		}
-
-		bool foundCredentials = m_storage.CheckCredentials(String(username), String(password));
-
-		response.code = foundCredentials ? 200 : 401;
-		response.body = crow::json::wvalue({
-			{"found", foundCredentials ? true : false}
-			}).dump();
-
-			return response;
-		});
+        return response;
+    });
 }
 
 void http::RouteManager::RegisterRoute()
