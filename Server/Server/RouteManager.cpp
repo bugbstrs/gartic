@@ -32,30 +32,55 @@ void http::RouteManager::Run()
 void http::RouteManager::FetchWordRoute()
 {
 	CROW_ROUTE(m_app, "/fetchword")([this](const crow::request& request) {
-        auto isAuthenticated = IsRequestAuthenticated(request);
+        if (IsRequestAuthenticated(request)) return IsRequestAuthenticated(request).value();
 
-        if (isAuthenticated) return isAuthenticated;
-    
-		std::vector<crow::json::wvalue> word_json;
-		std::string fetchedWord;
+        crow::response response;
+        response.set_header("Content-Type", "application/json");
 
-		try
-		{
-			fetchedWord = m_storage.FetchWord();
-			word_json.push_back(crow::json::wvalue{ {"word", fetchedWord} });
-		}
-		catch (CannotFetchWordException& exception)
-		{
-			word_json.push_back(crow::json::wvalue{ {"word", "N/A"} });
-		}
+        try
+        {
+            std::string fetchedWord = m_storage.FetchWord();
 
-		return crow::json::wvalue{ word_json };
-		});
+            response.code = 200;
+            response.body = crow::json::wvalue
+            { {
+                {"code", response.code},
+                {"word", fetchedWord}
+            } }.dump();
+
+            return response;
+        }
+        catch (GarticException<CannotFetchWordException>& exception)
+        {
+            response.code = 500;
+            response.body = crow::json::wvalue
+            { {
+                {"code", response.code},
+                {"word", "N/A"},
+                {"error", "Couldn't fetch word from database!"}
+            } }.dump();
+
+            return response;
+        };
+
+        // should never reach this point
+        response.code = 500;
+        response.body = crow::json::wvalue
+        { {
+            {"code", response.code},
+            {"word", "N/A"},
+            {"error", "Server unhandled error!"}
+        } }.dump();
+
+        return response;
+	});
 }
 
 void http::RouteManager::FetchQuoteRoute()
 {
-	CROW_ROUTE(m_app, "/fetchquote")([this]() {
+	CROW_ROUTE(m_app, "/fetchquote")([this](const crow::request& request) {
+        if (IsRequestAuthenticated(request)) return IsRequestAuthenticated(request).value();
+
         crow::response response;
         response.set_header("Content-Type", "application/json");
 
@@ -66,20 +91,20 @@ void http::RouteManager::FetchQuoteRoute()
             response.code = 200;
             response.body = crow::json::wvalue
             {{
-                "code", response.code,
-                "quote", fetchedQuote
+                {"code", response.code},
+                {"quote", fetchedQuote}
             }}.dump();
 
             return response;
 		}
-		catch (CannotFetchQuoteException& exception)
+		catch (GarticException<CannotFetchQuoteException>& exception)
 		{
             response.code = 500;
             response.body = crow::json::wvalue
             {{
-                "code", response.code,
-                "quote", "N/A",
-                "error", "Couldn't fetch quote from database!"
+                {"code", response.code},
+                {"quote", "N/A"},
+                {"error", "Couldn't fetch quote from database!"}
             }}.dump();
 
 			return response;
@@ -89,9 +114,9 @@ void http::RouteManager::FetchQuoteRoute()
         response.code = 500;
         response.body = crow::json::wvalue
         {{
-            "code", response.code,
-            "quote", "N/A",
-            "error", "Server unhandled error!"
+            {"code", response.code},
+            {"quote", "N/A"},
+            {"error", "Server unhandled error!"}
         }}.dump();
 
         return response;
@@ -147,7 +172,7 @@ void http::RouteManager::FetchTop5UsersRoute()
 				{ "username",     user.GetUsername()    },
 				{ "points",       user.GetPoints()      },
 				{ "games played", user.GetGamesPlayed() }
-				});
+			});
 		}
 
 		return crow::json::wvalue{ top_users_json };
@@ -264,9 +289,9 @@ std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const c
 		({
 			{"code", response.code},
 			{"error", "invalid username format! ((username format description))"}
-			}).dump();
+		}).dump();
 
-			return response;
+		return response;
 	}
 
 	bool foundCredentials = m_storage.CheckCredentials(String(username), String(password));
