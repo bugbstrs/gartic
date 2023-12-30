@@ -6,3 +6,4 @@ export import CannotFetchWordException;
 export import NotEnoughPlayersException;
 export import UserAlreadyExistsException;
 export import UserDoesntExistException;
+export import NotEnoughScoresRegisteredException;

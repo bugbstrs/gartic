@@ -57,6 +57,12 @@
     <ClCompile Include="GarticExceptions.cppm">
       <Filter>Main\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="NotEnoughScoresRegisteredException.cppm">
+      <Filter>Server\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="NotEnoughScoresRegisteredException.cpp">
+      <Filter>Server\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="GarticException.cpp">
