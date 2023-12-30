@@ -12,10 +12,6 @@ http::RouteManager::RouteManager(GarticStorage& storage, GarticManager& manager)
 
 void http::RouteManager::Run()
 {
-	CROW_ROUTE(m_app, "/")([]() {
-		return "This is an example app of crow and sql-orm";
-		});
-
 	FetchWordRoute();
 	FetchQuoteRoute();
 	FetchAllWordsRoute();
