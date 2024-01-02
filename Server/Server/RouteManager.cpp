@@ -408,6 +408,67 @@ void http::RouteManager::CreateGameRoute()
 		});
 }
 
+void http::RouteManager::JoinLobbyRoute()
+{
+	CROW_ROUTE(m_app, "/joinlobby")([this](const crow::request& request) {
+		char* username = request.url_params.get("username");
+		char* password = request.url_params.get("password");
+		char* code = request.url_params.get("code");
+
+		crow::response response;
+
+		if (username == nullptr)
+		{
+			// todo: log
+			response.code = 400;
+			response.body = crow::json::wvalue({
+				{"found", false}
+				}).dump();
+
+				return response;
+		}
+
+		std::string usernameString(username);
+		std::string passwordString(password);
+		std::string codeString(code);
+
+		if (!m_storage.CheckCredentials(usernameString, passwordString))
+		{
+			// todo: log
+			response.code = 401;
+			response.body = crow::json::wvalue({
+				{"no_user", false}
+				}).dump();
+
+				return response;
+		}
+
+		try
+		{
+			m_gartic.AddPlayerInLobby(usernameString, codeString);
+
+			response.code = 200;
+			response.body = crow::json::wvalue
+			{ {
+				{"code", response.code}
+			} }.dump();
+
+			return response;
+		}
+		catch (GarticException<LobbyDoesntExistException>& exception)
+		{
+			response.code = 500;
+			response.body = crow::json::wvalue
+			{ {
+				{"code", response.code},
+			} }.dump();
+
+			return response;
+		}
+
+		});
+}
+
 void http::RouteManager::FetchCodeRoute()
 {
 	CROW_ROUTE(m_app, "/fetchcode")([this](const crow::request& request) {

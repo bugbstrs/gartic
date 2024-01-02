@@ -161,6 +161,8 @@
   <ItemGroup>
     <ClCompile Include="CannotFetchWordException.cpp" />
     <ClCompile Include="GarticExceptions.cppm" />
+    <ClCompile Include="LobbyDoesntExistException.cpp" />
+    <ClCompile Include="LobbyDoesntExistException.cppm" />
     <ClCompile Include="NotEnoughPlayersException.cpp" />
     <ClCompile Include="NotEnoughScoresRegisteredException.cpp" />
     <ClCompile Include="NotEnoughScoresRegisteredException.cppm" />

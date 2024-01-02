@@ -33,6 +33,8 @@ namespace http
 		// Logic related
 		void CreateLobbyRoute();
 		void CreateGameRoute();
+
+		void JoinLobbyRoute();
 		
 		// Lobby
 		void FetchCodeRoute();

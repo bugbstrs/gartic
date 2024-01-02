@@ -63,6 +63,12 @@
     <ClCompile Include="NotEnoughScoresRegisteredException.cpp">
       <Filter>Server\Implementation Units</Filter>
     </ClCompile>
+    <ClCompile Include="LobbyDoesntExistException.cppm">
+      <Filter>Server\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyDoesntExistException.cpp">
+      <Filter>Server\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="GarticException.cpp">

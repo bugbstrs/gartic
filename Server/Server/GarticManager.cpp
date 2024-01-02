@@ -2,6 +2,7 @@
 
 #include<algorithm>
 
+import GarticExceptions;
 using namespace http;
 
 void http::GarticManager::CreateLobby(const String& username)
@@ -23,6 +24,8 @@ void http::GarticManager::AddPlayerInLobby(const String& username, const String&
 	{
 		m_lobby->AddUser(std::make_shared<User>(username));
 	}
+
+	throw GarticException<LobbyDoesntExistException>("GarticManager > AddPlayerInLobby(const String& username, const String& code): The searched lobby doesn't exist!");
 }
 
 std::shared_ptr<Game> http::GarticManager::GetGame(const String& username) const noexcept
