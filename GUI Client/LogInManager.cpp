@@ -1,6 +1,6 @@
 #include "LogInManager.h"
 #include <iomanip>
-
+#include "UserCredentials.h"
 
 LogInManager::LogInManager(QWidget *parent)
 	: QFrame { parent }
@@ -14,23 +14,18 @@ void LogInManager::showEvent(QShowEvent* event) {
 		nameInput = findChild<QLineEdit*>("enterNameLogInInput");
 		passwordInput = findChild<QLineEdit*>("enterPasswordLogInInput");
 		logInButton = findChild<QPushButton*>("logInButton");
+		incorrectCredentialsLabel = findChild<QLabel*>("incorrectCredentialsLabel");
+		incorrectCredentialsLabel->setStyleSheet("color: transparent");
 
-		QObject::connect(logInButton, &QPushButton::released, this, &LogInManager::OnSignUpCredentialsSent);
+		QObject::connect(logInButton, &QPushButton::released, this, &LogInManager::OnLogInCredentialsSent);
 		firstShow = false;
 	}
 }
 
-void LogInManager::OnSignUpCredentialsSent() noexcept  
+void LogInManager::OnLogInCredentialsSent() noexcept  
 {
 	std::string password = passwordInput->text().toUtf8().constData();
 	std::string username = nameInput->text().toUtf8().constData();
-	/*auto response = cpr::Put(
-		cpr::Url{ "http://localhost:18080/login" },
-		cpr::Payload{
-			{ "password", password },
-			{ "username", username }
-		}
-	);*/
 	auto response = cpr::Get(
 		cpr::Url{ "http://localhost:18080/login" },
 		cpr::Parameters{
@@ -41,6 +36,11 @@ void LogInManager::OnSignUpCredentialsSent() noexcept
 	if (response.status_code == 200) {
 		nameInput->clear();
 		passwordInput->clear();
-		emit OnLogInCredentialsAccepted();
+		UserCredentials::SetCredentials(username, password);
+		incorrectCredentialsLabel->setStyleSheet("color: transparent");
+		emit OnLogInCredentialsAccepted(username, password);
+	}
+	else {
+		incorrectCredentialsLabel->setStyleSheet("color: red");
 	}
 }

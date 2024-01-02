@@ -35,6 +35,7 @@ private slots:
 
     //Sign Up scene
     void OnGoToLogInFromSignUpButtonReleased() noexcept;
+    void OnSignUpSucceded() noexcept;
 
     //Log In scene
     void OnLogInCredentialsAccepted() noexcept;
@@ -43,5 +44,7 @@ private slots:
 private:
     std::unique_ptr<Ui::MainWindow> ui;
     bool isUserLoggedIn{ false };
+    std::string username;
+    std::string password;
 };
 #endif // MAINWINDOW_H

@@ -1,13 +1,10 @@
 #pragma once
 
 #include <QFrame>
+#include <qlabel.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>
-#include <numeric>
-#include <sstream>
-#include <regex>
 #include <string>
-#include <cpr/cpr.h>
 
 class LogInManager  : public QFrame
 {
@@ -21,14 +18,15 @@ public slots:
 	void showEvent(QShowEvent* event) override;
 
 protected:
-	void OnSignUpCredentialsSent() noexcept;
+	void OnLogInCredentialsSent() noexcept;
 
 signals:
-	void OnLogInCredentialsAccepted();
+	void OnLogInCredentialsAccepted(const std::string& username, const std::string& password);
 
 private:
 	bool firstShow{ true };
 	QLineEdit* nameInput	 { new QLineEdit{} };
 	QLineEdit* passwordInput { new QLineEdit{} };
 	QPushButton* logInButton { new QPushButton{} };
+	QLabel* incorrectCredentialsLabel{ new QLabel{} };
 };

@@ -1,6 +1,7 @@
 #include "GameplayWidget.h"
 #include <qthread.h>
 #include <QPropertyAnimation>
+#include "UserCredentials.h"
 
 GameplayWidget::GameplayWidget(QWidget *parent)
 	: QWidget{ parent }
@@ -216,10 +217,16 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 		ShowWordDependingOnPlayerType("Cuvant");
 	}
 
-	/*cpr::Response response = cpr::Get(cpr::Url{ "http://localhost:18080/fetchword" });
+	/*cpr::Response response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchallwords" },
+		cpr::Parameters{
+			{"password", UserCredentials::GetPassword()},
+			{"username", UserCredentials::GerUsername()}
+		}
+	);
 	auto word = crow::json::load(response.text);
-	std::string firstWord = std::string(word[0]["word"]);*/
-	//QString newWord = QString::fromUtf8(firstWord);
-	//wordToDraw->setText(newWord);
+	std::string firstWord = std::string(word[0]["word"]);
+	QString newWord = QString::fromUtf8(firstWord);
+	wordToDraw->setText(newWord);*/
 	//chat->SetWordToGuess(newWord);
 }

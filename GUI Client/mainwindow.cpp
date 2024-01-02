@@ -1,5 +1,11 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include <numeric>
+#include <sstream>
+#include <regex>
+#include <string>
+#include <cpr/cpr.h>
+#include "UserCredentials.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow{ parent }
@@ -47,6 +53,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     //Sign Up scene
     QObject::connect(ui->goToLogInFromSignUpButton, &QPushButton::released, this, &MainWindow::OnGoToSignUpFromLogInButtonReleased);
+    QObject::connect(ui->signUpViewFrame, &SignUpManager::OnSignUpCredentialsAccepted, this, &MainWindow::OnSignUpSucceded);
 
     //Log In scene
     QObject::connect(ui->goToSignUpFromLogInButton, &QPushButton::released, this, &MainWindow::OnGoToLogInFromSignUpButtonReleased);
@@ -64,6 +71,13 @@ void MainWindow::OnCreateLobbyButtonReleased() noexcept {
     ui->lobbyTable->AddPlayer("Andrei");
     ui->lobbyTable->AddPlayer("Bambi");
     ui->lobbyTable->AddPlayer("Turcu");
+    auto response = cpr::Get(
+        cpr::Url{ "http://localhost:18080/createlobby" },
+        cpr::Parameters{
+            {"password", UserCredentials::GetPassword()},
+            {"username", UserCredentials::GerUsername()}
+        }
+    );
     ui->stackedWidget->setCurrentWidget(ui->LobbyScene); 
 }
 void MainWindow::OnQuitButtonReleased() noexcept { QCoreApplication::quit(); }
@@ -93,10 +107,9 @@ void MainWindow::OnBackToMenuButtonReleased() noexcept { ui->stackedWidget->setC
 //Sign Up scene
 void MainWindow::OnGoToLogInFromSignUpButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->SignUpScene); }
 
-void MainWindow::OnLogInCredentialsAccepted() noexcept
-{
-    ui->stackedWidget->setCurrentWidget(ui->MainMenuScene);
-}
+void MainWindow::OnSignUpSucceded() noexcept { ui->stackedWidget->setCurrentWidget(ui->LogInScene); }
+
+void MainWindow::OnLogInCredentialsAccepted() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }
 
 //Log in scene
 void MainWindow::OnGoToSignUpFromLogInButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->LogInScene); }

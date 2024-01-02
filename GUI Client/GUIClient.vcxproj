@@ -126,6 +126,7 @@
     <ClCompile Include="ToolsFrame.cpp" />
     <ClCompile Include="GameplayWidget.cpp" />
     <ClCompile Include="MatchHistoryTable.cpp" />
+    <ClCompile Include="UserCredentials.cpp" />
     <QtRcc Include="mainwindow.qrc" />
     <QtUic Include="mainwindow.ui" />
     <QtMoc Include="mainwindow.h" />
@@ -171,6 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="LobbyFrame.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="UserCredentials.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

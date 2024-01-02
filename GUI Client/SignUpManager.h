@@ -18,6 +18,9 @@ public slots:
 protected:
 	void OnSignUpCredentialsSent() noexcept;
 
+signals:
+	void OnSignUpCredentialsAccepted();
+
 private:
 	bool firstShow{ true };
 	QLineEdit* nameInput;
