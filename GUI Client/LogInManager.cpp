@@ -15,9 +15,12 @@ void LogInManager::showEvent(QShowEvent* event) {
 		passwordInput = findChild<QLineEdit*>("enterPasswordLogInInput");
 		logInButton = findChild<QPushButton*>("logInButton");
 		incorrectCredentialsLabel = findChild<QLabel*>("incorrectCredentialsLabel");
-		incorrectCredentialsLabel->setStyleSheet("color: transparent");
+		togglePasswordView = findChild<QPushButton*>("toggleLogInPasswordViewButton");
+		incorrectCredentialsLabel->clear();
 
 		QObject::connect(logInButton, &QPushButton::released, this, &LogInManager::OnLogInCredentialsSent);
+		QObject::connect(togglePasswordView, &QPushButton::released, this, &LogInManager::OnTogglePasswordView);
+
 		firstShow = false;
 	}
 }
@@ -37,10 +40,22 @@ void LogInManager::OnLogInCredentialsSent() noexcept
 		nameInput->clear();
 		passwordInput->clear();
 		UserCredentials::SetCredentials(username, password);
-		incorrectCredentialsLabel->setStyleSheet("color: transparent");
+		incorrectCredentialsLabel->clear();
 		emit OnLogInCredentialsAccepted(username, password);
 	}
 	else {
-		incorrectCredentialsLabel->setStyleSheet("color: red");
+		incorrectCredentialsLabel->setText(incorrectCredentialsText);
+	}
+}
+
+void LogInManager::OnTogglePasswordView() noexcept
+{
+	if (passwordInput->echoMode() == QLineEdit::Password) {
+		togglePasswordView->setIcon(hidePasswordIcon);
+		passwordInput->setEchoMode(QLineEdit::Normal);
+	}
+	else {
+		togglePasswordView->setIcon(viewPasswordIcon);
+		passwordInput->setEchoMode(QLineEdit::Password);
 	}
 }

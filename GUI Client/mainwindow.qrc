@@ -31,4 +31,8 @@
         <file alias="WordsBackground">Resource Files/hatching-2460786_640.png</file>
         <file alias="timer_clock">Resource Files/timer_clock.png</file>
     </qresource>
+    <qresource prefix="/others">
+        <file alias="view_password">Resource Files/view_password.png</file>
+        <file alias="hide_password">Resource Files/hide_password.png</file>
+    </qresource>
 </RCC>

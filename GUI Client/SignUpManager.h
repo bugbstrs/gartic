@@ -16,8 +16,9 @@ public:
 public slots:
 	void showEvent(QShowEvent* event) override;
 
-protected:
+private:
 	void OnSignUpCredentialsSent() noexcept;
+	void OnTogglePasswordView() noexcept;
 
 signals:
 	void OnSignUpCredentialsAccepted();
@@ -27,5 +28,10 @@ private:
 	QLineEdit* nameInput{ new QLineEdit{} };
 	QLineEdit* passwordInput{ new QLineEdit{} };
 	QPushButton* signUpButton{ new QPushButton{} };
+	QPushButton* togglePasswordView{ new QPushButton{} };
 	QLabel* alreadyExistingAccountLabel{ new QLabel{} };
+	QString incorrectCredentialsText{ "Credentials match existing account." };
+
+	QIcon viewPasswordIcon{ QIcon(QPixmap(":/others/view_password")) };
+	QIcon hidePasswordIcon{ QIcon(QPixmap(":/others/hide_password")) };
 };

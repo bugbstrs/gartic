@@ -17,16 +17,22 @@ public:
 public slots:
 	void showEvent(QShowEvent* event) override;
 
-protected:
-	void OnLogInCredentialsSent() noexcept;
-
 signals:
 	void OnLogInCredentialsAccepted(const std::string& username, const std::string& password);
 
 private:
-	bool firstShow{ true };
-	QLineEdit* nameInput	 { new QLineEdit{} };
-	QLineEdit* passwordInput { new QLineEdit{} };
-	QPushButton* logInButton { new QPushButton{} };
-	QLabel* incorrectCredentialsLabel{ new QLabel{} };
+	void OnLogInCredentialsSent() noexcept;
+	void OnTogglePasswordView() noexcept;
+
+private:
+	bool firstShow					  { true };
+	QLineEdit* nameInput			  { new QLineEdit{} };
+	QLineEdit* passwordInput		  { new QLineEdit{} };
+	QPushButton* logInButton		  { new QPushButton{} };
+	QPushButton* togglePasswordView	  { new QPushButton{} };
+	QLabel* incorrectCredentialsLabel { new QLabel{} };
+	QString incorrectCredentialsText  { "Incorrect username or password. Please try again." };
+
+	QIcon viewPasswordIcon			  { QIcon(QPixmap(":/others/view_password")) };
+	QIcon hidePasswordIcon			  { QIcon(QPixmap(":/others/hide_password")) };
 };
