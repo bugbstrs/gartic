@@ -3,6 +3,11 @@
 #include <QFrame>
 #include <qlineedit.h>
 #include <qpushbutton.h>
+#include <numeric>
+#include <sstream>
+#include <regex>
+#include <string>
+#include <cpr/cpr.h>
 
 class LogInManager  : public QFrame
 {
@@ -17,6 +22,9 @@ public slots:
 
 protected:
 	void OnSignUpCredentialsSent() noexcept;
+
+signals:
+	void OnLogInCredentialsAccepted();
 
 private:
 	bool firstShow{ true };

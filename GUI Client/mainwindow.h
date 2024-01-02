@@ -37,6 +37,7 @@ private slots:
     void OnGoToLogInFromSignUpButtonReleased() noexcept;
 
     //Log In scene
+    void OnLogInCredentialsAccepted() noexcept;
     void OnGoToSignUpFromLogInButtonReleased() noexcept;
 
 private:

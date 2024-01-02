@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     //Log In scene
     QObject::connect(ui->goToSignUpFromLogInButton, &QPushButton::released, this, &MainWindow::OnGoToLogInFromSignUpButtonReleased);
+    QObject::connect(ui->LogInViewFrame, &LogInManager::OnLogInCredentialsAccepted, this, &MainWindow::OnLogInCredentialsAccepted);
 }
 
 MainWindow::~MainWindow() {}
@@ -91,6 +92,11 @@ void MainWindow::OnBackToMenuButtonReleased() noexcept { ui->stackedWidget->setC
 
 //Sign Up scene
 void MainWindow::OnGoToLogInFromSignUpButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->SignUpScene); }
+
+void MainWindow::OnLogInCredentialsAccepted() noexcept
+{
+    ui->stackedWidget->setCurrentWidget(ui->MainMenuScene);
+}
 
 //Log in scene
 void MainWindow::OnGoToSignUpFromLogInButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->LogInScene); }

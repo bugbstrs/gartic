@@ -1,4 +1,5 @@
 #include "LogInManager.h"
+#include <iomanip>
 
 LogInManager::LogInManager(QWidget *parent)
 	: QFrame { parent }
@@ -20,6 +21,25 @@ void LogInManager::showEvent(QShowEvent* event) {
 
 void LogInManager::OnSignUpCredentialsSent() noexcept  
 {
-	nameInput->clear();
-	passwordInput->clear();
+	std::string password = passwordInput->text().toUtf8().constData();
+	std::string username = nameInput->text().toUtf8().constData();
+	/*auto response = cpr::Put(
+		cpr::Url{ "http://localhost:18080/login" },
+		cpr::Payload{
+			{ "password", password },
+			{ "username", username }
+		}
+	);*/
+	auto response = cpr::Put(
+		cpr::Url{ "http://localhost:18080/login" },
+		cpr::Parameters{
+			{"password", password},
+			{"username", username}
+		}
+	);
+	if (response.status_code == 200) {
+		nameInput->clear();
+		passwordInput->clear();
+		emit OnLogInCredentialsAccepted();
+	}
 }
