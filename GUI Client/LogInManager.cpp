@@ -1,6 +1,7 @@
 #include "LogInManager.h"
 #include <iomanip>
 
+
 LogInManager::LogInManager(QWidget *parent)
 	: QFrame { parent }
 {}
@@ -30,7 +31,7 @@ void LogInManager::OnSignUpCredentialsSent() noexcept
 			{ "username", username }
 		}
 	);*/
-	auto response = cpr::Put(
+	auto response = cpr::Get(
 		cpr::Url{ "http://localhost:18080/login" },
 		cpr::Parameters{
 			{"password", password},

@@ -208,7 +208,7 @@ void http::RouteManager::FetchTop5UsersRoute()
 
 void http::RouteManager::LoginRoute()
 {
-	CROW_ROUTE(m_app, "/login").methods(crow::HTTPMethod::PUT)([this](const crow::request& request) {
+	CROW_ROUTE(m_app, "/login")([this](const crow::request& request) {
         if (IsRequestAuthenticated(request)) return IsRequestAuthenticated(request).value();
         
         crow::response response;
