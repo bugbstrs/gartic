@@ -208,7 +208,7 @@ void http::RouteManager::FetchTop5UsersRoute()
 
 void http::RouteManager::LoginRoute()
 {
-	CROW_ROUTE(m_app, "/login")([this](const crow::request& request) {
+	CROW_ROUTE(m_app, "/login").methods(crow::HTTPMethod::PUT)([this](const crow::request& request) {
         if (IsRequestAuthenticated(request)) return IsRequestAuthenticated(request).value();
         
         crow::response response;
@@ -263,7 +263,9 @@ std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const c
 	char* username = request.url_params.get("username");
 	crow::response response;
 	std::regex regexFormatSHA256{ "[a-f0-9]{64}" };
-	std::regex regexFormatUsername{ "^[a-z]+[a-z0-9_-]*[a-z]+$" };
+	//std::regex regexFormatUsername{ "^[a-z]+[a-z0-9_-]*[a-z]+$" };
+	std::regex regexFormatUsername{ "^[a-zA-Z]+[a-zA-Z0-9_-]*[a-zA-Z]+$" };
+
 
 	if (password == nullptr || username == nullptr)
 	{
@@ -279,7 +281,7 @@ std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const c
 	}
 
 	// length of SHA256 hash when converted to hex string
-	if (std::strlen(password) != 64 || !std::regex_match(password, regexFormatSHA256))
+	/*if (std::strlen(password) != 64 || !std::regex_match(password, regexFormatSHA256))
 	{
 		response.code = 400;
 		response.body = crow::json::wvalue
@@ -289,7 +291,7 @@ std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const c
 			}).dump();
 
 			return response;
-	}
+	}*/
 
 	if (!std::regex_match(username, regexFormatUsername))
 	{
@@ -312,7 +314,9 @@ std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const c
 		({
 			{"code", response.code},
 			{"error", "unauthorized"}
-			}).dump();
+		}).dump();
+		
+		return response;
 	}
 
 	return {};
