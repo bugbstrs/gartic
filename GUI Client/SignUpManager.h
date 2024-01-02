@@ -3,6 +3,7 @@
 #include <QFrame>
 #include <qpushbutton.h>
 #include <qlineedit.h>
+#include <qlabel.h>
 
 class SignUpManager  : public QFrame
 {
@@ -23,7 +24,8 @@ signals:
 
 private:
 	bool firstShow{ true };
-	QLineEdit* nameInput;
-	QLineEdit* passwordInput;
-	QPushButton* signUpButton;
+	QLineEdit* nameInput{ new QLineEdit{} };
+	QLineEdit* passwordInput{ new QLineEdit{} };
+	QPushButton* signUpButton{ new QPushButton{} };
+	QLabel* alreadyExistingAccountLabel{ new QLabel{} };
 };

@@ -10,6 +10,8 @@ void SignUpManager::showEvent(QShowEvent* event) {
 		nameInput = findChild<QLineEdit*>("enterNameSignUpInput");
 		passwordInput = findChild<QLineEdit*>("enterPasswordSignUpInput");
 		signUpButton = findChild<QPushButton*>("signUpButton");
+		alreadyExistingAccountLabel = findChild<QLabel*>("alreadyExistingAccountLabel");
+		alreadyExistingAccountLabel->setStyleSheet("color: transparent;");
 
 		QObject::connect(signUpButton, &QPushButton::released, this, &SignUpManager::OnSignUpCredentialsSent);
 
@@ -31,7 +33,11 @@ void SignUpManager::OnSignUpCredentialsSent() noexcept
 	if (response.status_code == 201) {
 		nameInput->clear();
 		passwordInput->clear();
+		alreadyExistingAccountLabel->setStyleSheet("color: transparent;");
 		emit OnSignUpCredentialsAccepted();
+	}
+	else {
+		alreadyExistingAccountLabel->setStyleSheet("color: red;");
 	}
 	/*nameInput->clear();
 	passwordInput->clear();*/
