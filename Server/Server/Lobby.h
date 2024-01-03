@@ -33,7 +33,7 @@ namespace http
 		std::shared_ptr<Game> StartGame();
 
 	private:
-		const String& GenerateCode();
+		String GenerateCode();
 
 	private:
 		std::vector<std::shared_ptr<User>> m_users;
