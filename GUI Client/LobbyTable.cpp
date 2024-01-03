@@ -40,6 +40,11 @@ void LobbyTable::AddPlayer(const std::string & name)
 	setItem(rowPosition, 0, item);
 }
 
+int LobbyTable::GetPlayersNumber() const
+{
+	return currentIndex;
+}
+
 void LobbyTable::ClearLobby()
 {
 	std::random_device rd;

@@ -20,6 +20,7 @@ public:
 
 	//Functionality
 	void AddPlayer(const std::string& name);
+	int GetPlayersNumber() const;
 	void ClearLobby();
 
 private:

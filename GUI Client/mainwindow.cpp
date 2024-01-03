@@ -84,6 +84,7 @@ void MainWindow::OnCreateLobbyButtonReleased() noexcept {
             {"password", UserCredentials::GetPassword()}
         }
     );
+
     auto code = cpr::Get(
         cpr::Url{ "http://localhost:18080/fetchcode" },
         cpr::Parameters{
@@ -92,8 +93,19 @@ void MainWindow::OnCreateLobbyButtonReleased() noexcept {
         }
     );
     auto codeText = crow::json::load(code.text);
-    if (response.status_code == 200 && code.status_code == 200) {
+
+    auto users = cpr::Get(
+        cpr::Url{ "http://localhost:18080/fetchusers" },
+        cpr::Parameters{
+            {"username", UserCredentials::GerUsername()},
+            {"password", UserCredentials::GetPassword()}
+        }
+    );
+    auto usersVector = crow::json::load(users.text);
+
+    if (response.status_code == 200 && code.status_code == 200 && users.status_code == 200) {
         ui->stackedWidget->setCurrentWidget(ui->LobbyScene);
+        ui->lobbyTable->AddPlayer(std::string(usersVector[0]["username"]));
         ui->lobbyFrame->SetCode(QString::fromUtf8(std::string(codeText[0]["code"])));
     }
 }
@@ -104,7 +116,29 @@ void MainWindow::OnGoToLogInButtonReleased() noexcept{ ui->stackedWidget->setCur
 void MainWindow::OnGoToSignUpButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->SignUpScene); }
 
 
-void MainWindow::OnLobbyCodeAccepted() noexcept { ui->stackedWidget->setCurrentWidget(ui->LobbyScene); }
+void MainWindow::OnLobbyCodeAccepted(std::string codeText) noexcept {
+    auto joinLobby = cpr::Get(
+        cpr::Url{ "http://localhost:18080/joinlobby" },
+        cpr::Parameters{
+            {"username", UserCredentials::GerUsername()},
+            {"password", UserCredentials::GetPassword()},
+            {"code", codeText}
+
+        }
+    );
+    auto users = cpr::Get(
+        cpr::Url{ "http://localhost:18080/fetchusers" },
+        cpr::Parameters{
+            {"username", UserCredentials::GerUsername()},
+            {"password", UserCredentials::GetPassword()}
+        }
+    );
+    auto usersVector = crow::json::load(users.text);
+    for (int index = 0; index < usersVector.size(); index++) {
+        ui->lobbyTable->AddPlayer(std::string(usersVector[index]["username"]));
+    }
+    ui->stackedWidget->setCurrentWidget(ui->LobbyScene); 
+}
 
 //Join Lobby Scene
 void MainWindow::OnGoToMenuFromJoinLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }

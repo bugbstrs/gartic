@@ -18,7 +18,7 @@ private:
 	void OnLobbyCodeSentForVerification() noexcept;
 
 signals:
-	void OnLobbyCodeAccepted();
+	void OnLobbyCodeAccepted(std::string codeText);
 
 private:
 	bool firstShow	{ true };

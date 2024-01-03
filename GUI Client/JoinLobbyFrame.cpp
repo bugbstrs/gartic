@@ -21,6 +21,6 @@ void JoinLobbyFrame::showEvent(QShowEvent * event)
 
 void JoinLobbyFrame::OnLobbyCodeSentForVerification() noexcept
 {
+	emit OnLobbyCodeAccepted(codeLineEdit->text().toUtf8().constData());
 	codeLineEdit->clear();
-	emit OnLobbyCodeAccepted();
 }
