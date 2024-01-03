@@ -79,6 +79,9 @@
     <ClCompile Include="UserCredentials.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="JoinLobbyFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DrawingBoard.h">
@@ -115,6 +118,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="LobbyFrame.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="JoinLobbyFrame.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

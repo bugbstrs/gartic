@@ -18,10 +18,15 @@ private slots:
 
     //Main menu buttons
     void OnCreateLobbyButtonReleased() noexcept;
+    void OnJoinLobbyButtonReleased() noexcept;
     void OnQuitButtonReleased() noexcept;
     void OnStatsButtonReleased() noexcept;
     void OnGoToLogInButtonReleased() noexcept;
     void OnGoToSignUpButtonReleased() noexcept;
+
+    //Join Lobby scene
+    void OnLobbyCodeAccepted() noexcept;
+    void OnGoToMenuFromJoinLobbyButtonReleased() noexcept;
 
     //Lobby scene
     void OnStartGameButtonReleased() noexcept;

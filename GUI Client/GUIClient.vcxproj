@@ -118,6 +118,7 @@
     <ClCompile Include="Chat.cpp" />
     <ClCompile Include="ChatConversation.cpp" />
     <ClCompile Include="ChatWritingBox.cpp" />
+    <ClCompile Include="JoinLobbyFrame.cpp" />
     <ClCompile Include="LobbyFrame.cpp" />
     <ClCompile Include="LobbyTable.cpp" />
     <ClCompile Include="LogInManager.cpp" />
@@ -174,6 +175,7 @@
     <QtMoc Include="LobbyFrame.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="JoinLobbyFrame.h" />
     <ClInclude Include="UserCredentials.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

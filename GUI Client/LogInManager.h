@@ -18,7 +18,7 @@ public slots:
 	void showEvent(QShowEvent* event) override;
 
 signals:
-	void OnLogInCredentialsAccepted(const std::string& username, const std::string& password);
+	void OnLogInCredentialsAccepted();
 
 private:
 	void OnLogInCredentialsSent() noexcept;

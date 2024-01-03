@@ -36,10 +36,15 @@ MainWindow::MainWindow(QWidget* parent)
         "}");
     //Main menu scene connections
     QObject::connect(ui->createLobbyButton, &QPushButton::released, this, &MainWindow::OnCreateLobbyButtonReleased);
+    QObject::connect(ui->joinLobbyButton, &QPushButton::released, this, &MainWindow::OnJoinLobbyButtonReleased);
     QObject::connect(ui->quitButton, &QPushButton::released, this, &MainWindow::OnQuitButtonReleased);
     QObject::connect(ui->statsButton, &QPushButton::released, this, &MainWindow::OnStatsButtonReleased);
     QObject::connect(ui->goToLogInButton, &QPushButton::released, this, &MainWindow::OnGoToLogInButtonReleased);
     QObject::connect(ui->goToSignUpButton, &QPushButton::released, this, &MainWindow::OnGoToSignUpButtonReleased);
+
+    //Join Lobby scene
+    QObject::connect(ui->joinLobbyFrame, &JoinLobbyFrame::OnLobbyCodeAccepted, this, &MainWindow::OnLobbyCodeAccepted);
+    QObject::connect(ui->backToMenuFromJoinButton, &QPushButton::released, this, &MainWindow::OnGoToMenuFromJoinLobbyButtonReleased);
 
     //Lobby scene
     QObject::connect(ui->startGameButton, &QPushButton::released, this, &MainWindow::OnStartGameButtonReleased);
@@ -80,20 +85,29 @@ void MainWindow::OnCreateLobbyButtonReleased() noexcept {
     );
     ui->stackedWidget->setCurrentWidget(ui->LobbyScene); 
 }
+void MainWindow::OnJoinLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->JoinLobbyScene); }
 void MainWindow::OnQuitButtonReleased() noexcept { QCoreApplication::quit(); }
 void MainWindow::OnStatsButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->StatsScene); }
 void MainWindow::OnGoToLogInButtonReleased() noexcept{ ui->stackedWidget->setCurrentWidget(ui->LogInScene); }
 void MainWindow::OnGoToSignUpButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->SignUpScene); }
 
+
+void MainWindow::OnLobbyCodeAccepted() noexcept { ui->stackedWidget->setCurrentWidget(ui->LobbyScene); }
+
+//Join Lobby Scene
+void MainWindow::OnGoToMenuFromJoinLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }
+
+
+//Lobby Scene
 void MainWindow::OnStartGameButtonReleased() noexcept { 
     ui->scoreboardTable->AddPlayersToScoreboard(std::move(ui->lobbyTable->GetTakenAvatars()));
     ui->gameplayWidget->SetGameSettings(ui->lobbyFrame->GetGameSettings());
     ui->stackedWidget->setCurrentWidget(ui->GameplayScene);
 }
-
 void MainWindow::OnExitLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }
 
-//Game scene events
+
+//Game Scene events
 void MainWindow::OnLeaveGameButtonReleased() noexcept { 
     ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); 
     
@@ -101,15 +115,16 @@ void MainWindow::OnLeaveGameButtonReleased() noexcept {
     ui->lobbyTable->ClearLobby();
 }
 
+
 // Stats scene events
 void MainWindow::OnBackToMenuButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }
 
+
 //Sign Up scene
 void MainWindow::OnGoToLogInFromSignUpButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->SignUpScene); }
-
 void MainWindow::OnSignUpSucceded() noexcept { ui->stackedWidget->setCurrentWidget(ui->LogInScene); }
-
 void MainWindow::OnLogInCredentialsAccepted() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }
+
 
 //Log in scene
 void MainWindow::OnGoToSignUpFromLogInButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->LogInScene); }

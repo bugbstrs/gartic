@@ -41,7 +41,7 @@ void LogInManager::OnLogInCredentialsSent() noexcept
 		passwordInput->clear();
 		UserCredentials::SetCredentials(username, password);
 		incorrectCredentialsLabel->clear();
-		emit OnLogInCredentialsAccepted(username, password);
+		emit OnLogInCredentialsAccepted();
 	}
 	else {
 		incorrectCredentialsLabel->setText(incorrectCredentialsText);
