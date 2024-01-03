@@ -20,7 +20,9 @@ void http::RouteManager::Run()
 	LoginRoute();
 	RegisterRoute();
 	CreateLobbyRoute();
+	JoinLobbyRoute();
 	FetchCodeRoute();
+	FetchUsersRoute();
 	CheckBannedWordRoute();
 	PutWordToGuessRoute();
 	FetchWordToDisplayRoute();
