@@ -1449,6 +1449,9 @@ QPushButton:hover {
                   <height>70</height>
                  </size>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton {
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
@@ -2288,7 +2291,7 @@ background: transparent;</string>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>150</width>
+                          <width>170</width>
                           <height>50</height>
                          </size>
                         </property>
@@ -2711,13 +2714,13 @@ background: transparent;</string>
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>200</width>
+                     <width>220</width>
                      <height>50</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>200</width>
+                     <width>220</width>
                      <height>50</height>
                     </size>
                    </property>

@@ -28,6 +28,10 @@ void LobbyFrame::showEvent(QShowEvent * event)
 		codeLineEdit = findChild<QLineEdit*>("codeLineEdit");
 		lobbyTable = findChild<LobbyTable*>("lobbyTable");
 
+		if (!m_isLeader) {
+			startGameButton->hide();
+		}
+
 		QObject::connect(startGameButton, &QPushButton::released, this, [this]() {
 			stop.store(true);
 		});
@@ -44,6 +48,11 @@ void LobbyFrame::showEvent(QShowEvent * event)
 void LobbyFrame::SetCode(QString codeText) noexcept
 {
 	codeLineEdit->setText(codeText);
+}
+
+void LobbyFrame::SetLeaderStatus(bool isLeader) noexcept
+{
+	m_isLeader = isLeader;
 }
 
 void LobbyFrame::CheckForNewPlayersJoined(std::atomic<bool>& stop)

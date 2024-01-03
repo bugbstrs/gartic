@@ -104,6 +104,7 @@ void MainWindow::OnCreateLobbyButtonReleased() noexcept {
     auto usersVector = crow::json::load(users.text);
 
     if (response.status_code == 200 && code.status_code == 200 && users.status_code == 200) {
+        ui->lobbyFrame->SetLeaderStatus(true);
         ui->stackedWidget->setCurrentWidget(ui->LobbyScene);
         ui->lobbyTable->AddPlayer(std::string(usersVector[0]["username"]));
         ui->lobbyFrame->SetCode(QString::fromUtf8(std::string(codeText[0]["code"])));
@@ -137,6 +138,7 @@ void MainWindow::OnLobbyCodeAccepted(std::string codeText) noexcept {
     for (int index = 0; index < usersVector.size(); index++) {
         ui->lobbyTable->AddPlayer(std::string(usersVector[index]["username"]));
     }
+    ui->codeLineEdit->setText(QString::fromUtf8(codeText));
     ui->stackedWidget->setCurrentWidget(ui->LobbyScene); 
 }
 
@@ -146,9 +148,18 @@ void MainWindow::OnGoToMenuFromJoinLobbyButtonReleased() noexcept { ui->stackedW
 
 //Lobby Scene
 void MainWindow::OnStartGameButtonReleased() noexcept { 
-    ui->scoreboardTable->AddPlayersToScoreboard(std::move(ui->lobbyTable->GetTakenAvatars()));
-    ui->gameplayWidget->SetGameSettings(ui->lobbyFrame->GetGameSettings());
-    ui->stackedWidget->setCurrentWidget(ui->GameplayScene);
+    auto createGame = cpr::Get(
+        cpr::Url{ "http://localhost:18080/creategame" },
+        cpr::Parameters{
+            {"username", UserCredentials::GerUsername()},
+            {"password", UserCredentials::GetPassword()}
+        }
+    );
+    if (createGame.status_code == 200) {
+        ui->scoreboardTable->AddPlayersToScoreboard(std::move(ui->lobbyTable->GetTakenAvatars()));
+        ui->gameplayWidget->SetGameSettings(ui->lobbyFrame->GetGameSettings());
+        ui->stackedWidget->setCurrentWidget(ui->GameplayScene);
+    }
 }
 void MainWindow::OnExitLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }
 

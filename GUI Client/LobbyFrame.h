@@ -20,13 +20,15 @@ public:
 	std::tuple <int, int, int> GetGameSettings();
 	void showEvent(QShowEvent* event) override;
 	void SetCode(QString code) noexcept;
+	void SetLeaderStatus(bool isLeader) noexcept;
 
 private:
 	void CheckForNewPlayersJoined(std::atomic<bool>& stop);
 
 private:
 	std::atomic<bool> stop;
-	bool firstShow{ true };
+	bool firstShow { true };
+	bool m_isLeader  { false };
 
 	QComboBox* drawTimeComboBox{ new QComboBox{} };
 	QComboBox* roundsComboBox{ new QComboBox{} };

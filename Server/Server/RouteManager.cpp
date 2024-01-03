@@ -19,13 +19,24 @@ void http::RouteManager::Run()
 	FetchTop5UsersRoute();
 	LoginRoute();
 	RegisterRoute();
+	CheckBannedWordRoute();
 	CreateLobbyRoute();
+	CreateGameRoute();
 	JoinLobbyRoute();
 	FetchCodeRoute();
 	FetchUsersRoute();
-	CheckBannedWordRoute();
-	PutWordToGuessRoute();
+	FetchSettingsRoute();
+	FetchPlayersRoute();
+	FetchGameStatusRoute();
+	FetchRoundNumberRoute();
+	FetchDrawerRoute();
+	FetchNWordsRoute();
+	FetchDrawingBoard();
+	FetchWordToGuessRoute();
 	FetchWordToDisplayRoute();
+	FetchMessagesRoute();
+	PutWordToGuessRoute();
+	PutMessageInChatRoute();
 
 	m_app
 		.port(18080)
@@ -593,7 +604,7 @@ void http::RouteManager::FetchPlayersRoute()
 
 void http::RouteManager::FetchGameStatusRoute()
 {
-	CROW_ROUTE(m_app, "/fetchplayers")([this](const crow::request& request) {
+	CROW_ROUTE(m_app, "/fetchgamestatus")([this](const crow::request& request) {
 		char* username = request.url_params.get("username");
 		char* password = request.url_params.get("password");
 
@@ -874,7 +885,7 @@ void http::RouteManager::PutWordToGuessRoute()
 
 void http::RouteManager::PutMessageInChatRoute()
 {
-	CROW_ROUTE(m_app, "/putwordtoguess")([this](const crow::request& request) {
+	CROW_ROUTE(m_app, "/putmessageinchat")([this](const crow::request& request) {
 		char* username = request.url_params.get("username");
 		char* password = request.url_params.get("password");
 		char* message = request.url_params.get("message");
