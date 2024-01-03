@@ -7,6 +7,7 @@ http::Lobby::Lobby(const String& username)
 {
 	m_leader = std::make_shared<User>(User(username));
 	m_users.push_back(m_leader);
+	m_code = GenerateCode();
 }
 
 http::Lobby::~Lobby()
@@ -87,5 +88,5 @@ const String& http::Lobby::GenerateCode()
 		randomCode += characters[randomIndex];
 	}
 
-	return characters;
+	return randomCode;
 }

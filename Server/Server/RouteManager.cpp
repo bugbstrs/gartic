@@ -19,6 +19,8 @@ void http::RouteManager::Run()
 	FetchTop5UsersRoute();
 	LoginRoute();
 	RegisterRoute();
+	CreateLobbyRoute();
+	FetchCodeRoute();
 	CheckBannedWordRoute();
 	PutWordToGuessRoute();
 	FetchWordToDisplayRoute();

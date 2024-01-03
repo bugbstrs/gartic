@@ -44,10 +44,15 @@ std::shared_ptr<Lobby> http::GarticManager::GetLobby(const String& username) con
 {
 	auto isInUsers = [&username](std::shared_ptr<User> user) { return user->GetUsername() == username; };
 
-	if (auto users{ m_lobby->GetUsers() };  std::find_if(users.begin(), users.end(), isInUsers) != users.end())
+	/*if (auto users{ m_lobby->GetUsers() };  std::find_if(users.begin(), users.end(), isInUsers) != users.end())
+	{
+		return m_lobby;
+	}*/
+	auto users{ m_lobby->GetUsers() };
+
+	if (std::find_if(users.begin(), users.end(), isInUsers) != users.end())
 	{
 		return m_lobby;
 	}
-
 	return {};
 }

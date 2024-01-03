@@ -42,7 +42,7 @@ namespace http
 
 		GameSettings m_settings;
 
-		const String m_code{ GenerateCode() };
+		String m_code;
 		const int kCodeLength{ 11 };
 	};
 }

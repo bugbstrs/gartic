@@ -70,20 +70,31 @@ MainWindow::~MainWindow() {}
 
 //Main menu events
 void MainWindow::OnCreateLobbyButtonReleased() noexcept { 
-    ui->lobbyTable->AddPlayer("Gigel");
-    ui->lobbyTable->AddPlayer("Frone");
-    ui->lobbyTable->AddPlayer("Alex");
-    ui->lobbyTable->AddPlayer("Andrei");
-    ui->lobbyTable->AddPlayer("Bambi");
-    ui->lobbyTable->AddPlayer("Turcu");
+    //ui->lobbyTable->AddPlayer("Gigel");
+    //ui->lobbyTable->AddPlayer("Frone");
+    //ui->lobbyTable->AddPlayer("Alex");
+    //ui->lobbyTable->AddPlayer("Andrei");
+    //ui->lobbyTable->AddPlayer("Bambi");
+    //ui->lobbyTable->AddPlayer("Turcu");
+
     auto response = cpr::Get(
         cpr::Url{ "http://localhost:18080/createlobby" },
         cpr::Parameters{
-            {"password", UserCredentials::GetPassword()},
-            {"username", UserCredentials::GerUsername()}
+            {"username", UserCredentials::GerUsername()},
+            {"password", UserCredentials::GetPassword()}
         }
     );
-    ui->stackedWidget->setCurrentWidget(ui->LobbyScene); 
+    cpr::Response code = cpr::Get(
+        cpr::Url{ "http://localhost:18080/fetchcode" },
+        cpr::Parameters{
+            {"username", UserCredentials::GerUsername()},
+            {"password", UserCredentials::GetPassword()}
+        }
+    );
+    auto word = crow::json::load(code.text);
+    std::string firstWord = std::string(word[0]["word"]);
+    /*if (response.status_code == 200)
+        ui->stackedWidget->setCurrentWidget(ui->LobbyScene); */
 }
 void MainWindow::OnJoinLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->JoinLobbyScene); }
 void MainWindow::OnQuitButtonReleased() noexcept { QCoreApplication::quit(); }
