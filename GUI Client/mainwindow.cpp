@@ -84,17 +84,18 @@ void MainWindow::OnCreateLobbyButtonReleased() noexcept {
             {"password", UserCredentials::GetPassword()}
         }
     );
-    cpr::Response code = cpr::Get(
+    auto code = cpr::Get(
         cpr::Url{ "http://localhost:18080/fetchcode" },
         cpr::Parameters{
             {"username", UserCredentials::GerUsername()},
             {"password", UserCredentials::GetPassword()}
         }
     );
-    auto word = crow::json::load(code.text);
-    std::string firstWord = std::string(word[0]["word"]);
-    /*if (response.status_code == 200)
-        ui->stackedWidget->setCurrentWidget(ui->LobbyScene); */
+    auto codeText = crow::json::load(code.text);
+    if (response.status_code == 200 && code.status_code == 200) {
+        ui->stackedWidget->setCurrentWidget(ui->LobbyScene);
+        ui->lobbyFrame->SetCode(QString::fromUtf8(std::string(codeText[0]["code"])));
+    }
 }
 void MainWindow::OnJoinLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->JoinLobbyScene); }
 void MainWindow::OnQuitButtonReleased() noexcept { QCoreApplication::quit(); }

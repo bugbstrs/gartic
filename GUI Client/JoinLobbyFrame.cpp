@@ -11,7 +11,7 @@ void JoinLobbyFrame::showEvent(QShowEvent * event)
 {
 	if (firstShow) {
 		joinButton = findChild<QPushButton*>("joinButton");
-		codeLineEdit = findChild<QLineEdit*>("codeLineEdit");
+		codeLineEdit = findChild<QLineEdit*>("codeInputLineEdit");
 
 		QObject::connect(joinButton, &QPushButton::released, this, &JoinLobbyFrame::OnLobbyCodeSentForVerification);
 

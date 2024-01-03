@@ -18,7 +18,13 @@ void LobbyFrame::showEvent(QShowEvent * event)
 		drawTimeComboBox = findChild<QComboBox*>("drawTimeComboBox");
 		roundsComboBox = findChild<QComboBox*>("roundsComboBox");
 		wordCountComboBox = findChild<QComboBox*>("wordCountComboBox");
+		codeLineEdit = findChild<QLineEdit*>("codeLineEdit");
 
 		firstShow = false;
 	}
+}
+
+void LobbyFrame::SetCode(QString codeText) noexcept
+{
+	codeLineEdit->setText(codeText);
 }
