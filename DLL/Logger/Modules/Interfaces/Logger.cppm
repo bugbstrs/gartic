@@ -19,7 +19,7 @@ public:
     #pragma endregion using statements for TransportOptions, LogFormat & LogLevel
 
     #pragma region Logger
-    __declspec(dllexport) Logger  (const TransportOptionsVect& transportOptions);
+    __declspec(dllexport) Logger  (const TransportOptionsVect&& transportOptions);
     __declspec(dllexport) ~Logger ();
     #pragma endregion constructors and destructor
 

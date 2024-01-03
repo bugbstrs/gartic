@@ -8,7 +8,7 @@ import <print>;
 import <string>;
 import <vector>;
 
-Logger::Logger(const std::vector<TransportOptions>& transportOptions)
+Logger::Logger(const TransportOptionsVect&& transportOptions)
 {
     if (transportOptions.size() == 0)
     {
@@ -51,10 +51,10 @@ void Logger::ForceDump()
 
 const Logger::String Logger::ConvertLogLevelToEmoji(Level level)
 {
-    if      (level == Level::INFO)  return "ℹ️";
-    else if (level == Level::WARN)  return "⚠️";
-    else if (level == Level::ERROR) return "🔴";
-    else if (level == Level::FATAL) return "🚨";
+    if      (level == Level::INFO)  return ":information_source:";
+    else if (level == Level::WARN)  return ":warning:";
+    else if (level == Level::ERROR) return ":red_circle:";
+    else if (level == Level::FATAL) return ":rotating_light:";
 
     throw std::exception("Invalid level provided in ConvertLogLevelToEmoji function!");
 }
@@ -71,17 +71,20 @@ const Logger::String Logger::ConvertLogLevelToString(Level level)
 
 const Logger::String Logger::FormatLog(Format logFormat, Level logLevel, const std::string& scope, const std::vector<std::string>& logPath, const std::string& message) const
 {
+    using std::chrono::floor;
+    using std::chrono::seconds;
+    using std::chrono::sys_seconds;
+    using std::chrono::system_clock;
+
+    sys_seconds currentTime{ floor<seconds>(system_clock::now())  };
     std::string logMessage = "";
-    //const auto now = std::chrono::system_clock::now();
-    //const std::time_t time = std::chrono::system_clock::to_time_t(now);
-    // TODO: get time
-    std::string dateTimeString = ".";
+    std::string dateTimeString = std::format("{:%Y-%m-%d %H:%M:%S}", currentTime);
 
     if (logFormat == Format::TEXT)
     {
         logMessage += std::format
         (
-            "[{}] on [{}]: ({}: ",
+            "[{}] @ [{}]: ({}: ",
             ConvertLogLevelToString(logLevel),
             dateTimeString,
             scope
