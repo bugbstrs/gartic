@@ -148,9 +148,18 @@ void MainWindow::OnGoToMenuFromJoinLobbyButtonReleased() noexcept { ui->stackedW
 
 //Lobby Scene
 void MainWindow::OnStartGameButtonReleased() noexcept { 
-    ui->scoreboardTable->AddPlayersToScoreboard(std::move(ui->lobbyTable->GetTakenAvatars()));
-    ui->gameplayWidget->SetGameSettings(ui->lobbyFrame->GetGameSettings());
-    ui->stackedWidget->setCurrentWidget(ui->GameplayScene);
+    auto createGame = cpr::Get(
+        cpr::Url{ "http://localhost:18080/creategame" },
+        cpr::Parameters{
+            {"username", UserCredentials::GerUsername()},
+            {"password", UserCredentials::GetPassword()}
+        }
+    );
+    if (createGame.status_code == 200) {
+        ui->scoreboardTable->AddPlayersToScoreboard(std::move(ui->lobbyTable->GetTakenAvatars()));
+        ui->gameplayWidget->SetGameSettings(ui->lobbyFrame->GetGameSettings());
+        ui->stackedWidget->setCurrentWidget(ui->GameplayScene);
+    }
 }
 void MainWindow::OnExitLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }
 
