@@ -3,7 +3,6 @@
 #include "Player.h"
 #include "GameSettings.h"
 #include "GameStatusEnum.h"
-#include "LobbyStatusEnum.h"
 #include "RoundTypeEnum.h"
 #include "Chat.h"
 #include "DrawingBoard.h"
@@ -25,7 +24,6 @@ namespace http
 
 		const std::vector<Player*>& GetPlayers() const noexcept;
 		GameStatus GetGameStatus() const noexcept;
-		LobbyStatus GetLobbyStatus() const noexcept;
 		GameSettings GetSettings() const noexcept;
 		Time GetTime() const noexcept;
 		Chat GetChat() const noexcept;
@@ -34,7 +32,6 @@ namespace http
 		Round GetRound() const noexcept;
 
 		void SetGameStatus(GameStatus newGameStatus);
-		void SetLobbyStatus(LobbyStatus newLobbyStatus);
 		void SetRoundNumber(int newRoundNumber);
 		void SetDrawingBoard(DrawingBoard newDrawingBoard);
 
@@ -47,8 +44,6 @@ namespace http
 		GameSettings m_settings;
 
 		GameStatus m_gameStatus;
-
-		LobbyStatus m_lobbyStatus;
 
 		Time m_remainingTime;
 

@@ -8,6 +8,7 @@ http::Lobby::Lobby(const String& username)
 	m_leader = std::make_shared<User>(User(username));
 	m_users.push_back(m_leader);
 	m_code = GenerateCode();
+	m_lobbyStatus = LobbyStatus::WaitingToStart;
 }
 
 http::Lobby::~Lobby()
@@ -49,9 +50,19 @@ const std::string& http::Lobby::GetCode() const noexcept
 	return m_code;
 }
 
+LobbyStatus http::Lobby::GetLobbyStatus() const noexcept
+{
+	return m_lobbyStatus;
+}
+
 void http::Lobby::SetLeader(std::shared_ptr<User> newLeader)
 {
 	m_leader = newLeader;
+}
+
+void http::Lobby::SetLobbyStatus(LobbyStatus newLobbyStatus)
+{
+	m_lobbyStatus = newLobbyStatus;
 }
 
 std::shared_ptr<http::Game> http::Lobby::StartGame()

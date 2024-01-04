@@ -5,7 +5,6 @@ using namespace http;
 Game::Game(std::vector<Player*>&& newPlayers) :
 	m_players{ std::move(newPlayers) },
 	m_gameStatus { GameStatus::Waiting },
-	m_lobbyStatus { LobbyStatus::WaitingToStart },
 	m_remainingTime { Time() },
 	m_chat { Chat(m_players) },
 	m_roundNumber { 0 },
@@ -34,11 +33,6 @@ GameStatus http::Game::GetGameStatus() const noexcept
 	return m_gameStatus;
 }
 
-LobbyStatus http::Game::GetLobbyStatus() const noexcept
-{
-	return m_lobbyStatus;
-}
-
 Time http::Game::GetTime() const noexcept
 {
 	return m_remainingTime;
@@ -57,11 +51,6 @@ Round http::Game::GetRound() const noexcept
 void http::Game::SetGameStatus(GameStatus newGameStatus)
 {
 	m_gameStatus = newGameStatus;
-}
-
-void http::Game::SetLobbyStatus(LobbyStatus newLobbyStatus)
-{
-	m_lobbyStatus = newLobbyStatus;
 }
 
 void http::Game::SetRoundNumber(int newRoundNumber)

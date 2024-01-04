@@ -23,10 +23,10 @@ void http::RouteManager::Run()
 	CreateLobbyRoute();
 	CreateGameRoute();
 	JoinLobbyRoute();
-	FetchLobbyStatusRoute();
 	FetchCodeRoute();
 	FetchUsersRoute();
 	FetchSettingsRoute();
+	FetchLobbyStatusRoute();
 	FetchPlayersRoute();
 	FetchGameStatusRoute();
 	FetchRoundNumberRoute();
@@ -416,6 +416,10 @@ void http::RouteManager::CreateGameRoute()
 
 		m_gartic.CreateGame(std::string(username));
 
+		if (response.code == 200) {
+			m_gartic.GetLobby(std::string(username))->SetLobbyStatus(LobbyStatus::StartedGame);
+		}
+
 		response.body = crow::json::wvalue({
 			{"put", true}
 			}).dump();
@@ -582,13 +586,13 @@ void http::RouteManager::FetchLobbyStatusRoute()
 		std::string usernameString(username);
 		std::string passwordString(password);
 
-		LobbyStatus fetchedStatus;
+		LobbyStatus fetchedStatus = LobbyStatus();
 
 		std::vector<crow::json::wvalue> status_json;
 
 		if (m_storage.CheckCredentials(usernameString, passwordString))
 		{
-			fetchedStatus = m_gartic.GetGame(usernameString)->GetLobbyStatus();
+			fetchedStatus = m_gartic.GetLobby(usernameString)->GetLobbyStatus();
 
 			std::string statusString = LobbyStatusWrapper::ToString(fetchedStatus);
 

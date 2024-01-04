@@ -5,9 +5,9 @@
 #include <optional>
 #include <cstdlib>
 #include <ctime>
-
 #include "User.h"
 #include "Game.h"
+#include "LobbyStatusEnum.h"
 #include "GameSettings.h"
 
 namespace http
@@ -27,8 +27,10 @@ namespace http
 		std::shared_ptr<User> GetLeader() const noexcept;
 		const GameSettings& GetSettings() const noexcept;
 		const std::string& GetCode() const noexcept;
+		LobbyStatus GetLobbyStatus() const noexcept;
 
 		void SetLeader(std::shared_ptr<User> newLeader);
+		void SetLobbyStatus(LobbyStatus newLobbyStatus);
 
 		std::shared_ptr<Game> StartGame();
 
@@ -41,6 +43,8 @@ namespace http
 		std::shared_ptr<User> m_leader;
 
 		GameSettings m_settings;
+
+		LobbyStatus m_lobbyStatus;
 
 		String m_code;
 		const int kCodeLength{ 11 };
