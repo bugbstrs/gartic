@@ -1,4 +1,6 @@
-﻿module LoginScene;
+﻿#include <cpr/cpr.h>
+
+module LoginScene;
 
 import Label;
 import Button;
@@ -13,16 +15,40 @@ LoginScene::LoginScene(ConsoleManager* console, InputManager* inputManager) :
 
 void LoginScene::Login()
 {
-	// Talk to server
-	User::Initialize(m_username, m_password);
-	m_nextScene = const_cast<std::type_info *>(&typeid(MenuScene));
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/login" },
+		cpr::Parameters
+		{
+			{"password", m_password},
+			{"username", m_username}
+		});
+	if (response.status_code == 200)
+	{
+		User::Initialize(m_username, m_password);
+		m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
+	}else
+	{
+
+	}
 }
 
 void LoginScene::Register()
 {
-	// Talk to server
-	User::Initialize(m_username, m_password);
-	m_nextScene = const_cast<std::type_info *>(&typeid(MenuScene));
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/register" },
+		cpr::Parameters{
+			{"password", m_password},
+			{"username", m_username}
+		}
+	);
+	if (response.status_code == 201)
+	{
+		User::Initialize(m_username, m_password);
+		m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
+	}else
+	{
+
+	}
 }
 
 void LoginScene::Input() const
@@ -71,14 +97,14 @@ void LoginScene::Start()
 	auto loginButton{new Button{20, 8, Align::Left, Align::Up, Color::DarkGray, Color::Green, 5, 1, Color::DarkBlue,
 						Color::White, m_console, m_input, m_selected, "LOGIN"}};
 	loginButton->SetHoverColors(Color::Blue, Color::White);
-	loginButton->SetFunctionOnActivate(std::bind(&LoginScene::Login, this));
+	loginButton->SetFunctionOnActivate([this]() { Login(); });
 	m_objects.emplace_back(loginButton);
 	m_selectableObjects.emplace_back(loginButton);
 
 	auto registerButton{new Button{30, 8, Align::Left, Align::Up, Color::DarkGray, Color::Cyan, 8, 1, Color::DarkBlue,
 						Color::White, m_console, m_input, m_selected, "REGISTER"}};
 	registerButton->SetHoverColors(Color::Blue, Color::White);
-	registerButton->SetFunctionOnActivate(std::bind(&LoginScene::Register, this));
+	registerButton->SetFunctionOnActivate([this]() { Register(); });
 	m_objects.emplace_back(registerButton);
 	m_selectableObjects.emplace_back(registerButton);
 
