@@ -29,7 +29,7 @@ private slots:
     void OnGoToMenuFromJoinLobbyButtonReleased() noexcept;
 
     //Lobby scene
-    void OnStartGameButtonReleased() noexcept;
+    void OnStartGameCommand() noexcept;
     void OnExitLobbyButtonReleased() noexcept;
 
     //Drawing scene

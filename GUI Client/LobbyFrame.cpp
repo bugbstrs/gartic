@@ -28,17 +28,25 @@ void LobbyFrame::showEvent(QShowEvent * event)
 		codeLineEdit = findChild<QLineEdit*>("codeLineEdit");
 		lobbyTable = findChild<LobbyTable*>("lobbyTable");
 
-		if (!m_isLeader) {
+		if (m_isLeader) {
+			QObject::connect(startGameButton, &QPushButton::released, this, [this]() {
+				//Muta aici din mainwindow crearea de game
+				auto createGame = cpr::Get(
+					cpr::Url{ "http://localhost:18080/creategame" },
+					cpr::Parameters{
+						{"username", UserCredentials::GerUsername()},
+						{"password", UserCredentials::GetPassword()}
+					}
+				);
+			});
+		}
+		else {
 			startGameButton->hide();
 		}
 
-		QObject::connect(startGameButton, &QPushButton::released, this, [this]() {
-			stop.store(true);
-		});
-
 		stop.store(false);
 
-		std::thread checkForNewPlayers(&LobbyFrame::CheckForNewPlayersJoined, this, std::ref(stop));
+		std::thread checkForNewPlayers(&LobbyFrame::CheckForLobbyUpdates, this, std::ref(stop));
 		checkForNewPlayers.detach();
 
 		firstShow = false;
@@ -55,7 +63,7 @@ void LobbyFrame::SetLeaderStatus(bool isLeader) noexcept
 	m_isLeader = isLeader;
 }
 
-void LobbyFrame::CheckForNewPlayersJoined(std::atomic<bool>& stop)
+void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 {
 	while (!stop.load()) {
 		auto users = cpr::Get(
@@ -66,11 +74,25 @@ void LobbyFrame::CheckForNewPlayersJoined(std::atomic<bool>& stop)
 			}
 		);
 		auto usersVector = crow::json::load(users.text);
-		int a = lobbyTable->GetPlayersNumber();
+		int playersNumber = lobbyTable->GetPlayersNumber();
 		if (usersVector.size() != lobbyTable->GetPlayersNumber()) {
-			for (int index = a; index < usersVector.size(); index++)
+			for (int index = playersNumber; index < usersVector.size(); index++)
 				lobbyTable->AddPlayer(std::string(usersVector[index]["username"]));
 		}
-		std::this_thread::sleep_for(std::chrono::seconds(2));
+
+		auto gameState = cpr::Get(
+			cpr::Url{ "http://localhost:18080/fetchlobbystatus" },
+			cpr::Parameters{
+				{"username", UserCredentials::GerUsername()},
+				{"password", UserCredentials::GetPassword()}
+			}
+		);
+		auto state = crow::json::load(gameState.text);
+		if (std::string(state[0]["lobby_status"]) == kStartedGame) {
+			stop.store(true);
+		}
+		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
+	if (stop.load())
+		emit OnGameStarted();
 }

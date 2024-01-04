@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget* parent)
     QObject::connect(ui->backToMenuFromJoinButton, &QPushButton::released, this, &MainWindow::OnGoToMenuFromJoinLobbyButtonReleased);
 
     //Lobby scene
-    QObject::connect(ui->startGameButton, &QPushButton::released, this, &MainWindow::OnStartGameButtonReleased);
+    QObject::connect(ui->lobbyFrame, &LobbyFrame::OnGameStarted, this, &MainWindow::OnStartGameCommand);
     QObject::connect(ui->exitLobbyButton, &QPushButton::released, this, &MainWindow::OnExitLobbyButtonReleased);
 
     //Game scene connections
@@ -70,13 +70,6 @@ MainWindow::~MainWindow() {}
 
 //Main menu events
 void MainWindow::OnCreateLobbyButtonReleased() noexcept { 
-    //ui->lobbyTable->AddPlayer("Gigel");
-    //ui->lobbyTable->AddPlayer("Frone");
-    //ui->lobbyTable->AddPlayer("Alex");
-    //ui->lobbyTable->AddPlayer("Andrei");
-    //ui->lobbyTable->AddPlayer("Bambi");
-    //ui->lobbyTable->AddPlayer("Turcu");
-
     auto response = cpr::Get(
         cpr::Url{ "http://localhost:18080/createlobby" },
         cpr::Parameters{
@@ -117,6 +110,7 @@ void MainWindow::OnGoToLogInButtonReleased() noexcept{ ui->stackedWidget->setCur
 void MainWindow::OnGoToSignUpButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->SignUpScene); }
 
 
+//Join Lobby Scene
 void MainWindow::OnLobbyCodeAccepted(std::string codeText) noexcept {
     auto joinLobby = cpr::Get(
         cpr::Url{ "http://localhost:18080/joinlobby" },
@@ -141,25 +135,14 @@ void MainWindow::OnLobbyCodeAccepted(std::string codeText) noexcept {
     ui->codeLineEdit->setText(QString::fromUtf8(codeText));
     ui->stackedWidget->setCurrentWidget(ui->LobbyScene); 
 }
-
-//Join Lobby Scene
 void MainWindow::OnGoToMenuFromJoinLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }
 
 
 //Lobby Scene
-void MainWindow::OnStartGameButtonReleased() noexcept { 
-    auto createGame = cpr::Get(
-        cpr::Url{ "http://localhost:18080/creategame" },
-        cpr::Parameters{
-            {"username", UserCredentials::GerUsername()},
-            {"password", UserCredentials::GetPassword()}
-        }
-    );
-    if (createGame.status_code == 200) {
-        ui->scoreboardTable->AddPlayersToScoreboard(std::move(ui->lobbyTable->GetTakenAvatars()));
-        ui->gameplayWidget->SetGameSettings(ui->lobbyFrame->GetGameSettings());
-        ui->stackedWidget->setCurrentWidget(ui->GameplayScene);
-    }
+void MainWindow::OnStartGameCommand() noexcept {
+    ui->scoreboardTable->AddPlayersToScoreboard(std::move(ui->lobbyTable->GetTakenAvatars()));
+    ui->gameplayWidget->SetGameSettings(ui->lobbyFrame->GetGameSettings());
+    ui->stackedWidget->setCurrentWidget(ui->GameplayScene);
 }
 void MainWindow::OnExitLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }
 

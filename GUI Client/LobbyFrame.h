@@ -23,12 +23,18 @@ public:
 	void SetLeaderStatus(bool isLeader) noexcept;
 
 private:
-	void CheckForNewPlayersJoined(std::atomic<bool>& stop);
+	void CheckForLobbyUpdates(std::atomic<bool>& stop);
+
+signals:
+	void OnGameStarted();
 
 private:
 	std::atomic<bool> stop;
 	bool firstShow { true };
 	bool m_isLeader  { false };
+
+	const std::string kWaitingToStart = "WaitingToStart";
+	const std::string kStartedGame = "StartedGame";
 
 	QComboBox* drawTimeComboBox{ new QComboBox{} };
 	QComboBox* roundsComboBox{ new QComboBox{} };
