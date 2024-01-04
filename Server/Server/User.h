@@ -17,6 +17,7 @@ namespace http
 		void SetUsername(const std::string& newUsername);
 
 		const std::string& GetUsername() const noexcept;
+		Time* GetTime() const noexcept;
 
 		void SetActive();
 		bool operator == (const User& u1);
@@ -28,7 +29,7 @@ namespace http
 	private:
 		std::string m_username;
 
-		Time m_active;
+		Time* m_active;
 	};
 }
 

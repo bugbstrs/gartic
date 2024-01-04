@@ -11,11 +11,11 @@ Game::Game(std::vector<Player*>&& newPlayers) :
 	m_board { DrawingBoard(m_players) },
 	m_round {}
 {
-	for (auto& player : m_players)
+	/*for (auto& player : m_players)
 	{
 		auto removePlayerCallback = std::bind(&Game::RemovePlayer, this, player->GetName());
 		player->GetTime().SetMethodToCall(removePlayerCallback);
-	}
+	}*/
 }
 
 const std::vector<Player*>& http::Game::GetPlayers() const noexcept

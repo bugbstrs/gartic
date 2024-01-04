@@ -16,16 +16,39 @@ http::Lobby::~Lobby()
 
 void http::Lobby::AddUser(std::shared_ptr<User> newUser)
 {
+	/*auto RemoveUserCallback = [this, newUser]() {
+		RemoveUser(newUser);
+	};
+
+	newUser->GetTime()->SetMethodToCall(RemoveUserCallback);
+	m_users.push_back(newUser);*/
+
+	/*const auto RemoveUserCallback = std::bind(&http::Lobby::RemoveUser, this, newUser->GetUsername());
+
+	std::function<void(const std::string&)> callbackFunction(RemoveUserCallback);
+
+	newUser->GetTime()->SetMethodToCall(callbackFunction, newUser->GetUsername());
+
+	m_users.push_back(newUser);*/
+
+	const std::function<void()> callbackFunction = [this, userName = newUser->GetUsername()]() {
+		this->RemoveUser(userName);
+	};
+
+	newUser->GetTime()->SetMethodToCall(callbackFunction);
 	m_users.push_back(newUser);
+	
+	//std::bind(&Lobby::RemoveUser, this, newUser->GetUsername());
 }
 
-void http::Lobby::RemoveUser(std::shared_ptr<User> userToLeave)
+void http::Lobby::RemoveUser(const std::string& username)
 {
-	if (auto it{ std::find(m_users.begin(), m_users.end(), userToLeave) }; it != m_users.end())
-	{
+	auto isUserToRemove = [&username](const std::shared_ptr<User> user) { return user->GetUsername() == username; };
+	auto users{ this->GetUsers() };
+	if (auto it = std::find_if(users.begin(), users.end(), isUserToRemove); it != users.end()) {
 		m_users.erase(it);
-        return;
-	}	
+		return;
+	}
 
 	throw GarticException<UserDoesntExistException>("Lobby > LeaveLobby(const User&): The player is already not in the lobby!");
 }

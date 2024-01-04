@@ -5,6 +5,7 @@
 
 #include "RouteManager.h"
 #include "Game.h"
+#include "Time.h"
 
 using namespace http;
 
@@ -21,6 +22,8 @@ int main()
 	GarticManager garticManager;
 
 	RouteManager manager(storage, garticManager);
+
+	Time::CheckTimers();
 
 	manager.Run();
 

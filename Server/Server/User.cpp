@@ -17,10 +17,15 @@ const std::string& http::User::GetUsername() const noexcept
 	return m_username;
 }
 
+Time* http::User::GetTime() const noexcept
+{
+	return m_active;
+}
+
 void http::User::SetActive()
 {
-	m_active.SetStartValue(kSecondsForBeingActive);
-	m_active.SetStartTimeStamp(static_cast<float>(m_active.GetServerTime()));
+	m_active->SetStartValue(kSecondsForBeingActive);
+	m_active->SetStartTimeStamp(static_cast<float>(m_active->GetServerTime()));
 }
 
 bool http::User::operator==(const User& u1)

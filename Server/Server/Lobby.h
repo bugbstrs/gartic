@@ -21,7 +21,7 @@ namespace http
 		~Lobby();
 
 		void AddUser(std::shared_ptr<User> newUser);
-		void RemoveUser(std::shared_ptr<User> userToLeave);
+		void RemoveUser(const std::string& username);
 
 		const std::vector<std::shared_ptr<User>>& GetUsers() const noexcept;
 		std::shared_ptr<User> GetLeader() const noexcept;

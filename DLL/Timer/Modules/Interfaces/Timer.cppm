@@ -36,7 +36,7 @@ public:
     __declspec(dllexport) Timer (uint16_t initialMinutes, uint16_t remainingMinutes, Milliseconds timerResolution = 1ms);
     __declspec(dllexport) Timer (const Timer& newTimer);
     
-    ~Timer ();
+    __declspec(dllexport) ~Timer ();
     #pragma endregion constructors & destructor
 
     #pragma region Timer

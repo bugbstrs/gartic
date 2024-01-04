@@ -2,8 +2,10 @@
 
 #include <functional>
 #include <chrono>
+#include <vector>
+#include <thread>
 
-//import Timer;
+import Timer;
 
 using namespace std::chrono_literals;
 
@@ -16,7 +18,7 @@ namespace http
 		Time(float newStartTimeStamp, float newStartValue, float newEndValue);
 		Time(const Time& newTime);
 
-		~Time() = default;
+		~Time();
 
 		float GetStartTimeStamp() const noexcept;
 		float GetStartValue() const noexcept;
@@ -24,17 +26,18 @@ namespace http
 
 		int GetServerTime() const noexcept;
 
-		const std::function<void(const std::string&)>& GetMethodToCall() const noexcept;
+		const std::function<void()>& GetMethodToCall() const noexcept;
 
 		void SetStartTimeStamp(float newTimeStamp);
 		void SetStartValue(float newStartValue);
 		void SetEndValue(float newEndValue);
 
-		void SetMethodToCall(std::function<void(const std::string&)> methodToCall);
+		void SetMethodToCall(const std::function<void()>& methodToCall);
 
 		void Start(float timeStamp, float startValue, float endValue);
 
 		bool Check();
+		static void CheckTimers();
 
 		Time operator = (const Time& t1);
 
@@ -43,9 +46,10 @@ namespace http
 		float m_startValue;
 		float m_endValue;
 		
-		std::function<void(const std::string&)> m_toCall;
+		std::function<void()> m_toCall;
 
-		//static Timer m_serverTimer;
+		static Timer m_serverTimer;
+		static std::vector<Time*> m_timers;
 
 		std::string m_currentPlayerToRemove;
 	};
