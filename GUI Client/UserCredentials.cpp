@@ -17,7 +17,7 @@ void UserCredentials::SetCredentials(const std::string& username, const std::str
     credentialsSet = true;
 }
 
-std::string UserCredentials::GerUsername()
+std::string UserCredentials::GetUsername()
 {
     return m_username;
 }

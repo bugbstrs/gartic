@@ -4,6 +4,7 @@
 #include <atomic>
 #include <chrono>
 #include <crow.h>
+#include <iostream>
 
 LobbyFrame::LobbyFrame(QWidget *parent)
 	: QFrame(parent),
@@ -34,8 +35,11 @@ void LobbyFrame::showEvent(QShowEvent * event)
 				auto createGame = cpr::Get(
 					cpr::Url{ "http://localhost:18080/creategame" },
 					cpr::Parameters{
-						{"username", UserCredentials::GerUsername()},
-						{"password", UserCredentials::GetPassword()}
+						{"username", UserCredentials::GetUsername()},
+						{"password", UserCredentials::GetPassword()},
+						{"drawTime", drawTimeComboBox->currentText().toUtf8().constData()},
+						{"wordCount", wordCountComboBox->currentText().toUtf8().constData()},
+						{"roundsNumber", roundsComboBox->currentText().toUtf8().constData()}
 					}
 				);
 			});
@@ -69,7 +73,7 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 		auto users = cpr::Get(
 			cpr::Url{ "http://localhost:18080/fetchusers" },
 			cpr::Parameters{
-				{"username", UserCredentials::GerUsername()},
+				{"username", UserCredentials::GetUsername()},
 				{"password", UserCredentials::GetPassword()}
 			}
 		);
@@ -83,7 +87,7 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 		auto gameState = cpr::Get(
 			cpr::Url{ "http://localhost:18080/fetchlobbystatus" },
 			cpr::Parameters{
-				{"username", UserCredentials::GerUsername()},
+				{"username", UserCredentials::GetUsername()},
 				{"password", UserCredentials::GetPassword()}
 			}
 		);
@@ -93,6 +97,18 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 		}
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
-	if (stop.load())
+	if (stop.load()) {
+		auto gameSettings = cpr::Get(
+			cpr::Url{ "http://localhost:18080/fetchsettings" },
+			cpr::Parameters{
+				{"username", UserCredentials::GetUsername()},
+				{"password", UserCredentials::GetPassword()}
+			}
+		);
+		auto settings = crow::json::load(gameSettings.text);
+		drawTimeComboBox->setCurrentText(QString::fromUtf8(std::string(settings[2]["drawTime"])));
+		roundsComboBox->setCurrentText(QString::fromUtf8(std::string(settings[0]["roundsNumber"])));
+		wordCountComboBox->setCurrentText(QString::fromUtf8(std::string(settings[1]["wordCount"])));
 		emit OnGameStarted();
+	}
 }

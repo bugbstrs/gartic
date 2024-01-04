@@ -386,10 +386,13 @@ void http::RouteManager::CreateGameRoute()
 	CROW_ROUTE(m_app, "/creategame")([this](const crow::request& request) {
 		char* username = request.url_params.get("username");
 		char* password = request.url_params.get("password");
+		char* drawTime = request.url_params.get("drawTime");
+		char* wordCount = request.url_params.get("wordCount");
+		char* roundsNumber = request.url_params.get("roundsNumber");
 
 		crow::response response;
 
-		if (username == nullptr)
+		if (username == nullptr || drawTime == nullptr || wordCount == nullptr || roundsNumber == nullptr)
 		{
 			// todo: log
 			response.code = 400;
@@ -416,9 +419,10 @@ void http::RouteManager::CreateGameRoute()
 
 		m_gartic.CreateGame(std::string(username));
 
-		if (response.code == 200) {
-			m_gartic.GetLobby(std::string(username))->SetLobbyStatus(LobbyStatus::StartedGame);
-		}
+		m_gartic.GetLobby(std::string(username))->SetLobbyStatus(LobbyStatus::StartedGame);
+		m_gartic.GetLobby(std::string(username))->SetDrawTime(std::atoi(drawTime));
+		m_gartic.GetLobby(std::string(username))->SetRoundsNumber(std::atoi(roundsNumber));
+		m_gartic.GetLobby(std::string(username))->SetWordCount(std::atoi(wordCount));
 
 		response.body = crow::json::wvalue({
 			{"put", true}
@@ -560,17 +564,15 @@ void http::RouteManager::FetchSettingsRoute()
 		if (m_storage.CheckCredentials(usernameString, passwordString))
 		{
 			GameSettings fetchedSettings{ m_gartic.GetLobby(std::string(username))->GetSettings() };
-			settings_json.push_back(crow::json::wvalue{ {"roundsNumber", fetchedSettings.GetRoundsNumber()}});
-			settings_json.push_back(crow::json::wvalue{ {"playersNumber", fetchedSettings.GetPlayersNumber()}});
-			settings_json.push_back(crow::json::wvalue{ {"drawTime", fetchedSettings.GetDrawTime()}});
-			settings_json.push_back(crow::json::wvalue{ {"isCustomRound", fetchedSettings.GetCustomRounds()}});
+			settings_json.push_back(crow::json::wvalue{ {"roundsNumber", std::to_string(fetchedSettings.GetRoundsNumber())}});
+			settings_json.push_back(crow::json::wvalue{ {"wordCount", std::to_string(fetchedSettings.GetWordCount())}});
+			settings_json.push_back(crow::json::wvalue{ {"drawTime", std::to_string(fetchedSettings.GetDrawTime())}});
 		}
 		else
 		{
 			settings_json.push_back(crow::json::wvalue{ {"roundsNumber", "N/A"} });
-			settings_json.push_back(crow::json::wvalue{ {"playersNumber", "N/A"} });
+			settings_json.push_back(crow::json::wvalue{ {"wordCount", "N/A"} });
 			settings_json.push_back(crow::json::wvalue{ {"drawTime", "N/A"} });
-			settings_json.push_back(crow::json::wvalue{ {"isCustomRound", "N/A"} });
 		}
 
 		return crow::json::wvalue{ settings_json };

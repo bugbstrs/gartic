@@ -65,6 +65,21 @@ void http::Lobby::SetLobbyStatus(LobbyStatus newLobbyStatus)
 	m_lobbyStatus = newLobbyStatus;
 }
 
+void http::Lobby::SetDrawTime(int drawTime) noexcept
+{
+	m_settings.SetDrawTime(drawTime);
+}
+
+void http::Lobby::SetRoundsNumber(int roundsNumber) noexcept
+{
+	m_settings.SetRoundsNumber(roundsNumber);
+}
+
+void http::Lobby::SetWordCount(int wordCount) noexcept
+{
+	m_settings.SetWordCount(wordCount);
+}
+
 std::shared_ptr<http::Game> http::Lobby::StartGame()
 {
 	if (m_users.size() > 2)

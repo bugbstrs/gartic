@@ -73,7 +73,7 @@ void MainWindow::OnCreateLobbyButtonReleased() noexcept {
     auto response = cpr::Get(
         cpr::Url{ "http://localhost:18080/createlobby" },
         cpr::Parameters{
-            {"username", UserCredentials::GerUsername()},
+            {"username", UserCredentials::GetUsername()},
             {"password", UserCredentials::GetPassword()}
         }
     );
@@ -81,7 +81,7 @@ void MainWindow::OnCreateLobbyButtonReleased() noexcept {
     auto code = cpr::Get(
         cpr::Url{ "http://localhost:18080/fetchcode" },
         cpr::Parameters{
-            {"username", UserCredentials::GerUsername()},
+            {"username", UserCredentials::GetUsername()},
             {"password", UserCredentials::GetPassword()}
         }
     );
@@ -90,7 +90,7 @@ void MainWindow::OnCreateLobbyButtonReleased() noexcept {
     auto users = cpr::Get(
         cpr::Url{ "http://localhost:18080/fetchusers" },
         cpr::Parameters{
-            {"username", UserCredentials::GerUsername()},
+            {"username", UserCredentials::GetUsername()},
             {"password", UserCredentials::GetPassword()}
         }
     );
@@ -115,7 +115,7 @@ void MainWindow::OnLobbyCodeAccepted(std::string codeText) noexcept {
     auto joinLobby = cpr::Get(
         cpr::Url{ "http://localhost:18080/joinlobby" },
         cpr::Parameters{
-            {"username", UserCredentials::GerUsername()},
+            {"username", UserCredentials::GetUsername()},
             {"password", UserCredentials::GetPassword()},
             {"code", codeText}
 
@@ -124,7 +124,7 @@ void MainWindow::OnLobbyCodeAccepted(std::string codeText) noexcept {
     auto users = cpr::Get(
         cpr::Url{ "http://localhost:18080/fetchusers" },
         cpr::Parameters{
-            {"username", UserCredentials::GerUsername()},
+            {"username", UserCredentials::GetUsername()},
             {"password", UserCredentials::GetPassword()}
         }
     );

@@ -11,7 +11,7 @@ class UserCredentials
 public:
     static void SetCredentials(const std::string& username, const std::string& password);
     // Static method to get the first string
-    static std::string GerUsername();
+    static std::string GetUsername();
 
     // Static method to get the second string
     static std::string GetPassword();

@@ -8,17 +8,7 @@ http::GameSettings::GameSettings()
 
 	if (!filename.eof())
 	{
-		filename >> m_customRounds;
-	}
-
-	if (!filename.eof())
-	{
 		filename >> m_roundsNumber;
-	}
-
-	if (!filename.eof())
-	{
-		filename >> m_customRoundChance;
 	}
 
 	if (!filename.eof())
@@ -30,26 +20,41 @@ http::GameSettings::GameSettings()
 	{
 		filename >> m_drawTime;
 	}
+
+	if (!filename.eof()) 
+	{
+		filename >> m_wordCount;
+	}
 }
 
-float http::GameSettings::GetDrawTime() const noexcept
+int http::GameSettings::GetDrawTime() const noexcept
 {
 	return m_drawTime;
+}
+
+int http::GameSettings::GetWordCount() const noexcept
+{
+	return m_wordCount;
+}
+
+void http::GameSettings::SetWordCount(int wordCount) noexcept
+{
+	m_wordCount = wordCount;
+}
+
+void http::GameSettings::SetRoundsNumber(int roundsNumber) noexcept
+{
+	m_roundsNumber = roundsNumber;
+}
+
+void http::GameSettings::SetDrawTime(int drawTime) noexcept
+{
+	m_drawTime = drawTime;
 }
 
 int http::GameSettings::GetRoundsNumber() const noexcept
 {
 	return m_roundsNumber;
-}
-
-bool http::GameSettings::GetCustomRounds() const noexcept
-{
-	return m_customRounds;
-}
-
-int http::GameSettings::GetCustomRoundChance() const noexcept
-{
-	return m_customRoundChance;
 }
 
 int http::GameSettings::GetPlayersNumber() const noexcept

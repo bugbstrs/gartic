@@ -32,6 +32,10 @@ namespace http
 		void SetLeader(std::shared_ptr<User> newLeader);
 		void SetLobbyStatus(LobbyStatus newLobbyStatus);
 
+		void SetDrawTime(int drawTime) noexcept;
+		void SetRoundsNumber(int roundsNumber) noexcept;
+		void SetWordCount(int wordCount) noexcept;
+
 		std::shared_ptr<Game> StartGame();
 
 	private:

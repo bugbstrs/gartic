@@ -1,5 +1,6 @@
 #include "Chat.h"
 #include <qdatetime.h>
+#include "UserCredentials.h"
 
 Chat::Chat(QWidget *parent)
 	: QFrame{ parent }
@@ -42,8 +43,19 @@ void Chat::showEvent(QShowEvent* event)
 	if (firstShow) {
 		m_chatWritingBox = findChild<ChatWritingBox*>("chatWritingBox");
 		m_chatConversation = findChild<ChatConversation*>("chatConversation");
-		QObject::connect(m_chatWritingBox, &ChatWritingBox::OnConversationWaitingForUpdateSignal, this, &Chat::OnConversationWaitingForUpdate);
-		/*QWidget::showEvent(event);*/
+		//QObject::connect(m_chatWritingBox, &ChatWritingBox::OnConversationWaitingForUpdateSignal, this, &Chat::OnConversationWaitingForUpdate);
+		QObject::connect(m_chatWritingBox, &ChatWritingBox::OnConversationWaitingForUpdateSignal, this, [this](const QString& message) {
+			//Muta aici din mainwindow crearea de game
+			auto createGame = cpr::Get(
+				cpr::Url{ "http://localhost:18080/putmessageinchat" },
+				cpr::Parameters{
+					{"username", UserCredentials::GetUsername()},
+					{"password", UserCredentials::GetPassword()},
+					{"message", std::string(message.toUtf8().constData())}
+
+				}
+			);
+		});
 		firstShow = false;
 	}
 }
