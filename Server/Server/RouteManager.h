@@ -30,16 +30,16 @@ namespace http
 
         std::optional<crow::response> IsRequestAuthenticated(const crow::request& request);
 
-		// Logic related
+		// Gartic Manager related
 		void CreateLobbyRoute();
 		void CreateGameRoute();
 
-		void JoinLobbyRoute();
-		
 		// Lobby
+		void JoinLobbyRoute(); 
 		void FetchCodeRoute();
 		void FetchUsersRoute();
 		void FetchSettingsRoute();
+		void FetchLobbyStatusRoute();
 
 		// Game
 		void FetchPlayersRoute();

@@ -137,6 +137,9 @@
     <ClInclude Include="GarticManager.h">
       <Filter>Header Files\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="LobbyStatusEnum.h">
+      <Filter>Header Files\Logic\Enums</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">

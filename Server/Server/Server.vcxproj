@@ -37,6 +37,7 @@
     <ClInclude Include="HttpUtils.h" />
     <ClInclude Include="KeepDraw.h" />
     <ClInclude Include="Lobby.h" />
+    <ClInclude Include="LobbyStatusEnum.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="QuotesEntity.h" />
     <ClInclude Include="Round.h" />

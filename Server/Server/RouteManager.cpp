@@ -23,6 +23,7 @@ void http::RouteManager::Run()
 	CreateLobbyRoute();
 	CreateGameRoute();
 	JoinLobbyRoute();
+	FetchLobbyStatusRoute();
 	FetchCodeRoute();
 	FetchUsersRoute();
 	FetchSettingsRoute();
@@ -572,6 +573,36 @@ void http::RouteManager::FetchSettingsRoute()
 		});
 }
 
+void http::RouteManager::FetchLobbyStatusRoute()
+{
+	CROW_ROUTE(m_app, "/fetchlobbystatus")([this](const crow::request& request) {
+		char* username = request.url_params.get("username");
+		char* password = request.url_params.get("password");
+
+		std::string usernameString(username);
+		std::string passwordString(password);
+
+		LobbyStatus fetchedStatus;
+
+		std::vector<crow::json::wvalue> status_json;
+
+		if (m_storage.CheckCredentials(usernameString, passwordString))
+		{
+			fetchedStatus = m_gartic.GetGame(usernameString)->GetLobbyStatus();
+
+			std::string statusString = LobbyStatusWrapper::ToString(fetchedStatus);
+
+			status_json.push_back(crow::json::wvalue{ {"lobby_status", statusString} });
+		}
+		else
+		{
+			status_json.push_back(crow::json::wvalue{ {"lobby_status", "N/A"} });
+		}
+
+		return crow::json::wvalue{ status_json };
+		});
+}
+
 void http::RouteManager::FetchPlayersRoute()
 {
 	CROW_ROUTE(m_app, "/fetchplayers")([this](const crow::request& request) {
@@ -617,7 +648,7 @@ void http::RouteManager::FetchGameStatusRoute()
 
 		if (m_storage.CheckCredentials(usernameString, passwordString))
 		{
-			fetchedStatus = m_gartic.GetGame(usernameString)->GetStatus();
+			fetchedStatus = m_gartic.GetGame(usernameString)->GetGameStatus();
 
 			std::string statusString = GameStatusWrapper::ToString(fetchedStatus);
 
