@@ -2,9 +2,15 @@
 
 using namespace http;
 
+http::User::User()
+{
+	m_active = new Time(3, 20, 50);
+}
+
 http::User::User(const std::string& newUsername):
 	m_username{ newUsername }
 {
+	m_active = new Time(5, 7, 10);
 }
 
 void http::User::SetUsername(const std::string& newUsername)

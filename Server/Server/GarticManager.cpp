@@ -23,6 +23,7 @@ void http::GarticManager::AddPlayerInLobby(const String& username, const String&
 	if (m_lobby->GetCode() == code)
 	{
 		m_lobby->AddUser(std::make_shared<User>(username));
+		return;
 	}
 
 	throw GarticException<LobbyDoesntExistException>("GarticManager > AddPlayerInLobby(const String& username, const String& code): The searched lobby doesn't exist!");

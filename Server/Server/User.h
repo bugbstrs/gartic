@@ -9,7 +9,7 @@ namespace http
 	class User
 	{
 	public:
-		User() = default;
+		User();
 		User(const std::string& newUsername);
 
 		~User() = default;

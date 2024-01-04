@@ -23,20 +23,20 @@ void http::Lobby::AddUser(std::shared_ptr<User> newUser)
 	newUser->GetTime()->SetMethodToCall(RemoveUserCallback);
 	m_users.push_back(newUser);*/
 
-	/*const auto RemoveUserCallback = std::bind(&http::Lobby::RemoveUser, this, newUser->GetUsername());
+	/*const auto RemoveUserCallback = std::bind(&http::Lobby::RemoveUser, this, newUser->GetUsername());*/
 
-	std::function<void(const std::string&)> callbackFunction(RemoveUserCallback);
+	/*std::function<void()> callbackFunction(RemoveUserCallback);*/
 
-	newUser->GetTime()->SetMethodToCall(callbackFunction, newUser->GetUsername());
+	newUser->GetTime()->SetMethodToCall([this](const std::string& username) {RemoveUser(username); }, newUser->GetUsername());
 
-	m_users.push_back(newUser);*/
+	m_users.push_back(newUser);
 
-	const std::function<void()> callbackFunction = [this, userName = newUser->GetUsername()]() {
+	/*const std::function<void()> callbackFunction = [this, userName = newUser->GetUsername()]() {
 		this->RemoveUser(userName);
 	};
 
 	newUser->GetTime()->SetMethodToCall(callbackFunction);
-	m_users.push_back(newUser);
+	m_users.push_back(newUser);*/
 	
 	//std::bind(&Lobby::RemoveUser, this, newUser->GetUsername());
 }

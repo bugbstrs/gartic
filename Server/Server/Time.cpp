@@ -55,7 +55,7 @@ int http::Time::GetServerTime() const noexcept
 	return static_cast<int>(m_serverTimer.GetElapsedTime().count());
 }
 
-const std::function<void()>& http::Time::GetMethodToCall() const noexcept
+const std::function<void(const std::string&)>& http::Time::GetMethodToCall() const noexcept
 {
 	return m_toCall;
 }
@@ -75,11 +75,12 @@ void http::Time::SetEndValue(float newEndValue)
 	m_endValue = newEndValue;
 }
 
-void http::Time::SetMethodToCall(const std::function<void()>& methodToCall)
+void http::Time::SetMethodToCall(std::function<void(const std::string&)> methodToCall, const std::string& username)
 {
 	m_toCall = methodToCall;
 
-	//m_currentPlayerToRemove = nameToRemove;
+	//m_currentPlayerToRemove = username;
+	m_currentPlayerToRemove = "Maria";
 }
 
 void http::Time::Start(float timeStamp, float startValue, float endValue)
@@ -91,26 +92,27 @@ void http::Time::Start(float timeStamp, float startValue, float endValue)
 
 bool http::Time::Check()
 {
-	if ((m_startValue > m_endValue && static_cast<int>(m_serverTimer.GetElapsedTime().count()) - m_startTimeStamp >= m_endValue) || (m_startValue <= m_endValue && static_cast<int>(m_serverTimer.GetElapsedTime().count()) - m_startTimeStamp >= m_endValue))
+	/*if ((m_startValue > m_endValue && static_cast<int>(m_serverTimer.GetElapsedTime().count()) - m_startTimeStamp >= m_endValue) || (m_startValue <= m_endValue && static_cast<int>(m_serverTimer.GetElapsedTime().count()) - m_startTimeStamp >= m_endValue))
 	{
-		m_toCall();
+		m_toCall(m_currentPlayerToRemove);
 		return true;
-	}
-
+	}*/
 	return false;
+	/*return false;*/
 }
 
 void http::Time::CheckTimers()
 {
-	auto myLambda = []() {
+	/*auto myLambda = [&]() {
 		while (true) {
-			for (auto& time : m_timers) {
-				time->Check();
+			for (auto& time : http::Time::m_timers) {
+				if (time != nullptr)
+					time->Check();
 			}
 		}
 	};
 	std::thread myThread(myLambda);
-	myThread.detach();
+	myThread.detach();*/
 }
 
 Time http::Time::operator=(const Time& t1)
