@@ -280,23 +280,24 @@ std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const c
 	std::optional<crow::response> returnResponse;
 	char* password = request.url_params.get("password");
 	char* username = request.url_params.get("username");
-	crow::response response;
-	std::regex regexFormatSHA256{ "[a-f0-9]{64}" };
+	
+    std::regex regexFormatSHA256{ "[a-f0-9]{64}" };
 	//std::regex regexFormatUsername{ "^[a-z]+[a-z0-9_-]*[a-z]+$" };
 	std::regex regexFormatUsername{ "^[a-zA-Z]+[a-zA-Z0-9_-]*[a-zA-Z]+$" };
 
+	crow::response response;
+    response.set_header("Content-Type", "application/json");
 
 	if (password == nullptr || username == nullptr)
 	{
 		response.code = 400;
-		response.set_header("Content-Type", "application/json");
 		response.body = crow::json::wvalue
 		({
 			{"code", response.code},
 			{"error", "user or password not provided"}
-			}).dump();
+		}).dump();
 
-			return response;
+		return response;
 	}
 
 	// length of SHA256 hash when converted to hex string
