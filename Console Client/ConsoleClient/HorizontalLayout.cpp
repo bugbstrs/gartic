@@ -85,6 +85,7 @@ void HorizontalLayout::Clear()
 {
 	for (auto obj : m_objects)
 		delete obj;
+	m_objects.clear();
 }
 
 void HorizontalLayout::DrawContents()

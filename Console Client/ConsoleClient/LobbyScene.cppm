@@ -2,11 +2,14 @@ export module LobbyScene;
 
 import Scene;
 import Label;
+import Button;
 import SpinBox;
 import CheckBox;
 import MenuScene;
 import GameScene;
 import VerticalLayout;
+
+using Color = ColorType;
 
 export class LobbyScene : public Scene
 {
@@ -24,12 +27,14 @@ private:
     SpinBox*          m_drawTime;
     SpinBox*          m_wordCount;
     Label*            m_codeLabel;
+    Button*           m_startButton;
     CheckBox*         m_customRounds;
 
     void StartGame  ();
     void GetUsers   ();
     void GetSettings();
     void SetSettings();
+    void SetAsLeader();
     void HasStarted ();
     void Back       ();
     void Input      () const override;

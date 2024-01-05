@@ -82,6 +82,7 @@ void VerticalLayout::Clear()
 {
 	for (auto obj : m_objects)
 		delete obj;
+	m_objects.clear();
 }
 
 void VerticalLayout::DrawContents()
