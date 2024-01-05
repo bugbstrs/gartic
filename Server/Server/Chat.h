@@ -15,7 +15,7 @@ namespace http
 	class Chat
 	{
 	public:
-		Chat(const std::vector<Player*>& players);
+		Chat(const std::vector<std::shared_ptr<Player>>& players);
 
 		void VerifyMessage(const String& username, const String& message);
 		void AddMessage(const String& username, const String& message);

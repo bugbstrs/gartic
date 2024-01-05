@@ -166,6 +166,8 @@
     <ClCompile Include="NotEnoughPlayersException.cpp" />
     <ClCompile Include="NotEnoughScoresRegisteredException.cpp" />
     <ClCompile Include="NotEnoughScoresRegisteredException.cppm" />
+    <ClCompile Include="PlayerDoesntExistException.cpp" />
+    <ClCompile Include="PlayerDoesntExistException.cppm" />
     <ClCompile Include="UserAlreadyExistsException.cpp" />
     <ClCompile Include="UserDoesntExistException.cpp" />
     <ClCompile Include="CannotFetchQuoteException.cpp" />

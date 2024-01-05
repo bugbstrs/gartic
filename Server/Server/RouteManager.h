@@ -54,6 +54,8 @@ namespace http
 		void FetchWordToDisplayRoute();
 		void FetchMessagesRoute();
 
+		void LeaveGameRoute();
+
 		void PutWordToGuessRoute();
 		void PutMessageInChatRoute();
 

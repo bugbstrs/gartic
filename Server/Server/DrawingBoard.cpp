@@ -4,7 +4,7 @@ import GarticExceptions;
 
 using namespace http;
 
-http::DrawingBoard::DrawingBoard(const std::vector<Player*>& players)
+http::DrawingBoard::DrawingBoard(const std::vector<std::shared_ptr<Player>>& players)
 {
     for (const auto& player : players)
     {

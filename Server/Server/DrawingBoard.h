@@ -12,7 +12,7 @@ namespace http
 	class DrawingBoard
 	{
 	public:
-		DrawingBoard(const std::vector<Player*>& players);
+		DrawingBoard(const std::vector<std::shared_ptr<Player>>& players);
 
 		~DrawingBoard() = default;
 

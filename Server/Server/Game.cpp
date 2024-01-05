@@ -1,8 +1,9 @@
 #include "Game.h"
 
+import GarticExceptions;
 using namespace http;
 
-Game::Game(std::vector<Player*>&& newPlayers) :
+Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers) :
 	m_players{ std::move(newPlayers) },
 	m_gameStatus { GameStatus::Waiting },
 	m_remainingTime { Time() },
@@ -18,7 +19,7 @@ Game::Game(std::vector<Player*>&& newPlayers) :
 	}*/
 }
 
-const std::vector<Player*>& http::Game::GetPlayers() const noexcept
+const std::vector<std::shared_ptr<Player>>& http::Game::GetPlayers() const noexcept
 {
 	return m_players;
 }
@@ -97,20 +98,12 @@ void Game::NextRound()
 
 void http::Game::RemovePlayer(const std::string& username)
 {
-	int indexToRemove = -1;
-
-	for (int index = 0; index < m_players.size(); index++)
+	auto isPlayerToRemove = [&username](const std::shared_ptr<Player> player) { return player->GetName() == username; };
+	if (auto it = std::find_if(m_players.begin(), m_players.end(), isPlayerToRemove); it != m_players.end())
 	{
-		if (m_players[index]->GetName() == username)
-		{
-			indexToRemove = index;
-		}
-	}
-
-	if (indexToRemove == -1)
-	{
+		m_players.erase(it);
 		return;
 	}
 
-	m_players.erase(m_players.begin() + indexToRemove);
+	throw GarticException<PlayerDoesntExistException>("Game > LeaveGame(const Player&): The player is already not in the game!");
 }

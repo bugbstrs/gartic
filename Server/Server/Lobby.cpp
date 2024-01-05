@@ -44,13 +44,14 @@ void http::Lobby::AddUser(std::shared_ptr<User> newUser)
 void http::Lobby::RemoveUser(const std::string& username)
 {
 	auto isUserToRemove = [&username](const std::shared_ptr<User> user) { return user->GetUsername() == username; };
-	auto users{ this->GetUsers() };
-	if (auto it = std::find_if(users.begin(), users.end(), isUserToRemove); it != users.end()) {
+	if (auto it = std::find_if(m_users.begin(), m_users.end(), isUserToRemove); it != m_users.end()) {
+		if (it == m_users.begin() && m_users.size() > 1)
+			m_leader = m_users[1];
 		m_users.erase(it);
 		return;
 	}
 
-	throw GarticException<UserDoesntExistException>("Lobby > LeaveLobby(const User&): The player is already not in the lobby!");
+	throw GarticException<UserDoesntExistException>("Lobby > LeaveLobby(const User&): The user is already not in the lobby!");
 }
 
 const std::vector<std::shared_ptr<User>>& http::Lobby::GetUsers() const noexcept
@@ -107,14 +108,14 @@ std::shared_ptr<http::Game> http::Lobby::StartGame()
 {
 	if (m_users.size() > 2)
 	{
-		std::vector<Player*> playersVector;
+		std::vector<std::shared_ptr<Player>> playersVector;
 		std::string currUsername;
 
 		for (const auto& user : m_users)
 		{
 			currUsername = user->GetUsername();
 
-			playersVector.push_back(new Player(currUsername));
+			playersVector.push_back(std::make_shared<Player>(currUsername));
 		}
 
 		return std::make_shared<Game>(std::move(playersVector));

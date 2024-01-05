@@ -31,7 +31,7 @@ void http::GarticManager::AddPlayerInLobby(const String& username, const String&
 
 std::shared_ptr<Game> http::GarticManager::GetGame(const String& username) const noexcept
 {
-	auto isInPlayers = [&username](const Player* player) { return player->GetName() == username; };
+	auto isInPlayers = [&username](const std::shared_ptr<Player> player) { return player->GetName() == username; };
 
 	if (auto players{ m_game->GetPlayers() };  std::find_if(players.begin(), players.end(), isInPlayers) != players.end())
 	{

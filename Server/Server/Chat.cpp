@@ -6,7 +6,7 @@ import GarticExceptions;
 
 using namespace http;
 
-http::Chat::Chat(const std::vector<Player*>& players)
+http::Chat::Chat(const std::vector<std::shared_ptr<Player>>& players)
 {
 	for (const auto& player : players)
 	{

@@ -28,6 +28,7 @@ void http::RouteManager::Run()
 	FetchSettingsRoute();
 	FetchLobbyStatusRoute();
 	LeaveLobbyRoute();
+	LeaveGameRoute();
 	FetchPlayersRoute();
 	FetchGameStatusRoute();
 	FetchRoundNumberRoute();
@@ -664,7 +665,7 @@ void http::RouteManager::FetchPlayersRoute()
 		std::string usernameString(username);
 		std::string passwordString(password);
 
-		std::vector<Player*> fetchedPlayers;
+		std::vector<std::shared_ptr<Player>> fetchedPlayers;
 
 		std::vector<crow::json::wvalue> players_json;
 
@@ -918,6 +919,51 @@ void http::RouteManager::FetchMessagesRoute()
 		}
 
 		return crow::json::wvalue{ messages_json };
+		});
+}
+
+void http::RouteManager::LeaveGameRoute()
+{
+	CROW_ROUTE(m_app, "/leavegame")([this](const crow::request& request) {
+		char* username = request.url_params.get("username");
+		char* password = request.url_params.get("password");
+
+		std::string usernameString(username);
+		std::string passwordString(password);
+
+		crow::response response;
+
+		if (!m_storage.CheckCredentials(usernameString, passwordString))
+		{
+			// todo: log
+			response.code = 401;
+			response.body = crow::json::wvalue({
+				{"no_user", false}
+				}).dump();
+
+				return response;
+		}
+
+		try
+		{
+			m_gartic.GetGame(usernameString)->RemovePlayer(usernameString);
+		}
+		catch (...)
+		{
+			// todo: log
+			response.code = 404;
+			response.body = crow::json::wvalue({
+				{"player_removed", false}
+				}).dump();
+
+				return response;
+		}
+
+		response.body = crow::json::wvalue({
+			{"player_removed", true}
+			}).dump();
+
+			return response;
 		});
 }
 

@@ -69,6 +69,12 @@
     <ClCompile Include="LobbyDoesntExistException.cpp">
       <Filter>Server\Implementation Units</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerDoesntExistException.cppm">
+      <Filter>Server\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDoesntExistException.cpp">
+      <Filter>Server\Implementation Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="GarticException.cpp">

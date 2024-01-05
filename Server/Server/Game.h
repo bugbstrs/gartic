@@ -18,11 +18,11 @@ namespace http
 	{
 	public:
 		Game() = default;
-		Game(std::vector<Player*>&& newPlayers);
+		Game(std::vector<std::shared_ptr<Player>>&& newPlayers);
 
 		~Game() = default;
 
-		const std::vector<Player*>& GetPlayers() const noexcept;
+		const std::vector<std::shared_ptr<Player>>& GetPlayers() const noexcept;
 		GameStatus GetGameStatus() const noexcept;
 		GameSettings GetSettings() const noexcept;
 		Time GetTime() const noexcept;
@@ -39,7 +39,7 @@ namespace http
 		void RemovePlayer(const std::string& username);
 
 	private:
-		std::vector<Player*> m_players;
+		std::vector<std::shared_ptr<Player>> m_players;
 		
 		GameSettings m_settings;
 
