@@ -1923,6 +1923,9 @@ QComboBox QAbstractItemView::item:hover {
 }
 </string>
                         </property>
+                        <property name="currentText">
+                         <string>60</string>
+                        </property>
                         <property name="frame">
                          <bool>true</bool>
                         </property>
@@ -2067,6 +2070,9 @@ QComboBox QAbstractItemView::item:hover {
 }
 </string>
                         </property>
+                        <property name="currentText">
+                         <string>4</string>
+                        </property>
                         <item>
                          <property name="text">
                           <string>1</string>
@@ -2207,6 +2213,9 @@ QComboBox QAbstractItemView::item:hover {
 	border-radius: 2px;
 }
 </string>
+                        </property>
+                        <property name="currentText">
+                         <string>3</string>
                         </property>
                         <item>
                          <property name="text">

@@ -36,10 +36,43 @@ void LobbyFrame::showEvent(QShowEvent * event)
 					cpr::Url{ "http://localhost:18080/creategame" },
 					cpr::Parameters{
 						{"username", UserCredentials::GetUsername()},
+						{"password", UserCredentials::GetPassword()}
+					}
+				);
+			});
+			QObject::connect(roundsComboBox, &QComboBox::currentTextChanged, this, [this](const QString& newText) {
+				auto modifySettings = cpr::Get(
+					cpr::Url{ "http://localhost:18080/setsettings" },
+					cpr::Parameters{
+						{"username", UserCredentials::GetUsername()},
 						{"password", UserCredentials::GetPassword()},
-						{"drawTime", drawTimeComboBox->currentText().toUtf8().constData()},
-						{"wordCount", wordCountComboBox->currentText().toUtf8().constData()},
-						{"roundsNumber", roundsComboBox->currentText().toUtf8().constData()}
+						{"roundsnumber", newText.toUtf8().constData()},
+						{"wordcount", wordCountComboBox->currentText().toUtf8().constData()},
+						{"drawtime", drawTimeComboBox->currentText().toUtf8().constData()}
+					}
+				);
+			});
+			QObject::connect(wordCountComboBox, &QComboBox::currentTextChanged, this, [this](const QString& newText) {
+				auto modifySettings = cpr::Get(
+					cpr::Url{ "http://localhost:18080/setsettings" },
+					cpr::Parameters{
+						{"username", UserCredentials::GetUsername()},
+						{"password", UserCredentials::GetPassword()},
+						{"roundsnumber", roundsComboBox->currentText().toUtf8().constData()},
+						{"wordcount", newText.toUtf8().constData()},
+						{"drawtime",  drawTimeComboBox->currentText().toUtf8().constData()}
+					}
+				);
+			});
+			QObject::connect(drawTimeComboBox, &QComboBox::currentTextChanged, this, [this](const QString& newText) {
+				auto modifySettings = cpr::Get(
+					cpr::Url{ "http://localhost:18080/setsettings" },
+					cpr::Parameters{
+						{"username", UserCredentials::GetUsername()},
+						{"password", UserCredentials::GetPassword()},
+						{"roundsnumber", roundsComboBox->currentText().toUtf8().constData()},
+						{"wordcount", wordCountComboBox->currentText().toUtf8().constData()},
+						{"drawtime", newText.toUtf8().constData()}
 					}
 				);
 			});
@@ -84,6 +117,20 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 				lobbyTable->AddPlayer(std::string(usersVector[index]["username"]));
 		}
 
+		if (!m_isLeader) {
+			auto gameSettings = cpr::Get(
+				cpr::Url{ "http://localhost:18080/fetchsettings" },
+				cpr::Parameters{
+					{"username", UserCredentials::GetUsername()},
+					{"password", UserCredentials::GetPassword()}
+				}
+			);
+			auto settings = crow::json::load(gameSettings.text);
+			drawTimeComboBox->setCurrentText(QString::fromUtf8(std::string(settings[2]["drawTime"])));
+			roundsComboBox->setCurrentText(QString::fromUtf8(std::string(settings[0]["roundsNumber"])));
+			wordCountComboBox->setCurrentText(QString::fromUtf8(std::string(settings[1]["wordCount"])));
+		}
+
 		auto gameState = cpr::Get(
 			cpr::Url{ "http://localhost:18080/fetchlobbystatus" },
 			cpr::Parameters{
@@ -95,20 +142,10 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 		if (std::string(state[0]["lobby_status"]) == kStartedGame) {
 			stop.store(true);
 		}
+
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 	if (stop.load()) {
-		auto gameSettings = cpr::Get(
-			cpr::Url{ "http://localhost:18080/fetchsettings" },
-			cpr::Parameters{
-				{"username", UserCredentials::GetUsername()},
-				{"password", UserCredentials::GetPassword()}
-			}
-		);
-		auto settings = crow::json::load(gameSettings.text);
-		drawTimeComboBox->setCurrentText(QString::fromUtf8(std::string(settings[2]["drawTime"])));
-		roundsComboBox->setCurrentText(QString::fromUtf8(std::string(settings[0]["roundsNumber"])));
-		wordCountComboBox->setCurrentText(QString::fromUtf8(std::string(settings[1]["wordCount"])));
 		emit OnGameStarted();
 	}
 }
