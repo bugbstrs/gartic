@@ -40,6 +40,7 @@ void http::RouteManager::Run()
 	FetchMessagesRoute();
 	PutWordToGuessRoute();
 	PutMessageInChatRoute();
+	SetSettingsRoute();
 
 	m_app
 		.port(18080)

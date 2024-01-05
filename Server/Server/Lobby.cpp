@@ -64,7 +64,7 @@ std::shared_ptr<User> http::Lobby::GetLeader() const noexcept
 	return m_leader;
 }
 
-GameSettings http::Lobby::GetSettings() const noexcept
+GameSettings& http::Lobby::GetSettings() noexcept
 {
 	return m_settings;
 }
