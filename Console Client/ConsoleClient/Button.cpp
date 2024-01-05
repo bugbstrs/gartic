@@ -45,7 +45,7 @@ void Button::Draw()
 	SetColor();
 
 	DrawBackground();
-
+	
 	DrawContents();
 }
 

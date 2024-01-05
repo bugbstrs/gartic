@@ -1,4 +1,6 @@
-﻿module MenuScene;
+﻿#include <cpr/cpr.h>
+
+module MenuScene;
 
 import <Windows.h>;
 
@@ -19,16 +21,46 @@ MenuScene::MenuScene(ConsoleManager* console, InputManager* inputManager) :
 
 void MenuScene::CreateLobby()
 {
-    m_nextScene = const_cast<std::type_info*>(&typeid(LobbyScene));
+    auto response = cpr::Get(
+        cpr::Url{ "http://localhost:18080/createlobby" },
+        cpr::Parameters{
+            {"username", User::GetUsername()},
+            {"password", User::GetPassword()}
+        }
+    );
+    if (response.status_code == 200)
+    {
+        m_nextScene = const_cast<std::type_info*>(&typeid(LobbyScene));
+    }
+    else
+    {
+
+    }
 }
 
 void MenuScene::JoinLobby()
 {
-    m_nextScene = const_cast<std::type_info*>(&typeid(LobbyScene));
+    auto response = cpr::Get(
+        cpr::Url{ "http://localhost:18080/joinlobby" },
+        cpr::Parameters{
+            {"username", User::GetUsername()},
+            {"password", User::GetPassword()},
+            {"code", m_lobbyCode}
+        }
+    );
+    if (response.status_code == 200)
+    {
+        m_nextScene = const_cast<std::type_info*>(&typeid(LobbyScene));
+    }
+    else
+    {
+
+    }
 }
 
 void MenuScene::Logout()
 {
+    User::Initialize("", "");
     m_nextScene = const_cast<std::type_info*>(&typeid(LoginScene));
 }
 
@@ -64,7 +96,7 @@ void MenuScene::Start()
     auto createLobbyButton{ new Button{20, 6, Align::Center, Align::Center, Color::DarkGray, Color::Green,
                             14, 3, Color::DarkBlue, Color::White, m_console, m_input, m_selected, "Create Lobby"} };
     createLobbyButton->SetHoverColors(Color::Blue, Color::White);
-    createLobbyButton->SetFunctionOnActivate(std::bind(&MenuScene::CreateLobby, this));
+    createLobbyButton->SetFunctionOnActivate([this]() { CreateLobby(); });
     m_objects.emplace_back(createLobbyButton);
     m_selectableObjects.emplace_back(createLobbyButton);
 
@@ -74,13 +106,13 @@ void MenuScene::Start()
     auto joinLobbyButton{ new Button{Align::Center, Align::Center, Color::DarkGray, Color::Green,
                           14, 3, Color::DarkBlue, Color::White, m_console, m_input, m_selected, "Join Lobby"} };
     joinLobbyButton->SetHoverColors(Color::Blue, Color::White);
-    joinLobbyButton->SetFunctionOnActivate(std::bind(&MenuScene::JoinLobby, this));
+    joinLobbyButton->SetFunctionOnActivate([this]() { JoinLobby(); });
     Hlayout->AddObject(joinLobbyButton);
     m_selectableObjects.emplace_back(joinLobbyButton);
 
     // Lobby code
     auto codeField{ new InputField{Align::Center, Align::Center, Color::Gray, Color::Black, 7, 3,
-                    Color::DarkBlue, Color::White, m_console, m_input, m_selected, m_lobbyCode, 5} };
+                    Color::DarkBlue, Color::White, m_console, m_input, m_selected, m_lobbyCode, 11} };
     codeField->SetHoverColors(Color::Blue, Color::White);
     Hlayout->AddObject(codeField);
     m_selectableObjects.emplace_back(codeField);
@@ -91,7 +123,7 @@ void MenuScene::Start()
     auto statsButton{ new Button{20, 16, Align::Center, Align::Center, Color::DarkGray, Color::Green,
                             14, 3, Color::DarkBlue, Color::White, m_console, m_input, m_selected, "Stats"} };
     statsButton->SetHoverColors(Color::Blue, Color::White);
-    statsButton->SetFunctionOnActivate(std::bind(&MenuScene::Stats, this));
+    statsButton->SetFunctionOnActivate([this]() { Stats(); });
     m_objects.emplace_back(statsButton);
     m_selectableObjects.emplace_back(statsButton);
 
@@ -104,7 +136,7 @@ void MenuScene::Start()
     auto LogoutButton{ new Button{Align::Center, Align::Center, Color::DarkGray, Color::Green,
                           8, 3, Color::DarkBlue, Color::White, m_console, m_input, m_selected, "Logout"} };
     LogoutButton->SetHoverColors(Color::Blue, Color::White);
-    LogoutButton->SetFunctionOnActivate(std::bind(&MenuScene::Logout, this));
+    LogoutButton->SetFunctionOnActivate([this]() { Logout(); });
     m_selectableObjects.emplace_back(LogoutButton);
     Vlayout->AddObject(LogoutButton);
 
