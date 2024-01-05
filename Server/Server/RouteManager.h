@@ -38,6 +38,7 @@ namespace http
 		void JoinLobbyRoute(); 
 		void FetchCodeRoute();
 		void FetchUsersRoute();
+		void SetSettingsRoute();
 		void FetchSettingsRoute();
 		void FetchLobbyStatusRoute();
 		

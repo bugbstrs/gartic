@@ -388,13 +388,10 @@ void http::RouteManager::CreateGameRoute()
 	CROW_ROUTE(m_app, "/creategame")([this](const crow::request& request) {
 		char* username = request.url_params.get("username");
 		char* password = request.url_params.get("password");
-		char* drawTime = request.url_params.get("drawTime");
-		char* wordCount = request.url_params.get("wordCount");
-		char* roundsNumber = request.url_params.get("roundsNumber");
 
 		crow::response response;
 
-		if (username == nullptr || drawTime == nullptr || wordCount == nullptr || roundsNumber == nullptr)
+		if (username == nullptr)
 		{
 			// todo: log
 			response.code = 400;
@@ -422,9 +419,6 @@ void http::RouteManager::CreateGameRoute()
 		m_gartic.CreateGame(std::string(username));
 
 		m_gartic.GetLobby(std::string(username))->SetLobbyStatus(LobbyStatus::StartedGame);
-		m_gartic.GetLobby(std::string(username))->SetDrawTime(std::atoi(drawTime));
-		m_gartic.GetLobby(std::string(username))->SetRoundsNumber(std::atoi(roundsNumber));
-		m_gartic.GetLobby(std::string(username))->SetWordCount(std::atoi(wordCount));
 
 		response.body = crow::json::wvalue({
 			{"put", true}
@@ -549,6 +543,46 @@ void http::RouteManager::FetchUsersRoute()
 		}
 
 		return crow::json::wvalue{ users_json };
+		});
+}
+
+void http::RouteManager::SetSettingsRoute()
+{
+	CROW_ROUTE(m_app, "/setsettings")([this](const crow::request& request) {
+		char* username = request.url_params.get("username");
+		char* password = request.url_params.get("password");
+		char* roundsNumber = request.url_params.get("roundsnumber");
+		char* wordCount = request.url_params.get("wordcount");
+		char* drawTime = request.url_params.get("drawtime");
+
+		std::string usernameString(username);
+		std::string passwordString(password);
+
+		crow::response response;
+
+		if (m_storage.CheckCredentials(usernameString, passwordString))
+		{
+			m_gartic.GetLobby(std::string(username))->GetSettings().SetWordCount(std::stoi(wordCount));
+			m_gartic.GetLobby(std::string(username))->GetSettings().SetRoundsNumber(std::stoi(roundsNumber));
+			m_gartic.GetLobby(std::string(username))->GetSettings().SetDrawTime(std::stoi(drawTime));
+
+			response.code = 200;
+			response.body = crow::json::wvalue({
+				{"set_settings", true}
+				}).dump();
+		}
+		else
+		{
+			// todo: log
+			response.code = 401;
+			response.body = crow::json::wvalue({
+				{"set_settings", false}
+				}).dump();
+
+				return response;
+		}
+
+		return response;
 		});
 }
 

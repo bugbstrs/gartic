@@ -6,7 +6,8 @@ import GarticExceptions;
 
 using namespace http;
 
-http::Chat::Chat(const std::vector<std::shared_ptr<Player>>& players)
+http::Chat::Chat(std::vector<std::shared_ptr<Player>>& players):
+	m_players{ players }
 {
 	for (const auto& player : players)
 	{
@@ -20,6 +21,11 @@ void http::Chat::VerifyMessage(const std::string& username, const std::string& m
 	{
 		if (message == m_wordToGuess)
 		{
+			auto isPlayerWhoGuessed = [&username](const std::shared_ptr<Player> player) { return player->GetName() == username; };
+			if (auto it = std::find_if(m_players.begin(), m_players.end(), isPlayerWhoGuessed); it != m_players.end())
+			{
+				(*it)->SetGuessed(true);
+			}
 			m_messages[username].push_back("You guessed the word!");
 		}
 		

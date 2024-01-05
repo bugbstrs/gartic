@@ -11,7 +11,7 @@ namespace http
 	class Chat
 	{
 	public:
-		Chat(const std::vector<std::shared_ptr<Player>>& players);
+		Chat(std::vector<std::shared_ptr<Player>>& players);
 
 		void VerifyMessage(const std::string& username, const std::string& message);
 		void AddMessage(const std::string& username, const std::string& message);
@@ -26,6 +26,8 @@ namespace http
 		static inline double kTreshold = 0.8;
 
 	private:
+		std::vector<std::shared_ptr<Player>>& m_players;
+
 		std::unordered_map<std::string, std::vector<std::string>> m_messages;
 
 		std::string m_wordToGuess;
