@@ -6,11 +6,7 @@ module LobbyScene;
 import <vector>;
 import <string>;
 
-import Label;
-import Button;
 import HorizontalLayout;
-
-using Color = ColorType;
 
 LobbyScene::LobbyScene(ConsoleManager* console, InputManager* inputManager) :
 	Scene{ console, inputManager }
@@ -23,7 +19,27 @@ void LobbyScene::StartGame()
 
 void LobbyScene::GetUsers()
 {
-
+	auto response{ cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchusers" },
+		cpr::Parameters{
+			{"password", User::GetPassword()},
+			{"username", User::GetUsername()}
+		}
+	) };
+	auto usersVector{ crow::json::load(response.text) };
+	m_users->Clear();
+	bool lastUserColor{ false };
+	bool first{ true };
+	for (const auto& user : usersVector)
+	{
+		Color color = first ? Color::Green : lastUserColor ? Color::DarkGray : Color::White;
+		if (first && std::string(user["username"]) == User::GetUsername())
+			SetAsLeader();
+		first = false;
+		lastUserColor = !lastUserColor;
+		m_users->AddObject(new Label{ Align::Center, Align::Center, color, Color::Black,
+									  20, 3, m_console, std::string(user["username"]) });
+	}
 }
 
 void LobbyScene::GetSettings()
@@ -34,6 +50,15 @@ void LobbyScene::GetSettings()
 void LobbyScene::SetSettings()
 {
 
+}
+
+void LobbyScene::SetAsLeader()
+{
+	m_rounds->CanBeSelected(true);
+	m_drawTime->CanBeSelected(true);
+	m_wordCount->CanBeSelected(true);
+	m_customRounds->CanBeSelected(true);
+	m_startButton->SetActive(true);
 }
 
 void LobbyScene::HasStarted()
@@ -77,6 +102,7 @@ void LobbyScene::Start()
 
 	m_drawTime = new SpinBox{Align::Left, Align::Center, Color::Gray, Color::Black,
 		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::DarkBlue, Color::Black};
+	m_drawTime->CanBeSelected(false);
 	m_drawTime->SetOptions({ "15", "20", "30", "40", "50", "60", "70", "80", "90", "100", "120" }, 5);
 	m_drawTime->SetHoverColors(Color::Blue, Color::Black);
 	m_selectableObjects.emplace_back(m_drawTime);
@@ -92,6 +118,7 @@ void LobbyScene::Start()
 
 	m_rounds = new SpinBox{ Align::Left, Align::Center, Color::Gray, Color::Black,
 		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::DarkBlue, Color::Black };
+	m_rounds->CanBeSelected(false);
 	m_rounds->SetOptions({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, 3);
 	m_rounds->SetHoverColors(Color::Blue, Color::Black);
 	m_selectableObjects.emplace_back(m_rounds);
@@ -107,6 +134,7 @@ void LobbyScene::Start()
 
 	m_wordCount = new SpinBox{ Align::Left, Align::Center, Color::Gray, Color::Black,
 		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::DarkBlue, Color::Black };
+	m_wordCount->CanBeSelected(false);
 	m_wordCount->SetOptions({ "1", "2", "3", "4", "5" }, 2);
 	m_wordCount->SetHoverColors(Color::Blue, Color::Black);
 	m_selectableObjects.emplace_back(m_wordCount);
@@ -121,6 +149,7 @@ void LobbyScene::Start()
 		10, 3, m_console, "Custom rounds" });
 
 	m_customRounds = new CheckBox{ Color::Gray, Color::Green, Color::DarkBlue, 6, 3, m_console, m_input, m_selected };
+	m_customRounds->CanBeSelected(false);
 	m_customRounds->SetHoverColors(Color::Blue, Color::Black);
 	m_selectableObjects.emplace_back(m_customRounds);
 	horizontalLayout->AddObject(m_customRounds);
@@ -158,22 +187,23 @@ void LobbyScene::Start()
 	m_objects.emplace_back(leaveButton);
 
 	// Start button
-	auto startButton = new Button{ 40, 40, Align::Center, Align::Center, Color::DarkGreen, Color::White, 15, 3,
+	m_startButton = new Button{ 40, 40, Align::Center, Align::Center, Color::DarkGreen, Color::White, 15, 3,
 		Color::Green, Color::White, m_console, m_input, m_selected, "START" };
-	startButton->SetHoverColors(Color::Green, Color::White);
-	startButton->SetFunctionOnActivate([this]() { StartGame(); });
-	m_selectableObjects.emplace_back(startButton);
-	m_objects.emplace_back(startButton);
+	m_startButton->SetHoverColors(Color::Green, Color::White);
+	m_startButton->SetFunctionOnActivate([this]() { StartGame(); });
+	m_startButton->SetActive(false);
+	m_selectableObjects.emplace_back(m_startButton);
+	m_objects.emplace_back(m_startButton);
 
 
 	m_drawTime->SetConections(nullptr, m_rounds, nullptr, nullptr);
 	m_rounds->SetConections(m_drawTime, m_wordCount, nullptr, nullptr);
 	m_wordCount->SetConections(m_rounds, m_customRounds, nullptr, nullptr);
-	m_customRounds->SetConections(m_wordCount, startButton, nullptr, nullptr);
-	startButton->SetConections(m_customRounds, nullptr, nullptr, leaveButton);
-	leaveButton->SetConections(nullptr, nullptr, startButton, nullptr);
+	m_customRounds->SetConections(m_wordCount, m_startButton, nullptr, nullptr);
+	m_startButton->SetConections(m_customRounds, nullptr, nullptr, leaveButton);
+	leaveButton->SetConections(nullptr, nullptr, m_startButton, nullptr);
 
-	m_selected = startButton;
+	m_selected = leaveButton;
 }
 
 void LobbyScene::Update()
