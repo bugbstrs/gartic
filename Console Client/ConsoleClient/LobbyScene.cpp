@@ -68,6 +68,14 @@ void LobbyScene::HasStarted()
 
 void LobbyScene::Back()
 {
+	auto response{ cpr::Get(
+	cpr::Url{ "http://localhost:18080/leavelobby" },
+	cpr::Parameters{
+		{"password", User::GetPassword()},
+		{"username", User::GetUsername()}
+	}
+) };
+
 	m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
 }
 

@@ -40,6 +40,8 @@ namespace http
 		void FetchUsersRoute();
 		void FetchSettingsRoute();
 		void FetchLobbyStatusRoute();
+		
+		void LeaveLobbyRoute();
 
 		// Game
 		void FetchPlayersRoute();
