@@ -1,6 +1,7 @@
 export module LobbyScene;
 
 import Scene;
+import Label;
 import SpinBox;
 import CheckBox;
 import MenuScene;
@@ -22,6 +23,7 @@ private:
     SpinBox*          m_rounds;
     SpinBox*          m_drawTime;
     SpinBox*          m_wordCount;
+    Label*            m_codeLabel;
     CheckBox*         m_customRounds;
 
     void StartGame  ();

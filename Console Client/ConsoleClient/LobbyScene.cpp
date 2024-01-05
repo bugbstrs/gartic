@@ -1,3 +1,6 @@
+#include <cpr/cpr.h>
+#include <crow.h>
+
 module LobbyScene;
 
 import <vector>;
@@ -124,12 +127,33 @@ void LobbyScene::Start()
 
 	m_objects.emplace_back(horizontalLayout);
 
+	// Code label
+	m_codeLabel = new Label{ 40, 22, Align::Center, Align::Center, Color::Black, Color::White,
+		17, 1, m_console, "Code: " };
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchcode" },
+		cpr::Parameters{
+			{"password", User::GetPassword()},
+			{"username", User::GetUsername()}
+		}
+	);
+	if (response.status_code == 200)
+	{
+		auto code = crow::json::load(response.text);
+		m_codeLabel->UpdateText(std::string("Code: ") + std::string(code[0]["code"]));
+	}
+	else
+	{
+
+	}
+	m_objects.emplace_back(m_codeLabel);
+
 	// Leave lobby button
 	auto leaveButton = new Button{ 150, 40, Align::Center, Align::Center, Color::Gray, Color::Black, 7, 3,
 		Color::DarkBlue, Color::Black, m_console, m_input, m_selected, "LEAVE" };
 
 	leaveButton->SetHoverColors(Color::Blue, Color::White);
-	leaveButton->SetFunctionOnActivate(std::bind(&LobbyScene::Back, this));
+	leaveButton->SetFunctionOnActivate([this]() { Back(); });
 	m_selectableObjects.emplace_back(leaveButton);
 	m_objects.emplace_back(leaveButton);
 
@@ -137,7 +161,7 @@ void LobbyScene::Start()
 	auto startButton = new Button{ 40, 40, Align::Center, Align::Center, Color::DarkGreen, Color::White, 15, 3,
 		Color::Green, Color::White, m_console, m_input, m_selected, "START" };
 	startButton->SetHoverColors(Color::Green, Color::White);
-	startButton->SetFunctionOnActivate(std::bind(&LobbyScene::StartGame, this));
+	startButton->SetFunctionOnActivate([this]() { StartGame(); });
 	m_selectableObjects.emplace_back(startButton);
 	m_objects.emplace_back(startButton);
 
