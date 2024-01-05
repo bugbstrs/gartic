@@ -908,14 +908,14 @@ void http::RouteManager::FetchMessagesRoute()
 		{
 			messages = m_gartic.GetGame(usernameString)->GetChat().GetAndDeleteMessages(usernameString);
 
-			for (int i{ 0 }; i < messages.size(); i++)
+			for (const auto& message : messages)
 			{
-				messages_json.push_back(crow::json::wvalue{ {std::format("message_no{}", i), messages[i]}});
+				messages_json.push_back(crow::json::wvalue{ {"message", message} });
 			}
 		}
 		else
 		{
-			messages_json.push_back(crow::json::wvalue{ {"messages", "N/A"} });
+			messages_json.push_back(crow::json::wvalue{ {"message", "N/A"} });
 		}
 
 		return crow::json::wvalue{ messages_json };

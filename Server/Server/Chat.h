@@ -6,10 +6,6 @@
 
 #include "Player.h"
 
-using String = std::string;
-using StringVector = std::vector<String>;
-using ChatMap = std::unordered_map<String, StringVector>;
-
 namespace http
 {
 	class Chat
@@ -17,12 +13,12 @@ namespace http
 	public:
 		Chat(const std::vector<std::shared_ptr<Player>>& players);
 
-		void VerifyMessage(const String& username, const String& message);
-		void AddMessage(const String& username, const String& message);
+		void VerifyMessage(const std::string& username, const std::string& message);
+		void AddMessage(const std::string& username, const std::string& message);
 
-		const StringVector& GetAndDeleteMessages(const String& username);
+		const std::vector<std::string>& GetAndDeleteMessages(const std::string& username);
 
-		const ChatMap& GetChat() const noexcept;
+		const std::unordered_map<std::string, std::vector<std::string>>& GetChat() const noexcept;
 
 		bool IsCloseEnough(const std::string& currGuess);
 
@@ -30,8 +26,8 @@ namespace http
 		static inline double kTreshold = 0.8;
 
 	private:
-		ChatMap m_messages;
+		std::unordered_map<std::string, std::vector<std::string>> m_messages;
 
-		String m_wordToGuess;
+		std::string m_wordToGuess;
 	};
 }

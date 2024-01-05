@@ -14,7 +14,7 @@ http::Chat::Chat(const std::vector<std::shared_ptr<Player>>& players)
 	}
 }
 
-void http::Chat::VerifyMessage(const String& username, const String& message)
+void http::Chat::VerifyMessage(const std::string& username, const std::string& message)
 {
 	if (IsCloseEnough(message))
 	{
@@ -31,7 +31,7 @@ void http::Chat::VerifyMessage(const String& username, const String& message)
 	}
 }
 
-void http::Chat::AddMessage(const String& username, const String& message)
+void http::Chat::AddMessage(const std::string& username, const std::string& message)
 {
 	for (auto [currUsername, currMessage] : m_messages)
 	{
@@ -42,11 +42,11 @@ void http::Chat::AddMessage(const String& username, const String& message)
 	}
 }
 
-const StringVector& http::Chat::GetAndDeleteMessages(const String& username)
+const std::vector<std::string>& http::Chat::GetAndDeleteMessages(const std::string& username)
 {
 	if (m_messages.find(username) != m_messages.end())
 	{
-		StringVector messagesToReturn = m_messages[username];
+		std::vector<std::string> messagesToReturn = m_messages[username];
 
 		m_messages[username].clear();
 
@@ -56,7 +56,7 @@ const StringVector& http::Chat::GetAndDeleteMessages(const String& username)
 	throw GarticException<UserDoesntExistException>("Chat > GetMessages(const std::string&): The given username doesn't exist!");
 }
 
-const ChatMap& http::Chat::GetChat() const noexcept
+const std::unordered_map<std::string, std::vector<std::string>>& http::Chat::GetChat() const noexcept
 {
 	return m_messages;
 }
