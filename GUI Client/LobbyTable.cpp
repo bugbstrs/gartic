@@ -1,21 +1,22 @@
 #include "LobbyTable.h"
 #include <random>
+#include "UserCredentials.h"
 
 LobbyTable::LobbyTable(QWidget *parent)
 	: QTableWidget(parent)
 {
-	avatars[0] = { QIcon(":/image/alien"), QColor("#32CD32") };
-	avatars[1] = { QIcon(":/image/astronaut"), QColor("#FFA500") };
-	avatars[2] = { QIcon(":/image/policeman"), QColor("#1E90FF") };
-	avatars[3] = { QIcon(":/image/robot"), QColor("#FF4500") };
-	avatars[4] = { QIcon(":/image/doctor"), QColor("#00BFFF") };
-	avatars[5] = { QIcon(":/image/king"), Qt::yellow };
-	avatars[6] = { QIcon(":/image/ninja"), QColor("#C0C0C0") };
-	avatars[7] = { QIcon(":/image/cowboy"), QColor("#A0522D") };
-	avatars[8] = { QIcon(":/image/injured"), QColor("#8a2be2") };
-	avatars[9] = { QIcon(":/image/chef"), QColor("#696969") };
-	avatars[10] = { QIcon(":/image/helmet"), QColor("#3CB371") };
-	avatars[11] = { QIcon(":/image/nurse"), QColor("#cb4d7e") };
+	avatars[0] = { QIcon(":/image/alien"), QColor("#32CD32"), false };
+	avatars[1] = { QIcon(":/image/astronaut"), QColor("#FFA500"), false };
+	avatars[2] = { QIcon(":/image/policeman"), QColor("#1E90FF"), false };
+	avatars[3] = { QIcon(":/image/robot"), QColor("#FF4500"), false };
+	avatars[4] = { QIcon(":/image/doctor"), QColor("#00BFFF"), false };
+	avatars[5] = { QIcon(":/image/king"), Qt::yellow, false };
+	avatars[6] = { QIcon(":/image/ninja"), QColor("#C0C0C0"), false };
+	avatars[7] = { QIcon(":/image/cowboy"), QColor("#A0522D"), false };
+	avatars[8] = { QIcon(":/image/injured"), QColor("#8a2be2"), false };
+	avatars[9] = { QIcon(":/image/chef"), QColor("#696969"), false };
+	avatars[10] = { QIcon(":/image/helmet"), QColor("#3CB371"), false };
+	avatars[11] = { QIcon(":/image/nurse"), QColor("#cb4d7e"), false };
 
 	/*std::random_device rd;
 	std::default_random_engine rng(rd());
@@ -23,6 +24,10 @@ LobbyTable::LobbyTable(QWidget *parent)
 
 	nameFont.setFamily("Consolas");
 	nameFont.setPixelSize(24);
+
+	yourNameFont.setFamily("Consolas");
+	yourNameFont.setPixelSize(30);
+	yourNameFont.setBold(true);
 }
 
 LobbyTable::~LobbyTable()
@@ -32,12 +37,21 @@ void LobbyTable::AddPlayer(const std::string & name)
 {
 	int rowPosition = rowCount();
 	insertRow(rowPosition);
-	QTableWidgetItem* item = new QTableWidgetItem(avatars[currentIndex].first, QString::fromUtf8(name));
-	item->setBackground(avatars[currentIndex].second);
-	item->setFont(nameFont);
-	takenAvatars.push_back({avatars[currentIndex].first, QString::fromUtf8(name), avatars[currentIndex].second});
-	++currentIndex;
-	setItem(rowPosition, 0, item);
+	for (auto& avatar : avatars) {
+		if (!std::get<2>(avatar)) {
+			QTableWidgetItem* item = new QTableWidgetItem(std::get<0>(avatar), QString::fromUtf8(name));
+			item->setBackground(std::get<1>(avatar));
+			if (name == UserCredentials::GetUsername())
+				item->setFont(yourNameFont);
+			else
+				item->setFont(nameFont);
+			takenAvatars.push_back({ std::get<0>(avatar), QString::fromUtf8(name), std::get<1>(avatar) });
+			std::get<2>(avatar) = true;
+			++currentIndex;
+			setItem(rowPosition, 0, item);
+			break;
+		}
+	}
 }
 
 int LobbyTable::GetPlayersNumber() const
@@ -47,11 +61,9 @@ int LobbyTable::GetPlayersNumber() const
 
 void LobbyTable::ClearLobby()
 {
-	/*std::random_device rd;
-	std::default_random_engine rng(rd());
-	std::shuffle(std::begin(avatars), std::end(avatars), rng);*/
-	
 	currentIndex = 0;
+	for (auto& avatar : avatars)
+		std::get<2>(avatar) = false;
 	takenAvatars.clear();
 	clearContents();
 	setRowCount(0);

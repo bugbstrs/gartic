@@ -26,68 +26,73 @@ void LobbyFrame::showEvent(QShowEvent * event)
 		roundsComboBox = findChild<QComboBox*>("roundsComboBox");
 		wordCountComboBox = findChild<QComboBox*>("wordCountComboBox");
 		startGameButton = findChild<QPushButton*>("startGameButton");
+		leaveLobbyButton = findChild<QPushButton*>("exitLobbyButton");
 		codeLineEdit = findChild<QLineEdit*>("codeLineEdit");
 		lobbyTable = findChild<LobbyTable*>("lobbyTable");
 
+		QObject::connect(startGameButton, &QPushButton::released, this, [this]() {
+			auto createGame = cpr::Post(
+				cpr::Url{ "http://localhost:18080/creategame" },
+				cpr::Parameters{
+					{"username", UserCredentials::GetUsername()},
+					{"password", UserCredentials::GetPassword()}
+				}
+			);
+		});
+		QObject::connect(roundsComboBox, &QComboBox::currentTextChanged, this, [this](const QString& newText) {
+			auto modifySettings = cpr::Post(
+				cpr::Url{ "http://localhost:18080/setsettings" },
+				cpr::Parameters{
+					{"username", UserCredentials::GetUsername()},
+					{"password", UserCredentials::GetPassword()},
+					{"roundsnumber", newText.toUtf8().constData()},
+					{"wordcount", wordCountComboBox->currentText().toUtf8().constData()},
+					{"drawtime", drawTimeComboBox->currentText().toUtf8().constData()}
+				}
+			);
+		});
+		QObject::connect(wordCountComboBox, &QComboBox::currentTextChanged, this, [this](const QString& newText) {
+			auto modifySettings = cpr::Post(
+				cpr::Url{ "http://localhost:18080/setsettings" },
+				cpr::Parameters{
+					{"username", UserCredentials::GetUsername()},
+					{"password", UserCredentials::GetPassword()},
+					{"roundsnumber", roundsComboBox->currentText().toUtf8().constData()},
+					{"wordcount", newText.toUtf8().constData()},
+					{"drawtime",  drawTimeComboBox->currentText().toUtf8().constData()}
+				}
+			);
+		});
+		QObject::connect(drawTimeComboBox, &QComboBox::currentTextChanged, this, [this](const QString& newText) {
+			auto modifySettings = cpr::Post(
+				cpr::Url{ "http://localhost:18080/setsettings" },
+				cpr::Parameters{
+					{"username", UserCredentials::GetUsername()},
+					{"password", UserCredentials::GetPassword()},
+					{"roundsnumber", roundsComboBox->currentText().toUtf8().constData()},
+					{"wordcount", wordCountComboBox->currentText().toUtf8().constData()},
+					{"drawtime", newText.toUtf8().constData()}
+				}
+			);
+		});
+
 		if (m_isLeader) {
-			QObject::connect(startGameButton, &QPushButton::released, this, [this]() {
-				//Muta aici din mainwindow crearea de game
-				auto createGame = cpr::Post(
-					cpr::Url{ "http://localhost:18080/creategame" },
-					cpr::Parameters{
-						{"username", UserCredentials::GetUsername()},
-						{"password", UserCredentials::GetPassword()}
-					}
-				);
-			});
-			QObject::connect(roundsComboBox, &QComboBox::currentTextChanged, this, [this](const QString& newText) {
-				auto modifySettings = cpr::Post(
-					cpr::Url{ "http://localhost:18080/setsettings" },
-					cpr::Parameters{
-						{"username", UserCredentials::GetUsername()},
-						{"password", UserCredentials::GetPassword()},
-						{"roundsnumber", newText.toUtf8().constData()},
-						{"wordcount", wordCountComboBox->currentText().toUtf8().constData()},
-						{"drawtime", drawTimeComboBox->currentText().toUtf8().constData()}
-					}
-				);
-			});
-			QObject::connect(wordCountComboBox, &QComboBox::currentTextChanged, this, [this](const QString& newText) {
-				auto modifySettings = cpr::Post(
-					cpr::Url{ "http://localhost:18080/setsettings" },
-					cpr::Parameters{
-						{"username", UserCredentials::GetUsername()},
-						{"password", UserCredentials::GetPassword()},
-						{"roundsnumber", roundsComboBox->currentText().toUtf8().constData()},
-						{"wordcount", newText.toUtf8().constData()},
-						{"drawtime",  drawTimeComboBox->currentText().toUtf8().constData()}
-					}
-				);
-			});
-			QObject::connect(drawTimeComboBox, &QComboBox::currentTextChanged, this, [this](const QString& newText) {
-				auto modifySettings = cpr::Post(
-					cpr::Url{ "http://localhost:18080/setsettings" },
-					cpr::Parameters{
-						{"username", UserCredentials::GetUsername()},
-						{"password", UserCredentials::GetPassword()},
-						{"roundsnumber", roundsComboBox->currentText().toUtf8().constData()},
-						{"wordcount", wordCountComboBox->currentText().toUtf8().constData()},
-						{"drawtime", newText.toUtf8().constData()}
-					}
-				);
-			});
+			SetLeaderSettings();
 		}
 		else {
-			startGameButton->hide();
+			SetNonLeaderSettings();
 		}
-
-		stop.store(false);
-
-		std::thread checkForNewPlayers(&LobbyFrame::CheckForLobbyUpdates, this, std::ref(stop));
-		checkForNewPlayers.detach();
+		QObject::connect(leaveLobbyButton, &QPushButton::released, this, [this]() {
+			leaveGame = true;
+			stop.store(true);
+		});
 
 		firstShow = false;
 	}
+	stop.store(false);
+
+	std::thread checkForNewPlayers(&LobbyFrame::CheckForLobbyUpdates, this, std::ref(stop));
+	checkForNewPlayers.detach();
 }
 
 void LobbyFrame::SetCode(QString codeText) noexcept
@@ -113,8 +118,19 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 		auto usersVector = crow::json::load(users.text);
 		int playersNumber = lobbyTable->GetPlayersNumber();
 		if (usersVector["users"].size() != lobbyTable->GetPlayersNumber()) {
-			for (int index = playersNumber; index < usersVector["users"].size(); index++)
-				lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
+			if (usersVector["users"].size() > lobbyTable->GetPlayersNumber()) {
+				for (int index = playersNumber; index < usersVector["users"].size(); index++)
+					lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
+			}
+			else {
+				lobbyTable->ClearLobby();
+				for (int index = 0; index < usersVector["users"].size(); index++)
+					lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
+				if (usersVector["users"][0] == UserCredentials::GetUsername() && !m_isLeader) {
+					m_isLeader = true;
+					SetLeaderSettings();
+				}
+			}
 		}
 
 		if (!m_isLeader) {
@@ -146,6 +162,30 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 	if (stop.load()) {
-		emit OnGameStarted();
+		if (leaveGame)
+			emit OnLobbyLeft();
+		else
+			emit OnGameStarted();
 	}
 }
+
+void LobbyFrame::SetLeaderSettings()
+{
+	QMetaObject::invokeMethod(this, [this]() {
+		startGameButton->show();
+		drawTimeComboBox->setDisabled(false);
+		roundsComboBox->setDisabled(false);
+		wordCountComboBox->setDisabled(false);
+	}, Qt::QueuedConnection);
+}
+
+void LobbyFrame::SetNonLeaderSettings()
+{
+	QMetaObject::invokeMethod(this, [this]() {
+		startGameButton->hide();
+		drawTimeComboBox->setDisabled(true);
+		roundsComboBox->setDisabled(true);
+		wordCountComboBox->setDisabled(true);
+	}, Qt::QueuedConnection);
+}
+

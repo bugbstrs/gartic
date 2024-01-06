@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     //Lobby scene
     QObject::connect(ui->lobbyFrame, &LobbyFrame::OnGameStarted, this, &MainWindow::OnStartGameCommand);
-    QObject::connect(ui->exitLobbyButton, &QPushButton::released, this, &MainWindow::OnExitLobbyButtonReleased);
+    QObject::connect(ui->lobbyFrame, &LobbyFrame::OnLobbyLeft, this, &MainWindow::OnExitLobbyButtonReleased);
 
     //Game scene connections
     QObject::connect(ui->leaveGameButton, &QPushButton::released, this, &MainWindow::OnLeaveGameButtonReleased);
@@ -145,7 +145,17 @@ void MainWindow::OnStartGameCommand() noexcept {
     ui->gameplayWidget->SetGameSettings(ui->lobbyFrame->GetGameSettings());
     ui->stackedWidget->setCurrentWidget(ui->GameplayScene);
 }
-void MainWindow::OnExitLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }
+void MainWindow::OnExitLobbyButtonReleased() noexcept { 
+    ui->stackedWidget->setCurrentWidget(ui->MainMenuScene);
+    ui->lobbyTable->ClearLobby();
+    auto users = cpr::Get(
+        cpr::Url{ "http://localhost:18080/leavelobby" },
+        cpr::Parameters{
+            {"username", UserCredentials::GetUsername()},
+            {"password", UserCredentials::GetPassword()}
+        }
+    );
+}
 
 
 //Game Scene events

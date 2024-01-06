@@ -24,14 +24,18 @@ public:
 
 private:
 	void CheckForLobbyUpdates(std::atomic<bool>& stop);
+	void SetLeaderSettings();
+	void SetNonLeaderSettings();
 
 signals:
 	void OnGameStarted();
+	void OnLobbyLeft();
 
 private:
 	std::atomic<bool> stop;
-	bool firstShow { true };
-	bool m_isLeader  { false };
+	bool leaveGame	{ false };
+	bool firstShow  { true };
+	bool m_isLeader { false };
 
 	const std::string kWaitingToStart = "WaitingToStart";
 	const std::string kStartedGame = "StartedGame";
@@ -44,4 +48,5 @@ private:
 	LobbyTable* lobbyTable{ new LobbyTable{} };
 
 	QPushButton* startGameButton{ new QPushButton{} };
+	QPushButton* leaveLobbyButton{ new QPushButton{} };
 };
