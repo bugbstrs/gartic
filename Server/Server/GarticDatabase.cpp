@@ -137,6 +137,8 @@ UserVector http::GarticStorage::FetchTop5Users()
 
 	int numTopUsers = std::min(5, static_cast<int>(allUsers.size()));
 
+    if (numTopUsers == 0) throw GarticException<NotEnoughScoresRegisteredException>("GarticStorage > FetchTop5Users(): No scores have been registered!");
+
 	return UserVector(allUsers.begin(), allUsers.begin() + numTopUsers);
 }
 
