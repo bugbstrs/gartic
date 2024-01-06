@@ -42,7 +42,7 @@ void LobbyTable::AddPlayer(const std::string & name)
 
 int LobbyTable::GetPlayersNumber() const
 {
-	return currentIndex;
+	return rowCount();
 }
 
 void LobbyTable::ClearLobby()

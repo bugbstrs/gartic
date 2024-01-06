@@ -113,7 +113,7 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 		auto usersVector = crow::json::load(users.text);
 		int playersNumber = lobbyTable->GetPlayersNumber();
 		if (usersVector["users"].size() != lobbyTable->GetPlayersNumber()) {
-			for (int index = playersNumber; index < usersVector.size(); index++)
+			for (int index = playersNumber; index < usersVector["users"].size(); index++)
 				lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
 		}
 
