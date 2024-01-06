@@ -61,10 +61,10 @@ void http::RouteManager::FetchWordRoute()
 
             response.code = 200;
             response.body = crow::json::wvalue
-            { {
+            {
                 {"code", response.code},
                 {"word", fetchedWord}
-            } }.dump();
+            }.dump();
 
             return response;
         }
@@ -72,11 +72,11 @@ void http::RouteManager::FetchWordRoute()
         {
             response.code = 500;
             response.body = crow::json::wvalue
-            { {
+            {
                 {"code", response.code},
                 {"word", "N/A"},
                 {"error", "Couldn't fetch word from database!"}
-            } }.dump();
+            }.dump();
 
             return response;
         };
@@ -84,11 +84,11 @@ void http::RouteManager::FetchWordRoute()
         // should never reach this point
         response.code = 500;
         response.body = crow::json::wvalue
-        { {
+        {
             {"code", response.code},
             {"word", "N/A"},
             {"error", "Server unhandled error!"}
-        } }.dump();
+        }.dump();
 
         return response;
 	});
@@ -107,10 +107,10 @@ void http::RouteManager::FetchQuoteRoute()
 
             response.code = 200;
             response.body = crow::json::wvalue
-            {{
+            {
                 {"code", response.code},
                 {"quote", fetchedQuote}
-            }}.dump();
+            }.dump();
 
             return response;
 		}
@@ -118,11 +118,11 @@ void http::RouteManager::FetchQuoteRoute()
 		{
             response.code = 500;
             response.body = crow::json::wvalue
-            {{
+            {
                 {"code", response.code},
                 {"quote", "N/A"},
                 {"error", "Couldn't fetch quote from database!"}
-            }}.dump();
+            }.dump();
 
 			return response;
 		};
@@ -130,11 +130,11 @@ void http::RouteManager::FetchQuoteRoute()
         // should never reach this point
         response.code = 500;
         response.body = crow::json::wvalue
-        {{
+        {
             {"code", response.code},
             {"quote", "N/A"},
             {"error", "Server unhandled error!"}
-        }}.dump();
+        }.dump();
 
         return response;
 	});
@@ -201,10 +201,10 @@ void http::RouteManager::FetchTop5UsersRoute()
             }
 
             response.body = crow::json::wvalue
-            {{
+            {
                 {"code", response.code},
                 {"users", top_users_json}
-            }}.dump();
+            }.dump();
             
             return response;
         }
@@ -212,10 +212,10 @@ void http::RouteManager::FetchTop5UsersRoute()
         {
             response.code = 204;
             response.body = crow::json::wvalue
-            {{
+            {
                 {"code", response.code},
                 {"users", std::vector<crow::json::wvalue>{}}
-            }}.dump();
+            }.dump();
             
             return response;
         }
@@ -344,9 +344,10 @@ void http::RouteManager::CreateLobbyRoute()
 		{
 			// todo: log
 			response.code = 400;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue
+            {
 				{"found", false}
-				}).dump();
+			}.dump();
 
 				return response;
 		}
@@ -358,18 +359,18 @@ void http::RouteManager::CreateLobbyRoute()
 		{
 			// todo: log
 			response.code = 401;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue{
 				{"no_user", false}
-				}).dump();
+				}.dump();
 
 				return response;
 		}
 
 		m_gartic.CreateLobby(usernameString);
 
-		response.body = crow::json::wvalue({
+		response.body = crow::json::wvalue{
 			{"put", true}
-			}).dump();
+			}.dump();
 
 			return response;
 		});
@@ -387,9 +388,9 @@ void http::RouteManager::CreateGameRoute()
 		{
 			// todo: log
 			response.code = 400;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue{
 				{"found", false}
-				}).dump();
+				}.dump();
 
 				return response;
 		}
@@ -401,9 +402,9 @@ void http::RouteManager::CreateGameRoute()
 		{
 			// todo: log
 			response.code = 401;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue{
 				{"no_user", false}
-				}).dump();
+				}.dump();
 
 				return response;
 		}
@@ -412,9 +413,9 @@ void http::RouteManager::CreateGameRoute()
 
 		m_gartic.GetLobby(std::string(username))->SetLobbyStatus(LobbyStatus::StartedGame);
 
-		response.body = crow::json::wvalue({
+		response.body = crow::json::wvalue{
 			{"put", true}
-			}).dump();
+			}.dump();
 
 			return response;
 		});
@@ -433,9 +434,9 @@ void http::RouteManager::JoinLobbyRoute()
 		{
 			// todo: log
 			response.code = 400;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue{
 				{"found", false}
-				}).dump();
+				}.dump();
 
 				return response;
 		}
@@ -448,9 +449,9 @@ void http::RouteManager::JoinLobbyRoute()
 		{
 			// todo: log
 			response.code = 401;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue{
 				{"no_user", false}
-				}).dump();
+				}.dump();
 
 				return response;
 		}
@@ -559,17 +560,17 @@ void http::RouteManager::SetSettingsRoute()
 			m_gartic.GetLobby(std::string(username))->GetSettings().SetDrawTime(std::stoi(drawTime));
 
 			response.code = 200;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue{
 				{"set_settings", true}
-				}).dump();
+				}.dump();
 		}
 		else
 		{
 			// todo: log
 			response.code = 401;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue{
 				{"set_settings", false}
-				}).dump();
+				}.dump();
 
 				return response;
 		}
@@ -652,9 +653,9 @@ void http::RouteManager::LeaveLobbyRoute()
 		{
 			// todo: log
 			response.code = 401;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue{
 				{"no_user", false}
-				}).dump();
+				}.dump();
 
 				return response;
 		}
@@ -667,16 +668,16 @@ void http::RouteManager::LeaveLobbyRoute()
 		{
 			// todo: log
 			response.code = 404;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue{
 				{"user_removed", false}
-				}).dump();
+				}.dump();
 
 				return response;
 		}
 
-		response.body = crow::json::wvalue({
+		response.body = crow::json::wvalue{
 			{"user_removed", true}
-			}).dump();
+			}.dump();
 
 			return response;
 		});
@@ -963,9 +964,9 @@ void http::RouteManager::LeaveGameRoute()
 		{
 			// todo: log
 			response.code = 401;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue{
 				{"no_user", false}
-				}).dump();
+				}.dump();
 
 				return response;
 		}
@@ -978,16 +979,16 @@ void http::RouteManager::LeaveGameRoute()
 		{
 			// todo: log
 			response.code = 404;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue{
 				{"player_removed", false}
-				}).dump();
+				}.dump();
 
 				return response;
 		}
 
-		response.body = crow::json::wvalue({
+		response.body = crow::json::wvalue{
 			{"player_removed", true}
-			}).dump();
+			}.dump();
 
 			return response;
 		});
@@ -1009,9 +1010,9 @@ void http::RouteManager::PutWordToGuessRoute()
 		{
 			// todo: log
 			response.code = 400;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue{
 				{"found", false}
-				}).dump();
+				}.dump();
 
 				return response;
 		}
@@ -1020,9 +1021,9 @@ void http::RouteManager::PutWordToGuessRoute()
 		{
 			// todo: log
 			response.code = 401;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue{
 				{"no_user", false}
-				}).dump();
+				}.dump();
 
 				return response;
 		}
@@ -1030,9 +1031,9 @@ void http::RouteManager::PutWordToGuessRoute()
 		std::string wordToDiplayString(wordToGuess);
 		m_gartic.GetGame(usernameString)->GetRound().SetWordToGuess(wordToDiplayString);
 
-		response.body = crow::json::wvalue({
+		response.body = crow::json::wvalue{
 			{"put", true}
-			}).dump();
+			}.dump();
 
 			return response;
 		});
@@ -1054,9 +1055,9 @@ void http::RouteManager::PutMessageInChatRoute()
 		{
 			// todo: log
 			response.code = 400;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue{
 				{"found", false}
-				}).dump();
+				}.dump();
 
 				return response;
 		}
@@ -1065,9 +1066,9 @@ void http::RouteManager::PutMessageInChatRoute()
 		{
 			// todo: log
 			response.code = 401;
-			response.body = crow::json::wvalue({
+			response.body = crow::json::wvalue{
 				{"no_user", false}
-				}).dump();
+				}.dump();
 
 				return response;
 		}
@@ -1075,9 +1076,9 @@ void http::RouteManager::PutMessageInChatRoute()
 		std::string messageString(message);
 		m_gartic.GetGame(usernameString)->GetChat().VerifyMessage(usernameString, messageString);
 
-		response.body = crow::json::wvalue({
+		response.body = crow::json::wvalue{
 			{"put", true}
-			}).dump();
+			}.dump();
 
 			return response;
 		});
