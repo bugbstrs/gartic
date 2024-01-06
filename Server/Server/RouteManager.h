@@ -28,7 +28,7 @@ namespace http
 		void RegisterRoute();
 		void CheckBannedWordRoute();
 
-        std::optional<crow::response> IsRequestAuthenticated(const crow::request& request);
+        crow::response IsRequestAuthenticated(const crow::request& request);
 
 		// Gartic Manager related
 		void CreateLobbyRoute();

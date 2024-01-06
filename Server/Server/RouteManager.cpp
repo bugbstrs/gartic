@@ -51,10 +51,9 @@ void http::RouteManager::Run()
 void http::RouteManager::FetchWordRoute()
 {
 	CROW_ROUTE(m_app, "/fetchword")([this](const crow::request& request) {
-        if (IsRequestAuthenticated(request)) return IsRequestAuthenticated(request).value();
+        crow::response response = IsRequestAuthenticated(request);
 
-        crow::response response;
-        response.set_header("Content-Type", "application/json");
+        if (response.code != 200) return response;
 
         try
         {
@@ -98,10 +97,9 @@ void http::RouteManager::FetchWordRoute()
 void http::RouteManager::FetchQuoteRoute()
 {
 	CROW_ROUTE(m_app, "/fetchquote")([this](const crow::request& request) {
-        if (IsRequestAuthenticated(request)) return IsRequestAuthenticated(request).value();
+        crow::response response = IsRequestAuthenticated(request);
 
-        crow::response response;
-        response.set_header("Content-Type", "application/json");
+        if (response.code != 200) return response;
 
 		try
 		{
@@ -181,10 +179,9 @@ void http::RouteManager::FetchAllUsersRoute()
 void http::RouteManager::FetchTop5UsersRoute()
 {
 	CROW_ROUTE(m_app, "/fetchtopusers")([this](const crow::request& request) {
-        if (IsRequestAuthenticated(request)) return IsRequestAuthenticated(request).value();
+        crow::response response = IsRequestAuthenticated(request);
 
-        crow::response response;
-        response.set_header("Content-Type", "application/json");
+        if (response.code != 200) return response;
         
         try
         {
@@ -228,13 +225,7 @@ void http::RouteManager::FetchTop5UsersRoute()
 void http::RouteManager::LoginRoute()
 {
 	CROW_ROUTE(m_app, "/login")([this](const crow::request& request) {
-        if (IsRequestAuthenticated(request)) return IsRequestAuthenticated(request).value();
-        
-        crow::response response;
-
-        response.code = 200;
-
-        return response;
+        return IsRequestAuthenticated(request);
     });
 }
 
@@ -275,9 +266,8 @@ void http::RouteManager::CheckBannedWordRoute()
 		});
 }
 
-std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const crow::request& request)
+crow::response http::RouteManager::IsRequestAuthenticated(const crow::request& request)
 {
-	std::optional<crow::response> returnResponse;
 	char* password = request.url_params.get("password");
 	char* username = request.url_params.get("username");
 	
@@ -292,10 +282,10 @@ std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const c
 	{
 		response.code = 400;
 		response.body = crow::json::wvalue
-		({
+		{
 			{"code", response.code},
 			{"error", "user or password not provided"}
-		}).dump();
+		}.dump();
 
 		return response;
 	}
@@ -305,22 +295,22 @@ std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const c
 	{
 		response.code = 400;
 		response.body = crow::json::wvalue
-		({
+		{
 			{"code", response.code},
 			{"error", "invalid password format! (not hashed or bad hash)"}
-			}).dump();
+		}.dump();
 
-			return response;
+		return response;
 	}*/
 
 	if (!std::regex_match(username, regexFormatUsername))
 	{
 		response.code = 400;
 		response.body = crow::json::wvalue
-		({
+		{
 			{"code", response.code},
 			{"error", "invalid username format! ((username format description))"}
-		}).dump();
+		}.dump();
 
 		return response;
 	}
@@ -331,15 +321,15 @@ std::optional<crow::response> http::RouteManager::IsRequestAuthenticated(const c
 	{
 		response.code = 401;
 		response.body = crow::json::wvalue
-		({
+		{
 			{"code", response.code},
 			{"error", "unauthorized"}
-		}).dump();
+		}.dump();
 		
 		return response;
 	}
 
-	return {};
+	return response;
 }
 
 void http::RouteManager::CreateLobbyRoute()
