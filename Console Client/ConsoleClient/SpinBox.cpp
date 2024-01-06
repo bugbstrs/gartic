@@ -87,6 +87,13 @@ void SpinBox::SetOptions(Options options, int startOption)
 	m_optionSelected = startOption;
 }
 
+void SpinBox::SetOption(String option)
+{
+	auto it{ std::find(m_options.begin(), m_options.end(), option) };
+	if (it != m_options.end())
+		m_optionSelected = it - m_options.begin();
+}
+
 void SpinBox::SetHoverColors(ColorType backgroundColor, ColorType textColor)
 {
 	m_left->SetHoverColors(backgroundColor, textColor);
@@ -98,6 +105,22 @@ void SpinBox::SetConections(SelectableObject* up, SelectableObject* down,
 {
 	m_left->SetConections(up, down, nullptr, m_right);
 	m_right->SetConections(up, down, m_left, nullptr);
+}
+
+void SpinBox::SetFunctionOnActivate(Function function)
+{
+	auto leftFunctionWrapper{ [function, this]()
+		{
+			function();
+			PreviousOption();
+		} };
+	auto rightFunctionWrapper{ [function, this]()
+		{
+			function();
+			NextOption();
+		} };
+	m_left->SetFunctionOnActivate(leftFunctionWrapper);
+	m_right->SetFunctionOnActivate(rightFunctionWrapper);
 }
 
 void SpinBox::Draw()
