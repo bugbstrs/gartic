@@ -85,7 +85,7 @@ void SelectableObject::CanBeSelected(bool selectable)
 
 bool SelectableObject::IsSelectable()
 {
-    return m_selectable;
+    return m_active ? m_selectable : false;
 }
 
 bool SelectableObject::IsPointInside(COORD point)

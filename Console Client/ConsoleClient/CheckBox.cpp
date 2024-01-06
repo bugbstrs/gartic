@@ -61,19 +61,19 @@ void CheckBox::CheckInput()
 				m_function();
 			break;
 		case ControlKeys::UpArrow:
-			if (m_upObject && m_upObject->IsActive())
+			if (m_upObject && m_upObject->IsSelectable())
 				m_selectedObject = m_upObject;
 			break;
 		case ControlKeys::DownArrow:
-			if (m_downObject && m_downObject->IsActive())
+			if (m_downObject && m_downObject->IsSelectable())
 				m_selectedObject = m_downObject;
 			break;
 		case ControlKeys::LeftArrow:
-			if (m_leftObject && m_leftObject->IsActive())
+			if (m_leftObject && m_leftObject->IsSelectable())
 				m_selectedObject = m_leftObject;
 			break;
 		case ControlKeys::RightArrow:
-			if (m_rightObject && m_rightObject->IsActive())
+			if (m_rightObject && m_rightObject->IsSelectable())
 				m_selectedObject = m_rightObject;
 			break;
 		default:

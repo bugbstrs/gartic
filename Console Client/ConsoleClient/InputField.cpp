@@ -68,14 +68,14 @@ void InputField::CheckInput()
 		if (m_textPos / m_width > 0)
 			m_textPos -= m_width;
 		else
-			if(m_upObject && m_upObject->IsActive())
+			if(m_upObject && m_upObject->IsSelectable())
 				m_selectedObject = m_upObject;
 		break;
 	case ControlKeys::DownArrow:
 		if (m_textPos < m_width * (m_height - 1))
 			m_textPos += m_width;
 		else
-			if (m_downObject && m_downObject->IsActive())
+			if (m_downObject && m_downObject->IsSelectable())
 				m_selectedObject = m_downObject;
 		break;
 	case ControlKeys::LeftArrow:
