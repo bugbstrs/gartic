@@ -14,7 +14,7 @@ LobbyScene::LobbyScene(ConsoleManager* console, InputManager* inputManager) :
 
 void LobbyScene::StartGame()
 {
-	auto response{ cpr::Get(
+	auto response{ cpr::Post(
 		cpr::Url{ "http://localhost:18080/creategame" },
 		cpr::Parameters{
 			{"password", User::GetPassword()},
@@ -33,40 +33,46 @@ void LobbyScene::GetUsers()
 			{"username", User::GetUsername()}
 		}
 	) };
-	auto usersVector{ crow::json::load(response.text) };
-	m_users->Clear();
-	bool lastUserColor{ false };
-	bool first{ true };
-	for (const auto& user : usersVector)
+	if (response.status_code == 200)
 	{
-		Color color = first ? Color::Green : lastUserColor ? Color::DarkGray : Color::White;
-		if (first && std::string(user["username"]) == User::GetUsername())
-			SetAsLeader();
-		first = false;
-		lastUserColor = !lastUserColor;
-		m_users->AddObject(new Label{ Align::Center, Align::Center, color, Color::Black,
-									  20, 3, m_console, std::string(user["username"]) });
+		auto usersVector{ crow::json::load(response.text) };
+		m_users->Clear();
+		bool lastUserColor{ false };
+		bool first{ true };
+		for (const auto& user : usersVector["users"])
+		{
+			Color color = first ? Color::Green : lastUserColor ? Color::DarkGray : Color::White;
+			if (first && std::string(user) == User::GetUsername())
+				SetAsLeader();
+			first = false;
+			lastUserColor = !lastUserColor;
+			m_users->AddObject(new Label{ Align::Center, Align::Center, color, Color::Black,
+										  20, 3, m_console, std::string(user) });
+		}
 	}
 }
 
 void LobbyScene::GetSettings()
 {
-	auto gameSettings = cpr::Get(
+	auto response = cpr::Get(
 		cpr::Url{ "http://localhost:18080/fetchsettings" },
 		cpr::Parameters{
 			{"username", User::GetUsername()},
 			{"password", User::GetPassword()}
 		}
 	);
-	auto settings = crow::json::load(gameSettings.text);
-	m_drawTime->SetOption(std::string(settings[2]["drawTime"]));
-	m_wordCount->SetOption(std::string(settings[1]["wordCount"]));
-	m_rounds->SetOption(std::string(settings[0]["roundsNumber"]));
+	if (response.status_code == 200)
+	{
+		auto settings = crow::json::load(response.text);
+		m_drawTime->SetOption(std::string(settings["settings"]["drawTime"]));
+		m_wordCount->SetOption(std::string(settings["settings"]["wordCount"]));
+		m_rounds->SetOption(std::string(settings["settings"]["roundsNumber"]));
+	}
 }
 
 void LobbyScene::SetSettings()
 {
-	auto response = cpr::Get(
+	auto response = cpr::Post(
 		cpr::Url{ "http://localhost:18080/setsettings" },
 		cpr::Parameters{
 			{"username", User::GetUsername()},
@@ -97,16 +103,19 @@ void LobbyScene::HasStarted()
 			{"password", User::GetPassword()}
 		}
 	) };
-	auto state = crow::json::load(response.text);
-	if (std::string(state[0]["lobby_status"]) == "StartedGame")
+	if (response.status_code == 200)
 	{
-		m_nextScene = const_cast<std::type_info*>(&typeid(GameScene));
+		auto state = crow::json::load(response.text);
+		if (std::string(state["status"]) == "StartedGame")
+		{
+			m_nextScene = const_cast<std::type_info*>(&typeid(GameScene));
+		}
 	}
 }
 
 void LobbyScene::Back()
 {
-	auto response{ cpr::Get(
+	auto response{ cpr::Post(
 	cpr::Url{ "http://localhost:18080/leavelobby" },
 	cpr::Parameters{
 		{"password", User::GetPassword()},
@@ -219,7 +228,7 @@ void LobbyScene::Start()
 	if (response.status_code == 200)
 	{
 		auto code = crow::json::load(response.text);
-		m_codeLabel->UpdateText(std::string("Code: ") + std::string(code[0]["code"]));
+		m_codeLabel->UpdateText(std::string("Code: ") + std::string(code["code"]));
 	}
 	else
 	{
@@ -260,13 +269,14 @@ void LobbyScene::Update()
 {
 	while (m_nextScene == nullptr)
 	{
-		//if(!m_isLeader)
-			//HasStarted();
+		if(!m_isLeader)
+			HasStarted();
 		GetUsers();
-		//if (!m_isLeader)
-			//GetSettings();
-
+		if (!m_isLeader)
+			GetSettings();
 		Input();
 		Display();
+
+		Sleep(200);
 	}
 }

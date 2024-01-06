@@ -21,7 +21,7 @@ MenuScene::MenuScene(ConsoleManager* console, InputManager* inputManager) :
 
 void MenuScene::CreateLobby()
 {
-    auto response = cpr::Get(
+    auto response = cpr::Post(
         cpr::Url{ "http://localhost:18080/createlobby" },
         cpr::Parameters{
             {"username", User::GetUsername()},
@@ -40,7 +40,7 @@ void MenuScene::CreateLobby()
 
 void MenuScene::JoinLobby()
 {
-    auto response = cpr::Get(
+    auto response = cpr::Post(
         cpr::Url{ "http://localhost:18080/joinlobby" },
         cpr::Parameters{
             {"username", User::GetUsername()},
