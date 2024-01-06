@@ -70,7 +70,7 @@ MainWindow::~MainWindow() {}
 
 //Main menu events
 void MainWindow::OnCreateLobbyButtonReleased() noexcept { 
-    auto response = cpr::Get(
+    auto response = cpr::Post(
         cpr::Url{ "http://localhost:18080/createlobby" },
         cpr::Parameters{
             {"username", UserCredentials::GetUsername()},
@@ -99,8 +99,8 @@ void MainWindow::OnCreateLobbyButtonReleased() noexcept {
     if (response.status_code == 200 && code.status_code == 200 && users.status_code == 200) {
         ui->lobbyFrame->SetLeaderStatus(true);
         ui->stackedWidget->setCurrentWidget(ui->LobbyScene);
-        ui->lobbyTable->AddPlayer(std::string(usersVector[0]["username"]));
-        ui->lobbyFrame->SetCode(QString::fromUtf8(std::string(codeText[0]["code"])));
+        ui->lobbyTable->AddPlayer(std::string(usersVector["users"][0]));
+        ui->lobbyFrame->SetCode(QString::fromUtf8(std::string(codeText["code"])));
     }
 }
 void MainWindow::OnJoinLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->JoinLobbyScene); }
@@ -112,7 +112,7 @@ void MainWindow::OnGoToSignUpButtonReleased() noexcept { ui->stackedWidget->setC
 
 //Join Lobby Scene
 void MainWindow::OnLobbyCodeAccepted(std::string codeText) noexcept {
-    auto joinLobby = cpr::Get(
+    auto joinLobby = cpr::Post(
         cpr::Url{ "http://localhost:18080/joinlobby" },
         cpr::Parameters{
             {"username", UserCredentials::GetUsername()},
@@ -121,6 +121,7 @@ void MainWindow::OnLobbyCodeAccepted(std::string codeText) noexcept {
 
         }
     );
+
     auto users = cpr::Get(
         cpr::Url{ "http://localhost:18080/fetchusers" },
         cpr::Parameters{
@@ -129,9 +130,9 @@ void MainWindow::OnLobbyCodeAccepted(std::string codeText) noexcept {
         }
     );
     auto usersVector = crow::json::load(users.text);
-    for (int index = 0; index < usersVector.size(); index++) {
-        ui->lobbyTable->AddPlayer(std::string(usersVector[index]["username"]));
-    }
+    for (int index = 0; index < usersVector.size(); index++)
+        ui->lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
+
     ui->codeLineEdit->setText(QString::fromUtf8(codeText));
     ui->stackedWidget->setCurrentWidget(ui->LobbyScene); 
 }

@@ -32,7 +32,7 @@ void LobbyFrame::showEvent(QShowEvent * event)
 		if (m_isLeader) {
 			QObject::connect(startGameButton, &QPushButton::released, this, [this]() {
 				//Muta aici din mainwindow crearea de game
-				auto createGame = cpr::Get(
+				auto createGame = cpr::Post(
 					cpr::Url{ "http://localhost:18080/creategame" },
 					cpr::Parameters{
 						{"username", UserCredentials::GetUsername()},
@@ -41,7 +41,7 @@ void LobbyFrame::showEvent(QShowEvent * event)
 				);
 			});
 			QObject::connect(roundsComboBox, &QComboBox::currentTextChanged, this, [this](const QString& newText) {
-				auto modifySettings = cpr::Get(
+				auto modifySettings = cpr::Post(
 					cpr::Url{ "http://localhost:18080/setsettings" },
 					cpr::Parameters{
 						{"username", UserCredentials::GetUsername()},
@@ -53,7 +53,7 @@ void LobbyFrame::showEvent(QShowEvent * event)
 				);
 			});
 			QObject::connect(wordCountComboBox, &QComboBox::currentTextChanged, this, [this](const QString& newText) {
-				auto modifySettings = cpr::Get(
+				auto modifySettings = cpr::Post(
 					cpr::Url{ "http://localhost:18080/setsettings" },
 					cpr::Parameters{
 						{"username", UserCredentials::GetUsername()},
@@ -65,7 +65,7 @@ void LobbyFrame::showEvent(QShowEvent * event)
 				);
 			});
 			QObject::connect(drawTimeComboBox, &QComboBox::currentTextChanged, this, [this](const QString& newText) {
-				auto modifySettings = cpr::Get(
+				auto modifySettings = cpr::Post(
 					cpr::Url{ "http://localhost:18080/setsettings" },
 					cpr::Parameters{
 						{"username", UserCredentials::GetUsername()},
@@ -112,9 +112,9 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 		);
 		auto usersVector = crow::json::load(users.text);
 		int playersNumber = lobbyTable->GetPlayersNumber();
-		if (usersVector.size() != lobbyTable->GetPlayersNumber()) {
+		if (usersVector["users"].size() != lobbyTable->GetPlayersNumber()) {
 			for (int index = playersNumber; index < usersVector.size(); index++)
-				lobbyTable->AddPlayer(std::string(usersVector[index]["username"]));
+				lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
 		}
 
 		if (!m_isLeader) {
@@ -126,9 +126,11 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 				}
 			);
 			auto settings = crow::json::load(gameSettings.text);
-			drawTimeComboBox->setCurrentText(QString::fromUtf8(std::string(settings[2]["drawTime"])));
-			roundsComboBox->setCurrentText(QString::fromUtf8(std::string(settings[0]["roundsNumber"])));
-			wordCountComboBox->setCurrentText(QString::fromUtf8(std::string(settings[1]["wordCount"])));
+			auto x = settings["settings"];
+			auto y = x["drawTime"];
+			drawTimeComboBox->setCurrentText(QString::fromUtf8(std::string(settings["settings"]["drawTime"])));
+			roundsComboBox->setCurrentText(QString::fromUtf8(std::string(settings["settings"]["roundsNumber"])));
+			wordCountComboBox->setCurrentText(QString::fromUtf8(std::string(settings["settings"]["wordCount"])));
 		}
 
 		auto gameState = cpr::Get(
@@ -139,7 +141,7 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 			}
 		);
 		auto state = crow::json::load(gameState.text);
-		if (std::string(state[0]["lobby_status"]) == kStartedGame) {
+		if (std::string(state["status"]) == kStartedGame) {
 			stop.store(true);
 		}
 
