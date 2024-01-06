@@ -29,6 +29,7 @@ private:
     Label*            m_codeLabel;
     Button*           m_startButton;
     CheckBox*         m_customRounds;
+    bool              m_isLeader;
 
     void StartGame  ();
     void GetUsers   ();

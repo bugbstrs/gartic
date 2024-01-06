@@ -14,6 +14,13 @@ LobbyScene::LobbyScene(ConsoleManager* console, InputManager* inputManager) :
 
 void LobbyScene::StartGame()
 {
+	auto response{ cpr::Get(
+		cpr::Url{ "http://localhost:18080/creategame" },
+		cpr::Parameters{
+			{"password", User::GetPassword()},
+			{"username", User::GetUsername()}
+		}
+	) };
 	m_nextScene = const_cast<std::type_info*>(&typeid(GameScene));
 }
 
@@ -44,26 +51,57 @@ void LobbyScene::GetUsers()
 
 void LobbyScene::GetSettings()
 {
-
+	auto gameSettings = cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchsettings" },
+		cpr::Parameters{
+			{"username", User::GetUsername()},
+			{"password", User::GetPassword()}
+		}
+	);
+	auto settings = crow::json::load(gameSettings.text);
+	m_drawTime->SetOption(std::string(settings[2]["drawTime"]));
+	m_wordCount->SetOption(std::string(settings[1]["wordCount"]));
+	m_rounds->SetOption(std::string(settings[0]["roundsNumber"]));
 }
 
 void LobbyScene::SetSettings()
 {
-
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/setsettings" },
+		cpr::Parameters{
+			{"username", User::GetUsername()},
+			{"password", User::GetPassword()},
+			{"roundsnumber", m_rounds->GetOption()},
+			{"wordcount", m_wordCount->GetOption()},
+			{"drawtime", m_drawTime->GetOption()}
+		}
+	);
 }
 
 void LobbyScene::SetAsLeader()
 {
+	m_isLeader = true;
 	m_rounds->CanBeSelected(true);
 	m_drawTime->CanBeSelected(true);
 	m_wordCount->CanBeSelected(true);
-	m_customRounds->CanBeSelected(true);
+	//m_customRounds->CanBeSelected(true);
 	m_startButton->SetActive(true);
 }
 
 void LobbyScene::HasStarted()
 {
-	m_nextScene = const_cast<std::type_info*>(&typeid(GameScene));
+	auto response{ cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchlobbystatus" },
+		cpr::Parameters{
+			{"username", User::GetUsername()},
+			{"password", User::GetPassword()}
+		}
+	) };
+	auto state = crow::json::load(response.text);
+	if (std::string(state[0]["lobby_status"]) == "StartedGame")
+	{
+		m_nextScene = const_cast<std::type_info*>(&typeid(GameScene));
+	}
 }
 
 void LobbyScene::Back()
@@ -92,6 +130,7 @@ void LobbyScene::Input() const
 void LobbyScene::Start()
 {
 	m_nextScene = nullptr;
+	m_isLeader = false;
 	m_console->ResetColorsPalette();
 	m_console->AddColorsToPalette({White, Black, Gray, DarkBlue, Blue, DarkGray, Green, DarkGreen});
 	m_console->NewConsole(L"Lobby", 160, 45);
@@ -110,6 +149,7 @@ void LobbyScene::Start()
 
 	m_drawTime = new SpinBox{Align::Left, Align::Center, Color::Gray, Color::Black,
 		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::DarkBlue, Color::Black};
+	m_drawTime->SetFunctionOnActivate([this]() { SetSettings(); });
 	m_drawTime->CanBeSelected(false);
 	m_drawTime->SetOptions({ "15", "20", "30", "40", "50", "60", "70", "80", "90", "100", "120" }, 5);
 	m_drawTime->SetHoverColors(Color::Blue, Color::Black);
@@ -126,6 +166,7 @@ void LobbyScene::Start()
 
 	m_rounds = new SpinBox{ Align::Left, Align::Center, Color::Gray, Color::Black,
 		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::DarkBlue, Color::Black };
+	m_rounds->SetFunctionOnActivate([this]() { SetSettings(); });
 	m_rounds->CanBeSelected(false);
 	m_rounds->SetOptions({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, 3);
 	m_rounds->SetHoverColors(Color::Blue, Color::Black);
@@ -142,6 +183,7 @@ void LobbyScene::Start()
 
 	m_wordCount = new SpinBox{ Align::Left, Align::Center, Color::Gray, Color::Black,
 		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::DarkBlue, Color::Black };
+	m_wordCount->SetFunctionOnActivate([this]() { SetSettings(); });
 	m_wordCount->CanBeSelected(false);
 	m_wordCount->SetOptions({ "1", "2", "3", "4", "5" }, 2);
 	m_wordCount->SetHoverColors(Color::Blue, Color::Black);
@@ -151,18 +193,18 @@ void LobbyScene::Start()
 	m_objects.emplace_back(horizontalLayout);
 
 	// Custom rounds
-	horizontalLayout = new HorizontalLayout{ 40, 17, Align::Right, Align::Up, Color::Black, 21, 3, m_console, 1 };
+	//horizontalLayout = new HorizontalLayout{ 40, 17, Align::Right, Align::Up, Color::Black, 21, 3, m_console, 1 };
 
-	horizontalLayout->AddObject(new Label{ Align::Right, Align::Center, Color::Black, Color::White,
-		10, 3, m_console, "Custom rounds" });
+	//horizontalLayout->AddObject(new Label{ Align::Right, Align::Center, Color::Black, Color::White,
+	//	10, 3, m_console, "Custom rounds" });
 
-	m_customRounds = new CheckBox{ Color::Gray, Color::Green, Color::DarkBlue, 6, 3, m_console, m_input, m_selected };
-	m_customRounds->CanBeSelected(false);
-	m_customRounds->SetHoverColors(Color::Blue, Color::Black);
-	m_selectableObjects.emplace_back(m_customRounds);
-	horizontalLayout->AddObject(m_customRounds);
+	//m_customRounds = new CheckBox{ Color::Gray, Color::Green, Color::DarkBlue, 6, 3, m_console, m_input, m_selected };
+	//m_customRounds->CanBeSelected(false);
+	//m_customRounds->SetHoverColors(Color::Blue, Color::Black);
+	//m_selectableObjects.emplace_back(m_customRounds);
+	//horizontalLayout->AddObject(m_customRounds);
 
-	m_objects.emplace_back(horizontalLayout);
+	//m_objects.emplace_back(horizontalLayout);
 
 	// Code label
 	m_codeLabel = new Label{ 40, 22, Align::Center, Align::Center, Color::Black, Color::White,
@@ -206,9 +248,9 @@ void LobbyScene::Start()
 
 	m_drawTime->SetConections(nullptr, m_rounds, nullptr, nullptr);
 	m_rounds->SetConections(m_drawTime, m_wordCount, nullptr, nullptr);
-	m_wordCount->SetConections(m_rounds, m_customRounds, nullptr, nullptr);
-	m_customRounds->SetConections(m_wordCount, m_startButton, nullptr, nullptr);
-	m_startButton->SetConections(m_customRounds, nullptr, nullptr, leaveButton);
+	m_wordCount->SetConections(m_rounds, m_startButton, nullptr, nullptr);
+	//m_customRounds->SetConections(m_wordCount, m_startButton, nullptr, nullptr);
+	m_startButton->SetConections(m_wordCount, nullptr, nullptr, leaveButton);
 	leaveButton->SetConections(nullptr, nullptr, m_startButton, nullptr);
 
 	m_selected = leaveButton;
@@ -218,7 +260,11 @@ void LobbyScene::Update()
 {
 	while (m_nextScene == nullptr)
 	{
+		//if(!m_isLeader)
+			//HasStarted();
 		GetUsers();
+		//if (!m_isLeader)
+			//GetSettings();
 
 		Input();
 		Display();

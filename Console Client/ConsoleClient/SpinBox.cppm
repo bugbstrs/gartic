@@ -35,15 +35,17 @@ public:
 	// Destructor
 	~SpinBox();
 
-	void   SetOptions		   (Options options, int startOption);
-	void   SetHoverColors	   (ColorType backgroundColor, ColorType textColor) override;
-	void   SetConections	   (SelectableObject* up, SelectableObject* down,
-							    SelectableObject* left, SelectableObject* right) override;
-	void   Draw				   () override;
-	void   InitializeTransform (COORD upLeftCorner) override;
-	void   CheckCursor		   () override;
-	void   CheckInput		   () override;
-	String GetOption		   () const;
+	void   SetOptions			(Options options, int startOption);
+	void   SetOption			(String option);
+	void   SetHoverColors		(ColorType backgroundColor, ColorType textColor) override;
+	void   SetConections		(SelectableObject* up, SelectableObject* down,
+							     SelectableObject* left, SelectableObject* right) override;
+	void   SetFunctionOnActivate(Function function) override;
+	void   Draw					() override;
+	void   InitializeTransform	(COORD upLeftCorner) override;
+	void   CheckCursor			() override;
+	void   CheckInput			() override;
+	String GetOption			() const;
 
 private:
 	Options m_options;
