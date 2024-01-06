@@ -126,8 +126,6 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 				}
 			);
 			auto settings = crow::json::load(gameSettings.text);
-			auto x = settings["settings"];
-			auto y = x["drawTime"];
 			drawTimeComboBox->setCurrentText(QString::fromUtf8(std::string(settings["settings"]["drawTime"])));
 			roundsComboBox->setCurrentText(QString::fromUtf8(std::string(settings["settings"]["roundsNumber"])));
 			wordCountComboBox->setCurrentText(QString::fromUtf8(std::string(settings["settings"]["wordCount"])));

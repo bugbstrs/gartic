@@ -130,7 +130,7 @@ void MainWindow::OnLobbyCodeAccepted(std::string codeText) noexcept {
         }
     );
     auto usersVector = crow::json::load(users.text);
-    for (int index = 0; index < usersVector.size(); index++)
+    for (int index = 0; index < usersVector["users"].size(); index++)
         ui->lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
 
     ui->codeLineEdit->setText(QString::fromUtf8(codeText));
