@@ -111,13 +111,13 @@ void SpinBox::SetFunctionOnActivate(Function function)
 {
 	auto leftFunctionWrapper{ [function, this]()
 		{
-			function();
 			PreviousOption();
+			function();
 		} };
 	auto rightFunctionWrapper{ [function, this]()
 		{
-			function();
 			NextOption();
+			function();
 		} };
 	m_left->SetFunctionOnActivate(leftFunctionWrapper);
 	m_right->SetFunctionOnActivate(rightFunctionWrapper);
@@ -141,6 +141,7 @@ void SpinBox::InitializeTransform(COORD upLeftCorner)
 
 void SpinBox::CheckCursor()
 {
+	if (!m_selectable) return;
 	m_left->CheckCursor();
 	m_right->CheckCursor();
 }
