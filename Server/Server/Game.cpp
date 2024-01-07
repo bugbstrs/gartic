@@ -6,7 +6,7 @@ using namespace http;
 Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers) :
 	m_players{ std::move(newPlayers) },
 	m_gameStatus { GameStatus::Waiting },
-	m_remainingTime { Time() },
+	m_remainingTime { Time(60) },
 	m_chat { Chat(m_players) },
 	m_roundNumber { 0 },
 	m_board { DrawingBoard(m_players) },

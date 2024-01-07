@@ -14,44 +14,40 @@ namespace http
 	class Time
 	{
 	public:
-		Time() = default;
-		Time(float newStartTimeStamp, float newStartValue, float newEndValue);
+		Time() = delete;
+		Time(int duration);
 		Time(const Time& newTime);
 
 		~Time();
 
-		float GetStartTimeStamp() const noexcept;
-		float GetStartValue() const noexcept;
-		float GetEndValue() const noexcept;
+		int GetDuration() const noexcept;
+		int GetRemainingTime() const noexcept;
 
-		int GetServerTime() const noexcept;
+		void SetDuration(int newDuration);
 
-		const std::function<void(const std::string&)>& GetMethodToCall() const noexcept;
+		template <typename FuncType, typename... Args>
+		void SetMethodToCall(FuncType methodToCall, Args&&... args)
+		{
+			m_toCall = std::bind(methodToCall, std::forward<Args>(args)...);
+		}
 
-		void SetStartTimeStamp(float newTimeStamp);
-		void SetStartValue(float newStartValue);
-		void SetEndValue(float newEndValue);
-
-		void SetMethodToCall(std::function<void(const std::string&)> methodToCall, const std::string& username);
-
-		void Start(float timeStamp, float startValue, float endValue);
+		void Reset();
 
 		bool Check();
+
 		static void CheckTimers();
+		static int GetServerTime() noexcept;
 
 		Time operator = (const Time& t1);
 
 	private:
-		float m_startTimeStamp;
-		float m_startValue;
-		float m_endValue;
+		int m_startTimeStamp;
+		int m_duration;
 		
-		std::function<void(const std::string&)> m_toCall;
+		std::function<void()> m_toCall;
+		std::string m_currentPlayerToRemove;
 
 		static Timer m_serverTimer;
 		static std::vector<Time*> m_timers;
-
-		std::string m_currentPlayerToRemove = "Maria";
 	};
 }
-

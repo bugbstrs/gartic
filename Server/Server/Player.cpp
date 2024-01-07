@@ -6,22 +6,26 @@ using namespace http;
 
 Player::Player() noexcept :
     m_user{ "" },
-    m_points{ 0 }
+    m_points{ 0 },
+    m_active{ 60 }
 {}
 
 Player::Player(const Player& otherPlayer) noexcept :
     m_user{ otherPlayer.m_user },
-    m_points{ otherPlayer.m_points }
+    m_points{ otherPlayer.m_points },
+    m_active{ otherPlayer.m_active }
 {}
 
 Player::Player(Player&& otherPlayer) noexcept :
     m_user{ std::move(otherPlayer.m_user) },
-    m_points{ std::move(otherPlayer.m_points) }
+    m_points{ std::move(otherPlayer.m_points) },
+    m_active{ std::move(otherPlayer.m_active) }
 {}
 
 Player::Player(const std::string& username, uint16_t points) :
     m_user{ username },
-    m_points{ points }
+    m_points{ points },
+    m_active{ 60 }
 {}
 
 uint16_t Player::GetPoints() const noexcept

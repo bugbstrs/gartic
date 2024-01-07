@@ -16,6 +16,14 @@ http::Lobby::~Lobby()
 
 void http::Lobby::AddUser(std::shared_ptr<User> newUser)
 {
+	auto removeUserCallback = [this](const std::string& username)
+		{
+			RemoveUser(username);
+		};
+
+	newUser->GetTime()->SetMethodToCall(removeUserCallback, newUser->GetUsername());
+	m_users.push_back(newUser);
+
 	/*auto RemoveUserCallback = [this, newUser]() {
 		RemoveUser(newUser);
 	};
@@ -27,9 +35,9 @@ void http::Lobby::AddUser(std::shared_ptr<User> newUser)
 
 	/*std::function<void()> callbackFunction(RemoveUserCallback);*/
 
-	newUser->GetTime()->SetMethodToCall([this](const std::string& username) {RemoveUser(username); }, newUser->GetUsername());
+	//newUser->GetTime()->SetMethodToCall([this](const std::string& username) {RemoveUser(username); }, newUser->GetUsername());
 
-	m_users.push_back(newUser);
+	//m_users.push_back(newUser);
 
 	/*const std::function<void()> callbackFunction = [this, userName = newUser->GetUsername()]() {
 		this->RemoveUser(userName);

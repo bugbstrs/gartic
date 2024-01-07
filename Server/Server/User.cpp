@@ -4,13 +4,13 @@ using namespace http;
 
 http::User::User()
 {
-	m_active = new Time(3, 20, 50);
+	m_active = new Time(3000);
 }
 
 http::User::User(const std::string& newUsername):
 	m_username{ newUsername }
 {
-	m_active = new Time(5, 7, 10);
+	m_active = new Time(3000);
 }
 
 void http::User::SetUsername(const std::string& newUsername)
@@ -30,8 +30,7 @@ Time* http::User::GetTime() const noexcept
 
 void http::User::SetActive()
 {
-	m_active->SetStartValue(kSecondsForBeingActive);
-	m_active->SetStartTimeStamp(static_cast<float>(m_active->GetServerTime()));
+	m_active->Reset();
 }
 
 bool http::User::operator==(const User& u1)

@@ -115,7 +115,7 @@ void LobbyScene::HasStarted()
 
 void LobbyScene::Back()
 {
-	auto response{ cpr::Post(
+	auto response{ cpr::Get(
 	cpr::Url{ "http://localhost:18080/leavelobby" },
 	cpr::Parameters{
 		{"password", User::GetPassword()},
