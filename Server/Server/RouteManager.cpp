@@ -491,7 +491,20 @@ void http::RouteManager::CreateGameRoute()
 
 		m_gartic.CreateGame(std::string(username));
 
-		m_gartic.GetLobby(std::string(username))->SetLobbyStatus(LobbyStatus::StartedGame);
+        if (!m_gartic.GetLobby(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a lobby!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
+    	m_gartic.GetLobby(std::string(username))->SetLobbyStatus(LobbyStatus::StartedGame);
 
 		response.body = crow::json::wvalue
         {
@@ -579,7 +592,20 @@ void http::RouteManager::FetchCodeRoute()
 
         String username = request.url_params.get("username");
 
-		std::string fetchedCode = m_gartic.GetLobby(username)->GetCode();
+        if (!m_gartic.GetLobby(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a lobby!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
+    	std::string fetchedCode = m_gartic.GetLobby(username)->GetCode();
         
         response.body = crow::json::wvalue
         {
@@ -609,7 +635,20 @@ void http::RouteManager::FetchUsersRoute()
 		std::vector<std::shared_ptr<User>> fetchedUsers;
 		std::vector<crow::json::wvalue> usersJSONArray;
 
-		fetchedUsers = m_gartic.GetLobby(username)->GetUsers();
+        if (!m_gartic.GetLobby(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a lobby!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
+        fetchedUsers = m_gartic.GetLobby(username)->GetUsers();
 		
         for (const auto& user : fetchedUsers)
             usersJSONArray.push_back(user->GetUsername());
@@ -681,6 +720,19 @@ void http::RouteManager::SetSettingsRoute()
             return;
         }
 
+        if (!m_gartic.GetLobby(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a lobby!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
 		m_gartic.GetLobby(username)->GetSettings().SetWordCount(std::stoi(wordCount));
 		m_gartic.GetLobby(username)->GetSettings().SetRoundsNumber(std::stoi(roundsNumber));
 		m_gartic.GetLobby(username)->GetSettings().SetDrawTime(std::stoi(drawTime));
@@ -710,7 +762,22 @@ void http::RouteManager::FetchSettingsRoute()
         }
 
         String username = request.url_params.get("username");
+
+        if (!m_gartic.GetLobby(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a lobby!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
 		GameSettings fetchedSettings{ m_gartic.GetLobby(std::string(username))->GetSettings() };
+
         crow::json::wvalue settingsJSON
         {
             {"roundsNumber", fetchedSettings.GetRoundsNumber()},
@@ -743,7 +810,22 @@ void http::RouteManager::FetchLobbyStatusRoute()
         }
 
         String username = request.url_params.get("username");
-		LobbyStatus fetchedStatus = m_gartic.GetLobby(username)->GetLobbyStatus();
+
+        if (!m_gartic.GetLobby(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a lobby!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+		
+        LobbyStatus fetchedStatus = m_gartic.GetLobby(username)->GetLobbyStatus();
+
 		std::string statusString = LobbyStatusWrapper::ToString(fetchedStatus);
 
 		response.body = crow::json::wvalue
@@ -774,7 +856,20 @@ void http::RouteManager::LeaveLobbyRoute()
 
 		try
 		{
-			m_gartic.GetLobby(username)->RemoveUser(username);
+            if (!m_gartic.GetLobby(username))
+            {
+                response.code = 403;
+                response.body = crow::json::wvalue
+                {
+                    {"code", response.code},
+                    {"error", "The user is not in a lobby!"}
+                }.dump();
+
+                response.end();
+                return;
+            }
+			
+            m_gartic.GetLobby(username)->RemoveUser(username);
             
             response.code = 200;
             response.body = crow::json::wvalue
@@ -819,7 +914,22 @@ void http::RouteManager::FetchPlayersRoute()
         }
 
         String username = request.url_params.get("username");
-		std::vector<std::shared_ptr<Player>> fetchedPlayers = m_gartic.GetGame(username)->GetPlayers();
+
+        if (!m_gartic.GetGame(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a game!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
+        std::vector<std::shared_ptr<Player>> fetchedPlayers = m_gartic.GetGame(username)->GetPlayers();
+
 		std::vector<crow::json::wvalue> playersJSON;
 
 		for (const auto& player : fetchedPlayers)
@@ -851,7 +961,22 @@ void http::RouteManager::FetchGameStatusRoute()
         }
 
         String username = request.url_params.get("username");
-		GameStatus fetchedStatus = m_gartic.GetGame(username)->GetGameStatus();
+
+        if (!m_gartic.GetGame(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a game!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
+        GameStatus fetchedStatus = m_gartic.GetGame(username)->GetGameStatus();
+
 	    std::string statusString = GameStatusWrapper::ToString(fetchedStatus);
 
 	    response.body = crow::json::wvalue
@@ -879,7 +1004,20 @@ void http::RouteManager::FetchRoundNumberRoute()
 
         String username = request.url_params.get("username");
 
-		int roundNumber = m_gartic.GetGame(username)->GetRoundNumber();
+        if (!m_gartic.GetGame(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a game!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
+        int roundNumber = m_gartic.GetGame(username)->GetRoundNumber();
 
 		response.body = crow::json::wvalue
         {
@@ -906,7 +1044,20 @@ void http::RouteManager::FetchDrawerRoute()
 
         String username = request.url_params.get("username");
 
-		Player* fetchedDrawer = m_gartic.GetGame(username)->GetRound().GetDrawer();
+        if (!m_gartic.GetGame(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a game!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
+        Player* fetchedDrawer = m_gartic.GetGame(username)->GetRound().GetDrawer();
 
 		response.body = crow::json::wvalue
         {
@@ -933,6 +1084,20 @@ void http::RouteManager::FetchNWordsRoute()
 
         String username = request.url_params.get("username");
 		std::vector<crow::json::wvalue> wordsJSON;
+
+        if (!m_gartic.GetLobby(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a lobby!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
         int numberOfWords = m_gartic.GetLobby(username)->GetSettings().GetRoundsNumber();
 
 		for (int i{ 0 }; i < numberOfWords; ++i)
@@ -965,6 +1130,19 @@ void http::RouteManager::FetchDrawingBoard()
 
 		std::vector<crow::json::wvalue> drawingBoardJSON;
 
+        if (!m_gartic.GetGame(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a game!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
 		std::vector<DrawEvent*> drawEvents{ m_gartic.GetGame(username)->GetBoard().GetAndDeleteEvents(username)};
 
 		for (const auto& drawEvent : drawEvents)
@@ -995,6 +1173,19 @@ void http::RouteManager::FetchWordToGuessRoute()
 
         String username = request.url_params.get("username");
 
+        if (!m_gartic.GetGame(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a game!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
 		std::string wordToGuess = m_gartic.GetGame(username)->GetRound().GetWordToGuess();
 
         response.body = crow::json::wvalue
@@ -1022,7 +1213,20 @@ void http::RouteManager::FetchWordToDisplayRoute()
 
         String username = request.url_params.get("username");
 
-		std::string wordToDisplay = m_gartic.GetGame(username)->GetRound().GetWordToDisplay();
+        if (!m_gartic.GetGame(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a game!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
+        std::string wordToDisplay = m_gartic.GetGame(username)->GetRound().GetWordToDisplay();
 
         response.body = crow::json::wvalue
         {
@@ -1049,6 +1253,20 @@ void http::RouteManager::FetchMessagesRoute()
 
         String username = request.url_params.get("username");
 		std::vector<crow::json::wvalue> messagesJSON;
+
+        if (!m_gartic.GetGame(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a game!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
 		std::vector<std::string> messages = m_gartic.GetGame(username)->GetChat().GetAndDeleteMessages(username);
 
 		for (const auto& message : messages)
@@ -1081,6 +1299,19 @@ void http::RouteManager::LeaveGameRoute()
 
 		try
 		{
+            if (!m_gartic.GetGame(username))
+            {
+                response.code = 403;
+                response.body = crow::json::wvalue
+                {
+                    {"code", response.code},
+                    {"error", "The user is not in a game!"}
+                }.dump();
+
+                response.end();
+                return;
+            }
+
 			m_gartic.GetGame(username)->RemovePlayer(username);
 
             response.code = 200;
@@ -1144,7 +1375,20 @@ void http::RouteManager::PutWordToGuessRoute()
 
 		std::string wordToDiplayString(wordToGuess);
 
-		m_gartic.GetGame(username)->GetRound().SetWordToGuess(wordToDiplayString);
+        if (!m_gartic.GetGame(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a game!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+		
+        m_gartic.GetGame(username)->GetRound().SetWordToGuess(wordToDiplayString);
 
 		response.body = crow::json::wvalue
         {
@@ -1186,6 +1430,20 @@ void http::RouteManager::PutMessageInChatRoute()
 		}
 
 		std::string messageString(message);
+
+        if (!m_gartic.GetGame(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a game!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
 		m_gartic.GetGame(username)->GetChat().VerifyMessage(username, messageString);
 
         response.body = crow::json::wvalue
