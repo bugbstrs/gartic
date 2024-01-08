@@ -81,9 +81,8 @@ Milliseconds Timer::GetRemainingTime() const
     return m_remainingTime;
 }
 
-Milliseconds Timer::GetElapsedTime()
+Milliseconds Timer::GetElapsedTime() const
 {
-    //std::lock_guard lock{ m_mutex };
     return m_initialTime - m_remainingTime;
 }
 
