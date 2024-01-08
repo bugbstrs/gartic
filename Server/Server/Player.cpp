@@ -73,6 +73,11 @@ void Player::AddPoints(uint16_t noOfPointsToBeAdded) noexcept
     m_points += noOfPointsToBeAdded;
 }
 
+void http::Player::SetActive()
+{
+    m_active.Reset();
+}
+
 bool Player::operator==(const Player& otherPlayer) const noexcept
 {
     return m_points == otherPlayer.m_points && m_user == otherPlayer.m_user;

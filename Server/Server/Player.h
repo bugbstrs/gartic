@@ -38,6 +38,8 @@ namespace http
 #pragma endregion functionality
 
 #pragma region Player
+        void SetActive();
+
         bool    operator== (const Player& otherPlayer) const noexcept;
         Player& operator=  (const Player& otherPlayer) noexcept;
         Player& operator=  (Player&& otherPlayer)      noexcept;
