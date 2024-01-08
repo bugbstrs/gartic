@@ -5,8 +5,8 @@ using namespace http;
 
 http::Lobby::Lobby(const String& username)
 {
-	m_leader = std::make_shared<User>(User(username));
-	m_users.push_back(m_leader);
+	m_leader = std::shared_ptr<User>(new User(username));
+	AddUser(m_leader);
 	m_code = GenerateCode();
 	m_lobbyStatus = LobbyStatus::WaitingToStart;
 }

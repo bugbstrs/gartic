@@ -66,8 +66,7 @@ bool http::Time::Check()
 	}
 	return false;
 }
-#include <Windows.h>
-#include <iostream>
+
 void http::Time::CheckTimers()
 {
 	m_serverTimer.StartTimer();
@@ -80,9 +79,6 @@ void http::Time::CheckTimers()
 			for (auto& timer : localTimers)
 				if (timer != nullptr)
 					timer->Check();
-
-			std::cout << GetServerTime()<<" ";
-			Sleep(1000);
 		}
 	}).detach();
 }

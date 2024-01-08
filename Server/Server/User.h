@@ -12,7 +12,7 @@ namespace http
 		User();
 		User(const std::string& newUsername);
 
-		~User() = default;
+		~User();
 
 		void SetUsername(const std::string& newUsername);
 

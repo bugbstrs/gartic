@@ -4,13 +4,18 @@ using namespace http;
 
 http::User::User()
 {
-	m_active = new Time(3000);
+	m_active = new Time(5000);
 }
 
 http::User::User(const std::string& newUsername):
 	m_username{ newUsername }
 {
-	m_active = new Time(3000);
+	m_active = new Time(5000);
+}
+
+http::User::~User()
+{
+	delete m_active;
 }
 
 void http::User::SetUsername(const std::string& newUsername)
