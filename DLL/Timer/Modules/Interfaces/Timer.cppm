@@ -7,6 +7,7 @@ import <cstdint>;
 import <functional>;
 import <mutex>;
 import <thread>;
+import <iostream>;
 #pragma endregion imports
 
 #pragma region Timer

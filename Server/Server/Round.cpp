@@ -1,5 +1,7 @@
 #include "Round.h"
 
+#include <random>
+
 using namespace http;
 
 http::Round::Round(RoundType newType, const String &newWordToGuess, const String &newWordToDisplay, Player *newDrawer, const std::vector<Player *> &newPlayers, int roundTime):
@@ -9,14 +11,13 @@ http::Round::Round(RoundType newType, const String &newWordToGuess, const String
 	m_drawer{std::move(newDrawer)},
 	m_players{newPlayers},
 	m_halfRoundTimer{new Time(roundTime / 2)},
-	m_wordToDisplayTimer{nullptr}//new Time(roundTime / 6)}
+	m_wordToDisplayTimer{new Time(roundTime / 6)}
 {
-	auto activateRevealLettersCallback = [this]()
+	auto wrapper = [this]()
 	{
 		ActivateRevealLetters();
 	};
-
-	m_halfRoundTimer->SetMethodToCall(activateRevealLettersCallback);
+	m_halfRoundTimer->SetMethodToCall(wrapper);
 }
 
 void http::Round::NextDrawer()
@@ -80,10 +81,29 @@ void http::Round::SetDrawer(Player* newDrawer)
 
 void http::Round::ActivateRevealLetters()
 {
+	RevealOneLetter();
 
+	auto wrapper = [this]()
+	{
+		RevealOneLetter();
+	};
+	m_wordToDisplayTimer->Reset();
+	m_wordToDisplayTimer->SetMethodToCall(wrapper);
 }
 
 void http::Round::RevealOneLetter()
 {
+	int lettersRevealed{ 0 };
+	for (char c : m_wordToDisplay)
+		if (c != ' ' && c != '_')
+			++lettersRevealed;
 
+	std::random_device				   rd;
+	std::default_random_engine		   engine(rd());
+	std::uniform_int_distribution<int> distribution(0, m_wordToDisplay.size() - lettersRevealed);
+	int random_number = distribution(engine);
+
+	m_wordToDisplay[random_number] = m_wordToGuess[random_number];
+
+	m_wordToDisplayTimer->Reset();
 }

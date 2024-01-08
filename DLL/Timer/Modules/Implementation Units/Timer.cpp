@@ -81,8 +81,9 @@ Milliseconds Timer::GetRemainingTime() const
     return m_remainingTime;
 }
 
-Milliseconds Timer::GetElapsedTime() const
+Milliseconds Timer::GetElapsedTime()
 {
+    //std::lock_guard lock{ m_mutex };
     return m_initialTime - m_remainingTime;
 }
 
@@ -139,12 +140,12 @@ void Timer::StopTimer()
 }
 #pragma endregion timer flow: start, stop, reset, starttimerfrom
 
+
 #pragma region Timer
 bool Timer::IsTimeExpired() const
 {
     return m_remainingTime <= Milliseconds(0);
 }
-
 void Timer::Run()
 {
     while (!m_isSuspended)
@@ -154,6 +155,7 @@ void Timer::Run()
         std::unique_lock lock(m_mutex);
         m_conditionalVariable.wait_for(lock, m_timerResolution, [&] { return !m_isSuspended; });
 
+        std::this_thread::sleep_for(std::chrono::milliseconds{10});
         auto elapsedTime      =  CurrentTimeInMillis(initialTime);
              m_timeToDecrease += elapsedTime;
 
