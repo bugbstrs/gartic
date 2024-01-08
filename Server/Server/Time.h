@@ -43,9 +43,9 @@ namespace http
 	private:
 		int m_startTimeStamp;
 		int m_duration;
+		bool m_activated;
 		
 		std::function<void()> m_toCall;
-		std::string m_currentPlayerToRemove;
 
 		static Timer m_serverTimer;
 		static std::vector<Time*> m_timers;

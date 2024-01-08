@@ -2,13 +2,21 @@
 
 using namespace http;
 
-http::Round::Round(RoundType newType, const String& newWordToGuess, const String& newWordToDisplay, Player* newDrawer, const std::vector<Player*>& newPlayers) :
-	m_type{ newType },
-	m_wordToGuess{ newWordToGuess },
-	m_wordToDisplay{ newWordToDisplay },
-	m_drawer{ std::move(newDrawer) },
-	m_players{ newPlayers }
+http::Round::Round(RoundType newType, const String &newWordToGuess, const String &newWordToDisplay, Player *newDrawer, const std::vector<Player *> &newPlayers, int roundTime):
+	m_type{newType},
+	m_wordToGuess{newWordToGuess},
+	m_wordToDisplay{newWordToDisplay},
+	m_drawer{std::move(newDrawer)},
+	m_players{newPlayers},
+	m_halfRoundTimer{new Time(roundTime / 2)},
+	m_wordToDisplayTimer{nullptr}//new Time(roundTime / 6)}
 {
+	auto activateRevealLettersCallback = [this]()
+	{
+		ActivateRevealLetters();
+	};
+
+	m_halfRoundTimer->SetMethodToCall(activateRevealLettersCallback);
 }
 
 void http::Round::NextDrawer()
@@ -68,4 +76,14 @@ void http::Round::SetWordToDisplay(const String& newWordToDisplay)
 void http::Round::SetDrawer(Player* newDrawer)
 {
 	m_drawer = newDrawer;
+}
+
+void http::Round::ActivateRevealLetters()
+{
+
+}
+
+void http::Round::RevealOneLetter()
+{
+
 }

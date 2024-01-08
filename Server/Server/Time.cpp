@@ -11,7 +11,7 @@ std::vector<Time*> http::Time::m_timers;
 http::Time::Time(int duration) :
 	m_startTimeStamp{ GetServerTime() },
 	m_duration{ duration },
-	m_currentPlayerToRemove{ "" }
+	m_activated{ false }
 {
 	m_timers.push_back(this);
 }
@@ -20,7 +20,7 @@ http::Time::Time(const Time& newTime) :
 	m_startTimeStamp{ newTime.m_startTimeStamp },
 	m_duration{ newTime.m_duration },
 	m_toCall{ newTime.m_toCall },
-	m_currentPlayerToRemove{ newTime.m_currentPlayerToRemove }
+	m_activated{false}
 {
 	m_timers.push_back(this);
 }
@@ -50,14 +50,18 @@ void http::Time::SetDuration(int newDuration)
 void http::Time::Reset()
 {
 	m_startTimeStamp = GetServerTime();
+	m_activated = false;
 }
 
 bool http::Time::Check()
 {
 	if(GetRemainingTime() == 0)
 	{
+		if (m_activated)
+			return true;
 		if(m_toCall)
 			m_toCall();
+		m_activated = true;
 		return true;
 	}
 	return false;
@@ -93,7 +97,6 @@ Time http::Time::operator=(const Time& t1)
 	this->m_startTimeStamp = t1.m_startTimeStamp;
 	this->m_duration = t1.m_duration;
 	this->m_toCall = t1.m_toCall;
-	this->m_currentPlayerToRemove = t1.m_currentPlayerToRemove;
 
 	return *this;
 }
