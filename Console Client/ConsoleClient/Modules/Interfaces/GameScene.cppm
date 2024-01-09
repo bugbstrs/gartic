@@ -42,7 +42,7 @@ private:
 	void GetTimer		();
 	void GetRound		();
 	void GetChat		();
-	void SendMessage	();
+	void SendMessageToServer();
 	void GetDrawEvents	();
 	void Leave			();
 	void Input			() const override;

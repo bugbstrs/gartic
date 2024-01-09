@@ -1,3 +1,6 @@
+#include <cpr/cpr.h>
+#include <crow.h>
+
 module GameScene;
 
 using Color = ColorType;
@@ -23,17 +26,39 @@ void GameScene::GetRound()
 
 void GameScene::GetChat()
 {
-
+	auto response{cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchmessages" },
+		cpr::Parameters{
+			{"password", User::GetPassword()},
+			{"username", User::GetUsername()}
+		}
+	)};
+	if (response.status_code == 200)
+	{
+		auto messages{crow::json::load(response.text)};
+		for (const auto& message : messages["messages"])
+		{
+			Color color = m_lastChatColor ? Color::DarkGray : Color::White;
+			m_lastChatColor = !m_lastChatColor;
+			m_chat->AddObject(new Label{Align::Left, Align::Up, color, Color::Black, 20,
+							  static_cast<int16_t>((m_message.size()) / 20 + 2), m_console, std::string(message)});
+		}
+	}
 }
 
-void GameScene::SendMessage()
+void GameScene::SendMessageToServer()
 {
 	if (m_message.empty())
 		return;
 
-
-	//send message to server
-
+	auto response{cpr::Post(
+		cpr::Url{ "http://localhost:18080/putmessageinchat" },
+		cpr::Parameters{
+			{"password", User::GetPassword()},
+			{"username", User::GetUsername()},
+			{"message", m_message}
+		}
+	)};
 
 	Color color = m_lastChatColor ? Color::DarkGray : Color::White;
 	m_lastChatColor = !m_lastChatColor;
@@ -92,7 +117,7 @@ void GameScene::Start()
 	// Chatbox
 	auto chatbox = new InputField{138, 83, Align::Left, Align::Up, Color::DarkGray, Color::Black, 20, 5,
 								 Color::DarkGray, Color::Black, m_console, m_input, m_selected, m_message, 100};
-	chatbox->SetFunctionOnActivate(std::bind(&GameScene::SendMessage, this));
+	chatbox->SetFunctionOnActivate([this]() { SendMessageToServer(); });
 	m_selectableObjects.emplace_back(chatbox);
 	m_objects.emplace_back(chatbox);
 
@@ -305,7 +330,7 @@ void GameScene::Start()
 	// Leave button
 	auto leaveButton = new Button{2, 83, Align::Center, Align::Center, Color::Blue, Color::White, 11, 5,
 							Color::DarkBlue, Color::White, m_console, m_input, m_selected, "LEAVE"};
-	leaveButton->SetFunctionOnActivate(std::bind(&GameScene::Leave, this));
+	leaveButton->SetFunctionOnActivate([this]() { Leave(); });
 	m_selectableObjects.emplace_back(leaveButton);
 	m_objects.emplace_back(leaveButton);
 
@@ -316,7 +341,10 @@ void GameScene::Update()
 {
 	while (m_nextScene == nullptr)
 	{
+		GetChat();
+		
 		Input();
 		Display();
+		Sleep(200);
 	}
 }
