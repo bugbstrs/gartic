@@ -90,7 +90,7 @@ void http::Lobby::SetWordCount(int wordCount) noexcept
 
 std::shared_ptr<http::Game> http::Lobby::StartGame()
 {
-	if (m_users.size() > 2)
+	if (m_users.size() >= 2)
 	{
 		std::vector<std::shared_ptr<Player>> playersVector;
 		std::string currUsername;
