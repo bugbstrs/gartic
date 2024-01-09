@@ -1,13 +1,19 @@
 #include "ScoreboardTable.h"
 #include <random>
+#include "UserCredentials.h"
 
 ScoreboardTable::ScoreboardTable(QWidget *parent)
 	: QTableWidget{ parent }
 {
 	nameFont.setFamily("Consolas");
-	pointsFont.setFamily("Consolas");
 	nameFont.setPixelSize(12);
+
+	pointsFont.setFamily("Consolas");
 	pointsFont.setPixelSize(20);
+
+	yourNameFont.setFamily("Consolas");
+	yourNameFont.setPixelSize(16);
+	yourNameFont.setBold(true);
 }
 
 ScoreboardTable::~ScoreboardTable()
@@ -19,7 +25,10 @@ void ScoreboardTable::AddPlayersToScoreboard(std::vector <std::tuple<QIcon, QStr
 		QTableWidgetItem* name = new QTableWidgetItem(std::get<0>(avatar), std::get<1>(avatar));
 		QTableWidgetItem* score = new QTableWidgetItem(QString::number(0));
 		name->setBackground(std::get<2>(avatar));
-		name->setFont(nameFont);
+		if (std::get<1>(avatar) == QString::fromUtf8(UserCredentials::GetUsername()))
+			name->setFont(yourNameFont);
+		else
+			name->setFont(nameFont);
 		name->setTextAlignment(Qt::AlignVCenter | Qt::AlignLeft);
 		score->setBackground(std::get<2>(avatar));
 		score->setFont(pointsFont);

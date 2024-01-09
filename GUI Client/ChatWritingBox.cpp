@@ -16,5 +16,6 @@ void ChatWritingBox::OnEnterPressed() noexcept {
 			{"message", std::string(text().toUtf8().constData())}
 		}
 	);
+	emit OnMessageSentToServer(text());
 	clear();
 }

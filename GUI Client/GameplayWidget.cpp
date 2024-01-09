@@ -199,6 +199,7 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 			}
 		);
 		auto words = crow::json::load(response.text);
+		int a = words.size();
 		for (int index = 0; index < words["words"].size(); index++) {
 			AddWordOption(std::string(words["words"][index]));
 		}

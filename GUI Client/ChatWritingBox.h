@@ -15,4 +15,7 @@ public:
 
 public slots:
 	void OnEnterPressed() noexcept;
+
+signals: 
+	void OnMessageSentToServer(const QString& newMessage);
 };

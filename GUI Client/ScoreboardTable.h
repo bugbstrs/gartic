@@ -18,6 +18,7 @@ public:
 private:
 	QFont nameFont																			 {};
 	QFont pointsFont																		 {};
+	QFont yourNameFont																		 {};
 	//std::vector <std::tuple<QIcon, QString, QColor, int>> players							 {};
 	std::vector <std::pair<QTableWidgetItem*, QTableWidgetItem*>> players					 {};
 };
