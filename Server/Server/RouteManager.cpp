@@ -32,7 +32,6 @@ void http::RouteManager::Run()
 	FetchPlayersRoute();
 	FetchGameStatusRoute();
 	FetchRoundNumberRoute();
-	FetchDrawerRoute();
 	FetchNWordsRoute();
 	FetchDrawingBoard();
 	FetchWordToGuessRoute();
@@ -933,22 +932,26 @@ void http::RouteManager::FetchPlayersRoute()
 
 		std::vector<crow::json::wvalue> playersJSON;
 
-		for (const auto& player : fetchedPlayers)
+        int drawerIndex = 0;
+		for (auto player : fetchedPlayers)
 		{
             crow::json::wvalue playerJSON;
             playerJSON["name"] = player->GetName();
             playerJSON["points"] = player->GetPoints();
             playerJSON["guessed"] = player->GetGuessed();
             playersJSON.emplace_back(playerJSON);
-		}
 
-        
+            if (player->GetName() == drawer->GetName())
+            {
+                drawerIndex = std::find(fetchedPlayers.begin(), fetchedPlayers.end(), player) - fetchedPlayers.begin();
+            }
+		}
 
         response.body = crow::json::wvalue
         {
             {"code", response.code},
-            {"players", playersJSON}
-            //{"drawer", }
+            {"players", playersJSON},
+            {"drawer", drawerIndex}
         }.dump();
 
 		response.end();
@@ -1037,46 +1040,6 @@ void http::RouteManager::FetchRoundNumberRoute()
 	};
 
     CROW_ROUTE(m_app, "/fetchroundnumber")(FetchRoundNumberRouteFunction);
-}
-
-void http::RouteManager::FetchDrawerRoute()
-{
-	auto FetchDrawerRouteFunction = [&](const crow::request& request, crow::response& response) {
-        response = IsRequestAuthenticated(request);
-
-        if (response.code != 200)
-        {
-            response.end();
-            return;
-        }
-
-        String username = request.url_params.get("username");
-
-        if (!m_gartic.GetGame(username))
-        {
-            response.code = 403;
-            response.body = crow::json::wvalue
-            {
-                {"code", response.code},
-                {"error", "The user is not in a game!"}
-            }.dump();
-
-            response.end();
-            return;
-        }
-
-        std::shared_ptr<Player> fetchedDrawer = m_gartic.GetGame(username)->GetRound()->GetDrawer();
-
-		response.body = crow::json::wvalue
-        {
-            {"code", response.code},
-            {"drawer", fetchedDrawer->GetName()}
-        }.dump();
-
-		response.end();
-	};
-
-    CROW_ROUTE(m_app, "/fetchdrawer")(FetchDrawerRouteFunction);
 }
 
 void http::RouteManager::FetchNWordsRoute()

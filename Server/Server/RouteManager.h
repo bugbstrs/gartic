@@ -48,7 +48,6 @@ namespace http
 		void FetchPlayersRoute();
 		void FetchGameStatusRoute();
 		void FetchRoundNumberRoute();
-		void FetchDrawerRoute();
 		void FetchNWordsRoute();
 		void FetchDrawingBoard();
 		void FetchWordToGuessRoute();
