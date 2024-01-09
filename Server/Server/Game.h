@@ -26,7 +26,7 @@ namespace http
 		GameStatus GetGameStatus() const noexcept;
 		GameSettings GetSettings() const noexcept;
 		Time GetTime() const noexcept;
-		Chat GetChat() const noexcept;
+		Chat& GetChat() noexcept;
 		int GetRoundNumber() const noexcept;
 		DrawingBoard GetBoard() const noexcept;
 		Round GetRound() const noexcept;

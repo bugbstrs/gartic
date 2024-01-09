@@ -64,7 +64,7 @@ void http::Game::SetDrawingBoard(DrawingBoard newDrawingBoard)
 	m_board = newDrawingBoard;
 }
 
-Chat Game::GetChat() const noexcept
+Chat& Game::GetChat() noexcept
 {
 	return m_chat;
 }
