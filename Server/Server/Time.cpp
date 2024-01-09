@@ -76,7 +76,7 @@ void http::Time::CheckTimers()
 		while (true)
 		{
 			std::vector<Time*> localTimers = m_timers;
-			for (auto& timer : localTimers)
+			for (auto timer : localTimers)
 				if (timer != nullptr)
 					timer->Check();
 		}
