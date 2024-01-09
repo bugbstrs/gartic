@@ -49,6 +49,11 @@ std::shared_ptr<Round> http::Game::GetRound() const noexcept
 	return m_round;
 }
 
+std::string http::Game::GetWordToGuess() const noexcept
+{
+	return m_wordToGuess;
+}
+
 void http::Game::SetGameStatus(GameStatus newGameStatus)
 {
 	m_gameStatus = newGameStatus;
@@ -57,6 +62,11 @@ void http::Game::SetGameStatus(GameStatus newGameStatus)
 void http::Game::SetRoundNumber(int newRoundNumber)
 {
 	m_roundNumber = newRoundNumber;
+}
+
+void http::Game::SetWordToGuess(const std::string& newWordToGuess)
+{
+	m_wordToGuess = newWordToGuess;
 }
 
 std::shared_ptr<Chat> Game::GetChat() noexcept

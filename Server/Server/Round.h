@@ -16,12 +16,10 @@ namespace http
 		void NextDrawer();
 
 		RoundType GetRoundType() const noexcept;
-		const std::string& GetWordToGuess() const noexcept;
 		const std::string& GetWordToDisplay() const noexcept;
 		std::shared_ptr<Player> GetDrawer();
 
 		void SetRoundType(RoundType newRoundType);
-		void SetWordToGuess(const std::string& newWordToGuess);
 		void SetWordToDisplay(const std::string& newWordToDisplay);
 		void SetDrawer(std::shared_ptr<Player> newDrawer);
 

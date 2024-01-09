@@ -30,9 +30,11 @@ namespace http
 		int GetRoundNumber() const noexcept;
 		std::shared_ptr<DrawingBoard> GetBoard() const noexcept;
 		std::shared_ptr<Round> GetRound() const noexcept;
+		std::string GetWordToGuess() const noexcept;
 
 		void SetGameStatus(GameStatus newGameStatus);
 		void SetRoundNumber(int newRoundNumber);
+		void SetWordToGuess(const std::string& newWordToGuess);
 
 		void NextRound();
 		void RemovePlayer(const std::string& username);
