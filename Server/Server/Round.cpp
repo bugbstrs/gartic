@@ -4,14 +4,11 @@
 
 using namespace http;
 
-http::Round::Round(RoundType newType, const String &newWordToGuess, const String &newWordToDisplay, Player *newDrawer, const std::vector<Player *> &newPlayers, int roundTime):
-	m_type{newType},
-	m_wordToGuess{newWordToGuess},
-	m_wordToDisplay{newWordToDisplay},
-	m_drawer{std::move(newDrawer)},
-	m_players{newPlayers},
-	m_halfRoundTimer{new Time(roundTime / 2)},
-	m_wordToDisplayTimer{new Time(roundTime / 6)}
+http::Round::Round(const std::vector<std::shared_ptr<Player>>& newPlayers, int roundTime, RoundType newType):
+	m_players{ newPlayers },
+	m_halfRoundTimer{ new Time(roundTime / 2) },
+	m_wordToDisplayTimer{ new Time(roundTime / 6) },
+	m_type{ newType }
 {
 	auto wrapper = [this]()
 	{
@@ -54,7 +51,7 @@ const String& http::Round::GetWordToDisplay() const noexcept
 	return m_wordToDisplay;
 }
 
-Player* http::Round::GetDrawer()
+std::shared_ptr<Player> http::Round::GetDrawer()
 {
 	return m_drawer;
 }
@@ -74,7 +71,7 @@ void http::Round::SetWordToDisplay(const String& newWordToDisplay)
 	m_wordToDisplay = newWordToDisplay;
 }
 
-void http::Round::SetDrawer(Player* newDrawer)
+void http::Round::SetDrawer(std::shared_ptr<Player> newDrawer)
 {
 	m_drawer = newDrawer;
 }

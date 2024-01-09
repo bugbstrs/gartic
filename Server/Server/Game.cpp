@@ -6,11 +6,11 @@ using namespace http;
 Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers) :
 	m_players{ std::move(newPlayers) },
 	m_gameStatus { GameStatus::Waiting },
-	m_remainingTime { Time(60) },
-	m_chat { Chat(m_players) },
+	m_remainingTime{ std::shared_ptr<Time>{ new Time(5) } },
+	m_chat { std::shared_ptr<Chat>{ new Chat(m_players) } },
 	m_roundNumber { 0 },
-	m_board { DrawingBoard(m_players) },
-	m_round {}
+	m_board{ std::shared_ptr<DrawingBoard>{ new DrawingBoard(m_players) } },
+	m_round{ std::shared_ptr<Round>{ new Round(m_players, m_settings.GetDrawTime()) } }
 {
 	/*for (auto& player : m_players)
 	{
@@ -19,7 +19,7 @@ Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers) :
 	}*/
 }
 
-const std::vector<std::shared_ptr<Player>>& http::Game::GetPlayers() const noexcept
+std::vector<std::shared_ptr<Player>>& http::Game::GetPlayers() noexcept
 {
 	return m_players;
 }
@@ -34,17 +34,17 @@ GameStatus http::Game::GetGameStatus() const noexcept
 	return m_gameStatus;
 }
 
-Time http::Game::GetTime() const noexcept
+std::shared_ptr<Time> http::Game::GetTime() const noexcept
 {
 	return m_remainingTime;
 }
 
-DrawingBoard http::Game::GetBoard() const noexcept
+std::shared_ptr<DrawingBoard> http::Game::GetBoard() const noexcept
 {
 	return m_board;
 }
 
-Round& http::Game::GetRound() noexcept
+std::shared_ptr<Round> http::Game::GetRound() const noexcept
 {
 	return m_round;
 }
@@ -59,12 +59,7 @@ void http::Game::SetRoundNumber(int newRoundNumber)
 	m_roundNumber = newRoundNumber;
 }
 
-void http::Game::SetDrawingBoard(DrawingBoard newDrawingBoard)
-{
-	m_board = newDrawingBoard;
-}
-
-Chat& Game::GetChat() noexcept
+std::shared_ptr<Chat> Game::GetChat() noexcept
 {
 	return m_chat;
 }

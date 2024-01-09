@@ -22,18 +22,17 @@ namespace http
 
 		~Game() = default;
 
-		const std::vector<std::shared_ptr<Player>>& GetPlayers() const noexcept;
+		std::vector<std::shared_ptr<Player>>& GetPlayers() noexcept;
 		GameStatus GetGameStatus() const noexcept;
 		GameSettings GetSettings() const noexcept;
-		Time GetTime() const noexcept;
-		Chat& GetChat() noexcept;
+		std::shared_ptr<Time> GetTime() const noexcept;
+		std::shared_ptr<Chat> GetChat() noexcept;
 		int GetRoundNumber() const noexcept;
-		DrawingBoard GetBoard() const noexcept;
-		Round& GetRound() noexcept;
+		std::shared_ptr<DrawingBoard> GetBoard() const noexcept;
+		std::shared_ptr<Round> GetRound() const noexcept;
 
 		void SetGameStatus(GameStatus newGameStatus);
 		void SetRoundNumber(int newRoundNumber);
-		void SetDrawingBoard(DrawingBoard newDrawingBoard);
 
 		void NextRound();
 		void RemovePlayer(const std::string& username);
@@ -45,14 +44,14 @@ namespace http
 
 		GameStatus m_gameStatus;
 
-		Time m_remainingTime;
+		std::shared_ptr<Time> m_remainingTime;
 
-		Chat m_chat;
+		std::shared_ptr<Chat> m_chat;
 
 		int m_roundNumber;
 
-		Round m_round;
+		std::shared_ptr<Round> m_round;
 
-		DrawingBoard m_board;
+		std::shared_ptr<DrawingBoard> m_board;
 	};
 }

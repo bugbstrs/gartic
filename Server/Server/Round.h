@@ -13,19 +13,19 @@ namespace http
 	{
 	public:
 		Round() = default;
-		Round(RoundType newType, const String& newWordToGuess, const String& newWordToDisplay, Player* newDrawer, const std::vector<Player*>& newPlayers, int roundTime);
+		Round(const std::vector<std::shared_ptr<Player>>& newPlayers, int roundTime, RoundType newType = RoundType::Normal);
 
 		void NextDrawer();
 
 		RoundType GetRoundType() const noexcept;
 		const String& GetWordToGuess() const noexcept;
 		const String& GetWordToDisplay() const noexcept;
-		Player* GetDrawer();
+		std::shared_ptr<Player> GetDrawer();
 
 		void SetRoundType(RoundType newRoundType);
 		void SetWordToGuess(const String& newWordToGuess);
 		void SetWordToDisplay(const String& newWordToDisplay);
-		void SetDrawer(Player* newDrawer);
+		void SetDrawer(std::shared_ptr<Player> newDrawer);
 
 		void ActivateRevealLetters();
 		void RevealOneLetter();
@@ -37,11 +37,11 @@ namespace http
 		String m_wordToDisplay;
 
 		Time* m_wordToDisplayTimer;
-		Time *m_halfRoundTimer;
+		Time* m_halfRoundTimer;
 
-		Player* m_drawer;
+		std::shared_ptr<Player> m_drawer;
 
-		std::vector<Player*> m_players;
+		std::vector<std::shared_ptr<Player>> m_players;
 	};
 }
 

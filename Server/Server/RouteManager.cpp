@@ -929,6 +929,7 @@ void http::RouteManager::FetchPlayersRoute()
         }
 
         std::vector<std::shared_ptr<Player>> fetchedPlayers = m_gartic.GetGame(username)->GetPlayers();
+        std::shared_ptr<Player> drawer = m_gartic.GetGame(username)->GetRound()->GetDrawer();
 
 		std::vector<crow::json::wvalue> playersJSON;
 
@@ -941,10 +942,13 @@ void http::RouteManager::FetchPlayersRoute()
             playersJSON.emplace_back(playerJSON);
 		}
 
+        
+
         response.body = crow::json::wvalue
         {
             {"code", response.code},
             {"players", playersJSON}
+            //{"drawer", }
         }.dump();
 
 		response.end();
@@ -1061,7 +1065,7 @@ void http::RouteManager::FetchDrawerRoute()
             return;
         }
 
-        Player* fetchedDrawer = m_gartic.GetGame(username)->GetRound().GetDrawer();
+        std::shared_ptr<Player> fetchedDrawer = m_gartic.GetGame(username)->GetRound()->GetDrawer();
 
 		response.body = crow::json::wvalue
         {
@@ -1147,7 +1151,7 @@ void http::RouteManager::FetchDrawingBoard()
             return;
         }
 
-		std::vector<DrawEvent*> drawEvents{ m_gartic.GetGame(username)->GetBoard().GetAndDeleteEvents(username)};
+		std::vector<DrawEvent*> drawEvents{ m_gartic.GetGame(username)->GetBoard()->GetAndDeleteEvents(username)};
 
 		for (const auto& drawEvent : drawEvents)
 			drawingBoardJSON.push_back(drawEvent->Serialize());
@@ -1190,7 +1194,7 @@ void http::RouteManager::FetchWordToGuessRoute()
             return;
         }
 
-		std::string wordToGuess = m_gartic.GetGame(username)->GetRound().GetWordToGuess();
+		std::string wordToGuess = m_gartic.GetGame(username)->GetRound()->GetWordToGuess();
 
         response.body = crow::json::wvalue
         {
@@ -1230,7 +1234,7 @@ void http::RouteManager::FetchWordToDisplayRoute()
             return;
         }
 
-        std::string wordToDisplay = m_gartic.GetGame(username)->GetRound().GetWordToDisplay();
+        std::string wordToDisplay = m_gartic.GetGame(username)->GetRound()->GetWordToDisplay();
 
         response.body = crow::json::wvalue
         {
@@ -1271,7 +1275,7 @@ void http::RouteManager::FetchMessagesRoute()
             return;
         }
 
-		std::vector<std::string> messages = m_gartic.GetGame(username)->GetChat().GetAndDeleteMessages(username);
+		std::vector<std::string> messages = m_gartic.GetGame(username)->GetChat()->GetAndDeleteMessages(username);
 
 		for (const auto& message : messages)
             messagesJSON.push_back(message);
@@ -1392,7 +1396,7 @@ void http::RouteManager::PutWordToGuessRoute()
             return;
         }
 		
-        m_gartic.GetGame(username)->GetRound().SetWordToGuess(wordToDiplayString);
+        m_gartic.GetGame(username)->GetRound()->SetWordToGuess(wordToDiplayString);
 
 		response.body = crow::json::wvalue
         {
@@ -1448,7 +1452,7 @@ void http::RouteManager::PutMessageInChatRoute()
             return;
         }
 
-		m_gartic.GetGame(username)->GetChat().VerifyMessage(username, messageString);
+		m_gartic.GetGame(username)->GetChat()->VerifyMessage(username, messageString);
 
         response.body = crow::json::wvalue
         {
