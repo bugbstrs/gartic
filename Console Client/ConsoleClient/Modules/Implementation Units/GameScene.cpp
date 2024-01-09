@@ -11,7 +11,30 @@ GameScene::GameScene(ConsoleManager *console, InputManager *inputManager):
 
 void GameScene::GetPlayers()
 {
-
+	auto response{ cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchplayers" },
+		cpr::Parameters{
+			{"password", User::GetPassword()},
+			{"username", User::GetUsername()}
+		}
+	) };
+	if (response.status_code == 200)
+	{
+		auto players{ crow::json::load(response.text) };
+		m_players->Clear();
+		bool lastPlayerColor = false;
+		for (const auto& player : players["players"])
+		{
+			Color color = player["guessed"] ? Color::Green : lastPlayerColor ? Color::DarkGray : Color::White;
+			lastPlayerColor = !lastPlayerColor;
+			auto layout = new VerticalLayout{ Align::Left, Align::Up, Color::White, 20, 3, m_console, 0 };
+			m_players->AddObject(layout);
+			layout->AddObject(new Label{ Align::Left, Align::Up, color, Color::Black, 20, 1, m_console,
+										 std::string(player["name"]) });
+			layout->AddObject(new Label{ Align::Left, Align::Up, color, Color::Black, 20, 1, m_console,
+										 std::string(player["points"]) });
+		}
+	}
 }
 
 void GameScene::GetTimer()
@@ -107,8 +130,8 @@ void GameScene::Start()
 	m_objects.emplace_back(m_drawingBoard);
 
 	// Users layout
-	m_users = new VerticalLayout{2, 5, Align::Center, Align::Up, Color::White, 20, 70, m_console, 0};
-	m_objects.emplace_back(m_users);
+	m_players = new VerticalLayout{2, 5, Align::Center, Align::Up, Color::White, 20, 70, m_console, 0};
+	m_objects.emplace_back(m_players);
 
 	// Chat layout
 	m_chat = new VerticalLayout{138, 5, Align::Center, Align::Up, Color::White, 20, 77, m_console, 0};
@@ -342,9 +365,10 @@ void GameScene::Update()
 	while (m_nextScene == nullptr)
 	{
 		GetChat();
+		GetPlayers();
 		
 		Input();
 		Display();
-		Sleep(200);
+		Sleep(1000);
 	}
 }

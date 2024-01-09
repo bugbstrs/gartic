@@ -934,7 +934,11 @@ void http::RouteManager::FetchPlayersRoute()
 
 		for (const auto& player : fetchedPlayers)
 		{
-			playersJSON.push_back(player->GetName());
+            crow::json::wvalue playerJSON;
+            playerJSON["name"] = player->GetName();
+            playerJSON["points"] = player->GetPoints();
+            playerJSON["guessed"] = player->GetGuessed();
+            playersJSON.emplace_back(playerJSON);
 		}
 
         response.body = crow::json::wvalue

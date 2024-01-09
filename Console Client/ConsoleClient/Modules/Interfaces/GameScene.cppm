@@ -27,7 +27,7 @@ private:
 	SelectableObject *m_selectedWidthButton;
 	SelectableObject *m_selected;
 	HorizontalLayout *m_wordsToChoose;
-	VerticalLayout	 *m_users;
+	VerticalLayout	 *m_players;
 	VerticalLayout   *m_chat;
 	DrawingBoard	 *m_drawingBoard;
 	ColorDisplay	 *m_colorDisplay;

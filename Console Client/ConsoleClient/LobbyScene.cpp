@@ -194,7 +194,7 @@ void LobbyScene::Start()
 		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::DarkBlue, Color::Black };
 	m_wordCount->SetFunctionOnActivate([this]() { SetSettings(); });
 	m_wordCount->CanBeSelected(false);
-	m_wordCount->SetOptions({ "1", "2", "3", "4", "5" }, 2);
+	m_wordCount->SetOptions({ "1", "2", "3", "4", "5" }, 0);
 	m_wordCount->SetHoverColors(Color::Blue, Color::Black);
 	m_selectableObjects.emplace_back(m_wordCount);
 	horizontalLayout->AddObject(m_wordCount);
