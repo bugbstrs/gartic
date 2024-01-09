@@ -16,7 +16,7 @@ namespace http
 		void VerifyMessage(const std::string& username, const std::string& message);
 		void AddMessage(const std::string& username, const std::string& message);
 
-		const std::vector<std::string>& GetAndDeleteMessages(const std::string& username);
+		std::vector<std::string> GetAndDeleteMessages(const std::string& username);
 
 		const std::unordered_map<std::string, std::vector<std::string>>& GetChat() const noexcept;
 

@@ -48,7 +48,7 @@ bool http::Player::GetGuessed() const noexcept
     return m_guessed;
 }
 
-Time http::Player::GetTime() const noexcept
+Time* http::Player::GetTime() const noexcept
 {
     return m_active;
 }
@@ -63,7 +63,7 @@ void http::Player::SetName(const std::string& newName)
     m_user = newName;
 }
 
-void http::Player::SetTime(const Time& newTime)
+void http::Player::SetTime(Time* newTime)
 {
     m_active = newTime;
 }
@@ -80,7 +80,7 @@ void Player::AddPoints(uint16_t noOfPointsToBeAdded) noexcept
 
 void http::Player::SetActive()
 {
-    m_active.Reset();
+    m_active->Reset();
 }
 
 bool Player::operator==(const Player& otherPlayer) const noexcept

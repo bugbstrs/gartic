@@ -48,7 +48,7 @@ void http::Chat::AddMessage(const std::string& username, const std::string& mess
 	}
 }
 
-const std::vector<std::string>& http::Chat::GetAndDeleteMessages(const std::string& username)
+std::vector<std::string> http::Chat::GetAndDeleteMessages(const std::string& username)
 {
 	if (m_messages.find(username) != m_messages.end())
 	{

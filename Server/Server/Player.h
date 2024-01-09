@@ -23,13 +23,13 @@ namespace http
         uint16_t GetPoints() const noexcept;
         const std::string& GetName() const noexcept;
         bool GetGuessed() const noexcept;
-        Time GetTime() const noexcept;
+        Time* GetTime() const noexcept;
 #pragma endregion getters
 
 #pragma region Player
         void SetPoints(uint16_t newPoints);
         void SetName(const std::string& newName);
-        void SetTime(const Time& newTime);
+        void SetTime(Time* newTime);
         void SetGuessed(bool newGuessed);
 #pragma endregion setters
 
@@ -48,7 +48,7 @@ namespace http
     private:
         std::string m_user;
 
-        Time m_active;
+        Time* m_active;
 
         uint16_t m_points;
 
