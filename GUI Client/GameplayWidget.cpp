@@ -141,12 +141,22 @@ void GameplayWidget::AddWordOption(const std::string& word)
 	wordsToChoose.push_back(wordButton);
 	wordsToChooseLayout->addWidget(wordButton);
 	QObject::connect(wordButton, &QPushButton::released, [this, wordButton]() { 
-		ShowWordDependingOnPlayerType(wordButton->text());
-		for (auto& button : wordsToChoose) {
-			button->hide();
+		auto wordToGuessPosted = cpr::Post(
+			cpr::Url{ "http://localhost:18080/putwordtoguess" },
+			cpr::Parameters{
+				{"password", UserCredentials::GetPassword()},
+				{"username", UserCredentials::GetUsername()},
+				{"word", wordButton->text().toUtf8().constData()}
+			}
+		);
+		if (wordToGuessPosted.status_code == 200) {
+			ShowWordDependingOnPlayerType(wordButton->text());
+			for (auto& button : wordsToChoose) {
+				button->hide();
+			}
+			backgroundForDrawer->hide();
+			drawingBoard->SetIsChoosingWord(false);
 		}
-		backgroundForDrawer->hide(); 
-		drawingBoard->SetIsChoosingWord(false);
 	});
 
 }
@@ -199,7 +209,6 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 			}
 		);
 		auto words = crow::json::load(response.text);
-		int a = words.size();
 		for (int index = 0; index < words["words"].size(); index++) {
 			AddWordOption(std::string(words["words"][index]));
 		}
@@ -223,17 +232,4 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 		backgroundForGuesser->show();
 		ShowWordDependingOnPlayerType("Cuvant");
 	}
-
-	/*cpr::Response response = cpr::Get(
-		cpr::Url{ "http://localhost:18080/fetchallwords" },
-		cpr::Parameters{
-			{"password", UserCredentials::GetPassword()},
-			{"username", UserCredentials::GetUsername()}
-		}
-	);
-	auto word = crow::json::load(response.text);
-	std::string firstWord = std::string(word[0]["word"]);
-	QString newWord = QString::fromUtf8(firstWord);
-	wordToDraw->setText(newWord);*/
-	//chat->SetWordToGuess(newWord);
 }
