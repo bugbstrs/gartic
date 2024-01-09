@@ -29,7 +29,7 @@ namespace http
 		Chat& GetChat() noexcept;
 		int GetRoundNumber() const noexcept;
 		DrawingBoard GetBoard() const noexcept;
-		Round GetRound() const noexcept;
+		Round& GetRound() noexcept;
 
 		void SetGameStatus(GameStatus newGameStatus);
 		void SetRoundNumber(int newRoundNumber);

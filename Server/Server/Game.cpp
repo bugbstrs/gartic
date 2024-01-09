@@ -44,7 +44,7 @@ DrawingBoard http::Game::GetBoard() const noexcept
 	return m_board;
 }
 
-Round http::Game::GetRound() const noexcept
+Round& http::Game::GetRound() noexcept
 {
 	return m_round;
 }
