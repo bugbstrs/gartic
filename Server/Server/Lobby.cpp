@@ -99,7 +99,7 @@ std::shared_ptr<http::Game> http::Lobby::StartGame()
 		{
 			currUsername = user->GetUsername();
 
-			playersVector.push_back(std::make_shared<Player>(currUsername));
+			playersVector.push_back(std::shared_ptr<Player>(new Player(currUsername)));
 		}
 
 		return std::make_shared<Game>(std::move(playersVector));

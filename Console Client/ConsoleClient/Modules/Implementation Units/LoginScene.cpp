@@ -34,7 +34,7 @@ void LoginScene::Login()
 
 void LoginScene::Register()
 {
-	auto response = cpr::Get(
+	auto response = cpr::Post(
 		cpr::Url{ "http://localhost:18080/register" },
 		cpr::Parameters{
 			{"password", m_password},

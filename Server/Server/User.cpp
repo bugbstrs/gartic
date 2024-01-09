@@ -2,16 +2,14 @@
 
 using namespace http;
 
-http::User::User()
-{
-	m_active = new Time(5000);
-}
+http::User::User():
+	m_active{new Time(5000)}
+{}
 
-http::User::User(const std::string& newUsername):
-	m_username{ newUsername }
-{
-	m_active = new Time(5000);
-}
+http::User::User(const std::string &newUsername):
+	m_username{newUsername},
+	m_active{new Time(5000)}
+{}
 
 http::User::~User()
 {

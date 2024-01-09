@@ -1,5 +1,7 @@
 #include "Time.h"
 
+#include <Windows.h>
+
 using namespace http;
 
 
@@ -76,6 +78,7 @@ void http::Time::CheckTimers()
 		while (true)
 		{
 			std::vector<Time*> localTimers = m_timers;
+			Sleep(250);
 			for (auto timer : localTimers)
 				if (timer != nullptr)
 					timer->Check();
