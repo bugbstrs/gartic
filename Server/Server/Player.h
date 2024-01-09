@@ -16,7 +16,7 @@ namespace http
         Player(Player&& otherPlayer)                   noexcept;
         Player(const std::string& username, uint16_t points = 0);
 
-        ~Player() = default;
+        ~Player();
 #pragma endregion constructors & destructor
 
 #pragma region Player

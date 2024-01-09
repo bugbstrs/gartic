@@ -7,7 +7,7 @@ using namespace http;
 Player::Player() noexcept :
     m_user{ "" },
     m_points{ 0 },
-    m_active{ 60 }
+    m_active{new Time(5000)}
 {}
 
 Player::Player(const Player& otherPlayer) noexcept :
@@ -25,8 +25,13 @@ Player::Player(Player&& otherPlayer) noexcept :
 Player::Player(const std::string& username, uint16_t points) :
     m_user{ username },
     m_points{ points },
-    m_active{ 60 }
+    m_active{new Time(5000)}
 {}
+
+http::Player::~Player()
+{
+    delete m_active;
+}
 
 uint16_t Player::GetPoints() const noexcept
 {
