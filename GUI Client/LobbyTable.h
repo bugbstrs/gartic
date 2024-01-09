@@ -16,7 +16,7 @@ public:
 	~LobbyTable();
 
 	//Getter
-	std::vector<std::tuple<QIcon, QString, QColor>> GetTakenAvatars();
+	std::vector<std::tuple<QIcon, QString, QColor, QIcon>> GetTakenAvatars();
 
 	//Functionality
 	void AddPlayer(const std::string& name);
@@ -28,6 +28,6 @@ private:
 	int currentIndex = 0;
 	QFont nameFont{};
 	QFont yourNameFont{};
-	std::array<std::tuple<QIcon, QColor, bool>, kNumberOfIcons> avatars{};
-	std::vector<std::tuple<QIcon, QString, QColor>> takenAvatars;
+	std::array<std::tuple<QIcon, QColor, bool, QIcon>, kNumberOfIcons> avatars{};
+	std::vector<std::tuple<QIcon, QString, QColor, QIcon>> takenAvatars;
 };

@@ -30,6 +30,18 @@
         <file alias="time_settings">Resource Files/alarm-clock.png</file>
         <file alias="WordsBackground">Resource Files/hatching-2460786_640.png</file>
         <file alias="timer_clock">Resource Files/timer_clock.png</file>
+        <file alias="check_alien">Resource Files/check_alien.png</file>
+        <file alias="check_astronaut">Resource Files/check_astronaut.png</file>
+        <file alias="check_chef">Resource Files/check_chef.png</file>
+        <file alias="check_cowboy">Resource Files/check_cowboy.png</file>
+        <file alias="check_crown">Resource Files/check_crown.png</file>
+        <file alias="check_helmet">Resource Files/check_helmet.png</file>
+        <file alias="check_injured">Resource Files/check_injured.png</file>
+        <file alias="check_doctor">Resource Files/check_md.png</file>
+        <file alias="check_ninja">Resource Files/check_ninja.png</file>
+        <file alias="check_nurse">Resource Files/check_nurse.png</file>
+        <file alias="check_policeman">Resource Files/check_police.png</file>
+        <file alias="check_robot">Resource Files/check_robot.png</file>
     </qresource>
     <qresource prefix="/others">
         <file alias="view_password">Resource Files/view_password.png</file>

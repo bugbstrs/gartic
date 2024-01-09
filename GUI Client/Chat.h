@@ -28,6 +28,9 @@ private:
 	void CheckForNewMessages(std::atomic<bool>& stop);
 	void AddMessageInChat(const QString& newMessage) noexcept;
 
+signals:
+	void OnWordGuessed();
+
 private:
 	std::atomic<bool> stop;
 	bool firstShow { true };

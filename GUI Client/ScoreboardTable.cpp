@@ -19,24 +19,29 @@ ScoreboardTable::ScoreboardTable(QWidget *parent)
 ScoreboardTable::~ScoreboardTable()
 {}
 
-void ScoreboardTable::AddPlayersToScoreboard(std::vector <std::tuple<QIcon, QString, QColor>> takenAvatars)
+void ScoreboardTable::AddPlayersToScoreboard(std::vector <std::tuple<QIcon, QString, QColor, QIcon>> takenAvatarsFromLobby)
 {
+	takenAvatars = takenAvatarsFromLobby;
 	for (auto& avatar : takenAvatars) {
 		QTableWidgetItem* name = new QTableWidgetItem(std::get<0>(avatar), std::get<1>(avatar));
-		QTableWidgetItem* score = new QTableWidgetItem(QString::number(0));
+		QTableWidgetItem* score = new QTableWidgetItem(QIcon(), QString::number(0));
+
 		name->setBackground(std::get<2>(avatar));
 		if (std::get<1>(avatar) == QString::fromUtf8(UserCredentials::GetUsername()))
 			name->setFont(yourNameFont);
 		else
 			name->setFont(nameFont);
 		name->setTextAlignment(Qt::AlignVCenter | Qt::AlignLeft);
+
 		score->setBackground(std::get<2>(avatar));
 		score->setFont(pointsFont);
 		score->setTextAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
+
 		int rowPosition = rowCount();
 		insertRow(rowPosition);
 		setItem(rowPosition, 0, name);
 		setItem(rowPosition, 1, score);
+		
 		players.push_back({name, score});
 	}
 }
