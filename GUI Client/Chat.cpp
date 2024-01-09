@@ -1,9 +1,12 @@
 #include "Chat.h"
+#include <thread>
+#include <crow.h>
 #include <qdatetime.h>
 #include "UserCredentials.h"
 
 Chat::Chat(QWidget *parent)
-	: QFrame{ parent }
+	: QFrame{ parent },
+	stop(false)
 {}
 
 Chat::~Chat()
@@ -12,7 +15,7 @@ Chat::~Chat()
 	delete m_chatWritingBox;
 }
 
-void Chat::OnConversationWaitingForUpdate(const QString& newMessage) noexcept
+void Chat::AddMessageInChat(const QString& newMessage) noexcept
 {
 	QDateTime currentTime = QDateTime::currentDateTime();
 	QString formattedTime = currentTime.toString("hh:mm");
@@ -43,19 +46,32 @@ void Chat::showEvent(QShowEvent* event)
 	if (firstShow) {
 		m_chatWritingBox = findChild<ChatWritingBox*>("chatWritingBox");
 		m_chatConversation = findChild<ChatConversation*>("chatConversation");
-		//QObject::connect(m_chatWritingBox, &ChatWritingBox::OnConversationWaitingForUpdateSignal, this, &Chat::OnConversationWaitingForUpdate);
-		QObject::connect(m_chatWritingBox, &ChatWritingBox::OnConversationWaitingForUpdateSignal, this, [this](const QString& message) {
-			//Muta aici din mainwindow crearea de game
-			auto createGame = cpr::Get(
-				cpr::Url{ "http://localhost:18080/putmessageinchat" },
-				cpr::Parameters{
-					{"username", UserCredentials::GetUsername()},
-					{"password", UserCredentials::GetPassword()},
-					{"message", std::string(message.toUtf8().constData())}
-
-				}
-			);
-		});
 		firstShow = false;
+	}
+	stop.store(false);
+
+	std::thread checkForMessagesUpdates(&Chat::CheckForNewMessages, this, std::ref(stop));
+	checkForMessagesUpdates.detach();
+}
+
+void Chat::CheckForNewMessages(std::atomic<bool>& stop)
+{
+	while (!stop.load()) {
+		auto newMessages = cpr::Get(
+			cpr::Url{ "http://localhost:18080/fetchmessages" },
+			cpr::Parameters{
+				{"username", UserCredentials::GetUsername()},
+				{"password", UserCredentials::GetPassword()}
+			}
+		);
+		auto messages = crow::json::load(newMessages.text);
+		for (int index = 0; index < messages["messages"].size(); index++) {
+			AddMessageInChat(QString::fromStdString(std::string(messages["messages"][index])));
+		}
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+	}
+	if (stop.load()) {
+		m_chatConversation->clear();
+		m_chatWritingBox->clear();
 	}
 }

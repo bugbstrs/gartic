@@ -91,8 +91,8 @@ void LobbyFrame::showEvent(QShowEvent * event)
 	}
 	stop.store(false);
 
-	std::thread checkForNewPlayers(&LobbyFrame::CheckForLobbyUpdates, this, std::ref(stop));
-	checkForNewPlayers.detach();
+	std::thread checkForLobbyUpdates(&LobbyFrame::CheckForLobbyUpdates, this, std::ref(stop));
+	checkForLobbyUpdates.detach();
 }
 
 void LobbyFrame::SetCode(QString codeText) noexcept

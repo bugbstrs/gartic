@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QFrame>
+#include <atomic>
 #include "ChatWritingBox.h"
 #include "ChatConversation.h"
 
@@ -23,11 +24,13 @@ public:
 protected:
 	void showEvent(QShowEvent* event) override;
 
-public slots:
-	void OnConversationWaitingForUpdate(const QString& newMessage) noexcept;
+private:
+	void CheckForNewMessages(std::atomic<bool>& stop);
+	void AddMessageInChat(const QString& newMessage) noexcept;
 
 private:
-	bool firstShow{ true };
+	std::atomic<bool> stop;
+	bool firstShow { true };
 	QString m_wordToGuess				 {};
 	ChatWritingBox* m_chatWritingBox     { new ChatWritingBox{} };
 	ChatConversation* m_chatConversation { new ChatConversation{} };

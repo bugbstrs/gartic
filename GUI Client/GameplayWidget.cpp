@@ -78,7 +78,7 @@ void GameplayWidget::OnFillButtonReleased() noexcept
 
 void GameplayWidget::ShowWordDependingOnPlayerType(const QString& word) noexcept
 {
-	if (!isDrawer) {
+	if (!m_isDrawer) {
 		QString hiddenWord;
 		for (int index = 0; index < word.size(); index++)
 			hiddenWord += "_ ";
@@ -92,7 +92,7 @@ void GameplayWidget::ShowWordDependingOnPlayerType(const QString& word) noexcept
 		toolsFrame->show();
 		drawingBoard->setDisabled(false);
 	}
-	chat->SetChatConfigurationAccordingToPlayerType(isDrawer);
+	chat->SetChatConfigurationAccordingToPlayerType(m_isDrawer);
 }
 
 void GameplayWidget::BackgroundChangeForGuessersOnDrawerPickingWord()
@@ -184,29 +184,24 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 
 	AddPlayers();
 
-	if (isDrawer) {
+	if (m_isDrawer) {
 		drawingBoard->SetIsChoosingWord(true);
 		backgroundForDrawer->setStyleSheet(
 			"background-image: url(:/settings/WordsBackground);"
 			"background-position: center;"
 			"background-repeat: no-repeat;"
 		);
-		AddWordOption("cuvant");
-		AddWordOption("mere");
-		AddWordOption("prune");
-		AddWordOption("cirese");
-		AddWordOption("pere");
-		/*cpr::Response response = cpr::Get(
+		cpr::Response response = cpr::Get(
 			cpr::Url{ "http://localhost:18080/fetchnwords" },
 			cpr::Parameters{
 				{"password", UserCredentials::GetPassword()},
 				{"username", UserCredentials::GetUsername()}
 			}
 		);
-		auto word = crow::json::load(response.text);
-		std::string firstWord = std::string(word[0]["word"]);
-		QString newWord = QString::fromUtf8(firstWord);
-		wordToDraw->setText(newWord);*/
+		auto words = crow::json::load(response.text);
+		for (int index = 0; index < words["words"].size(); index++) {
+			AddWordOption(std::string(words["words"][index]));
+		}
 		backgroundForDrawer->show();
 	}
 	else {

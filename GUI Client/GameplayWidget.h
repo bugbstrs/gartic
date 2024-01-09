@@ -34,6 +34,7 @@ public:
 	void ChangePenWidth(int width) noexcept;
 
 	void SetGameSettings(std::tuple<int, int, int> gameSettings);
+	void SetIsDrawer(bool isDrawer);
 	
 	void Clear() noexcept;
 
@@ -64,7 +65,7 @@ private:
 	int wordsCount					 {};
 
 	bool firstShow					 { true };
-	bool isDrawer					 { true };
+	bool m_isDrawer					 { true };
 	QLabel* wordToDraw				 { new QLabel{} };
 	QLabel* timerLabel				 { new QLabel{} };
 	QLabel* roundsLabel				 { new QLabel{} };

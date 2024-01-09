@@ -1,4 +1,5 @@
 #include "ChatWritingBox.h"
+#include "UserCredentials.h"
 
 ChatWritingBox::ChatWritingBox(QWidget *parent)
 	: QLineEdit{ parent }
@@ -7,6 +8,13 @@ ChatWritingBox::ChatWritingBox(QWidget *parent)
 }
 
 void ChatWritingBox::OnEnterPressed() noexcept { 
-	emit OnConversationWaitingForUpdateSignal(text());
+	auto putMessageInChat = cpr::Post(
+		cpr::Url{ "http://localhost:18080/putmessageinchat" },
+		cpr::Parameters{
+			{"username", UserCredentials::GetUsername()},
+			{"password", UserCredentials::GetPassword()},
+			{"message", std::string(text().toUtf8().constData())}
+		}
+	);
 	clear();
 }

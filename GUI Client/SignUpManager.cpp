@@ -25,7 +25,7 @@ void SignUpManager::OnSignUpCredentialsSent() noexcept
 {
 	std::string password = passwordInput->text().toUtf8().constData();
 	std::string username = nameInput->text().toUtf8().constData();
-	auto response = cpr::Get(
+	auto response = cpr::Post(
 		cpr::Url{ "http://localhost:18080/register" },
 		cpr::Parameters{
 			{"password", password},
