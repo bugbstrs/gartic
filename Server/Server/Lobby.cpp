@@ -3,7 +3,7 @@
 import GarticExceptions;
 using namespace http;
 
-http::Lobby::Lobby(const String& username):
+http::Lobby::Lobby(const std::string& username):
 	m_leader{ std::shared_ptr<User>(new User(username)) },
 	m_code{ GenerateCode() },
 	m_lobbyStatus{ LobbyStatus::WaitingToStart }
@@ -109,7 +109,7 @@ std::shared_ptr<http::Game> http::Lobby::StartGame()
 	return {};
 }
 
-String http::Lobby::GenerateCode()
+std::string http::Lobby::GenerateCode()
 {
 	std::string characters{ "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" };
 	size_t charactersLength{ characters.size() };

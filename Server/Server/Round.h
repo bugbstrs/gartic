@@ -5,26 +5,24 @@
 #include "RoundTypeEnum.h"
 #include "Player.h"
 
-using String = std::string;
-
 namespace http
 {
 	class Round
 	{
 	public:
-		Round() = default;
-		Round(const std::vector<std::shared_ptr<Player>>& newPlayers, int roundTime, RoundType newType = RoundType::Normal);
+		Round() = delete;
+		Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string& wordToGuess, int roundTime, RoundType newType = RoundType::Normal);
 
 		void NextDrawer();
 
 		RoundType GetRoundType() const noexcept;
-		const String& GetWordToGuess() const noexcept;
-		const String& GetWordToDisplay() const noexcept;
+		const std::string& GetWordToGuess() const noexcept;
+		const std::string& GetWordToDisplay() const noexcept;
 		std::shared_ptr<Player> GetDrawer();
 
 		void SetRoundType(RoundType newRoundType);
-		void SetWordToGuess(const String& newWordToGuess);
-		void SetWordToDisplay(const String& newWordToDisplay);
+		void SetWordToGuess(const std::string& newWordToGuess);
+		void SetWordToDisplay(const std::string& newWordToDisplay);
 		void SetDrawer(std::shared_ptr<Player> newDrawer);
 
 		void ActivateRevealLetters();
@@ -33,15 +31,15 @@ namespace http
 	private:
 		RoundType m_type;
 
-		String m_wordToGuess;
-		String m_wordToDisplay;
+		std::string& m_wordToGuess;
+		std::string m_wordToDisplay;
 
 		Time* m_wordToDisplayTimer;
 		Time* m_halfRoundTimer;
 
 		std::shared_ptr<Player> m_drawer;
 
-		std::vector<std::shared_ptr<Player>> m_players;
+		std::vector<std::shared_ptr<Player>>& m_players;
 	};
 }
 

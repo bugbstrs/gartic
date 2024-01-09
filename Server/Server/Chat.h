@@ -11,7 +11,8 @@ namespace http
 	class Chat
 	{
 	public:
-		Chat(std::vector<std::shared_ptr<Player>>& players);
+		Chat() = delete;
+		Chat(std::vector<std::shared_ptr<Player>>& players, std::string& wordToGuess);
 
 		void VerifyMessage(const std::string& username, const std::string& message);
 		void AddMessage(const std::string& username, const std::string& message);
@@ -30,6 +31,6 @@ namespace http
 
 		std::unordered_map<std::string, std::vector<std::string>> m_messages;
 
-		std::string m_wordToGuess;
+		std::string& m_wordToGuess;
 	};
 }

@@ -7,10 +7,10 @@ Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers) :
 	m_players{ std::move(newPlayers) },
 	m_gameStatus { GameStatus::Waiting },
 	m_remainingTime{ std::shared_ptr<Time>{ new Time(5) } },
-	m_chat { std::shared_ptr<Chat>{ new Chat(m_players) } },
+	m_chat { std::shared_ptr<Chat>{ new Chat(m_players, m_wordToGuess) } },
 	m_roundNumber { 0 },
 	m_board{ std::shared_ptr<DrawingBoard>{ new DrawingBoard(m_players) } },
-	m_round{ std::shared_ptr<Round>{ new Round(m_players, m_settings.GetDrawTime()) } }
+	m_round{ std::shared_ptr<Round>{ new Round(m_players, m_wordToGuess, m_settings.GetDrawTime()) } }
 {
 	/*for (auto& player : m_players)
 	{

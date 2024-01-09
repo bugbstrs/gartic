@@ -6,8 +6,9 @@ import GarticExceptions;
 
 using namespace http;
 
-http::Chat::Chat(std::vector<std::shared_ptr<Player>>& players):
-	m_players{ players }
+http::Chat::Chat(std::vector<std::shared_ptr<Player>>& players, std::string& wordToGuess):
+	m_players{ players },
+	m_wordToGuess{ wordToGuess }
 {
 	for (const auto& player : players)
 	{

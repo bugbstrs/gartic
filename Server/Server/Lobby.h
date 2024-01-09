@@ -16,7 +16,7 @@ namespace http
 	{
 	public:
 		Lobby() = default;
-		Lobby(const String& username);
+		Lobby(const std::string& username);
 
 		~Lobby();
 
@@ -39,7 +39,7 @@ namespace http
 		std::shared_ptr<Game> StartGame();
 
 	private:
-		String GenerateCode();
+		std::string GenerateCode();
 
 	private:
 		std::vector<std::shared_ptr<User>> m_users;
@@ -50,7 +50,7 @@ namespace http
 
 		LobbyStatus m_lobbyStatus;
 
-		String m_code;
+		std::string m_code;
 		const int kCodeLength{ 11 };
 	};
 }

@@ -53,5 +53,7 @@ namespace http
 		std::shared_ptr<Round> m_round;
 
 		std::shared_ptr<DrawingBoard> m_board;
+
+		std::string m_wordToGuess;
 	};
 }

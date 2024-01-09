@@ -4,10 +4,11 @@
 
 using namespace http;
 
-http::Round::Round(const std::vector<std::shared_ptr<Player>>& newPlayers, int roundTime, RoundType newType):
+http::Round::Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string& wordToGuess, int roundTime, RoundType newType):
 	m_players{ newPlayers },
 	m_halfRoundTimer{ new Time(roundTime / 2) },
 	m_wordToDisplayTimer{ new Time(roundTime / 6) },
+	m_wordToGuess{ wordToGuess },
 	m_type{ newType }
 {
 	auto wrapper = [this]()
@@ -41,12 +42,12 @@ RoundType http::Round::GetRoundType() const noexcept
 	return m_type;
 }
 
-const String& http::Round::GetWordToGuess() const noexcept
+const std::string& http::Round::GetWordToGuess() const noexcept
 {
 	return m_wordToGuess;
 }
 
-const String& http::Round::GetWordToDisplay() const noexcept
+const std::string& http::Round::GetWordToDisplay() const noexcept
 {
 	return m_wordToDisplay;
 }
@@ -61,12 +62,12 @@ void http::Round::SetRoundType(RoundType newRoundType)
 	m_type = newRoundType;
 }
 
-void http::Round::SetWordToGuess(const String& newWordToGuess)
+void http::Round::SetWordToGuess(const std::string& newWordToGuess)
 {
 	m_wordToGuess = newWordToGuess;
 }
 
-void http::Round::SetWordToDisplay(const String& newWordToDisplay)
+void http::Round::SetWordToDisplay(const std::string& newWordToDisplay)
 {
 	m_wordToDisplay = newWordToDisplay;
 }
