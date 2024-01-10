@@ -3,6 +3,7 @@
 #include <QFrame>
 #include <qlineedit.h>
 #include <qpushbutton.h>
+#include <qlabel.h>
 
 class JoinLobbyFrame  : public QFrame
 {
@@ -25,4 +26,5 @@ private:
 
 	QLineEdit* codeLineEdit			{ new QLineEdit{} };
 	QPushButton* joinButton			{ new QPushButton{} };
+	QLabel* gameAlreadyStarted		{ new QLabel{} };
 };

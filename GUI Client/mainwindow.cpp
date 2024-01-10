@@ -121,20 +121,25 @@ void MainWindow::OnLobbyCodeAccepted(std::string codeText) noexcept {
 
         }
     );
+    if (joinLobby.status_code == 404) {
+        ui->gameAlreadyStartedLabel->show();
+    }
+    else {
 
-    auto users = cpr::Get(
-        cpr::Url{ "http://localhost:18080/fetchusers" },
-        cpr::Parameters{
-            {"username", UserCredentials::GetUsername()},
-            {"password", UserCredentials::GetPassword()}
-        }
-    );
-    auto usersVector = crow::json::load(users.text);
-    for (int index = 0; index < usersVector["users"].size(); index++)
-        ui->lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
+        auto users = cpr::Get(
+            cpr::Url{ "http://localhost:18080/fetchusers" },
+            cpr::Parameters{
+                {"username", UserCredentials::GetUsername()},
+                {"password", UserCredentials::GetPassword()}
+            }
+        );
+        auto usersVector = crow::json::load(users.text);
+        for (int index = 0; index < usersVector["users"].size(); index++)
+            ui->lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
 
-    ui->codeLineEdit->setText(QString::fromUtf8(codeText));
-    ui->stackedWidget->setCurrentWidget(ui->LobbyScene); 
+        ui->codeLineEdit->setText(QString::fromUtf8(codeText));
+        ui->stackedWidget->setCurrentWidget(ui->LobbyScene);
+    }
 }
 void MainWindow::OnGoToMenuFromJoinLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }
 

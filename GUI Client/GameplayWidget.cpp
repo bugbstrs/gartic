@@ -158,7 +158,6 @@ void GameplayWidget::AddWordOption(const std::string& word)
 			drawingBoard->SetIsChoosingWord(false);
 		}
 	});
-
 }
 
 void GameplayWidget::showEvent(QShowEvent* event) {

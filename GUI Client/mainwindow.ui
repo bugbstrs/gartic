@@ -1924,7 +1924,7 @@ QComboBox QAbstractItemView::item:hover {
 </string>
                         </property>
                         <property name="currentText">
-                         <string>60</string>
+                         <string>30</string>
                         </property>
                         <property name="frame">
                          <bool>true</bool>
@@ -2071,7 +2071,7 @@ QComboBox QAbstractItemView::item:hover {
 </string>
                         </property>
                         <property name="currentText">
-                         <string>4</string>
+                         <string>1</string>
                         </property>
                         <item>
                          <property name="text">
@@ -2693,27 +2693,10 @@ background: transparent;</string>
                  <property name="bottomMargin">
                   <number>20</number>
                  </property>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="enterCodeLabel">
-                   <property name="font">
-                    <font>
-                     <family>Comic Sans MS</family>
-                     <pointsize>16</pointsize>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">border: 0px;
-border-radius: 0px;
-padding: 0px 0px;
-background: transparent;</string>
-                   </property>
-                   <property name="text">
-                    <string>Enter room id</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
+                 <property name="verticalSpacing">
+                  <number>0</number>
+                 </property>
+                 <item row="2" column="0">
                   <widget class="QLineEdit" name="codeInputLineEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -2744,6 +2727,39 @@ background: transparent;</string>
 border-radius: 20px;
 padding: 5px 10px;
 </string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="enterCodeLabel">
+                   <property name="font">
+                    <font>
+                     <family>Comic Sans MS</family>
+                     <pointsize>16</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border: 0px;
+border-radius: 0px;
+padding: 0px 0px;
+background: transparent;</string>
+                   </property>
+                   <property name="text">
+                    <string>Enter room id</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="gameAlreadyStartedLabel">
+                   <property name="styleSheet">
+                    <string notr="true">color: red;</string>
+                   </property>
+                   <property name="text">
+                    <string>Game already running</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
                    </property>
                   </widget>
                  </item>
