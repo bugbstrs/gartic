@@ -12,7 +12,7 @@ http::StartDraw::StartDraw(int newX, int newY, int newWidth, int newColor):
 
 const std::string& http::StartDraw::Serialize()
 {
-    return std::format("{}: {}, {}, {}, {}", "StartDraw", m_x, m_y, m_width, m_color);
+    return std::format("{} {} {} {} {}", "StartDraw", m_x, m_y, m_width, m_color);
 }
 
 void http::StartDraw::Deserialize(const std::string& toDeserialize)

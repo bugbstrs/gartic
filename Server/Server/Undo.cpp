@@ -4,7 +4,7 @@ using namespace http;
 
 const std::string& http::Undo::Serialize()
 {
-    return std::format("{}: None", "Undo");
+    return std::format("{}", "Undo");
 }
 
 void http::Undo::Deserialize(const std::string&)

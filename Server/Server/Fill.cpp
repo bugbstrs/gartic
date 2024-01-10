@@ -11,7 +11,7 @@ http::Fill::Fill(int newX, int newY, int newColor) :
 
 const std::string& http::Fill::Serialize()
 {
-    return std::format("{}: {}, {}, {}", "Fill", m_x, m_y, m_color);
+    return std::format("{} {} {} {}", "Fill", m_x, m_y, m_color);
 }
 
 void http::Fill::Deserialize(const std::string& toDeserialize)
