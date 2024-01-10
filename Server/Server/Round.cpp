@@ -30,6 +30,7 @@ void http::Round::NextDrawer()
 	if (drawerIt == m_players.rbegin())
 	{
 		m_drawer = m_players[0];
+		++m_roundNumber;
 	}
 	else
 	{
@@ -42,7 +43,12 @@ RoundType http::Round::GetRoundType() const noexcept
 	return m_type;
 }
 
-const std::string& http::Round::GetWordToGuess() const noexcept
+int http::Round::GetRoundNumber() const noexcept
+{
+	return m_roundNumber;
+}
+
+std::string& http::Round::GetWordToGuess()
 {
 	return m_wordToGuess;
 }
@@ -52,7 +58,7 @@ const std::string& http::Round::GetWordToDisplay() const noexcept
 	return m_wordToDisplay;
 }
 
-std::shared_ptr<Player> http::Round::GetDrawer()
+std::shared_ptr<Player> http::Round::GetDrawer() const noexcept
 {
 	return m_drawer;
 }
@@ -75,6 +81,11 @@ void http::Round::SetWordToDisplay(const std::string& newWordToDisplay)
 void http::Round::SetDrawer(std::shared_ptr<Player> newDrawer)
 {
 	m_drawer = newDrawer;
+}
+
+void http::Round::SetRoundNumber(int newRoundNumber)
+{
+	m_roundNumber = newRoundNumber;
 }
 
 void http::Round::ActivateRevealLetters()

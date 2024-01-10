@@ -53,6 +53,11 @@ Time* http::Player::GetTime() const noexcept
     return m_active;
 }
 
+int http::Player::GetTimeWhenGuessed() const noexcept
+{
+    return m_timeWhenGuessed;
+}
+
 void http::Player::SetPoints(uint16_t newPoints)
 {
     m_points = newPoints;
@@ -71,6 +76,11 @@ void http::Player::SetTime(Time* newTime)
 void http::Player::SetGuessed(bool newGuessed)
 {
     m_guessed = newGuessed;
+}
+
+void http::Player::SetTimeWhenGuessed(int newTimeWhenGuessed)
+{
+    m_timeWhenGuessed = newTimeWhenGuessed;
 }
 
 void Player::AddPoints(uint16_t noOfPointsToBeAdded) noexcept
