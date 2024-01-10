@@ -160,10 +160,21 @@ void MainWindow::OnExitLobbyButtonReleased() noexcept {
 
 //Game Scene events
 void MainWindow::OnLeaveGameButtonReleased() noexcept { 
-    ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); 
-    
-    ui->gameplayWidget->Clear();
-    ui->lobbyTable->ClearLobby();
+    auto response{ cpr::Get(
+        cpr::Url{ "http://localhost:18080/leavegame" },
+        cpr::Parameters{
+            {"password", UserCredentials::GetPassword()},
+            {"username", UserCredentials::GetUsername()}
+        }
+    ) };
+    if (response.status_code == 200) {
+        ui->scoreboardTable->StopCheckingForPlayers(true);
+        ui->chatFrame->StopCheckingForUpdates(true);
+        ui->stackedWidget->setCurrentWidget(ui->MainMenuScene);
+        ui->gameplayWidget->Clear();
+        ui->lobbyTable->ClearLobby();
+        ui->scoreboardTable->clear();
+    }
 }
 
 

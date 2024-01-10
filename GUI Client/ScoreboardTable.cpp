@@ -1,9 +1,11 @@
 #include "ScoreboardTable.h"
 #include <random>
+#include <crow.h>
 #include "UserCredentials.h"
 
 ScoreboardTable::ScoreboardTable(QWidget *parent)
-	: QTableWidget{ parent }
+	: QTableWidget{ parent },
+	stop(false)
 {
 	nameFont.setFamily("Consolas");
 	nameFont.setPixelSize(12);
@@ -51,8 +53,60 @@ void ScoreboardTable::AddPointsToPlayerWithIndex(uint8_t index)
 	players[0].second->setText(QString::number(players[0].second->text().toInt() + 10));
 }
 
+void ScoreboardTable::StopCheckingForPlayers(bool checkForPlayers)
+{
+	stop.store(true);
+}
+
 void ScoreboardTable::ClearScoreboard()
 {
 	players.clear();
 	clearContents();
 }
+
+void ScoreboardTable::showEvent(QShowEvent* event)
+{
+	if (firstShow) {
+
+		firstShow = false;
+	}
+
+	stop.store(false);
+
+	std::thread checkForScoreboardUpdates(&ScoreboardTable::CheckForScoreboardUpdates, this, std::ref(stop));
+	checkForScoreboardUpdates.detach();
+}
+
+void ScoreboardTable::CheckForScoreboardUpdates(std::atomic<bool>& stop)
+{
+	while (!stop.load()) {
+		auto response =  cpr::Get(
+			cpr::Url{ "http://localhost:18080/fetchplayers" },
+			cpr::Parameters{
+				{"password", UserCredentials::GetPassword()},
+				{"username", UserCredentials::GetUsername()}
+			}
+		);
+		if (response.status_code == 200)
+		{
+			auto playersResponse = crow::json::load(response.text);
+			
+			if (playersResponse["players"].size() != takenAvatars.size()) {
+				int indexToRemove = -1;
+				for (int index = 0; index < playersResponse["players"].size(); index++) {
+					if (std::string(playersResponse["players"][index]["name"]) != std::get<1>(takenAvatars[index]).toUtf8().constData()) {
+						indexToRemove = index;
+						break;
+					}
+				}
+				if (indexToRemove == -1) {
+					indexToRemove = takenAvatars.size() - 1;
+				}
+				takenAvatars.erase(takenAvatars.begin() + indexToRemove);
+				removeRow(indexToRemove);
+			}
+		}
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+	}
+}
+

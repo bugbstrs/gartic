@@ -14,8 +14,16 @@ public:
 	void AddPlayersToScoreboard(std::vector <std::tuple<QIcon, QString, QColor, QIcon>> takenAvatarsFromLobby);
 	void AddPointsToPlayerWithIndex(uint8_t index);
 
+	void StopCheckingForPlayers(bool checkForPlayers);
 	void ClearScoreboard();
+	void CheckForScoreboardUpdates(std::atomic<bool>& stop);
+	void showEvent(QShowEvent* event) override;
+
 private:
+
+private:
+	std::atomic<bool> stop;
+	bool firstShow{ true };
 	int currentIndex = 0;
 	QFont nameFont																			 {};
 	QFont pointsFont																		 {};

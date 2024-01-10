@@ -18,6 +18,7 @@ public:
 	~Chat();
 
 	//Functionality
+	void StopCheckingForUpdates(bool value);
 	void SetWordToGuess(QString wordToGuess) noexcept;
 	void SetChatConfigurationAccordingToPlayerType(bool isDrawer) noexcept;
 

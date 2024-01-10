@@ -34,6 +34,11 @@ void Chat::AddMessageInChat(const QString& newMessage) noexcept
 	}, Qt::QueuedConnection);
 }
 
+void Chat::StopCheckingForUpdates(bool value)
+{
+	stop.store(true);
+}
+
 void Chat::SetWordToGuess(QString wordToGuess) noexcept
 {
 	m_wordToGuess = wordToGuess;
@@ -81,14 +86,14 @@ void Chat::CheckForNewMessages(std::atomic<bool>& stop)
 				{"password", UserCredentials::GetPassword()}
 			}
 		);
-		auto messages = crow::json::load(newMessages.text);
-		for (int index = 0; index < messages["messages"].size(); index++) {
-			AddMessageInChat(QString::fromUtf8(std::string(messages["messages"][index])));
+		if (newMessages.status_code == 200) {
+			auto messages = crow::json::load(newMessages.text);
+			for (int index = 0; index < messages["messages"].size(); index++) {
+				AddMessageInChat(QString::fromUtf8(std::string(messages["messages"][index])));
+			}
 		}
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 	if (stop.load()) {
-		m_chatConversation->clear();
-		m_chatWritingBox->clear();
 	}
 }
