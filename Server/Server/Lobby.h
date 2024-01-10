@@ -42,6 +42,7 @@ namespace http
 		std::string GenerateCode();
 
 	private:
+		const int kCodeLength{ 11 };
 		std::vector<std::shared_ptr<User>> m_users;
 
 		std::shared_ptr<User> m_leader;
@@ -51,6 +52,5 @@ namespace http
 		LobbyStatus m_lobbyStatus;
 
 		std::string m_code;
-		const int kCodeLength{ 11 };
 	};
 }
