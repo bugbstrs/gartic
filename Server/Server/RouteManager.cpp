@@ -1075,7 +1075,7 @@ void http::RouteManager::FetchNWordsRoute()
             return;
         }
 
-        int numberOfWords = m_gartic.GetLobby(username)->GetSettings().GetRoundsNumber();
+        int numberOfWords = m_gartic.GetLobby(username)->GetSettings().GetWordCount();
 
 		for (int i{ 0 }; i < numberOfWords; ++i)
 			wordsJSON.push_back(m_storage.FetchWord());
