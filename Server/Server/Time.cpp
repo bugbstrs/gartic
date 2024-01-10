@@ -64,6 +64,7 @@ void http::Time::Reset()
 {
 	m_startTimeStamp = GetServerTime();
 	m_functionActivated = false;
+	m_started = true;
 }
 
 bool http::Time::Check()
@@ -77,9 +78,9 @@ bool http::Time::Check()
 	{
 		if (m_functionActivated)
 			return true;
+		m_functionActivated = true;
 		if(m_toCall)
 			m_toCall();
-		m_functionActivated = true;
 		return true;
 	}
 	return false;
