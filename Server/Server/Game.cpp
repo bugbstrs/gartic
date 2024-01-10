@@ -6,10 +6,10 @@ using namespace http;
 Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers, GarticStorage& storage) :
 	m_players{ std::move(newPlayers) },
 	m_gameStatus { GameStatus::PickingWord },
-	m_gameTime{ std::shared_ptr<Time>{ new Time(m_settings.GetDrawTime() * 1000) } },
+	m_gameTime{ std::shared_ptr<Time>{ new Time(m_settings.GetDrawTime() * 1000, false) } },
 	m_chat { std::shared_ptr<Chat>{ new Chat(m_players, m_wordToGuess, m_gameTime) } },
 	m_board{ std::shared_ptr<DrawingBoard>{ new DrawingBoard(m_players) } },
-	m_round{ std::shared_ptr<Round>{ new Round(m_players, m_wordToGuess, storage, m_settings.GetDrawTime() * 1000, m_settings.GetWordCount()) } }
+	m_round{ std::shared_ptr<Round>{ new Round(m_players, m_wordToGuess, storage, m_gameTime, m_settings.GetWordCount()) } }
 {
 	auto removePlayerCallback = [this](const std::string& username)
 	{
@@ -113,6 +113,7 @@ void Game::NextRound()
 	if (m_round->GetRoundNumber() == m_settings.GetRoundsNumber() + 1)
 	{
 		m_gameStatus = GameStatus::Finished;
+		m_gameTime->Stop();
 		// TODO: stop all timers
 	}
 

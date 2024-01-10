@@ -5,11 +5,13 @@
 using namespace http;
 
 http::Round::Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string& wordToGuess,
-				   GarticStorage& storage, int roundTime, int numberOfWordsToChooseFrom, RoundType newType):
+				   GarticStorage& storage, std::shared_ptr<Time>& roundTime,
+				   int numberOfWordsToChooseFrom, RoundType newType):
 	m_players{ newPlayers },
-	m_halfRoundTimer{ new Time(roundTime / 2, false) },
-	m_wordToDisplayTimer{ new Time(roundTime / 6, false) },
-	m_pickWordTimer{ new Time(15000, false) },
+	m_halfRoundTimer{ new Time(roundTime->GetDuration() / 2, false) },
+	m_wordToDisplayTimer{ new Time(roundTime->GetDuration() / 6, false) },
+	m_pickWordTimer{ new Time(15000) },
+	m_roundTime{ roundTime },
 	m_numberOfWordsToChooseFrom{ numberOfWordsToChooseFrom },
 	m_wordToGuess{ wordToGuess },
 	m_type{ newType },
@@ -44,6 +46,10 @@ void http::Round::NextDrawer()
 		++drawerIt;
 		m_drawer = *drawerIt;
 	}
+
+	m_halfRoundTimer->Stop();
+	m_wordToDisplayTimer->Stop();
+	m_pickWordTimer->Reset();
 
 	m_halfRoundTimer->Reset();
 }
@@ -104,6 +110,8 @@ bool http::Round::PickAWord(const std::string& pickedWord)
 	m_wordToGuess = pickedWord;
 	SetWordToDisplay(m_wordToGuess);
 	m_pickWordTimer->Stop();
+	m_roundTime->Reset();
+	m_halfRoundTimer->Reset();
 	return true;
 }
 
@@ -117,6 +125,8 @@ void http::Round::PickARandomWord()
 	m_wordToGuess = m_wordsToChooseFrom[randomNumber];
 	SetWordToDisplay(m_wordToGuess);
 	m_wordsToChooseFrom.clear();
+	m_roundTime->Reset();
+	m_halfRoundTimer->Reset();
 }
 
 void http::Round::SetWordToDisplay(const std::string& word)
@@ -139,7 +149,7 @@ void http::Round::ActivateRevealLetters()
 	{
 		RevealOneLetter();
 	};
-	m_wordToDisplayTimer->Reset();
+	m_wordToDisplayTimer->Start();
 	m_wordToDisplayTimer->SetMethodToCall(wrapper);
 }
 
