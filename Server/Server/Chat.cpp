@@ -28,7 +28,7 @@ void http::Chat::VerifyMessage(const std::string& username, const std::string& m
 			
 			CalculatePoints(username);
 
-			m_messages[username].push_back("You guessed the word!");
+			m_messages[username].push_back(std::format("{} guessed the word!", username));
 		}
 		
 		m_messages[username].push_back("You are close!");

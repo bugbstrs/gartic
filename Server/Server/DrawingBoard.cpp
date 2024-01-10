@@ -12,7 +12,7 @@ http::DrawingBoard::DrawingBoard(const std::vector<std::shared_ptr<Player>>& pla
     }
 }
 
-void http::DrawingBoard::Draw(const std::string& username, DrawEvent* currEvent)
+void http::DrawingBoard::Draw(const std::string& username, const std::shared_ptr<DrawEvent> currEvent)
 {
 	for (auto [currUsername, currEventVector] : m_events)
 	{
@@ -23,16 +23,16 @@ void http::DrawingBoard::Draw(const std::string& username, DrawEvent* currEvent)
 	}
 }
 
-const std::unordered_map<std::string, std::vector<DrawEvent*>>& http::DrawingBoard::GetAllEvents() const noexcept
+const std::unordered_map<std::string, std::vector<std::shared_ptr<DrawEvent>>>& http::DrawingBoard::GetAllEvents() const noexcept
 {
     return m_events;
 }
 
-const std::vector<DrawEvent*>& http::DrawingBoard::GetAndDeleteEvents(const std::string& username)
+const std::vector<std::shared_ptr<DrawEvent>>& http::DrawingBoard::GetAndDeleteEvents(const std::string& username)
 {
 	if (m_events.find(username) != m_events.end())
 	{
-		std::vector<DrawEvent*> eventsToReturn = m_events[username];
+		std::vector<std::shared_ptr<DrawEvent>> eventsToReturn = m_events[username];
 
 		m_events[username].clear();
 
