@@ -16,11 +16,17 @@ http::Round::Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string
 {
 	m_drawer = m_players[0];
 
-	auto wrapper = [this]()
+	auto revealLettersWrapper = [this]()
 	{
 		ActivateRevealLetters();
 	};
-	m_halfRoundTimer->SetMethodToCall(wrapper);
+	auto pickARandomWordWrapper = [this]()
+	{
+		PickARandomWord();
+	};
+
+	m_halfRoundTimer->SetMethodToCall(revealLettersWrapper);
+	m_pickWordTimer->SetMethodToCall(pickARandomWordWrapper);
 }
 
 void http::Round::NextDrawer()

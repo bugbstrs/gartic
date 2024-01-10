@@ -118,6 +118,13 @@ void Game::NextRound()
 
 	m_round->NextDrawer();
 
+	// Game is finished
+	if (m_round->GetRoundNumber() == m_settings.GetRoundsNumber() + 1)
+	{
+		m_gameStatus = GameStatus::Finished;
+		// TODO: stop all timers
+	}
+
 
 	/*if (m_round->GetRoundNumber() == m_settings.GetRoundsNumber() - 1)
 	{
