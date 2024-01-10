@@ -194,6 +194,26 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 
 	AddPlayers();
 
+	auto response = cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchplayers" },
+		cpr::Parameters{
+			{"password", UserCredentials::GetPassword()},
+			{"username", UserCredentials::GetUsername()}
+		}
+	);
+	auto playersResponse = crow::json::load(response.text);
+	for (int index = 0; index < playersResponse["players"].size(); index++) {
+		if (std::string(playersResponse["players"][index]["name"]) == UserCredentials::GetUsername()) {
+			if (std::stoi(std::string(playersResponse["drawer index"])) == index) {
+				m_isDrawer = true;
+			}
+			else {
+				m_isDrawer = false;
+			}
+			break;
+		}
+	}
+
 	if (m_isDrawer) {
 		drawingBoard->SetIsChoosingWord(true);
 		backgroundForDrawer->setStyleSheet(
