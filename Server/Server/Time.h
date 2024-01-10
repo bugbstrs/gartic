@@ -15,7 +15,7 @@ namespace http
 	{
 	public:
 		Time() = delete;
-		Time(int duration);
+		Time(int duration, bool start = true);
 		Time(const Time& newTime);
 
 		~Time();
@@ -31,6 +31,8 @@ namespace http
 			m_toCall = std::bind(methodToCall, std::forward<Args>(args)...);
 		}
 
+		void Start();
+		void Stop();
 		void Reset();
 
 		bool Check();
@@ -43,7 +45,9 @@ namespace http
 	private:
 		int m_startTimeStamp;
 		int m_duration;
-		bool m_activated;
+		int m_elapsedTime;
+		bool m_functionActivated;
+		bool m_started;
 		
 		std::function<void()> m_toCall;
 

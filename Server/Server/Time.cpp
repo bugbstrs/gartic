@@ -1,7 +1,5 @@
 #include "Time.h"
 
-#include <Windows.h>
-
 using namespace http;
 
 
@@ -10,10 +8,11 @@ Timer http::Time::m_serverTimer(1440);//one day
 std::vector<Time*> http::Time::m_timers;
 
 
-http::Time::Time(int duration) :
+http::Time::Time(int duration, bool start) :
 	m_startTimeStamp{ GetServerTime() },
 	m_duration{ duration },
-	m_activated{ false }
+	m_functionActivated{ false },
+	m_started{ start }
 {
 	m_timers.push_back(this);
 }
@@ -22,7 +21,8 @@ http::Time::Time(const Time& newTime) :
 	m_startTimeStamp{ newTime.m_startTimeStamp },
 	m_duration{ newTime.m_duration },
 	m_toCall{ newTime.m_toCall },
-	m_activated{false}
+	m_functionActivated{ newTime.m_functionActivated },
+	m_started{ newTime.m_started }
 {
 	m_timers.push_back(this);
 }
@@ -49,21 +49,37 @@ void http::Time::SetDuration(int newDuration)
 	m_duration = newDuration;
 }
 
+void http::Time::Start()
+{
+	m_startTimeStamp = GetServerTime() - m_elapsedTime;
+	m_started = true;
+}
+
+void http::Time::Stop()
+{
+	m_started = false;
+}
+
 void http::Time::Reset()
 {
 	m_startTimeStamp = GetServerTime();
-	m_activated = false;
+	m_functionActivated = false;
 }
 
 bool http::Time::Check()
 {
+	if (!m_started)
+		return false;
+
+	m_elapsedTime = GetServerTime() - m_startTimeStamp;
+
 	if(GetRemainingTime() == 0)
 	{
-		if (m_activated)
+		if (m_functionActivated)
 			return true;
 		if(m_toCall)
 			m_toCall();
-		m_activated = true;
+		m_functionActivated = true;
 		return true;
 	}
 	return false;
@@ -78,7 +94,6 @@ void http::Time::CheckTimers()
 		while (true)
 		{
 			std::vector<Time*> localTimers = m_timers;
-			Sleep(250);
 			for (auto timer : localTimers)
 				if (timer != nullptr)
 					timer->Check();
