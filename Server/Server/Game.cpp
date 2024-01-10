@@ -5,7 +5,7 @@ using namespace http;
 
 Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers) :
 	m_players{ std::move(newPlayers) },
-	m_gameStatus { GameStatus::Waiting },
+	m_gameStatus { GameStatus::PickingWord },
 	m_gameTime{ std::shared_ptr<Time>{ new Time(m_settings.GetDrawTime() * 1000) } },
 	m_chat { std::shared_ptr<Chat>{ new Chat(m_players, m_wordToGuess, m_gameTime) } },
 	m_board{ std::shared_ptr<DrawingBoard>{ new DrawingBoard(m_players) } },
