@@ -46,11 +46,9 @@ namespace http
 
 		GameStatus m_gameStatus;
 
-		std::shared_ptr<Time> m_remainingTime;
+		std::shared_ptr<Time> m_gameTime;
 
 		std::shared_ptr<Chat> m_chat;
-
-		int m_roundNumber;
 
 		std::shared_ptr<Round> m_round;
 

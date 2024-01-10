@@ -6,9 +6,10 @@ import GarticExceptions;
 
 using namespace http;
 
-http::Chat::Chat(std::vector<std::shared_ptr<Player>>& players, std::string& wordToGuess):
+http::Chat::Chat(std::vector<std::shared_ptr<Player>>& players, std::string& wordToGuess, std::shared_ptr<Time> gameTime):
 	m_players{ players },
-	m_wordToGuess{ wordToGuess }
+	m_wordToGuess{ wordToGuess },
+	m_gameTime{ gameTime }
 {
 	for (const auto& player : players)
 	{
@@ -22,11 +23,11 @@ void http::Chat::VerifyMessage(const std::string& username, const std::string& m
 	{
 		if (message == m_wordToGuess)
 		{
-			auto isPlayerWhoGuessed = [&username](const std::shared_ptr<Player> player) { return player->GetName() == username; };
-			if (auto it = std::find_if(m_players.begin(), m_players.end(), isPlayerWhoGuessed); it != m_players.end())
-			{
-				(*it)->SetGuessed(true);
-			}
+			GetPlayerByName(username)->SetGuessed(true);
+			GetPlayerByName(username)->SetTimeWhenGuessed(m_gameTime->GetRemainingTime() / 1000);
+			
+			CalculatePoints(username);
+
 			m_messages[username].push_back("You guessed the word!");
 		}
 		
@@ -105,4 +106,32 @@ bool http::Chat::IsCloseEnough(const std::string& currGuess)
 	double similarity = dotProduct / (std::sqrt(mag1) * std::sqrt(mag2));
 
 	return similarity >= Chat::kTreshold;
+}
+
+void http::Chat::CalculatePoints(const std::string& username)
+{
+	std::shared_ptr<Player> playerWhoGuessed;
+	
+	int remainingTime{ m_gameTime->GetRemainingTime() / 1000 };
+	int totalTime{ m_gameTime->GetDuration() / 1000 };
+
+	if (remainingTime >= totalTime / 2)
+	{
+		playerWhoGuessed->AddPoints(100);
+	}
+	else
+	{
+		playerWhoGuessed->AddPoints((totalTime - remainingTime) * 50 / totalTime);
+	}
+}
+
+std::shared_ptr<Player> http::Chat::GetPlayerByName(const std::string& username)
+{
+	auto getPlayerByName = [&username](const std::shared_ptr<Player> player) { return player->GetName() == username; };
+	if (auto it = std::find_if(m_players.begin(), m_players.end(), getPlayerByName); it != m_players.end())
+	{
+		return *it;
+	}
+
+	return {};
 }

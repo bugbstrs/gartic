@@ -6,9 +6,8 @@ using namespace http;
 Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers) :
 	m_players{ std::move(newPlayers) },
 	m_gameStatus { GameStatus::Waiting },
-	m_remainingTime{ std::shared_ptr<Time>{ new Time(5) } },
-	m_chat { std::shared_ptr<Chat>{ new Chat(m_players, m_wordToGuess) } },
-	m_roundNumber { 0 },
+	m_gameTime{ std::shared_ptr<Time>{ new Time(m_settings.GetDrawTime() * 1000) } },
+	m_chat { std::shared_ptr<Chat>{ new Chat(m_players, m_wordToGuess, m_gameTime) } },
 	m_board{ std::shared_ptr<DrawingBoard>{ new DrawingBoard(m_players) } },
 	m_round{ std::shared_ptr<Round>{ new Round(m_players, m_wordToGuess, m_settings.GetDrawTime()) } }
 {
@@ -36,7 +35,7 @@ GameStatus http::Game::GetGameStatus() const noexcept
 
 std::shared_ptr<Time> http::Game::GetTime() const noexcept
 {
-	return m_remainingTime;
+	return m_gameTime;
 }
 
 std::shared_ptr<DrawingBoard> http::Game::GetBoard() const noexcept
@@ -61,7 +60,7 @@ void http::Game::SetGameStatus(GameStatus newGameStatus)
 
 void http::Game::SetRoundNumber(int newRoundNumber)
 {
-	m_roundNumber = newRoundNumber;
+	m_round->SetRoundNumber(newRoundNumber);
 }
 
 void http::Game::SetWordToGuess(const std::string& newWordToGuess)
@@ -76,14 +75,41 @@ std::shared_ptr<Chat> Game::GetChat() noexcept
 
 int http::Game::GetRoundNumber() const noexcept
 {
-	return m_roundNumber;
+	return m_round->GetRoundNumber();
 }
 
 void Game::NextRound()
 {
-	m_roundNumber += 1;
+	float averageGuessTime = .0;
+	for (auto& player : m_players)
+	{
+		if (m_round->GetDrawer() == player)
+		{
+			continue;
+		}
 
-	if (m_roundNumber == m_settings.GetRoundsNumber() - 1)
+		if(!player->GetGuessed())
+		{ 
+			player->AddPoints(-50);
+		}
+
+		player->SetGuessed(false);
+		
+		averageGuessTime += player->GetTimeWhenGuessed();
+	}
+
+	averageGuessTime /= (m_players.size() - 2);
+
+	if (averageGuessTime == m_gameTime->GetDuration() / 1000)
+	{
+		m_round->GetDrawer()->AddPoints(-100);
+	}
+	else
+	{
+		m_round->GetDrawer()->AddPoints((m_gameTime->GetDuration() / 1000 - averageGuessTime) * 100 / (m_gameTime->GetDuration() / 1000));
+	}
+
+	if (m_round->GetRoundNumber() == m_settings.GetRoundsNumber() - 1)
 	{
 		/*std::random_device				   rd;
 		std::default_random_engine		   engine(rd());
