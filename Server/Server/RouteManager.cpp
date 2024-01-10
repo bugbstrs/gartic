@@ -1034,7 +1034,7 @@ void http::RouteManager::FetchRoundNumberRoute()
             return;
         }
 
-        int roundNumber = m_gartic.GetGame(username)->GetRoundNumber();
+        int roundNumber = m_gartic.GetGame(username)->GetRound()->GetRoundNumber();
 
 		response.body = crow::json::wvalue
         {

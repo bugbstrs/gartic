@@ -5,7 +5,7 @@
 using namespace http;
 
 http::Round::Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string& wordToGuess,
-				   GarticStorage& manager, int roundTime, int numberOfWordsToChooseFrom, RoundType newType):
+				   GarticStorage& storage, int roundTime, int numberOfWordsToChooseFrom, RoundType newType):
 	m_players{ newPlayers },
 	m_halfRoundTimer{ new Time(roundTime / 2, false) },
 	m_wordToDisplayTimer{ new Time(roundTime / 6, false) },
@@ -13,7 +13,7 @@ http::Round::Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string
 	m_numberOfWordsToChooseFrom{ numberOfWordsToChooseFrom },
 	m_wordToGuess{ wordToGuess },
 	m_type{ newType },
-	m_manager{ manager }
+	m_storage{ storage }
 {
 	m_drawer = m_players[0];
 
@@ -68,7 +68,13 @@ std::vector<std::string> http::Round::GetWordsToChooseFrom()
 	if(m_wordsToChooseFrom.empty())
 		for (int index{ 0 }; index < m_numberOfWordsToChooseFrom; ++index)
 		{
-			// TODO: Get words from data base
+			std::string fetchedWord = m_storage.FetchWord();
+			while (m_wordsPicked.contains(fetchedWord))
+			{
+				fetchedWord = m_storage.FetchWord();
+			}
+			m_wordsPicked.insert(fetchedWord);
+			m_wordsToChooseFrom.push_back(fetchedWord);
 		}
 
 	return m_wordsToChooseFrom;
@@ -82,6 +88,11 @@ std::shared_ptr<Player> http::Round::GetDrawer() const noexcept
 void http::Round::SetRoundType(RoundType newRoundType)
 {
 	m_type = newRoundType;
+}
+
+int http::Round::GetPickWordRemainingDuration()
+{
+	return m_pickWordTimer->GetRemainingTime();
 }
 
 bool http::Round::PickAWord(const std::string& pickedWord)
@@ -118,16 +129,6 @@ void http::Round::SetWordToDisplay(const std::string& word)
 		else
 			m_wordToDisplay += '_';
 	}
-}
-
-void http::Round::SetDrawer(std::shared_ptr<Player> newDrawer)
-{
-	m_drawer = newDrawer;
-}
-
-void http::Round::SetRoundNumber(int newRoundNumber)
-{
-	m_roundNumber = newRoundNumber;
 }
 
 void http::Round::ActivateRevealLetters()

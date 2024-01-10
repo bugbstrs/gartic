@@ -14,7 +14,7 @@ namespace http
 	{
 	public:
 		GarticManager() = delete;
-		GarticManager(GarticStorage& manager);
+		GarticManager(GarticStorage& storage);
 
 		void CreateLobby(const String& username);
 		void CreateGame(const String& username);
@@ -29,7 +29,7 @@ namespace http
 
 		std::shared_ptr<Lobby> m_lobby;
 
-		GarticStorage& m_manager;
+		GarticStorage& m_storage;
 	};
 }
 

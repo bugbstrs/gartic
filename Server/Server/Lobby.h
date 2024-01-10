@@ -37,7 +37,7 @@ namespace http
 		void SetRoundsNumber(int roundsNumber) noexcept;
 		void SetWordCount(int wordCount) noexcept;
 
-		std::shared_ptr<Game> StartGame(GarticStorage& manager);
+		std::shared_ptr<Game> StartGame(GarticStorage& storage);
 
 	private:
 		std::string GenerateCode();

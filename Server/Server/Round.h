@@ -14,7 +14,7 @@ namespace http
 	public:
 		Round() = delete;
 		Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string& wordToGuess,
-			  GarticStorage& manager, int roundTime, int numberOfWordsToChooseFrom,
+			  GarticStorage& storage, int roundTime, int numberOfWordsToChooseFrom,
 			  RoundType newType = RoundType::Normal);
 
 		void NextDrawer();
@@ -27,9 +27,8 @@ namespace http
 
 		void SetRoundType(RoundType newRoundType);
 		void SetWordToDisplay(const std::string& word);
-		void SetDrawer(std::shared_ptr<Player> newDrawer);
-		void SetRoundNumber(int newRoundNumber);
 
+		int GetPickWordRemainingDuration();
 		bool PickAWord(const std::string& pickedWord);
 		void PickARandomWord();
 
@@ -56,7 +55,7 @@ namespace http
 		std::vector<std::shared_ptr<Player>>& m_players;
 		std::string& m_wordToGuess;
 
-		GarticStorage& m_manager;
+		GarticStorage& m_storage;
 	};
 }
 

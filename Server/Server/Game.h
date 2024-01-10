@@ -18,7 +18,7 @@ namespace http
 	{
 	public:
 		Game() = default;
-		Game(std::vector<std::shared_ptr<Player>>&& newPlayers, GarticStorage& manager);
+		Game(std::vector<std::shared_ptr<Player>>&& newPlayers, GarticStorage& storage);
 
 		~Game() = default;
 
@@ -27,13 +27,9 @@ namespace http
 		GameSettings GetSettings() const noexcept;
 		int GetTime() const noexcept;
 		std::shared_ptr<Chat> GetChat() noexcept;
-		int GetRoundNumber() const noexcept;
 		std::shared_ptr<DrawingBoard> GetBoard() const noexcept;
 		std::shared_ptr<Round> GetRound() const noexcept;
 		std::string GetWordToGuess() const noexcept;
-
-		void SetGameStatus(GameStatus newGameStatus);
-		void SetRoundNumber(int newRoundNumber);
 
 		void NextRound();
 		void RemovePlayer(const std::string& username);

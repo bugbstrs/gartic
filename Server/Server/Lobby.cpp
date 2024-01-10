@@ -88,7 +88,7 @@ void http::Lobby::SetWordCount(int wordCount) noexcept
 	m_settings.SetWordCount(wordCount);
 }
 
-std::shared_ptr<http::Game> http::Lobby::StartGame(GarticStorage& manager)
+std::shared_ptr<http::Game> http::Lobby::StartGame(GarticStorage& storage)
 {
 	if (m_users.size() >= 2)
 	{
@@ -102,7 +102,7 @@ std::shared_ptr<http::Game> http::Lobby::StartGame(GarticStorage& manager)
 			playersVector.push_back(std::shared_ptr<Player>(new Player(currUsername)));
 		}
 
-		return std::make_shared<Game>(std::move(playersVector), manager);
+		return std::make_shared<Game>(std::move(playersVector), storage);
 	}
 
 	//throw GarticException<NotEnoughPlayersException>("Lobby > StartGame(): There are not enough players to start a game!");
