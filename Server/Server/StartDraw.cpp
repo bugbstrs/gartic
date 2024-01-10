@@ -14,22 +14,3 @@ const std::string& http::StartDraw::Serialize()
 {
     return std::format("{} {} {} {} {}", "StartDraw", m_x, m_y, m_width, m_color);
 }
-
-void http::StartDraw::Deserialize(const std::string& toDeserialize)
-{
-    std::istringstream iss(toDeserialize);
-
-    int x, y, width, color;
-
-    iss.ignore(std::numeric_limits<std::streamsize>::max(), ':');
-
-    iss >> x >> y >> width >> color;
-
-    if (!iss.fail())
-    {
-        m_x = x;
-        m_y = y;
-        m_width = width;
-        m_color = color;
-    }
-}
