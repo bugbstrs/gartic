@@ -25,7 +25,7 @@ void GameScene::GetPlayers()
 		bool lastPlayerColor = false;
 		for (const auto& player : players["players"])
 		{
-			Color color = player["guessed"] ? Color::Green : lastPlayerColor ? Color::DarkGray : Color::White;
+			Color color = std::string(player["guessed"]) == "1" ? Color::Green : lastPlayerColor ? Color::DarkGray : Color::White;
 			lastPlayerColor = !lastPlayerColor;
 			auto layout = new VerticalLayout{ Align::Left, Align::Up, Color::White, 20, 3, m_console, 0 };
 			m_players->AddObject(layout);

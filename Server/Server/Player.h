@@ -14,13 +14,13 @@ namespace http
         Player()                                       noexcept;
         Player(const Player& otherPlayer)              noexcept;
         Player(Player&& otherPlayer)                   noexcept;
-        Player(const std::string& username, uint16_t points = 0);
+        Player(const std::string& username, int points = 0);
 
         ~Player();
 #pragma endregion constructors & destructor
 
 #pragma region Player
-        uint16_t GetPoints() const noexcept;
+        int GetPoints() const noexcept;
         const std::string& GetName() const noexcept;
         bool GetGuessed() const noexcept;
         Time* GetTime() const noexcept;
@@ -28,7 +28,7 @@ namespace http
 #pragma endregion getters
 
 #pragma region Player
-        void SetPoints(uint16_t newPoints);
+        void SetPoints(int newPoints);
         void SetName(const std::string& newName);
         void SetTime(Time* newTime);
         void SetGuessed(bool newGuessed);
@@ -36,7 +36,7 @@ namespace http
 #pragma endregion setters
 
 #pragma region Player
-        void AddPoints(uint16_t noOfPointsToBeAdded) noexcept;
+        void AddPoints(int noOfPointsToBeAdded) noexcept;
 #pragma endregion functionality
 
 #pragma region Player
@@ -52,7 +52,7 @@ namespace http
 
         Time* m_active;
 
-        uint16_t m_points;
+        int m_points;
 
         bool m_guessed;
 

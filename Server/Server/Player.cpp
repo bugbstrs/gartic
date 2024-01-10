@@ -25,7 +25,7 @@ Player::Player(Player&& otherPlayer) noexcept :
     m_active{ std::move(otherPlayer.m_active) }
 {}
 
-Player::Player(const std::string& username, uint16_t points) :
+Player::Player(const std::string& username, int points) :
     m_user{ username },
     m_points{ points },
     m_guessed{ false },
@@ -37,7 +37,7 @@ http::Player::~Player()
     delete m_active;
 }
 
-uint16_t Player::GetPoints() const noexcept
+int Player::GetPoints() const noexcept
 {
     return m_points;
 }
@@ -62,7 +62,7 @@ int http::Player::GetTimeWhenGuessed() const noexcept
     return m_timeWhenGuessed;
 }
 
-void http::Player::SetPoints(uint16_t newPoints)
+void http::Player::SetPoints(int newPoints)
 {
     m_points = newPoints;
 }
@@ -87,7 +87,7 @@ void http::Player::SetTimeWhenGuessed(int newTimeWhenGuessed)
     m_timeWhenGuessed = newTimeWhenGuessed;
 }
 
-void Player::AddPoints(uint16_t noOfPointsToBeAdded) noexcept
+void Player::AddPoints(int noOfPointsToBeAdded) noexcept
 {
     m_points += noOfPointsToBeAdded;
 }
