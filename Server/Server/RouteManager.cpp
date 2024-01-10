@@ -548,7 +548,7 @@ void http::RouteManager::JoinLobbyRoute()
 
 		try
 		{
-			m_gartic.AddPlayerInLobby(username, codeString);
+            m_gartic.AddPlayerInLobby(username, codeString);
 
 			response.code = 200;
 			response.body = crow::json::wvalue
