@@ -13,7 +13,8 @@ namespace http
 	class GarticManager
 	{
 	public:
-		GarticManager() = default;
+		GarticManager() = delete;
+		GarticManager(GarticStorage& manager);
 
 		void CreateLobby(const String& username);
 		void CreateGame(const String& username);
@@ -27,6 +28,8 @@ namespace http
 		std::shared_ptr<Game> m_game;
 
 		std::shared_ptr<Lobby> m_lobby;
+
+		GarticStorage& m_manager;
 	};
 }
 

@@ -1163,12 +1163,15 @@ void http::RouteManager::FetchWordToGuessRoute()
             return;
         }
 
-		std::string wordToGuess = m_gartic.GetGame(username)->GetWordToGuess();
+		std::vector<std::string> wordsToGuess = m_gartic.GetGame(username)->GetRound()->GetWordsToChooseFrom();
+        std::vector<crow::json::wvalue> wordsToGuessJSON;
+        for (const auto& word : wordsToGuess)
+            wordsToGuessJSON.emplace_back(word);
 
         response.body = crow::json::wvalue
         {
             {"code", response.code},
-            {"word", wordToGuess}
+            {"words", wordsToGuessJSON}
         }.dump();
 
 		response.end();
@@ -1365,7 +1368,7 @@ void http::RouteManager::PutWordToGuessRoute()
             return;
         }
 		
-        m_gartic.GetGame(username)->SetWordToGuess(wordToGuessString);
+        m_gartic.GetGame(username)->GetRound()->PickAWord(wordToGuessString);
 
 		response.body = crow::json::wvalue
         {

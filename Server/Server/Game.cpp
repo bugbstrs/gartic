@@ -3,13 +3,13 @@
 import GarticExceptions;
 using namespace http;
 
-Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers) :
+Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers, GarticStorage& manager) :
 	m_players{ std::move(newPlayers) },
 	m_gameStatus { GameStatus::PickingWord },
 	m_gameTime{ std::shared_ptr<Time>{ new Time(m_settings.GetDrawTime() * 1000) } },
 	m_chat { std::shared_ptr<Chat>{ new Chat(m_players, m_wordToGuess, m_gameTime) } },
 	m_board{ std::shared_ptr<DrawingBoard>{ new DrawingBoard(m_players) } },
-	m_round{ std::shared_ptr<Round>{ new Round(m_players, m_wordToGuess, m_settings.GetDrawTime() * 1000, m_settings.GetWordCount()) } }
+	m_round{ std::shared_ptr<Round>{ new Round(m_players, m_wordToGuess, manager, m_settings.GetDrawTime() * 1000, m_settings.GetWordCount()) } }
 {
 	auto removePlayerCallback = [this](const std::string& username)
 	{
@@ -42,9 +42,21 @@ GameStatus http::Game::GetGameStatus() const noexcept
 	return m_gameStatus;
 }
 
-std::shared_ptr<Time> http::Game::GetTime() const noexcept
+int http::Game::GetTime() const noexcept
 {
-	return m_gameTime;
+	switch (m_gameStatus)
+	{
+	case GameStatus::PickingWord:
+
+		break;
+	case GameStatus::Drawing:
+
+		break;
+	case GameStatus::Finished:
+
+		break;
+	}
+	return 1;
 }
 
 std::shared_ptr<DrawingBoard> http::Game::GetBoard() const noexcept
@@ -70,11 +82,6 @@ void http::Game::SetGameStatus(GameStatus newGameStatus)
 void http::Game::SetRoundNumber(int newRoundNumber)
 {
 	m_round->SetRoundNumber(newRoundNumber);
-}
-
-void http::Game::SetWordToGuess(const std::string& newWordToGuess)
-{
-	m_wordToGuess = newWordToGuess;
 }
 
 std::shared_ptr<Chat> Game::GetChat() noexcept

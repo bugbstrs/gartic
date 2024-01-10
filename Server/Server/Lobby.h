@@ -9,6 +9,7 @@
 #include "Game.h"
 #include "LobbyStatusEnum.h"
 #include "GameSettings.h"
+#include "GarticDatabase.h"
 
 namespace http
 {
@@ -36,7 +37,7 @@ namespace http
 		void SetRoundsNumber(int roundsNumber) noexcept;
 		void SetWordCount(int wordCount) noexcept;
 
-		std::shared_ptr<Game> StartGame();
+		std::shared_ptr<Game> StartGame(GarticStorage& manager);
 
 	private:
 		std::string GenerateCode();

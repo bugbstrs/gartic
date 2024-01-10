@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_set>
 
+#include "GarticDatabase.h"
 #include "RoundTypeEnum.h"
 #include "Player.h"
 
@@ -13,7 +14,8 @@ namespace http
 	public:
 		Round() = delete;
 		Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string& wordToGuess,
-			  int roundTime, int numberOfWordsToChooseFrom, RoundType newType = RoundType::Normal);
+			  GarticStorage& manager, int roundTime, int numberOfWordsToChooseFrom,
+			  RoundType newType = RoundType::Normal);
 
 		void NextDrawer();
 
@@ -22,13 +24,11 @@ namespace http
 		const std::string& GetWordToDisplay() const noexcept;
 		std::vector<std::string> GetWordsToChooseFrom();
 		std::shared_ptr<Player> GetDrawer() const noexcept;
-		std::string& GetWordToGuess();
 
 		void SetRoundType(RoundType newRoundType);
 		void SetWordToDisplay(const std::string& word);
 		void SetDrawer(std::shared_ptr<Player> newDrawer);
 		void SetRoundNumber(int newRoundNumber);
-		void SetWordToGuess(const std::string& newWordToGuess);
 
 		bool PickAWord(const std::string& pickedWord);
 		void PickARandomWord();
@@ -55,6 +55,8 @@ namespace http
 
 		std::vector<std::shared_ptr<Player>>& m_players;
 		std::string& m_wordToGuess;
+
+		GarticStorage& m_manager;
 	};
 }
 

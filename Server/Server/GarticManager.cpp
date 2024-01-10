@@ -5,6 +5,10 @@
 import GarticExceptions;
 using namespace http;
 
+http::GarticManager::GarticManager(GarticStorage& manager):
+	m_manager{ manager }
+{}
+
 void http::GarticManager::CreateLobby(const String& username)
 {
 	m_lobby = std::make_shared<Lobby>(username);
@@ -14,7 +18,7 @@ void http::GarticManager::CreateGame(const String& username)
 {
 	if (m_lobby->GetUsers()[0]->GetUsername() == username)
 	{
-		m_game = m_lobby->StartGame();
+		m_game = m_lobby->StartGame(m_manager);
 	}
 }
 

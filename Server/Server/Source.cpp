@@ -19,7 +19,7 @@ int main()
 		return -1;
 	}
 
-	GarticManager garticManager;
+	GarticManager garticManager(storage);
 
 	RouteManager manager(storage, garticManager);
 
