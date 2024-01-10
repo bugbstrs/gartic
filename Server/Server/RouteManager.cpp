@@ -932,7 +932,8 @@ void http::RouteManager::FetchPlayersRoute()
 
 		std::vector<crow::json::wvalue> playersJSON;
 
-        int drawerIndex = 0;
+        int drawerIndex{ 0 };
+        bool drawerFound{ false };
 		for (auto player : fetchedPlayers)
 		{
             crow::json::wvalue playerJSON;
@@ -941,9 +942,14 @@ void http::RouteManager::FetchPlayersRoute()
             playerJSON["guessed"] = player->GetGuessed();
             playersJSON.emplace_back(playerJSON);
 
-            if (player->GetName() == drawer->GetName())
+            if (player->GetName() != drawer->GetName())
             {
-                drawerIndex = std::find(fetchedPlayers.begin(), fetchedPlayers.end(), player) - fetchedPlayers.begin();
+                if (!drawerFound)
+                    ++drawerIndex;
+            }
+            else
+            {
+                drawerFound = true;
             }
 		}
 
@@ -951,7 +957,7 @@ void http::RouteManager::FetchPlayersRoute()
         {
             {"code", response.code},
             {"players", playersJSON},
-            {"drawer", drawerIndex}
+            {"drawer index", drawerIndex}
         }.dump();
 
 		response.end();
