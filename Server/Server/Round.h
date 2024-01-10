@@ -5,6 +5,7 @@
 
 #include "GarticDatabase.h"
 #include "RoundTypeEnum.h"
+#include "GameStatusEnum.h"
 #include "Player.h"
 
 namespace http
@@ -15,7 +16,7 @@ namespace http
 		Round() = delete;
 		Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string& wordToGuess,
 			  GarticStorage& storage, std::shared_ptr<Time>& roundTime,
-			  int numberOfWordsToChooseFrom, RoundType newType = RoundType::Normal);
+			  int numberOfWordsToChooseFrom, GameStatus& gameStatus, RoundType newType = RoundType::Normal);
 
 		void NextDrawer();
 
@@ -57,6 +58,8 @@ namespace http
 		std::string& m_wordToGuess;
 
 		GarticStorage& m_storage;
+
+		GameStatus& m_gameStatus;
 	};
 }
 

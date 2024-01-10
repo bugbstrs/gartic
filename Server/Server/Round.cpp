@@ -6,7 +6,7 @@ using namespace http;
 
 http::Round::Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string& wordToGuess,
 				   GarticStorage& storage, std::shared_ptr<Time>& roundTime,
-				   int numberOfWordsToChooseFrom, RoundType newType):
+				   int numberOfWordsToChooseFrom, GameStatus& gameStatus, RoundType newType):
 	m_players{ newPlayers },
 	m_halfRoundTimer{ new Time(roundTime->GetDuration() / 2, false) },
 	m_wordToDisplayTimer{ new Time(roundTime->GetDuration() / 6, false) },
@@ -15,7 +15,8 @@ http::Round::Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string
 	m_numberOfWordsToChooseFrom{ numberOfWordsToChooseFrom },
 	m_wordToGuess{ wordToGuess },
 	m_type{ newType },
-	m_storage{ storage }
+	m_storage{ storage },
+	m_gameStatus{ gameStatus } 
 {
 	m_drawer = m_players[0];
 
@@ -34,6 +35,8 @@ http::Round::Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string
 
 void http::Round::NextDrawer()
 {
+	m_gameStatus = GameStatus::PickingWord;
+
 	auto drawerIt = std::find(m_players.rbegin(), m_players.rend(), m_drawer);
 
 	if (drawerIt == m_players.rbegin())
@@ -104,7 +107,9 @@ int http::Round::GetPickWordRemainingDuration()
 bool http::Round::PickAWord(const std::string& pickedWord)
 {
 	if (std::find(m_wordsToChooseFrom.begin(), m_wordsToChooseFrom.end(), pickedWord) == m_wordsToChooseFrom.end())
+	{
 		return false;
+	}
 
 	m_wordsToChooseFrom.clear();
 	m_wordToGuess = pickedWord;
@@ -112,6 +117,9 @@ bool http::Round::PickAWord(const std::string& pickedWord)
 	m_pickWordTimer->Stop();
 	m_roundTime->Reset();
 	m_halfRoundTimer->Reset();
+	
+	m_gameStatus = GameStatus::Drawing;
+	
 	return true;
 }
 
@@ -127,6 +135,8 @@ void http::Round::PickARandomWord()
 	m_wordsToChooseFrom.clear();
 	m_roundTime->Reset();
 	m_halfRoundTimer->Reset();
+
+	m_gameStatus = GameStatus::Drawing;
 }
 
 void http::Round::SetWordToDisplay(const std::string& word)

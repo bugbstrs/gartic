@@ -53,6 +53,7 @@ namespace http
 		void FetchWordToGuessRoute();
 		void FetchWordToDisplayRoute();
 		void FetchMessagesRoute();
+		void FetchTimeRoute();
 
 		void LeaveGameRoute();
 

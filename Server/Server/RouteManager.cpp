@@ -1264,6 +1264,46 @@ void http::RouteManager::FetchMessagesRoute()
     CROW_ROUTE(m_app, "/fetchmessages")(FetchMessagesRouteFunction);
 }
 
+void http::RouteManager::FetchTimeRoute()
+{
+    auto FetchTimeFunction = [&](const crow::request& request, crow::response& response) {
+        response = IsRequestAuthenticated(request);
+
+        if (response.code != 200)
+        {
+            response.end();
+            return;
+        }
+
+        String username = request.url_params.get("username");
+
+        if (!m_gartic.GetGame(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The game has not started yet!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
+        int gameTime = m_gartic.GetGame(username)->GetTime();
+
+        response.body = crow::json::wvalue
+        {
+            {"code", response.code},
+            {"time", gameTime}
+        }.dump();
+
+        response.end();
+    };
+
+    CROW_ROUTE(m_app, "/fetchtime")(FetchTimeFunction);
+}
+
 void http::RouteManager::LeaveGameRoute()
 {
 	auto LeaveGameRouteFunction = [&](const crow::request& request, crow::response& response) {
