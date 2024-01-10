@@ -78,6 +78,11 @@ std::shared_ptr<Chat> Game::GetChat() noexcept
 	return m_chat;
 }
 
+static inline bool GreaterForPlayers(const std::shared_ptr<Player> player1, const std::shared_ptr<Player> player2)
+{
+	return player1->GetPoints() > player2->GetPoints();
+}
+
 void Game::NextRound()
 {
 	float averageGuessTime = .0;
@@ -101,11 +106,13 @@ void Game::NextRound()
 
 	averageGuessTime /= (m_players.size() - 1);
 
-	if (averageGuessTime == m_gameTime->GetDuration() / 1000)
-		m_round->GetDrawer()->AddPoints(-100);
-	else
-		m_round->GetDrawer()->AddPoints((m_gameTime->GetDuration() / 1000 - averageGuessTime) * 100 / (m_gameTime->GetDuration() / 1000));
-
+	if (m_round->GetDrawer())
+	{
+		if (averageGuessTime == m_gameTime->GetDuration() / 1000)
+			m_round->GetDrawer()->AddPoints(-100);
+		else
+			m_round->GetDrawer()->AddPoints((m_gameTime->GetDuration() / 1000 - averageGuessTime) * 100 / (m_gameTime->GetDuration() / 1000));
+	}
 
 	m_round->NextDrawer();
 
@@ -114,27 +121,10 @@ void Game::NextRound()
 	{
 		m_gameStatus = GameStatus::Finished;
 		m_gameTime->Stop();
-		// TODO: stop all timers
+		m_round->StopAllTimers();
+
+		std::sort(m_players.begin(), m_players.end(), GreaterForPlayers);
 	}
-
-
-	/*if (m_round->GetRoundNumber() == m_settings.GetRoundsNumber() - 1)
-	{
-		std::random_device				   rd;
-		std::default_random_engine		   engine(rd());
-		auto							   count = isWordsEntity ? m_db.count<WordsEntity>() : m_db.count<QuotesEntity>();
-		std::uniform_int_distribution<int> distribution(0, count - 1);
-
-        // remove srand
-		srand(static_cast<unsigned int>(time(0)));
-
-		int randomRoundIndex = rand();
-
-		m_specialRoundType = (RoundType)randomRoundIndex;
-
-		m_status = GameStatus::SpecialRound;
-	}*/
-
 
 	m_gameTime->Reset();
 }
@@ -144,8 +134,10 @@ void http::Game::RemovePlayer(const std::string& username)
 	auto isPlayerToRemove = [&username](const std::shared_ptr<Player> player) { return player->GetName() == username; };
 	if (auto it = std::find_if(m_players.begin(), m_players.end(), isPlayerToRemove); it != m_players.end())
 	{
-		// TODO: Check if it is drawer
-
+		if (*it == m_round->GetDrawer())
+		{
+			m_round->NextDrawer();
+		}
 
 		m_players.erase(it);
 		return;

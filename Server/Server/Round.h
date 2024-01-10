@@ -33,6 +33,8 @@ namespace http
 		bool PickAWord(const std::string& pickedWord);
 		void PickARandomWord();
 
+		void StopAllTimers();
+
 		void ActivateRevealLetters();
 		void RevealOneLetter();
 

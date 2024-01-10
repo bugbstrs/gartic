@@ -52,9 +52,9 @@ void http::Round::NextDrawer()
 
 	m_halfRoundTimer->Stop();
 	m_wordToDisplayTimer->Stop();
-	m_pickWordTimer->Reset();
 
-	m_halfRoundTimer->Reset();
+	m_pickWordTimer->Reset();
+	m_roundTime->Reset();
 }
 
 RoundType http::Round::GetRoundType() const noexcept
@@ -137,6 +137,13 @@ void http::Round::PickARandomWord()
 	m_halfRoundTimer->Reset();
 
 	m_gameStatus = GameStatus::Drawing;
+}
+
+void http::Round::StopAllTimers()
+{
+	m_halfRoundTimer->Stop();
+	m_pickWordTimer->Stop();
+	m_wordToDisplayTimer->Stop();
 }
 
 void http::Round::SetWordToDisplay(const std::string& word)
