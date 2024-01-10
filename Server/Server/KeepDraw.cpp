@@ -10,7 +10,7 @@ http::KeepDraw::KeepDraw(int newX, int newY) :
 
 const std::string& http::KeepDraw::Serialize()
 {
-    return std::format("{}: {}, {}", "KeepDraw", m_x, m_y);
+    return std::format("{} {} {}", "KeepDraw", m_x, m_y);
 }
 
 void http::KeepDraw::Deserialize(const std::string& toDeserialize)

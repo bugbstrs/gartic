@@ -1,6 +1,12 @@
 #include "RouteManager.h"
+#include "Clear.h"
+#include "Fill.h"
+#include "KeepDraw.h"
+#include "StartDraw.h"
+#include "Undo.h"
 
 #include <sstream>
+#include <memory>
 #include <regex>
 
 import GarticExceptions;
@@ -37,8 +43,10 @@ void http::RouteManager::Run()
 	FetchWordToGuessRoute();
 	FetchWordToDisplayRoute();
 	FetchMessagesRoute();
+    FetchTimeRoute();
 	PutWordToGuessRoute();
 	PutMessageInChatRoute();
+    PutEventOnDrawingBoardRoute();
 	SetSettingsRoute();
 
 	m_app
@@ -1120,7 +1128,7 @@ void http::RouteManager::FetchDrawingBoard()
             return;
         }
 
-		std::vector<DrawEvent*> drawEvents{ m_gartic.GetGame(username)->GetBoard()->GetAndDeleteEvents(username)};
+		std::vector<std::shared_ptr<DrawEvent>> drawEvents{ m_gartic.GetGame(username)->GetBoard()->GetAndDeleteEvents(username)};
 
 		for (const auto& drawEvent : drawEvents)
 			drawingBoardJSON.push_back(drawEvent->Serialize());
@@ -1475,4 +1483,99 @@ void http::RouteManager::PutMessageInChatRoute()
 	};
 
     CROW_ROUTE(m_app, "/putmessageinchat").methods(crow::HTTPMethod::POST)(PutMessageInChatRouteFunction);
+}
+
+void http::RouteManager::PutEventOnDrawingBoardRoute()
+{
+    auto PutMessageInChatRouteFunction = [&](const crow::request& request, crow::response& response) {
+        response = IsRequestAuthenticated(request);
+
+        if (response.code != 200)
+        {
+            response.end();
+            return;
+        }
+
+        String username = request.url_params.get("username");
+        char* drawEvent = request.url_params.get("event");
+
+        if (drawEvent == nullptr)
+        {
+            // todo: log
+            response.code = 400;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The given draw event is not valid!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+           
+        std::string drawEventString(drawEvent);
+
+        if (!m_gartic.GetGame(username))
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The user is not in a game!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
+        std::istringstream iss(drawEventString);
+        std::vector<std::string> tokens;
+
+        while(iss >> std::skipws >> drawEventString)
+        {
+            tokens.push_back(drawEventString);
+        }
+
+        if (tokens[0] == "Clear")
+        {
+            m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<Clear>());
+        }
+        else if (tokens[0] == "KeepDraw")
+        {
+            m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<KeepDraw>(std::stoi(tokens[1]), std::stoi(tokens[2])));
+        }
+        else if (tokens[0] == "KeepDraw")
+        {
+            m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<Fill>(std::stoi(tokens[1]), std::stoi(tokens[2]), std::stoi(tokens[3])));
+        }
+        else if (tokens[0] == "StartDraw")
+        {
+            m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<StartDraw>(std::stoi(tokens[1]), std::stoi(tokens[2]), std::stoi(tokens[3]), std::stoi(tokens[4])));
+        }
+        else if (tokens[0] == "Undo")
+        {
+            m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<Undo>());
+        }
+        else
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "The given event is not valid!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
+        response.body = crow::json::wvalue
+        {
+            {"code", response.code}
+        }.dump();
+
+        response.end();
+    };
+
+    CROW_ROUTE(m_app, "/putdraweventindrawingboard").methods(crow::HTTPMethod::POST)(PutMessageInChatRouteFunction);
 }

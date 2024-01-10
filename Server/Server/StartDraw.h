@@ -11,7 +11,7 @@ namespace http
 		// Inherited via DrawEvent
 		const std::string& Serialize() override;
 
-		void Deserialize(const std::string&) override;
+		void Deserialize(const std::string&);
 
 	private:
 		int m_x;
