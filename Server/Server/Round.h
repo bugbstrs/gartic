@@ -11,7 +11,8 @@ namespace http
 	{
 	public:
 		Round() = delete;
-		Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string& wordToGuess, int roundTime, RoundType newType = RoundType::Normal);
+		Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string& wordToGuess,
+			  int roundTime, RoundType newType = RoundType::Normal);
 
 		void NextDrawer();
 
@@ -33,7 +34,6 @@ namespace http
 	private:
 		RoundType m_type;
 
-		std::string& m_wordToGuess;
 		std::string m_wordToDisplay;
 
 		Time* m_wordToDisplayTimer;
@@ -44,6 +44,7 @@ namespace http
 		int m_roundNumber;
 
 		std::vector<std::shared_ptr<Player>>& m_players;
+		std::string& m_wordToGuess;
 	};
 }
 

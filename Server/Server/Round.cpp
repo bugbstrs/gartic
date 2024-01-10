@@ -4,7 +4,8 @@
 
 using namespace http;
 
-http::Round::Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string& wordToGuess, int roundTime, RoundType newType):
+http::Round::Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string& wordToGuess,
+				   int roundTime, RoundType newType):
 	m_players{ newPlayers },
 	m_halfRoundTimer{ new Time(roundTime / 2) },
 	m_wordToDisplayTimer{ new Time(roundTime / 6) },
@@ -20,22 +21,20 @@ http::Round::Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string
 
 void http::Round::NextDrawer()
 {
-	if (m_drawer == nullptr)
-	{
-		return;
-	}
-
 	auto drawerIt = std::find(m_players.rbegin(), m_players.rend(), m_drawer);
 
 	if (drawerIt == m_players.rbegin())
 	{
-		m_drawer = m_players[0];
 		++m_roundNumber;
+		m_drawer = m_players[0];
 	}
 	else
 	{
-		m_drawer = m_players[m_players.rbegin() - drawerIt];
+		++drawerIt;
+		m_drawer = *drawerIt;
 	}
+
+	m_halfRoundTimer->Reset();
 }
 
 RoundType http::Round::GetRoundType() const noexcept
