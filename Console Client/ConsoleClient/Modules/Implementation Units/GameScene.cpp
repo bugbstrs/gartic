@@ -39,12 +39,32 @@ void GameScene::GetPlayers()
 
 void GameScene::GetTimer()
 {
-
+	auto response{ cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchtime" },
+		cpr::Parameters{
+			{"password", User::GetPassword()},
+			{"username", User::GetUsername()}
+		}
+	) };
+	if (response.status_code == 200)
+	{
+		m_timer->UpdateText("time: " + std::string(crow::json::load(response.text)["time"]));
+	}
 }
 
 void GameScene::GetRound()
 {
-
+	auto response{ cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchroundnumber" },
+		cpr::Parameters{
+			{"password", User::GetPassword()},
+			{"username", User::GetUsername()}
+		}
+	) };
+	if (response.status_code == 200)
+	{
+		m_round->UpdateText("round " + std::string(crow::json::load(response.text)["round"]));
+	}
 }
 
 void GameScene::GetChat()
@@ -66,6 +86,27 @@ void GameScene::GetChat()
 			m_chat->AddObject(new Label{Align::Left, Align::Up, color, Color::Black, 20,
 							  static_cast<int16_t>((m_message.size()) / 20 + 2), m_console, std::string(message)});
 		}
+	}
+}
+
+void GameScene::GetGameStatus()
+{
+	auto response{ cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchgamestatus" },
+		cpr::Parameters{
+			{"password", User::GetPassword()},
+			{"username", User::GetUsername()}
+		}
+	) };
+	if (response.status_code == 200)
+	{
+		std::string status = std::string(crow::json::load(response.text)["status"]);
+		if (status == "PickingWord")
+			m_gameStatus = GameStatus::PickingWord;
+		else if (status == "Drawing")
+			m_gameStatus = GameStatus::Drawing;
+		else if (status == "Finished")
+			m_gameStatus = GameStatus::Finished;
 	}
 }
 
@@ -98,6 +139,13 @@ void GameScene::GetDrawEvents()
 
 void GameScene::Leave()
 {
+	auto response{ cpr::Get(
+		cpr::Url{ "http://localhost:18080/leavegame" },
+		cpr::Parameters{
+			{"password", User::GetPassword()},
+			{"username", User::GetUsername()}
+		}
+	)};
 	m_nextScene = const_cast<std::type_info *>(&typeid(MenuScene));
 }
 
@@ -364,11 +412,14 @@ void GameScene::Update()
 {
 	while (m_nextScene == nullptr)
 	{
-		GetChat();
+		GetGameStatus();
 		GetPlayers();
+		GetRound();
+		GetTimer();
+		GetChat();
 		
 		Input();
 		Display();
-		Sleep(1000);
+		Sleep(200);
 	}
 }

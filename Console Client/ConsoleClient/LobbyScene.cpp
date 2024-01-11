@@ -121,7 +121,7 @@ void LobbyScene::Back()
 		{"password", User::GetPassword()},
 		{"username", User::GetUsername()}
 	}
-) };
+	) };
 
 	m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
 }

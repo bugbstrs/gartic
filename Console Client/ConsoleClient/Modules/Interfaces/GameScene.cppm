@@ -22,6 +22,13 @@ public:
 	~GameScene() = default;
 
 private:
+	enum class GameStatus
+	{
+		PickingWord,
+		Drawing,
+		Finished
+	};
+
 	SelectableObject *m_selectedDrawOptionButton;
 	SelectableObject *m_selectedColorButton;
 	SelectableObject *m_selectedWidthButton;
@@ -36,12 +43,14 @@ private:
 	Label			 *m_gameState;
 	Label			 *m_timer;
 	Label			 *m_round;
+	GameStatus		  m_gameStatus;
 	bool			  m_lastChatColor;//For alternating colors on chat
 
 	void GetPlayers		();
 	void GetTimer		();
 	void GetRound		();
 	void GetChat		();
+	void GetGameStatus	();
 	void SendMessageToServer();
 	void GetDrawEvents	();
 	void Leave			();
