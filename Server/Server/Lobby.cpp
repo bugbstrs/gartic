@@ -102,7 +102,7 @@ std::shared_ptr<http::Game> http::Lobby::StartGame(GarticStorage& storage)
 			playersVector.push_back(std::shared_ptr<Player>(new Player(currUsername)));
 		}
 
-		return std::make_shared<Game>(std::move(playersVector), storage, m_gameSettings);
+		return std::make_shared<Game>(std::move(playersVector), storage, m_settings);
 	}
 
 	//throw GarticException<NotEnoughPlayersException>("Lobby > StartGame(): There are not enough players to start a game!");
