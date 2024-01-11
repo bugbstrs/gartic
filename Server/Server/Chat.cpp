@@ -30,8 +30,9 @@ void http::Chat::VerifyMessage(const std::string& username, const std::string& m
 
 			m_messages[username].push_back(std::format("{} guessed the word!", username));
 		}
-		
-		m_messages[username].push_back("You are close!");
+		else {
+			m_messages[username].push_back("You are close!");
+		}
 	}
 	else
 	{
@@ -112,16 +113,20 @@ void http::Chat::CalculatePoints(const std::string& username)
 {
 	std::shared_ptr<Player> playerWhoGuessed;
 	
-	int remainingTime{ m_gameTime->GetRemainingTime() / 1000 };
-	int totalTime{ m_gameTime->GetDuration() / 1000 };
+	auto isPlayerWhoGuessed = [&username](const std::shared_ptr<Player>& player) { return player->GetName() == username; };
+	if (auto playerWhoGuessedIt = std::find_if(m_players.begin(), m_players.end(), isPlayerWhoGuessed); playerWhoGuessedIt != m_players.end())
+	{
+		int remainingTime{ m_gameTime->GetRemainingTime() / 1000 };
+		int totalTime{ m_gameTime->GetDuration() / 1000 };
 
-	if (remainingTime >= totalTime / 2)
-	{
-		playerWhoGuessed->AddPoints(100);
-	}
-	else
-	{
-		playerWhoGuessed->AddPoints((totalTime - remainingTime) * 50 / totalTime);
+		if (remainingTime >= totalTime / 2)
+		{
+			(*playerWhoGuessedIt)->AddPoints(100);
+		}
+		else
+		{
+			(*playerWhoGuessedIt)->AddPoints((totalTime - remainingTime) * 50 / totalTime);
+		}
 	}
 }
 
