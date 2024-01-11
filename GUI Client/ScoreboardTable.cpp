@@ -53,6 +53,31 @@ void ScoreboardTable::AddPointsToPlayerWithIndex(uint8_t index)
 	players[0].second->setText(QString::number(players[0].second->text().toInt() + 10));
 }
 
+void ScoreboardTable::SetPointsToPlayer(const QString& username, int numberOfPoints)
+{
+	for (int index = 0; index < rowCount(); index++) {
+		if (players[index].first->text() == username) {
+			players[index].second->setText(QString::number(numberOfPoints));
+			break;
+		}
+	}
+}
+
+void ScoreboardTable::MarkGuessedForPlayer(const QString& username)
+{
+	for (int index = 0; index < rowCount(); index++) {
+		if (players[index].first->text() == username) {
+			players[index].second->setIcon(std::get<3>(takenAvatars[index]));
+			break;
+		}
+	}
+}
+
+std::vector<std::pair<QTableWidgetItem*, QTableWidgetItem*>> ScoreboardTable::GetPlayersOrdered()
+{
+	return players;
+}
+
 void ScoreboardTable::StopCheckingForPlayers(bool checkForPlayers)
 {
 	stop.store(true);

@@ -52,6 +52,8 @@ MainWindow::MainWindow(QWidget* parent)
 
     //Game scene connections
     QObject::connect(ui->leaveGameButton, &QPushButton::released, this, &MainWindow::OnLeaveGameButtonReleased);
+    QObject::connect(ui->gameplayWidget, &GameplayWidget::OnGameFinished, this, &MainWindow::OnGameEnded);
+    QObject::connect(ui->goToMenuFromResultsButton, &QPushButton::released, this, &MainWindow::OnBackToMenuFromGameResults);
 
     //Stats scene connections
     QObject::connect(ui->backToMenuButton, &QPushButton::released, this, &MainWindow::OnBackToMenuButtonReleased);
@@ -180,6 +182,39 @@ void MainWindow::OnLeaveGameButtonReleased() noexcept {
         ui->lobbyTable->ClearLobby();
         ui->scoreboardTable->clear();
     }
+}
+
+void MainWindow::OnGameEnded() noexcept
+{
+    ui->stackedWidget->setCurrentWidget(ui->ResultsScene);
+    /*std::vector <std::pair<QTableWidgetItem*, QTableWidgetItem*>> players = ui->scoreboardTable->GetPlayersOrdered();
+    for (auto& player : players) {
+        QTableWidgetItem* name = new QTableWidgetItem(std::get<0>(player), std::get<1>(player));
+        QTableWidgetItem* score = new QTableWidgetItem(QIcon(), QString::number(0));
+
+        name->setBackground(std::get<2>(player));
+        if (std::get<1>(player) == QString::fromUtf8(UserCredentials::GetUsername()))
+            name->setFont(yourNameFont);
+        else
+            name->setFont(nameFont);
+        name->setTextAlignment(Qt::AlignVCenter | Qt::AlignLeft);
+
+        score->setBackground(std::get<2>(avatar));
+        score->setFont(pointsFont);
+        score->setTextAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
+
+        int rowPosition = rowCount();
+        insertRow(rowPosition);
+        setItem(rowPosition, 0, name);
+        setItem(rowPosition, 1, score);
+
+        players.push_back({ name, score });
+    }*/
+}
+
+void MainWindow::OnBackToMenuFromGameResults() noexcept
+{
+    ui->stackedWidget->setCurrentWidget(ui->MainMenuScene);
 }
 
 

@@ -23,7 +23,7 @@ void Chat::AddMessageInChat(const QString& newMessage) noexcept
 		QString name = newMessage.section(": ", 0, 0);
 		QString messageSent = newMessage.section(": ", 1);
 		QString formattedMessage;
-		if (newMessage != m_wordToGuess)
+		if (newMessage != kFoundWord)
 			formattedMessage = QString("[%1] <b>%2:</b> <b style='color: blue;'>%3</b><br>").arg(formattedTime, name, messageSent);
 		else {
 			formattedMessage = QString("<b style='color: white; background-color: green; padding: 5px;'> You have guessed the word</b><br>");
@@ -46,8 +46,10 @@ void Chat::SetWordToGuess(QString wordToGuess) noexcept
 
 void Chat::SetChatConfigurationAccordingToPlayerType(bool isDrawer) noexcept
 {
-	if (isDrawer)
-		m_chatWritingBox->setDisabled(true);
+	QMetaObject::invokeMethod(this, [this, isDrawer]() {
+		if (isDrawer)
+			m_chatWritingBox->setDisabled(true);
+	}, Qt::QueuedConnection);
 }
 
 void Chat::showEvent(QShowEvent* event)

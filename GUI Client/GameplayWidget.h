@@ -48,6 +48,9 @@ public slots:
 	void OnCanvasCleared()  noexcept;
 	void OnPencilButtonReleased() noexcept;
 
+signals:
+	void OnGameFinished();
+
 private:
 	void CheckForUpdatesInGameScene(std::atomic<bool>& stop);
 	void AddPlayers();

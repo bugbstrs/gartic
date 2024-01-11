@@ -1,8 +1,10 @@
 #include "DrawingBoard.h"
+#include "UserCredentials.h"
 
 DrawingBoard::DrawingBoard(QWidget* parent)
     : QWidget{ parent },
-    eraserColor { Qt::white }
+    eraserColor { Qt::white },
+    stop(false)
 {
     setMouseTracking(true);
     ChangePenPropertiesTo(Qt::black, 4);
@@ -21,6 +23,18 @@ void DrawingBoard::mousePressEvent(QMouseEvent* event)
     if (fillEnabled) {
         QPoint mouseRegisteredPosition = event->pos() + QPoint(-12, 10);
         FloodFill(mouseRegisteredPosition, mouseRegisteredPosition, image.pixelColor(mouseRegisteredPosition), pen.color());
+        /*std::string drawEvent = "Fill";
+        drawEvent += std::to_string(mouseRegisteredPosition.x()) + " ";
+        drawEvent += std::to_string(mouseRegisteredPosition.y()) + " ";
+        drawEvent += std::to_string()
+        auto sentFillCoordinatesResponse = cpr::Post(
+            cpr::Url{ "http://localhost:18080/fetchplayers" },
+            cpr::Parameters{
+                {"password", UserCredentials::GetPassword()},
+                {"username", UserCredentials::GetUsername()},
+                {"event", }
+            }
+        );*/
     }
 }
 
@@ -121,6 +135,16 @@ void DrawingBoard::ResetBoard() noexcept
     images.clear();
 }
 
+void DrawingBoard::CheckForNewDrawEvents(std::atomic<bool>& stop)
+{
+    while (!stop.load()) {
+
+    }
+    if (stop.load()) {
+
+    }
+}
+
 void DrawingBoard::FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith)
 {
     std::vector <std::thread> threads;
@@ -159,7 +183,6 @@ void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, Q
         return;
 
     QPoint currentPoint;
-    QRect imageRect = image.rect();
     std::queue<QPoint> pointsQueue;
     pointsQueue.push(pointToExecuteAt);
 
@@ -178,6 +201,13 @@ void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, Q
         pointsQueue.push(QPoint(currentPoint.x() + 1, currentPoint.y()));
     }
     update();
+}
+
+void DrawingBoard::showEvent(QShowEvent* event)
+{
+    stop.store(false);
+    std::thread checkForNewDrawEvents(&DrawingBoard::CheckForNewDrawEvents, this, std::ref(stop));
+    checkForNewDrawEvents.detach();
 }
 
 void DrawingBoard::paintEvent(QPaintEvent* event)

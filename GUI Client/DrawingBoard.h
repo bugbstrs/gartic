@@ -35,6 +35,8 @@ public:
 	void ResetBoard() noexcept;
 
 protected:
+	void showEvent(QShowEvent* event) override;
+
 	void paintEvent(QPaintEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void mousePressEvent(QMouseEvent* event) override;
@@ -42,6 +44,8 @@ protected:
 	void resizeEvent(QResizeEvent* event) override;
 
 private:
+	void CheckForNewDrawEvents(std::atomic<bool>& stop);
+
 	void FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith);
 	void GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith);
 	void DrawStartingPixels(const QPoint& startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith, std::vector <std::thread>& threads);
@@ -50,6 +54,7 @@ private:
 	const QColor kDefaultPenColor{ Qt::black };
 	const int kDefaultPenWidth { 4 };
 	const int kCircleRadius { 25 };
+	std::atomic<bool>stop;
 
 	bool isChoosingWord		{ false };
 	bool firstPaint			{ true };

@@ -33,6 +33,7 @@ signals:
 	void OnWordGuessed();
 
 private:
+	const QString kFoundWord = "You guessed the word!";
 	std::atomic<bool> stop;
 	bool firstShow { true };
 	QString m_wordToGuess				 {};

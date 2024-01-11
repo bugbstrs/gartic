@@ -34,6 +34,10 @@ private slots:
 
     //Drawing scene
     void OnLeaveGameButtonReleased() noexcept;
+    void OnGameEnded() noexcept;
+
+    //Game results scene
+    void OnBackToMenuFromGameResults() noexcept;
 
     //Stats scene
     void OnBackToMenuButtonReleased() noexcept;

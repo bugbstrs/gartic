@@ -13,6 +13,10 @@ public:
 
 	void AddPlayersToScoreboard(std::vector <std::tuple<QIcon, QString, QColor, QIcon>> takenAvatarsFromLobby);
 	void AddPointsToPlayerWithIndex(uint8_t index);
+	void SetPointsToPlayer(const QString& username, int numberOfPoints);
+	void MarkGuessedForPlayer(const QString& username);
+
+	std::vector <std::pair<QTableWidgetItem*, QTableWidgetItem*>> GetPlayersOrdered();
 
 	void StopCheckingForPlayers(bool checkForPlayers);
 	void ClearScoreboard();

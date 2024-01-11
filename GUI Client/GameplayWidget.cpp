@@ -84,14 +84,11 @@ void GameplayWidget::ShowWordDependingOnPlayerType(const QString& word) noexcept
 		for (int index = 0; index < word.size(); index++)
 			hiddenWord += "_";
 		wordToDraw->setText(hiddenWord);
-		toolsFrame->hide();
 		
 		chat->SetWordToGuess(word);
 	}
 	else {
 		wordToDraw->setText(word);
-		toolsFrame->show();
-		drawingBoard->setDisabled(false);
 	}
 	chat->SetChatConfigurationAccordingToPlayerType(m_isDrawer);
 }
@@ -181,8 +178,15 @@ void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
 				else {
 					m_isDrawer = false;
 				}
+				chat->SetChatConfigurationAccordingToPlayerType(m_isDrawer);
 				break;
 			}
+		}
+		for (int index = 0; index < playersResponse["players"].size(); index++) {
+			if (std::string(playersResponse["players"][index]["guessed"]) == "true") {
+				scoreboardTable->MarkGuessedForPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])));
+			}
+			scoreboardTable->SetPointsToPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])), std::stoi(std::string(playersResponse["players"][index]["points"])));
 		}
 
 		auto fetchedGameStatus = cpr::Get(
@@ -218,6 +222,11 @@ void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
 				if (!m_isDrawer && backgroundForGuesser->isHidden())
 					ShowGuesserInterface();
 			}
+			if (std::string(gameStatusText["status"]) == kFinished) {
+				stop.store(true);
+				emit(OnGameFinished());
+			}
+
 		}
 
 		auto fetchRoundNumber = cpr::Get(
@@ -286,10 +295,6 @@ void GameplayWidget::AddWordOption(const std::string& word)
 				{"word", wordButton->text().toUtf8().constData()}
 			}
 		);
-		/*if (wordToGuessPosted.status_code == 200) {
-			ShowWordDependingOnPlayerType(wordButton->text());
-			BackgroundChangeForDrawer();
-		}*/
 	});
 }
 
@@ -369,6 +374,8 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 	else {
 		ShowGuesserInterface();
 	}
+	chat->SetChatConfigurationAccordingToPlayerType(m_isDrawer);
+
 	stop.store(false);
 
 	std::thread checkForLobbyUpdates(&GameplayWidget::CheckForUpdatesInGameScene, this, std::ref(stop));
