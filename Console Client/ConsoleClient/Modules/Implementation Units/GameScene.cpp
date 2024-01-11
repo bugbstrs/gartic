@@ -183,6 +183,7 @@ void GameScene::SetAsDrawer()
 		break;
 	case GameStatus::Drawing:
 		m_wordsToChoose->Clear();
+		m_selected = m_leaveButton;
 		m_wordsToChoose->SetActive(false);
 		m_drawOptions->SetActive(true);
 		m_colorsOptions->SetActive(true);
@@ -218,7 +219,9 @@ void GameScene::SetWordsToPick()
 		) };
 		if (response.status_code == 200)
 		{
-			for (const auto& word : crow::json::load(response.text)["words"])
+			auto words = crow::json::load(response.text);
+			Button* prevButton{ nullptr };
+			for (const auto& word : words["words"])
 			{
 				std::function<void(std::string)> buttonFunction = [](std::string word)
 				{
@@ -231,10 +234,15 @@ void GameScene::SetWordsToPick()
 						}
 					);
 				};
-				auto button{ new Button{ Align::Center, Align::Center, Color::Green, Color::Black, 5, 5,
-					Color::Green, Color::Black, m_console, m_input, m_selectedColorButton, std::string(word)} };
+				auto button{ new Button{ Align::Center, Align::Center, Color::DarkGreen, Color::Black, 5, 5,
+					Color::Green, Color::Black, m_console, m_input, m_selected, std::string(word)} };
 				m_wordsToChoose->AddObject(button);
+				m_selected = button;
 				button->SetFunctionOnActivate(buttonFunction, std::string(word));
+				button->AddConections(nullptr, nullptr, prevButton, nullptr);
+				if(prevButton)
+					prevButton->AddConections(nullptr, nullptr, nullptr, button);
+				prevButton = button;
 			}
 		}
 	}
@@ -491,13 +499,13 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 
 	// Leave button
-	auto leaveButton = new Button{2, 83, Align::Center, Align::Center, Color::Blue, Color::White, 11, 5,
+	m_leaveButton = new Button{2, 83, Align::Center, Align::Center, Color::Blue, Color::White, 11, 5,
 							Color::DarkBlue, Color::White, m_console, m_input, m_selected, "LEAVE"};
-	leaveButton->SetFunctionOnActivate([this](std::string a) { Leave(); });
-	m_selectableObjects.emplace_back(leaveButton);
-	m_objects.emplace_back(leaveButton);
+	m_leaveButton->SetFunctionOnActivate([this](std::string a) { Leave(); });
+	m_selectableObjects.emplace_back(m_leaveButton);
+	m_objects.emplace_back(m_leaveButton);
 
-	m_selected = leaveButton;
+	m_selected = m_leaveButton;
 }
 
 void GameScene::Update()
@@ -512,6 +520,5 @@ void GameScene::Update()
 		
 		Input();
 		Display();
-		Sleep(200);
 	}
 }

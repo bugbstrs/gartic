@@ -43,6 +43,7 @@ private:
 	ColorDisplay	 *m_colorDisplay;
 	InputField		 *m_chatbox;
 	String			  m_message;
+	Button			 *m_leaveButton;
 	Label			 *m_displayWord;
 	Label			 *m_gameStateLabel;
 	Label			 *m_timer;

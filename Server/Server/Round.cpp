@@ -185,11 +185,17 @@ void http::Round::RevealOneLetter()
 			++lettersRevealed;
 
 	std::random_device				   rd;
-	std::default_random_engine		   engine(rd());
-	std::uniform_int_distribution<int> distribution(0, m_wordToDisplay.size() - lettersRevealed);
+	std::mt19937 					   engine(rd());
+	std::uniform_int_distribution<int> distribution(0, m_wordToDisplay.size() - lettersRevealed - 1);
 	int randomNumber = distribution(engine);
 
-	m_wordToDisplay[randomNumber] = m_wordToGuess[randomNumber];
+	int index{ 0 };
+	for (index; index < randomNumber; ++index)
+	{
+		if (m_wordToDisplay[index] != ' ' && m_wordToDisplay[index] != '_')
+			++randomNumber;
+	}
+	m_wordToDisplay[index] = m_wordToGuess[index];
 
 	m_wordToDisplayTimer->Reset();
 }

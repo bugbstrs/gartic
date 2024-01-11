@@ -68,6 +68,18 @@ void SelectableObject::SetConections(SelectableObject* up, SelectableObject* dow
     m_rightObject = right;
 }
 
+void SelectableObject::AddConections(SelectableObject* up, SelectableObject* down, SelectableObject* left, SelectableObject* right)
+{
+    if(up)
+        m_upObject = up;
+    if(down)
+        m_downObject = down;
+    if(left)
+        m_leftObject = left;
+    if(right)
+        m_rightObject = right;
+}
+
 void SelectableObject::CheckCursor()
 {
     if (IsPointInside(m_im->GetCurrentCursorPosition()) &&

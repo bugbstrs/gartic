@@ -33,13 +33,15 @@ public:
     virtual void SetFunctionOnActivate (Function function, std::string argument = "");
     virtual void SetConections  (SelectableObject* up, SelectableObject* down,
                                  SelectableObject* left, SelectableObject* right);
+    virtual void AddConections  (SelectableObject* up, SelectableObject* down,
+                                 SelectableObject* left, SelectableObject* right);
     virtual void CheckInput     () = 0;
     virtual void CheckCursor    ();
     void CanBeSelected          (bool selectable);
     bool IsSelectable           ();
     
 protected:
-    bool               m_selectable;
+    int               m_selectable;
     Function           m_function;
     std::string        m_argument;
     ColorType          m_selectedBackgroundColor;
