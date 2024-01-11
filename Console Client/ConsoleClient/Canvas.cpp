@@ -162,6 +162,26 @@ ColorType Canvas::GetSectorColor(int x, int y, int width, int height) const
     return predominantColor;
 }
 
+ColorType Canvas::GetPixelColor(int x, int y) const
+{
+    if (x < 0)
+        x = 0;
+    if (y < 0)
+        y = 0;
+    if (x >= m_canvas.size())
+        x = m_canvas.size() - 1;
+    if (y >= m_canvas[0].size())
+        y = m_canvas[0].size() - 1;
+    return m_canvas[x][y].GetColor();
+}
+
+void Canvas::SetPixelColor(int x, int y, ColorType color)
+{
+    if (x < 0 || x >= m_canvas.size() || y < 0 || y >= m_canvas[0].size())
+        return;
+    m_canvas[x][y].SetColor(color);
+}
+
 Pixel &Canvas::At(int x, int y)
 {
     if (x < 0) x = 0;

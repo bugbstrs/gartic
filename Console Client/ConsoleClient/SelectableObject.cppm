@@ -41,7 +41,7 @@ public:
     bool IsSelectable           ();
     
 protected:
-    int               m_selectable;
+    bool               m_selectable;
     Function           m_function;
     std::string        m_argument;
     ColorType          m_selectedBackgroundColor;

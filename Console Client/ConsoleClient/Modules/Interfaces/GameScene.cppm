@@ -65,6 +65,9 @@ private:
 	void SetAsGuesser	();
 	void SetWordsToPick	();
 
+	bool m_stopThread;
+	void CreateServerCommunicationThread();
+
 	void Input			() const override;
 	void Start			()       override;
 	void Update			()       override;

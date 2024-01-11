@@ -3,6 +3,8 @@
 
 module GameScene;
 
+import <thread>;
+
 using Color = ColorType;
 
 GameScene::GameScene(ConsoleManager *console, InputManager *inputManager):
@@ -72,6 +74,21 @@ void GameScene::GetRound()
 	if (response.status_code == 200)
 	{
 		m_round->UpdateText("round " + std::string(crow::json::load(response.text)["round"]));
+	}
+}
+
+void GameScene::GetWord()
+{
+	auto response{ cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchwordtodisplay" },
+		cpr::Parameters{
+			{"password", User::GetPassword()},
+			{"username", User::GetUsername()}
+		}
+	) };
+	if (response.status_code == 200)
+	{
+		m_displayWord->UpdateText(std::string(crow::json::load(response.text)["word"]));
 	}
 }
 
@@ -163,6 +180,7 @@ void GameScene::Leave()
 			{"username", User::GetUsername()}
 		}
 	)};
+	m_stopThread = true;
 	m_nextScene = const_cast<std::type_info *>(&typeid(MenuScene));
 }
 
@@ -248,6 +266,22 @@ void GameScene::SetWordsToPick()
 	}
 }
 
+void GameScene::CreateServerCommunicationThread()
+{
+	std::thread([this]()
+	{
+		while (!m_stopThread)
+		{
+			GetGameStatus();
+			GetPlayers();
+			GetRound();
+			GetTimer();
+			GetWord();
+			GetChat();
+		}
+	}).detach();
+}
+
 void GameScene::Input() const
 {
 	m_input->ReadInput();
@@ -263,6 +297,8 @@ void GameScene::Start()
 	m_nextScene = nullptr;
 	m_message = "";
 	m_lastChatColor = false;
+	m_stopThread = false;
+	CreateServerCommunicationThread();
 	m_gameStatus = GameStatus::PickingWord;
 	m_console->SetWindowed();
 	m_console->ResetColorsPalette();
@@ -287,8 +323,9 @@ void GameScene::Start()
 
 	// Chatbox
 	m_chatbox = new InputField{138, 83, Align::Left, Align::Up, Color::DarkGray, Color::Black, 20, 5,
-								 Color::DarkGray, Color::Black, m_console, m_input, m_selected, m_message, 100};
+								 Color::Blue, Color::Black, m_console, m_input, m_selected, m_message, 100};
 	m_chatbox->SetFunctionOnActivate([this](std::string a) { SendMessageToServer(); });
+	m_chatbox->SetHoverColors(Color::Red, Color::Black);
 	m_selectableObjects.emplace_back(m_chatbox);
 	m_objects.emplace_back(m_chatbox);
 
@@ -502,6 +539,7 @@ void GameScene::Start()
 	m_leaveButton = new Button{2, 83, Align::Center, Align::Center, Color::Blue, Color::White, 11, 5,
 							Color::DarkBlue, Color::White, m_console, m_input, m_selected, "LEAVE"};
 	m_leaveButton->SetFunctionOnActivate([this](std::string a) { Leave(); });
+	m_leaveButton->SetConections(nullptr, nullptr, m_chatbox, nullptr);
 	m_selectableObjects.emplace_back(m_leaveButton);
 	m_objects.emplace_back(m_leaveButton);
 
@@ -512,12 +550,6 @@ void GameScene::Update()
 {
 	while (m_nextScene == nullptr)
 	{
-		GetGameStatus();
-		GetPlayers();
-		GetRound();
-		GetTimer();
-		GetChat();
-		
 		Input();
 		Display();
 	}

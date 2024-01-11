@@ -78,6 +78,71 @@ void DrawingBoard::SetDrawColor(Color color)
 	m_color = color;
 }
 
+void DrawingBoard::FloodFill(COORD startingPoint, COORD pointToExecuteAt, Color startingColor, Color colorToBeFilledWith)
+{
+	Threads threads;
+	DrawStartingPixels(startingPoint, pointToExecuteAt, startingColor, colorToBeFilledWith, threads);
+	for (auto& thread : threads)
+		thread.join();
+}
+
+void DrawingBoard::DrawStartingPixels(COORD startingPoint, COORD pointToExecuteAt, Color startingColor, Color colorToBeFilledWith, Threads& threads)
+{
+	if (m_canvases.top().GetPixelColor(pointToExecuteAt.X, pointToExecuteAt.Y) != startingColor ||
+		m_canvases.top().GetPixelColor(pointToExecuteAt.X, pointToExecuteAt.Y) == colorToBeFilledWith)
+		return;
+
+	double distance = std::sqrt(std::pow(pointToExecuteAt.X - startingPoint.X, 2) + std::pow(pointToExecuteAt.Y - startingPoint.Y, 2));
+
+	if (distance <= 25)
+	{
+		if (distance >= 24)
+			threads.emplace_back(std::thread(&DrawingBoard::GenericFill, this, pointToExecuteAt, std::ref(pointToExecuteAt), startingColor, colorToBeFilledWith));
+		else
+			m_canvases.top().SetPixelColor(pointToExecuteAt.X, pointToExecuteAt.Y, colorToBeFilledWith);
+
+		COORD executeAt{ pointToExecuteAt };
+		++executeAt.X;
+		DrawStartingPixels(startingPoint, executeAt, startingColor, colorToBeFilledWith, threads);
+		executeAt = pointToExecuteAt;
+		--executeAt.X;
+		DrawStartingPixels(startingPoint, executeAt, startingColor, colorToBeFilledWith, threads);
+		executeAt = pointToExecuteAt;
+		++executeAt.Y;
+		DrawStartingPixels(startingPoint, executeAt, startingColor, colorToBeFilledWith, threads);
+		executeAt = pointToExecuteAt;
+		--executeAt.Y;
+		DrawStartingPixels(startingPoint, executeAt, startingColor, colorToBeFilledWith, threads);
+	}
+}
+
+void DrawingBoard::GenericFill(COORD startingPoint, COORD pointToExecuteAt, Color startingColor, Color colorToBeFilledWith)
+{
+	if (m_canvases.top().GetPixelColor(pointToExecuteAt.X, pointToExecuteAt.Y) != startingColor)
+		return;
+
+	COORD currentPoint;
+	std::queue<COORD> pointsQueue;
+	pointsQueue.push(pointToExecuteAt);
+
+	while (!pointsQueue.empty())
+	{
+		currentPoint = pointsQueue.front();
+		pointsQueue.pop();
+
+		if (m_canvases.top().GetPixelColor(currentPoint.X, currentPoint.Y) != startingColor ||
+			m_canvases.top().GetPixelColor(currentPoint.X, currentPoint.Y) == colorToBeFilledWith)
+			continue;
+
+		m_canvases.top().SetPixelColor(currentPoint.X, currentPoint.Y, colorToBeFilledWith);
+
+		pointsQueue.push(COORD{ currentPoint.X, short(currentPoint.Y + 1) });
+		pointsQueue.push(COORD{ currentPoint.X, short(currentPoint.Y - 1) });
+		pointsQueue.push(COORD{ short(currentPoint.X - 1), currentPoint.Y });
+		pointsQueue.push(COORD{ short(currentPoint.X + 1), currentPoint.Y });
+	}
+}
+
 void DrawingBoard::Draw()
 {
 	if (!m_active)
@@ -99,7 +164,13 @@ void DrawingBoard::CheckCursor()
 	{
 		if (m_im->GetClickPressed() && m_option == Option::fill)
 		{
-			//fill
+			//m_canvases.emplace(m_canvases.top());
+			//FloodFill({ short(m_sectorWidth * (cursorPos.X - m_upLeftCorner.X) + m_sectorWidth / 2) ,
+			//			short(m_sectorHeight* (cursorPos.Y - m_upLeftCorner.Y) + m_sectorHeight / 2) },
+			//		  { short(m_sectorWidth * (cursorPos.X - m_upLeftCorner.X) + m_sectorWidth / 2) ,
+			//			short(m_sectorHeight * (cursorPos.Y - m_upLeftCorner.Y) + m_sectorHeight / 2) },
+			//			m_canvases.top().GetPixelColor(short(m_sectorWidth * (cursorPos.X - m_upLeftCorner.X) + m_sectorWidth / 2),
+			//								short(m_sectorHeight * (cursorPos.Y - m_upLeftCorner.Y) + m_sectorHeight / 2)), m_color);
 		}else
 		if (m_im->GetClickHold() && m_option == Option::draw)
 		{

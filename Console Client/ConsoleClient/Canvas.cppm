@@ -23,6 +23,8 @@ public:
 	int		  GetWidth		() const;
 	int		  GetHeight		() const;
 	ColorType GetSectorColor(int x, int y, int width, int height) const;
+	ColorType GetPixelColor(int x, int y) const;
+	void SetPixelColor(int x, int y, ColorType color);
 
 private:
 	std::vector<std::vector<Pixel>> m_canvas;
