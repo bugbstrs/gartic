@@ -1167,7 +1167,7 @@ void http::RouteManager::FetchWordToDisplayRoute()
             return;
         }
 
-        std::string wordToDisplay = m_gartic.GetGame(username)->GetRound()->GetWordToDisplay();
+        std::string wordToDisplay = m_gartic.GetGame(username)->GetRound()->GetWordToDisplay(username);
 
         response.body = crow::json::wvalue
         {

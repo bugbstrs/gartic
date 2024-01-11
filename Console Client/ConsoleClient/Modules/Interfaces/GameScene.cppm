@@ -54,6 +54,7 @@ private:
 	void GetPlayers		();
 	void GetTimer		();
 	void GetRound		();
+	void GetWord		();
 	void GetChat		();
 	void GetGameStatus	();
 	void SendMessageToServer();

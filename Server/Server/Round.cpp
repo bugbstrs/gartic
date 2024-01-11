@@ -74,8 +74,10 @@ int http::Round::GetRoundNumber() const noexcept
 	return m_roundNumber;
 }
 
-const std::string& http::Round::GetWordToDisplay() const noexcept
+const std::string& http::Round::GetWordToDisplay(std::string username) const noexcept
 {
+	if (m_drawer->GetName() == username)
+		return m_wordToGuess;
 	return m_wordToDisplay;
 }
 
@@ -190,7 +192,7 @@ void http::Round::RevealOneLetter()
 	int randomNumber = distribution(engine);
 
 	int index{ 0 };
-	for (index; index < randomNumber; ++index)
+	for (; index < randomNumber; ++index)
 	{
 		if (m_wordToDisplay[index] != ' ' && m_wordToDisplay[index] != '_')
 			++randomNumber;

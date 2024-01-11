@@ -22,7 +22,7 @@ namespace http
 
 		RoundType GetRoundType() const noexcept;
 		int GetRoundNumber() const noexcept;
-		const std::string& GetWordToDisplay() const noexcept;
+		const std::string& GetWordToDisplay(std::string username) const noexcept;
 		std::vector<std::string> GetWordsToChooseFrom();
 		std::shared_ptr<Player> GetDrawer() const noexcept;
 
