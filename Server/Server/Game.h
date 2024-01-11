@@ -18,7 +18,7 @@ namespace http
 	{
 	public:
 		Game() = default;
-		Game(std::vector<std::shared_ptr<Player>>&& newPlayers, GarticStorage& storage);
+		Game(std::vector<std::shared_ptr<Player>>&& newPlayers, GarticStorage& storage, GameSettings& newGameSettings);
 
 		~Game() = default;
 

@@ -3,18 +3,20 @@
 import GarticExceptions;
 using namespace http;
 
-Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers, GarticStorage& storage) :
+Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers, GarticStorage& storage, GameSettings& newGameSettings) :
 	m_players{ std::move(newPlayers) },
 	m_gameStatus { GameStatus::PickingWord },
 	m_gameTime{ std::shared_ptr<Time>{ new Time(m_settings.GetDrawTime() * 1000, false) } },
 	m_chat { std::shared_ptr<Chat>{ new Chat(m_players, m_wordToGuess, m_gameTime) } },
 	m_board{ std::shared_ptr<DrawingBoard>{ new DrawingBoard(m_players) } },
-	m_round{ std::shared_ptr<Round>{ new Round(m_players, m_wordToGuess, storage, m_gameTime, m_settings.GetWordCount(), m_gameStatus) } }
+	m_round{ std::shared_ptr<Round>{ new Round(m_players, m_wordToGuess, storage, m_gameTime, m_settings.GetWordCount(), m_gameStatus) } },
+	m_gameSettings{ newGameSettings }
 {
 	auto removePlayerCallback = [this](const std::string& username)
 	{
 		RemovePlayer(username);
 	};
+
 	for (auto& player : m_players)
 	{
 		player->GetTime()->SetMethodToCall(removePlayerCallback, player->GetName());
@@ -24,6 +26,7 @@ Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers, GarticStorage& sto
 	{
 		NextRound();
 	};
+
 	m_gameTime->SetMethodToCall(nextRoundCallback);
 }
 
