@@ -1924,11 +1924,21 @@ QComboBox QAbstractItemView::item:hover {
 </string>
                         </property>
                         <property name="currentText">
-                         <string>30</string>
+                         <string>60</string>
                         </property>
                         <property name="frame">
                          <bool>true</bool>
                         </property>
+                        <item>
+                         <property name="text">
+                          <string>15</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>20</string>
+                         </property>
+                        </item>
                         <item>
                          <property name="text">
                           <string>30</string>
@@ -1967,11 +1977,6 @@ QComboBox QAbstractItemView::item:hover {
                         <item>
                          <property name="text">
                           <string>100</string>
-                         </property>
-                        </item>
-                        <item>
-                         <property name="text">
-                          <string>110</string>
                          </property>
                         </item>
                         <item>
@@ -2071,7 +2076,7 @@ QComboBox QAbstractItemView::item:hover {
 </string>
                         </property>
                         <property name="currentText">
-                         <string>1</string>
+                         <string>4</string>
                         </property>
                         <item>
                          <property name="text">
@@ -3127,6 +3132,10 @@ padding: 0px 0px;</string>
                      <pointsize>12</pointsize>
                      <bold>true</bold>
                     </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">letter-spacing: 4px;
+</string>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::NoFrame</enum>

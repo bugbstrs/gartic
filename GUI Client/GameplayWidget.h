@@ -13,6 +13,7 @@
 #include <regex>
 #include <string>
 #include <cpr/cpr.h>
+#include <atomic>
 
 #pragma warning(push)
 
@@ -34,7 +35,7 @@ public:
 	void ChangePenWidth(int width) noexcept;
 
 	void SetGameSettings(std::tuple<int, int, int> gameSettings);
-	void SetIsDrawer(bool isDrawer);
+	//void SetIsDrawer(bool isDrawer);
 	
 	void Clear() noexcept;
 
@@ -48,21 +49,37 @@ public slots:
 	void OnPencilButtonReleased() noexcept;
 
 private:
+	void CheckForUpdatesInGameScene(std::atomic<bool>& stop);
 	void AddPlayers();
 	void AddWordOption(const std::string& word);
 	void ShowWordDependingOnPlayerType(const QString& word) noexcept;
+
+	void ShowDrawerInterface();
+	void ShowGuesserInterface();
+
 	void BackgroundChangeForGuessersOnDrawerPickingWord();
+	void BackgroundChangeForDrawer();
 
 private:
 	struct Player {
 		std::string name;
 		int points;
 	};
+	enum class GameStatus
+	{
+		PickingWord,
+		Drawing,
+		Finished
+	};
 
 private:
-	int drawTime					 {};
-	int rounds						 {};
-	int wordsCount					 {};
+	const std::string kPickingWord = "PickingWord";
+	const std::string kDrawing = "Drawing";
+	const std::string kFinished = "Finished";
+	std::atomic<bool> stop;
+	int m_drawTime					 {};
+	int m_rounds					 {};
+	int m_wordsCount				 {};
 
 	bool firstShow					 { true };
 	bool m_isDrawer					 { true };
