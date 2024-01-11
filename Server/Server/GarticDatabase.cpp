@@ -162,7 +162,7 @@ void GarticStorage::CreateUser(const String& givenUsername, const String& givenP
 		throw GarticException<UserAlreadyExistsException>("GarticStorage > CreateUser(): User already exists!");
 	}
 
-	m_db.insert(UsersEntity{ 0, 0, givenUsername, givenPassword });
+	m_db.insert(UsersEntity{ 0, givenUsername, givenPassword });
 }
 
 void GarticStorage::PopulateUsersEntity()
@@ -271,12 +271,11 @@ std::ostream& http::operator<<(std::ostream& out, const UserVector& users)
 	{
 		std::print(
 			out,
-			"id: {} username: {} password: {} points: {} games played: {} \n",
+			"id: {} username: {} password: {} points: {}\n",
 			user.GetId(),
 			user.GetUsername(),
 			user.GetPassword(),
-			user.GetPoints(),
-			user.GetGamesPlayed()
+			user.GetPoints()
 		);
 	}
 

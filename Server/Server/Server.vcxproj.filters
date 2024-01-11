@@ -140,6 +140,9 @@
     <ClInclude Include="LobbyStatusEnum.h">
       <Filter>Header Files\Logic\Enums</Filter>
     </ClInclude>
+    <ClInclude Include="GameHistoryEntity.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -210,6 +213,9 @@
     </ClCompile>
     <ClCompile Include="GarticManager.cpp">
       <Filter>Source Files\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="GameHistoryEntity.cpp">
+      <Filter>Source Files\Database</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -211,8 +211,7 @@ void http::RouteManager::FetchAllUsersRoute()
 			usersJSON.push_back(crow::json::wvalue
             {
 				{ "username",     user.GetUsername()    },
-				{ "points",       user.GetPoints()      },
-				{ "games played", user.GetGamesPlayed() }
+                { "points",       user.GetPoints()      }
 		    });
 		}
 
@@ -248,8 +247,7 @@ void http::RouteManager::FetchTop5UsersRoute()
                 top_users_json.push_back(crow::json::wvalue
                 {
                     { "username",     user.GetUsername()    },
-                    { "points",       user.GetPoints()      },
-                    { "games played", user.GetGamesPlayed() }
+                    { "points",       user.GetPoints()      }
                 });
             }
 
