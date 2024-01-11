@@ -23,9 +23,16 @@ void GameScene::GetPlayers()
 		auto players{ crow::json::load(response.text) };
 		m_players->Clear();
 		bool lastPlayerColor = false;
+		int i{ 0 };
+		SetAsGuesser();
 		for (const auto& player : players["players"])
 		{
-			Color color = std::string(player["guessed"]) == "1" ? Color::Green : lastPlayerColor ? Color::DarkGray : Color::White;
+			if (std::stoi(std::string(players["drawer index"])) == i && std::string(player["name"]) == User::GetUsername())
+				SetAsDrawer();
+
+			Color color = std::string(player["guessed"]) == "1" ? Color::Green : 
+						  std::stoi(std::string(players["drawer index"])) == i ? Color::Red :
+						  lastPlayerColor ? Color::DarkGray : Color::White;
 			lastPlayerColor = !lastPlayerColor;
 			auto layout = new VerticalLayout{ Align::Left, Align::Up, Color::White, 20, 3, m_console, 0 };
 			m_players->AddObject(layout);
@@ -33,6 +40,7 @@ void GameScene::GetPlayers()
 										 std::string(player["name"]) });
 			layout->AddObject(new Label{ Align::Left, Align::Up, color, Color::Black, 20, 1, m_console,
 										 std::string(player["points"]) });
+			++i;
 		}
 	}
 }
@@ -247,6 +255,7 @@ void GameScene::Start()
 	m_nextScene = nullptr;
 	m_message = "";
 	m_lastChatColor = false;
+	m_gameStatus = GameStatus::PickingWord;
 	m_console->SetWindowed();
 	m_console->ResetColorsPalette();
 	m_console->AddColorsToPalette({White, Black, DarkGray, Red, DarkRed, Orange, Yellow, Green, DarkGreen,
