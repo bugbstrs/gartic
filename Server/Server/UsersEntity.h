@@ -11,7 +11,6 @@ namespace http
 
 		~UsersEntity() = default;
 
-		void SetGamesPlayed(int gamesPlayed);
 		void SetId(int id);
 		void SetPassword(const std::string& password);
 		void SetPoints(int points);

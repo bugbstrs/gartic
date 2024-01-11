@@ -8,11 +8,6 @@ UsersEntity::UsersEntity(int newPoints, const std::string& newUsername, const st
 	password	{ newPassword	 }
 {}
 
-void UsersEntity::SetGamesPlayed(int gamesPlayed)
-{
-	this->gamesPlayed = gamesPlayed;
-}
-
 void UsersEntity::SetId(int id)
 {
 	this->id = id;
@@ -55,8 +50,7 @@ std::string UsersEntity::GetUsername() const
 
 bool http::UsersEntity::operator==(const UsersEntity& secondUser) const noexcept
 {
-	return this->gamesPlayed == secondUser.gamesPlayed && 
-		   this->points == secondUser.points		   && 
+	return this->points == secondUser.points		   && 
 		   this->username == secondUser.username       && 
 		   this->password == secondUser.password       && 
 		   this->id == secondUser.id;
