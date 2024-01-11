@@ -31,6 +31,8 @@ http::Round::Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string
 
 	m_halfRoundTimer->SetMethodToCall(revealLettersWrapper);
 	m_pickWordTimer->SetMethodToCall(pickARandomWordWrapper);
+
+	GetWordsToChooseFrom();
 }
 
 void http::Round::NextDrawer()
@@ -52,9 +54,10 @@ void http::Round::NextDrawer()
 
 	m_halfRoundTimer->Stop();
 	m_wordToDisplayTimer->Stop();
+	m_roundTime->Stop();
 
 	m_pickWordTimer->Reset();
-	m_roundTime->Reset();
+	GetWordsToChooseFrom();
 }
 
 RoundType http::Round::GetRoundType() const noexcept
@@ -128,9 +131,9 @@ void http::Round::PickARandomWord()
 	std::random_device				   rd;
 	std::default_random_engine		   engine(rd());
 	std::uniform_int_distribution<int> distribution(0, m_numberOfWordsToChooseFrom);
-	int randomNumber = distribution(engine);
+	//int randomNumber = distribution(engine);
 
-	m_wordToGuess = m_wordsToChooseFrom[randomNumber];
+	m_wordToGuess = m_wordsToChooseFrom[0];
 	SetWordToDisplay(m_wordToGuess);
 	m_wordsToChooseFrom.clear();
 	m_roundTime->Reset();

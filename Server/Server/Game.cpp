@@ -73,6 +73,11 @@ std::string http::Game::GetWordToGuess() const noexcept
 	return m_wordToGuess;
 }
 
+std::string http::Game::GetRoundNumberString() const noexcept
+{
+	return std::format("{} of {}", m_round->GetRoundNumber(), m_settings.GetRoundsNumber());
+}
+
 std::shared_ptr<Chat> Game::GetChat() noexcept
 {
 	return m_chat;
@@ -125,8 +130,6 @@ void Game::NextRound()
 
 		std::sort(m_players.begin(), m_players.end(), GreaterForPlayers);
 	}
-
-	m_gameTime->Reset();
 }
 
 void http::Game::RemovePlayer(const std::string& username)

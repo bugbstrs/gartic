@@ -30,6 +30,7 @@ namespace http
 		std::shared_ptr<DrawingBoard> GetBoard() const noexcept;
 		std::shared_ptr<Round> GetRound() const noexcept;
 		std::string GetWordToGuess() const noexcept;
+		std::string GetRoundNumberString() const noexcept;
 
 		void NextRound();
 		void RemovePlayer(const std::string& username);
