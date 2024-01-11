@@ -51,5 +51,7 @@ namespace http
 		std::shared_ptr<DrawingBoard> m_board;
 
 		std::string m_wordToGuess;
+
+		GarticStorage& m_storage;
 	};
 }

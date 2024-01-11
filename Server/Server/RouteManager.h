@@ -21,12 +21,10 @@ namespace http
 		// Database related
 		void FetchWordRoute();
 		void FetchQuoteRoute();
-		void FetchAllWordsRoute();
-		void FetchAllUsersRoute();
-		void FetchTop5UsersRoute();
 		void LoginRoute();
 		void RegisterRoute();
 		void CheckBannedWordRoute();
+		void FetchProfileInfoRoute();
 
         crow::response IsRequestAuthenticated(const crow::request& request);
 

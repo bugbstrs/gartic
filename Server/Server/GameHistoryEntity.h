@@ -6,7 +6,7 @@ namespace http
 	{
 	public:
 		GameHistoryEntity() = default;
-		GameHistoryEntity(int newId, int newUserId, int newPosition, int newTotalPoints);
+		GameHistoryEntity(int newUserId, int newPosition, int newTotalPoints);
 
 		~GameHistoryEntity() = default;
 
@@ -15,10 +15,10 @@ namespace http
 		void SetPosition(int newPosition);
 		void SetTotalPoints(int newTotalPoints);
 
-		int GetId();
-		int GetUserId();
-		int GetPosition();
-		int GetTotalPoints();
+		int GetId() const;
+		int GetUserId() const;
+		int GetPosition() const;
+		int GetTotalPoints() const;
 
 	private:
 		int id;

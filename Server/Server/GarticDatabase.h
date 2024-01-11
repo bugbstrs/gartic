@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include <crow.h>
 #include <sqlite_orm/sqlite_orm.h>
@@ -12,7 +13,10 @@ namespace sql = sqlite_orm;
 #include "WordsEntity.h"
 #include "BannedWordsEntity.h"
 #include "QuotesEntity.h"
+#include "GameHistoryEntity.h"
 #include "HttpUtils.h"
+
+#include "Player.h"
 
 // Exceptions
 
@@ -53,6 +57,13 @@ namespace http
 				"QuotesEntity",
 				sql::make_column("id", &QuotesEntity::SetId, &QuotesEntity::GetId, sql::primary_key().autoincrement()),
 				sql::make_column("name", &QuotesEntity::SetName, &QuotesEntity::GetName)
+			),
+			sql::make_table(
+				"GameHistoryEntity",
+				sql::make_column("id", &GameHistoryEntity::SetId, &GameHistoryEntity::GetId, sql::primary_key().autoincrement()),
+				sql::make_column("userId", &GameHistoryEntity::SetUserId, &GameHistoryEntity::GetUserId),
+				sql::make_column("position", &GameHistoryEntity::SetPosition, &GameHistoryEntity::GetPosition),
+				sql::make_column("totalPoints", &GameHistoryEntity::SetTotalPoints, &GameHistoryEntity::GetTotalPoints)
 			)
 		);
 	}
@@ -70,17 +81,15 @@ namespace http
 
 		String	   FetchWord();
 		String	   FetchQuote();
-
-		UserVector FetchAllUsers();
-		UserVector FetchTop5Users();
 		
-		WordVector FetchAllWords();
+		std::vector<std::pair<int, int>> FetchAllHistoriesOf(const String& givenUsername);
 
 		void	   CreateUser(const String& givenUsername, const String& givenPassword);
 		void	   PopulateUsersEntity();
 		void	   PopulateWordsEntity();
 		void	   PopulateBannedWordsEntity();
 		void	   PopulateQuotesEntity();
+		void	   PopulateGameHistoryEntity(const std::vector<std::shared_ptr<Player>>& leaderboard);
 
 	private:
 		int GenerateRandomId(bool isWordsEntity);

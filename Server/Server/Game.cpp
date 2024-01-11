@@ -10,7 +10,8 @@ Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers, GarticStorage& sto
 	m_chat { std::shared_ptr<Chat>{ new Chat(m_players, m_wordToGuess, m_gameTime) } },
 	m_board{ std::shared_ptr<DrawingBoard>{ new DrawingBoard(m_players) } },
 	m_round{ std::shared_ptr<Round>{ new Round(m_players, m_wordToGuess, storage, m_gameTime, m_settings.GetWordCount(), m_gameStatus) } },
-	m_settings{ newGameSettings }
+	m_settings{ newGameSettings },
+	m_storage { storage }
 {
 	auto removePlayerCallback = [this](const std::string& username)
 	{
@@ -132,6 +133,8 @@ void Game::NextRound()
 		m_round->StopAllTimers();
 
 		std::sort(m_players.begin(), m_players.end(), GreaterForPlayers);
+
+		m_storage.PopulateGameHistoryEntity(m_players);
 	}
 }
 

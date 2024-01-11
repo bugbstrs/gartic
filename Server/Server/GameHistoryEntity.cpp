@@ -1,7 +1,6 @@
 #include "GameHistoryEntity.h"
 
-http::GameHistoryEntity::GameHistoryEntity(int newId, int newUserId, int newPosition, int newTotalPoints):
-	id{ newId },
+http::GameHistoryEntity::GameHistoryEntity(int newUserId, int newPosition, int newTotalPoints):
 	userId{ newUserId },
 	position{ newPosition },
 	totalPoints{ newTotalPoints }
@@ -28,22 +27,22 @@ void http::GameHistoryEntity::SetTotalPoints(int newTotalPoints)
 	totalPoints = newTotalPoints;
 }
 
-int http::GameHistoryEntity::GetId()
+int http::GameHistoryEntity::GetId() const
 {
 	return id;
 }
 
-int http::GameHistoryEntity::GetUserId()
+int http::GameHistoryEntity::GetUserId() const
 {
 	return userId;
 }
 
-int http::GameHistoryEntity::GetPosition()
+int http::GameHistoryEntity::GetPosition() const
 {
 	return position;
 }
 
-int http::GameHistoryEntity::GetTotalPoints()
+int http::GameHistoryEntity::GetTotalPoints() const
 {
 	return totalPoints;
 }

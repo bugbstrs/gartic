@@ -12,6 +12,7 @@ using namespace sqlite_orm;
 bool http::GarticStorage::Initialize()
 {
 	m_db.sync_schema();
+	auto initGameHisCount = m_db.count<GameHistoryEntity>();
 	auto initWordsCount = m_db.count<WordsEntity>();
 	if (!initWordsCount)
 	{
@@ -44,16 +45,16 @@ bool http::GarticStorage::Initialize()
 	return wordsCount != 0 && usersCount != 0 && bannedWordsCount != 0 && quotesCount != 0;
 }
 
-bool GarticStorage::CheckCredentials(const String& givenUsername, const String& givenPassword) 
+bool GarticStorage::CheckCredentials(const String& givenUsername, const String& givenPassword)
 {
-    auto users = m_db.get_all<UsersEntity>(
-        where(
-            c(&UsersEntity::GetUsername) == givenUsername &&
-            c(&UsersEntity::GetPassword) == givenPassword
-        )
-    );
+	auto users = m_db.get_all<UsersEntity>(
+		where(
+			c(&UsersEntity::GetUsername) == givenUsername &&
+			c(&UsersEntity::GetPassword) == givenPassword
+			)
+	);
 
-    return !users.empty();
+	return !users.empty();
 }
 
 bool GarticStorage::CheckUsernameAlreadyExists(const String& givenUsername)
@@ -61,7 +62,7 @@ bool GarticStorage::CheckUsernameAlreadyExists(const String& givenUsername)
 	auto result = m_db.get_all<UsersEntity>(
 		where(
 			c(&UsersEntity::GetUsername) == givenUsername
-		)
+			)
 	);
 
 	return !result.empty();
@@ -72,7 +73,7 @@ bool http::GarticStorage::CheckBannedWord(const String& givenWord)
 	auto result = m_db.get_all<BannedWordsEntity>(
 		where(
 			c(&BannedWordsEntity::GetName) == givenWord
-		)
+			)
 	);
 
 	return !result.empty();
@@ -85,7 +86,7 @@ String GarticStorage::FetchWord()
 	auto result = m_db.select(sqlite_orm::columns(&WordsEntity::GetName),
 		where(
 			c(&WordsEntity::GetId) == randomId
-		)
+			)
 	);
 
 	if (!result.empty())
@@ -93,7 +94,7 @@ String GarticStorage::FetchWord()
 		return std::get<0>(result[0]);
 	}
 
-	throw GarticException<CannotFetchWordException>("GarticStroage > FetchWord(): Word could not be fetched!");
+	throw GarticException<CannotFetchWordException>("GarticStorage > FetchWord(): Word could not be fetched!");
 }
 
 String http::GarticStorage::FetchQuote()
@@ -103,56 +104,33 @@ String http::GarticStorage::FetchQuote()
 	auto result = m_db.select(sqlite_orm::columns(&QuotesEntity::GetName),
 		where(
 			c(&QuotesEntity::GetId) == randomId
-		)
+			)
 	);
 
 	if (!result.empty())
 	{
 		return std::get<0>(result[0]);
 	}
-	
+
 	throw GarticException<CannotFetchQuoteException>("GarticStorage > FetchQuote(): Quote could not be fetched!");
 }
 
-UserVector GarticStorage::FetchAllUsers()
+std::vector<std::pair<int, int>> http::GarticStorage::FetchAllHistoriesOf(const String& givenUsername)
 {
-	UserVector allUsers;
+	auto result = 
+	m_db.select(
+		sql::columns(&GameHistoryEntity::GetId, &GameHistoryEntity::GetPosition, &GameHistoryEntity::GetTotalPoints),
+		sql::inner_join<UsersEntity>(sql::on(sql::c(&UsersEntity::GetId) == &GameHistoryEntity::GetUserId))
+	);
+	
+	std::vector<std::pair<int, int>> statsForProfile;
 
-	auto users = m_db.get_all<UsersEntity>();
-	for (const auto& user : users)
+	for (int index = 0; index < result.size(); index++)
 	{
-		allUsers.push_back(user);
+		statsForProfile.push_back(std::make_pair(std::get<1>(result[index]), std::get<2>(result[index])));
 	}
 
-	return allUsers;
-}
-
-UserVector http::GarticStorage::FetchTop5Users()
-{
-	UserVector allUsers = FetchAllUsers();
-
-	std::sort(allUsers.begin(), allUsers.end(), [](const UsersEntity& user1, const UsersEntity& user2) {
-		return user1.GetPoints() < user2.GetPoints();
-	});
-
-	int numTopUsers = std::min(5, static_cast<int>(allUsers.size()));
-
-    if (numTopUsers == 0) throw GarticException<NotEnoughScoresRegisteredException>("GarticStorage > FetchTop5Users(): No scores have been registered!");
-
-	return UserVector(allUsers.begin(), allUsers.begin() + numTopUsers);
-}
-
-WordVector GarticStorage::FetchAllWords()
-{
-	WordVector allWords;
-
-	auto words = m_db.get_all<WordsEntity>();
-	for (const auto& word : words)
-	{
-		allWords.push_back(word.GetName());
-	}
-
-	return allWords;
+	return statsForProfile;
 }
 
 void GarticStorage::CreateUser(const String& givenUsername, const String& givenPassword)
@@ -249,6 +227,21 @@ void http::GarticStorage::PopulateQuotesEntity()
 	}
 
 	filename.close();
+}
+
+void http::GarticStorage::PopulateGameHistoryEntity(const std::vector<std::shared_ptr<Player>>& leaderboard)
+{
+	for (int index = 0; index < leaderboard.size(); index++)
+	{
+		auto currentUser = m_db.select(columns(&UsersEntity::GetId), where(c(&UsersEntity::GetUsername) == leaderboard[index]->GetName()));
+
+		if (!currentUser.empty())
+		{
+			auto id = std::get<0>(currentUser[0]);
+
+			m_db.insert(GameHistoryEntity{ id, index + 1, leaderboard[index]->GetPoints() });
+		}
+	}
 }
 
 int GarticStorage::GenerateRandomId(bool isWordsEntity)

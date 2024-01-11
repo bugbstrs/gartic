@@ -19,13 +19,11 @@ http::RouteManager::RouteManager(GarticStorage& storage, GarticManager& manager)
 void http::RouteManager::Run()
 {
 	FetchWordRoute();
-	FetchQuoteRoute();
-	FetchAllWordsRoute();
-	FetchAllUsersRoute();
-	FetchTop5UsersRoute();
+    FetchQuoteRoute();
 	LoginRoute();
 	RegisterRoute();
 	CheckBannedWordRoute();
+    FetchProfileInfoRoute();
 	CreateLobbyRoute();
 	CreateGameRoute();
 	JoinLobbyRoute();
@@ -164,119 +162,6 @@ void http::RouteManager::FetchQuoteRoute()
     CROW_ROUTE(m_app, "/fetchquote")(FetchQuoteRouteFunction);
 }
 
-// todo: remove
-void http::RouteManager::FetchAllWordsRoute()
-{
-	auto FetchAllWordsRouteFunction = [&](const crow::request& request, crow::response& response)
-    {
-        response = IsRequestAuthenticated(request);
-
-        if (response.code != 200)
-        {
-            response.end();
-            return;
-        }
-        
-		std::vector<crow::json::wvalue> wordsJSON;
-		WordVector words = m_storage.FetchAllWords();
-
-		for (const auto& word : words)
-			wordsJSON.push_back(word);
-
-        response.body = crow::json::wvalue{wordsJSON}.dump();
-        response.end();
-	};
-
-    CROW_ROUTE(m_app, "/fetchallwords")(FetchAllWordsRouteFunction);
-}
-
-// todo: remove
-void http::RouteManager::FetchAllUsersRoute()
-{
-	auto FetchAllUsersRouteFunction = [&](const crow::request& request, crow::response& response)
-    {
-        response = IsRequestAuthenticated(request);
-
-        if (response.code != 200)
-        {
-            response.end();
-            return;
-        }
-		
-        std::vector<crow::json::wvalue> usersJSON;		
-        UserVector users = m_storage.FetchAllUsers();
-
-		for (const auto& user : users)
-		{
-			usersJSON.push_back(crow::json::wvalue
-            {
-				{ "username",     user.GetUsername()    },
-                { "points",       user.GetPoints()      }
-		    });
-		}
-
-        response.body = crow::json::wvalue{usersJSON}.dump();
-        response.end();
-	};
-
-    CROW_ROUTE(m_app, "/fetchallusers")(FetchAllUsersRouteFunction);
-}
-
-void http::RouteManager::FetchTop5UsersRoute()
-{
-	auto FetchTop5UsersRouteFunction = [&](const crow::request& request, crow::response& response)
-    {
-        response = IsRequestAuthenticated(request);
-
-        if (response.code != 200)
-        {
-            response.end();
-            return;
-        }
-        
-        try
-        {
-            std::vector<crow::json::wvalue> top_users_json;
-
-            UserVector topUsers = m_storage.FetchTop5Users();
-
-            response.code = topUsers.size() == 5 ? 200 : 206;
-
-            for (const auto& user : topUsers)
-            {
-                top_users_json.push_back(crow::json::wvalue
-                {
-                    { "username",     user.GetUsername()    },
-                    { "points",       user.GetPoints()      }
-                });
-            }
-
-            response.body = crow::json::wvalue
-            {
-                {"code", response.code},
-                {"users", top_users_json}
-            }.dump();
-            
-            response.end();
-            return;
-        }
-        catch (GarticException<NotEnoughScoresRegisteredException>& exception)
-        {
-            response.code = 204;
-            response.body = crow::json::wvalue
-            {
-                {"code", response.code},
-                {"users", std::vector<crow::json::wvalue>{}}
-            }.dump();
-            
-            response.end();
-            return;
-        }
-    };
-
-    CROW_ROUTE(m_app, "/fetchtopusers")(FetchTop5UsersRouteFunction);
-}
-
 void http::RouteManager::LoginRoute()
 {
 	auto LoginRouteFunction = [&](const crow::request& request, crow::response& response)
@@ -384,6 +269,62 @@ void http::RouteManager::CheckBannedWordRoute()
 	};
 
     CROW_ROUTE(m_app, "/bannedword")(CheckBannedWordRouteFunction);
+}
+
+void http::RouteManager::FetchProfileInfoRoute()
+{
+    auto FetchProfileInfoRouteFunction = [&](const crow::request& request, crow::response& response)
+        {
+            response = IsRequestAuthenticated(request);
+
+            if (response.code != 200)
+            {
+                response.end();
+                return;
+            }
+
+            String username = request.url_params.get("username");
+
+            if (!m_gartic.GetLobby(username))
+            {
+                response.code = 403;
+                response.body = crow::json::wvalue
+                {
+                    {"code", response.code},
+                    {"error", "The user is not in a lobby!"}
+                }.dump();
+
+                response.end();
+                return;
+            }
+
+            std::vector<std::pair<int, int>> profileInfo;
+            try
+            {
+                profileInfo = m_storage.FetchAllHistoriesOf(username);
+            }
+            catch (...)
+            {
+                response.code = 404;
+                response.body = crow::json::wvalue
+                {
+                    {"code", response.code},
+                    {"error", "The user doesn't have a history!"}
+                }.dump();
+
+                response.end();
+                return;
+            }
+
+            response.body = crow::json::wvalue
+            {
+                {"info", profileInfo[0].first}
+            }.dump();
+
+            response.end();
+        };
+
+    CROW_ROUTE(m_app, "/fetchprofileinfo")(FetchProfileInfoRouteFunction);
 }
 
 crow::response http::RouteManager::IsRequestAuthenticated(const crow::request& request)
