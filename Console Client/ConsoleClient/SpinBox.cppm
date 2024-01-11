@@ -40,7 +40,7 @@ public:
 	void   SetHoverColors		(ColorType backgroundColor, ColorType textColor) override;
 	void   SetConections		(SelectableObject* up, SelectableObject* down,
 							     SelectableObject* left, SelectableObject* right) override;
-	void   SetFunctionOnActivate(Function function) override;
+	void   SetFunctionOnActivate(Function function, std::string argument = "") override;
 	void   Draw					() override;
 	void   InitializeTransform	(COORD upLeftCorner) override;
 	void   CheckCursor			() override;

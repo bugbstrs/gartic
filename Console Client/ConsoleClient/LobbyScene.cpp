@@ -158,7 +158,7 @@ void LobbyScene::Start()
 
 	m_drawTime = new SpinBox{Align::Left, Align::Center, Color::Gray, Color::Black,
 		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::DarkBlue, Color::Black};
-	m_drawTime->SetFunctionOnActivate([this]() { SetSettings(); });
+	m_drawTime->SetFunctionOnActivate([this](std::string a) { SetSettings(); });
 	m_drawTime->CanBeSelected(false);
 	m_drawTime->SetOptions({ "15", "20", "30", "40", "50", "60", "70", "80", "90", "100", "120" }, 5);
 	m_drawTime->SetHoverColors(Color::Blue, Color::Black);
@@ -175,7 +175,7 @@ void LobbyScene::Start()
 
 	m_rounds = new SpinBox{ Align::Left, Align::Center, Color::Gray, Color::Black,
 		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::DarkBlue, Color::Black };
-	m_rounds->SetFunctionOnActivate([this]() { SetSettings(); });
+	m_rounds->SetFunctionOnActivate([this](std::string a) { SetSettings(); });
 	m_rounds->CanBeSelected(false);
 	m_rounds->SetOptions({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, 3);
 	m_rounds->SetHoverColors(Color::Blue, Color::Black);
@@ -192,7 +192,7 @@ void LobbyScene::Start()
 
 	m_wordCount = new SpinBox{ Align::Left, Align::Center, Color::Gray, Color::Black,
 		10, 3, m_console, m_input, m_selected, Color::DarkGray, Color::White, Color::DarkBlue, Color::Black };
-	m_wordCount->SetFunctionOnActivate([this]() { SetSettings(); });
+	m_wordCount->SetFunctionOnActivate([this](std::string a) { SetSettings(); });
 	m_wordCount->CanBeSelected(false);
 	m_wordCount->SetOptions({ "1", "2", "3", "4", "5" }, 0);
 	m_wordCount->SetHoverColors(Color::Blue, Color::Black);
@@ -241,7 +241,7 @@ void LobbyScene::Start()
 		Color::DarkBlue, Color::Black, m_console, m_input, m_selected, "LEAVE" };
 
 	leaveButton->SetHoverColors(Color::Blue, Color::White);
-	leaveButton->SetFunctionOnActivate([this]() { Back(); });
+	leaveButton->SetFunctionOnActivate([this](std::string a) { Back(); });
 	m_selectableObjects.emplace_back(leaveButton);
 	m_objects.emplace_back(leaveButton);
 
@@ -249,7 +249,7 @@ void LobbyScene::Start()
 	m_startButton = new Button{ 40, 40, Align::Center, Align::Center, Color::DarkGreen, Color::White, 15, 3,
 		Color::Green, Color::White, m_console, m_input, m_selected, "START" };
 	m_startButton->SetHoverColors(Color::Green, Color::White);
-	m_startButton->SetFunctionOnActivate([this]() { StartGame(); });
+	m_startButton->SetFunctionOnActivate([this](std::string a) { StartGame(); });
 	m_startButton->SetActive(false);
 	m_selectableObjects.emplace_back(m_startButton);
 	m_objects.emplace_back(m_startButton);

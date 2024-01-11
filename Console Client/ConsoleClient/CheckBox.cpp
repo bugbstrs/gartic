@@ -10,7 +10,7 @@ CheckBox::CheckBox(COORD upLeftCorner,
 	m_checkColor	 { checkColor											 },
 	m_checked		 { false												 }
 {
-	m_function = [this]() {m_checked = !m_checked; };
+	m_function = [this](std::string a) {m_checked = !m_checked; };
 }
 
 CheckBox::CheckBox(int16_t x, int16_t y,
@@ -23,7 +23,7 @@ CheckBox::CheckBox(int16_t x, int16_t y,
 	m_checkColor	 { checkColor											 },
 	m_checked		 { false												 }
 {
-	m_function = [this]() {m_checked = !m_checked; };
+	m_function = [this](std::string a) {m_checked = !m_checked; };
 }
 
 CheckBox::CheckBox(ColorType backgroundColor, ColorType checkColor,
@@ -35,7 +35,7 @@ CheckBox::CheckBox(ColorType backgroundColor, ColorType checkColor,
 	m_checkColor	 { checkColor											 },
 	m_checked		 { false												 }
 {
-	m_function = [this]() {m_checked = !m_checked; };
+	m_function = [this](std::string a) {m_checked = !m_checked; };
 }
 
 void CheckBox::Draw()
@@ -58,7 +58,7 @@ void CheckBox::CheckInput()
 		{
 		case ControlKeys::Enter:
 			if (m_function)
-				m_function();
+				m_function(m_argument);
 			break;
 		case ControlKeys::UpArrow:
 			if (m_upObject && m_upObject->IsSelectable())

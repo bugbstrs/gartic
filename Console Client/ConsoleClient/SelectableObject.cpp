@@ -53,9 +53,10 @@ void SelectableObject::SetHoverColors(ColorType background, ColorType text)
     m_hoverTextColor = text;
 }
 
-void SelectableObject::SetFunctionOnActivate(Function function)
+void SelectableObject::SetFunctionOnActivate(Function function, std::string argument)
 {
     m_function = function;
+    m_argument = argument;
 }
 
 void SelectableObject::SetConections(SelectableObject* up, SelectableObject* down,
@@ -74,7 +75,7 @@ void SelectableObject::CheckCursor()
     {
         m_selectedObject = this;
         if (m_function)
-            m_function();
+            m_function(m_argument);
     }
 }
 

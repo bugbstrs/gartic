@@ -45,7 +45,7 @@ void StatsScene::Start()
     auto BackButton{ new Button{Align::Center, Align::Center, Color::DarkGray, Color::Green,
                           8, 3, Color::DarkBlue, Color::White, m_console, m_input, m_selected, "Logout"} };
     BackButton->SetHoverColors(Color::Blue, Color::White);
-    BackButton->SetFunctionOnActivate(std::bind(&StatsScene::Back, this));
+    BackButton->SetFunctionOnActivate([this](std::string a) {Back(); });
     m_selectableObjects.emplace_back(BackButton);
     m_objects.emplace_back(BackButton);
 

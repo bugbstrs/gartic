@@ -8,7 +8,7 @@ export import GUIObject;
 
 export typedef short int16_t;
 
-export using Function = std::function<void()>;
+export using Function = std::function<void(std::string)>;
 
 export class SelectableObject : public GUIObject
 {
@@ -30,7 +30,7 @@ public:
     virtual ~SelectableObject() = default;
 
     virtual void SetHoverColors (ColorType background, ColorType text);
-    virtual void SetFunctionOnActivate  (Function function);
+    virtual void SetFunctionOnActivate (Function function, std::string argument = "");
     virtual void SetConections  (SelectableObject* up, SelectableObject* down,
                                  SelectableObject* left, SelectableObject* right);
     virtual void CheckInput     () = 0;
@@ -41,6 +41,7 @@ public:
 protected:
     bool               m_selectable;
     Function           m_function;
+    std::string        m_argument;
     ColorType          m_selectedBackgroundColor;
     ColorType          m_selectedTextColor;
     ColorType          m_hoverBackgroundColor;

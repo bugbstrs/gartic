@@ -34,13 +34,17 @@ private:
 	SelectableObject *m_selectedWidthButton;
 	SelectableObject *m_selected;
 	HorizontalLayout *m_wordsToChoose;
+	HorizontalLayout *m_drawOptions;
 	VerticalLayout	 *m_players;
 	VerticalLayout   *m_chat;
+	VerticalLayout	 *m_colorsOptions;
+	VerticalLayout	 *m_widthOptions;
 	DrawingBoard	 *m_drawingBoard;
 	ColorDisplay	 *m_colorDisplay;
+	InputField		 *m_chatbox;
 	String			  m_message;
 	Label			 *m_displayWord;
-	Label			 *m_gameState;
+	Label			 *m_gameStateLabel;
 	Label			 *m_timer;
 	Label			 *m_round;
 	GameStatus		  m_gameStatus;
@@ -54,6 +58,11 @@ private:
 	void SendMessageToServer();
 	void GetDrawEvents	();
 	void Leave			();
+
+	void SetAsDrawer	();
+	void SetAsGuesser	();
+	void SetWordsToPick	();
+
 	void Input			() const override;
 	void Start			()       override;
 	void Update			()       override;

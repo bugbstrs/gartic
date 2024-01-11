@@ -104,17 +104,17 @@ void GameScene::GetGameStatus()
 		if (status == "PickingWord")
 		{
 			m_gameStatus = GameStatus::PickingWord;
-			m_gameState->UpdateText("PickingWord");
+			m_gameStateLabel->UpdateText("PickingWord");
 		}
 		else if (status == "Drawing")
 		{
 			m_gameStatus = GameStatus::Drawing;
-			m_gameState->UpdateText("Drawing");
+			m_gameStateLabel->UpdateText("Drawing");
 		}
 		else if (status == "Finished")
 		{
 			m_gameStatus = GameStatus::Finished;
-			m_gameState->UpdateText("Finished");
+			m_gameStateLabel->UpdateText("Finished");
 		}
 	}
 }
@@ -158,6 +158,80 @@ void GameScene::Leave()
 	m_nextScene = const_cast<std::type_info *>(&typeid(MenuScene));
 }
 
+void GameScene::SetAsDrawer()
+{
+	m_chatbox->CanBeSelected(false);
+
+	switch (m_gameStatus)
+	{
+	case GameStatus::PickingWord:
+		m_wordsToChoose->SetActive(true);
+		SetWordsToPick();
+		m_drawOptions->SetActive(false);
+		m_colorsOptions->SetActive(false);
+		m_widthOptions->SetActive(false);
+		m_colorDisplay->SetActive(false);
+		m_drawingBoard->CanBeSelected(false);
+		break;
+	case GameStatus::Drawing:
+		m_wordsToChoose->Clear();
+		m_wordsToChoose->SetActive(false);
+		m_drawOptions->SetActive(true);
+		m_colorsOptions->SetActive(true);
+		m_widthOptions->SetActive(true);
+		m_colorDisplay->SetActive(true);
+		m_drawingBoard->CanBeSelected(true);
+		break;
+	default:
+		break;
+	}
+}
+
+void GameScene::SetAsGuesser()
+{
+	m_drawOptions->SetActive(false);
+	m_colorsOptions->SetActive(false);
+	m_widthOptions->SetActive(false);
+	m_drawingBoard->CanBeSelected(false);
+	m_colorDisplay->SetActive(false);
+	m_chatbox->CanBeSelected(true);
+}
+
+void GameScene::SetWordsToPick()
+{
+	if (m_wordsToChoose->IsEmpty())
+	{
+		auto response{ cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchwordstoguess" },
+		cpr::Parameters{
+				{"password", User::GetPassword()},
+				{"username", User::GetUsername()}
+			}
+		) };
+		if (response.status_code == 200)
+		{
+			for (const auto& word : crow::json::load(response.text)["words"])
+			{
+				std::function<void(std::string)> buttonFunction = [](std::string word)
+				{
+					cpr::Post(
+						cpr::Url{ "http://localhost:18080/putwordtoguess" },
+						cpr::Parameters{
+								{"password", User::GetPassword()},
+								{"username", User::GetUsername()},
+								{"word", word}
+						}
+					);
+				};
+				auto button{ new Button{ Align::Center, Align::Center, Color::Green, Color::Black, 5, 5,
+					Color::Green, Color::Black, m_console, m_input, m_selectedColorButton, std::string(word)} };
+				m_wordsToChoose->AddObject(button);
+				button->SetFunctionOnActivate(buttonFunction, std::string(word));
+			}
+		}
+	}
+}
+
 void GameScene::Input() const
 {
 	m_input->ReadInput();
@@ -195,11 +269,11 @@ void GameScene::Start()
 	m_objects.emplace_back(m_chat);
 
 	// Chatbox
-	auto chatbox = new InputField{138, 83, Align::Left, Align::Up, Color::DarkGray, Color::Black, 20, 5,
+	m_chatbox = new InputField{138, 83, Align::Left, Align::Up, Color::DarkGray, Color::Black, 20, 5,
 								 Color::DarkGray, Color::Black, m_console, m_input, m_selected, m_message, 100};
-	chatbox->SetFunctionOnActivate([this]() { SendMessageToServer(); });
-	m_selectableObjects.emplace_back(chatbox);
-	m_objects.emplace_back(chatbox);
+	m_chatbox->SetFunctionOnActivate([this](std::string a) { SendMessageToServer(); });
+	m_selectableObjects.emplace_back(m_chatbox);
+	m_objects.emplace_back(m_chatbox);
 
 	// Timer
 	m_timer = new Label{2, 2, Align::Left, Align::Up, Color::Black, Color::White, 9, 1, m_console, "time: "};
@@ -210,32 +284,32 @@ void GameScene::Start()
 	m_objects.emplace_back(m_round);
 
 	// Game state
-	m_gameState = new Label{143, 2, Align::Right, Align::Up, Color::Black, Color::White, 15, 1, m_console, "Waiting"};
-	m_objects.emplace_back(m_gameState);
+	m_gameStateLabel = new Label{143, 2, Align::Right, Align::Up, Color::Black, Color::White, 15, 1, m_console, "Waiting"};
+	m_objects.emplace_back(m_gameStateLabel);
 
 	// Word
 	m_displayWord = new Label{70, 2, Align::Center, Align::Up, Color::Black, Color::White, 20, 1, m_console, "CUVANT"};
 	m_objects.emplace_back(m_displayWord);
 
 	// Words to choose
-	auto HLayout = new HorizontalLayout{40, 37, Align::Center, Align::Up, Color::White, 80, 5, m_console, 2};
-	HLayout->SetActive(false);
-	m_objects.emplace_back(HLayout);
+	m_wordsToChoose = new HorizontalLayout{40, 37, Align::Center, Align::Up, Color::DarkGray, 80, 5, m_console, 2};
+	m_wordsToChoose->SetActive(false);
+	m_objects.emplace_back(m_wordsToChoose);
 
 	// Color display
 	m_colorDisplay = new ColorDisplay{24, 79, Color::Black, 7, 7, m_console};
 	m_objects.emplace_back(m_colorDisplay);
 
 	// Colors
-	auto VLayout = new VerticalLayout{33, 77, Align::Left, Align::Up, Color::Black, 95, 11, m_console, 1};
-	m_objects.emplace_back(VLayout);
+	m_colorsOptions = new VerticalLayout{33, 77, Align::Left, Align::Up, Color::Black, 95, 11, m_console, 1};
+	m_objects.emplace_back(m_colorsOptions);
 	auto row1 = new HorizontalLayout{Align::Left, Align::Up, Color::Black, 95, 5, m_console, 1};
-	VLayout->AddObject(row1);
+	m_colorsOptions->AddObject(row1);
 	auto row2 = new HorizontalLayout{Align::Left, Align::Up, Color::Black, 95, 5, m_console, 1};
-	VLayout->AddObject(row2);
+	m_colorsOptions->AddObject(row2);
 	auto aux = new Button{Align::Center, Align::Center, Color::White, Color::White, 5, 5,
 					Color::White, Color::White, m_console, m_input, m_selectedColorButton, ""};
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::White);
 		m_drawingBoard->SetDrawColor(Color::White);
@@ -244,7 +318,7 @@ void GameScene::Start()
 	row1->AddObject(aux);
 	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::Pink, Color::Pink, 5, 5,
 					Color::Pink, Color::Pink, m_console, m_input, m_selectedColorButton, ""});
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::Pink);
 		m_drawingBoard->SetDrawColor(Color::Pink);
@@ -252,7 +326,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::Red, Color::Red, 5, 5,
 					Color::Red, Color::Red, m_console, m_input, m_selectedColorButton, ""});
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::Red);
 		m_drawingBoard->SetDrawColor(Color::Red);
@@ -260,7 +334,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::Orange, Color::Orange, 5, 5,
 					Color::Orange, Color::Orange, m_console, m_input, m_selectedColorButton, ""});
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::Orange);
 		m_drawingBoard->SetDrawColor(Color::Orange);
@@ -268,7 +342,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::Yellow, Color::Yellow, 5, 5,
 					Color::Yellow, Color::Yellow, m_console, m_input, m_selectedColorButton, ""});
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::Yellow);
 		m_drawingBoard->SetDrawColor(Color::Yellow);
@@ -276,7 +350,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::Green, Color::Green, 5, 5,
 					Color::Green, Color::Green, m_console, m_input, m_selectedColorButton, ""});
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::Green);
 		m_drawingBoard->SetDrawColor(Color::Green);
@@ -284,7 +358,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::Blue, Color::Blue, 5, 5,
 					Color::Blue, Color::Blue, m_console, m_input, m_selectedColorButton, ""});
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::Blue);
 		m_drawingBoard->SetDrawColor(Color::Blue);
@@ -292,7 +366,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::Cyan, Color::Cyan, 5, 5,
 					Color::Cyan, Color::Cyan, m_console, m_input, m_selectedColorButton, ""});
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::Cyan);
 		m_drawingBoard->SetDrawColor(Color::Cyan);
@@ -300,7 +374,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::Black, Color::White, 5, 5,
 					Color::Black, Color::White, m_console, m_input, m_selectedColorButton, "BLACK"});
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::Black);
 		m_drawingBoard->SetDrawColor(Color::Black);
@@ -308,7 +382,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGray, Color::DarkGray, 5, 5,
 					Color::DarkGray, Color::DarkGray, m_console, m_input, m_selectedColorButton, ""});
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::DarkGray);
 		m_drawingBoard->SetDrawColor(Color::DarkGray);
@@ -316,7 +390,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkRed, Color::DarkRed, 5, 5,
 					Color::DarkRed, Color::DarkRed, m_console, m_input, m_selectedColorButton, ""});
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::DarkRed);
 		m_drawingBoard->SetDrawColor(Color::DarkRed);
@@ -324,7 +398,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkBrown, Color::DarkBrown, 5, 5,
 					Color::DarkBrown, Color::DarkBrown, m_console, m_input, m_selectedColorButton, ""});
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::DarkBrown);
 		m_drawingBoard->SetDrawColor(Color::DarkBrown);
@@ -332,7 +406,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkPink, Color::DarkPink, 5, 5,
 					Color::DarkPink, Color::DarkPink, m_console, m_input, m_selectedColorButton, ""});
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::DarkPink);
 		m_drawingBoard->SetDrawColor(Color::DarkPink);
@@ -340,7 +414,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGreen, Color::DarkGreen, 5, 5,
 					Color::DarkGreen, Color::DarkGreen, m_console, m_input, m_selectedColorButton, ""});
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::DarkGreen);
 		m_drawingBoard->SetDrawColor(Color::DarkGreen);
@@ -348,7 +422,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkBlue, Color::DarkBlue, 5, 5,
 					Color::DarkBlue, Color::DarkBlue, m_console, m_input, m_selectedColorButton, ""});
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::DarkBlue);
 		m_drawingBoard->SetDrawColor(Color::DarkBlue);
@@ -356,7 +430,7 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::Purple, Color::Purple, 5, 5,
 					Color::Purple, Color::Purple, m_console, m_input, m_selectedColorButton, ""});
-	aux->SetFunctionOnActivate([this]()
+	aux->SetFunctionOnActivate([this](std::string a)
 	{
 		m_colorDisplay->SetDisplayColor(Color::Purple);
 		m_drawingBoard->SetDrawColor(Color::Purple);
@@ -364,53 +438,53 @@ void GameScene::Start()
 	m_selectableObjects.emplace_back(aux);
 
 	// Width
-	VLayout = new VerticalLayout{87, 77, Align::Left, Align::Up, Color::Black, 11, 11, m_console, 1};
-	m_objects.emplace_back(VLayout);
+	m_widthOptions = new VerticalLayout{87, 77, Align::Left, Align::Up, Color::Black, 11, 11, m_console, 1};
+	m_objects.emplace_back(m_widthOptions);
 	row1 = new HorizontalLayout{Align::Left, Align::Up, Color::Black, 11, 5, m_console, 1};
-	VLayout->AddObject(row1);
+	m_widthOptions->AddObject(row1);
 	row2 = new HorizontalLayout{Align::Left, Align::Up, Color::Black, 11, 5, m_console, 1};
-	VLayout->AddObject(row2);
+	m_widthOptions->AddObject(row2);
 	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGray, Color::Black, 5, 5,
 					Color::DarkGray, Color::Black, m_console, m_input, m_selectedWidthButton, "4"});
-	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetPenWidth(4); });
+	aux->SetFunctionOnActivate([this](std::string a){ m_drawingBoard->SetPenWidth(4); });
 	m_selectableObjects.emplace_back(aux);
 	row1->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGray, Color::Black, 5, 5,
 					Color::DarkGray, Color::Black, m_console, m_input, m_selectedWidthButton, "10"});
-	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetPenWidth(10); });
+	aux->SetFunctionOnActivate([this](std::string a){ m_drawingBoard->SetPenWidth(10); });
 	m_selectableObjects.emplace_back(aux);
 	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGray, Color::Black, 5, 5,
 					Color::DarkGray, Color::Black, m_console, m_input, m_selectedWidthButton, "18"});
-	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetPenWidth(18); });
+	aux->SetFunctionOnActivate([this](std::string a){ m_drawingBoard->SetPenWidth(18); });
 	m_selectableObjects.emplace_back(aux);
 	row2->AddObject(aux = new Button{Align::Center, Align::Center, Color::DarkGray, Color::Black, 5, 5,
 					Color::DarkGray, Color::Black, m_console, m_input, m_selectedWidthButton, "26"});
-	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetPenWidth(26); });
+	aux->SetFunctionOnActivate([this](std::string a){ m_drawingBoard->SetPenWidth(26); });
 	m_selectableObjects.emplace_back(aux);
 
 	// Draw options
-	HLayout = new HorizontalLayout{105, 80, Align::Left, Align::Up, Color::Black, 31, 5, m_console, 1};
-	m_objects.emplace_back(HLayout);
-	HLayout->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
+	m_drawOptions = new HorizontalLayout{105, 80, Align::Left, Align::Up, Color::Black, 31, 5, m_console, 1};
+	m_objects.emplace_back(m_drawOptions);
+	m_drawOptions->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
 					Color::White, Color::Black, m_console, m_input, m_selectedDrawOptionButton, "pen"});
-	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetOption(DrawingBoard::Option::draw); });
+	aux->SetFunctionOnActivate([this](std::string a){ m_drawingBoard->SetOption(DrawingBoard::Option::draw); });
 	m_selectableObjects.emplace_back(aux);
-	HLayout->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
+	m_drawOptions->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
 					Color::White, Color::Black, m_console, m_input, m_selectedDrawOptionButton, "fill"});
-	aux->SetFunctionOnActivate([this](){ m_drawingBoard->SetOption(DrawingBoard::Option::fill); });
+	aux->SetFunctionOnActivate([this](std::string a){ m_drawingBoard->SetOption(DrawingBoard::Option::fill); });
 	m_selectableObjects.emplace_back(aux);
-	HLayout->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
+	m_drawOptions->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
 					Color::White, Color::Black, m_console, m_input, m_selectedDrawOptionButton, "undo"});
-	aux->SetFunctionOnActivate([this](){ m_drawingBoard->Undo(); });
+	aux->SetFunctionOnActivate([this](std::string a){ m_drawingBoard->Undo(); });
 	m_selectableObjects.emplace_back(aux);
-	HLayout->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
+	m_drawOptions->AddObject(aux = new Button{Align::Center, Align::Center, Color::White, Color::Black, 7, 5,
 					Color::White, Color::Black, m_console, m_input, m_selectedDrawOptionButton, "clear"});
-	aux->SetFunctionOnActivate([this](){ m_drawingBoard->Clear(); });
+	aux->SetFunctionOnActivate([this](std::string a){ m_drawingBoard->Clear(); });
 	m_selectableObjects.emplace_back(aux);
 
 	// Leave button
 	auto leaveButton = new Button{2, 83, Align::Center, Align::Center, Color::Blue, Color::White, 11, 5,
 							Color::DarkBlue, Color::White, m_console, m_input, m_selected, "LEAVE"};
-	leaveButton->SetFunctionOnActivate([this]() { Leave(); });
+	leaveButton->SetFunctionOnActivate([this](std::string a) { Leave(); });
 	m_selectableObjects.emplace_back(leaveButton);
 	m_objects.emplace_back(leaveButton);
 

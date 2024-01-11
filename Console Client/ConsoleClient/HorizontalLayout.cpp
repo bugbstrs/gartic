@@ -88,6 +88,11 @@ void HorizontalLayout::Clear()
 	m_objects.clear();
 }
 
+bool HorizontalLayout::IsEmpty()
+{
+	return m_objects.empty();
+}
+
 void HorizontalLayout::DrawContents()
 {
 	for (auto obj : m_objects)

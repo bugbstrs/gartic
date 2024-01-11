@@ -62,7 +62,7 @@ void InputField::CheckInput()
 	{
 	case ControlKeys::Enter:
 		if (m_function)
-			m_function();
+			m_function(m_argument);
 		break;
 	case ControlKeys::UpArrow:
 		if (m_textPos / m_width > 0)

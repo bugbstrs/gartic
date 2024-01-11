@@ -107,17 +107,17 @@ void SpinBox::SetConections(SelectableObject* up, SelectableObject* down,
 	m_right->SetConections(up, down, m_left, nullptr);
 }
 
-void SpinBox::SetFunctionOnActivate(Function function)
+void SpinBox::SetFunctionOnActivate(Function function, std::string argument)
 {
-	auto leftFunctionWrapper{ [function, this]()
+	auto leftFunctionWrapper{ [function, this](std::string argument)
 		{
 			PreviousOption();
-			function();
+			function(argument);
 		} };
-	auto rightFunctionWrapper{ [function, this]()
+	auto rightFunctionWrapper{ [function, this](std::string argument)
 		{
 			NextOption();
-			function();
+			function(argument);
 		} };
 	m_left->SetFunctionOnActivate(leftFunctionWrapper);
 	m_right->SetFunctionOnActivate(rightFunctionWrapper);

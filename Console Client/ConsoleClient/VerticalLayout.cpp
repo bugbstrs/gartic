@@ -85,6 +85,11 @@ void VerticalLayout::Clear()
 	m_objects.clear();
 }
 
+bool VerticalLayout::IsEmpty()
+{
+	return m_objects.empty();
+}
+
 void VerticalLayout::DrawContents()
 {
 	for (auto obj : m_objects)

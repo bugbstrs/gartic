@@ -97,14 +97,14 @@ void LoginScene::Start()
 	auto loginButton{new Button{20, 8, Align::Left, Align::Up, Color::DarkGray, Color::Green, 5, 1, Color::DarkBlue,
 						Color::White, m_console, m_input, m_selected, "LOGIN"}};
 	loginButton->SetHoverColors(Color::Blue, Color::White);
-	loginButton->SetFunctionOnActivate([this]() { Login(); });
+	loginButton->SetFunctionOnActivate([this](std::string a) { Login(); });
 	m_objects.emplace_back(loginButton);
 	m_selectableObjects.emplace_back(loginButton);
 
 	auto registerButton{new Button{30, 8, Align::Left, Align::Up, Color::DarkGray, Color::Cyan, 8, 1, Color::DarkBlue,
 						Color::White, m_console, m_input, m_selected, "REGISTER"}};
 	registerButton->SetHoverColors(Color::Blue, Color::White);
-	registerButton->SetFunctionOnActivate([this]() { Register(); });
+	registerButton->SetFunctionOnActivate([this](std::string a) { Register(); });
 	m_objects.emplace_back(registerButton);
 	m_selectableObjects.emplace_back(registerButton);
 

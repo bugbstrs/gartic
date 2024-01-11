@@ -96,7 +96,7 @@ void MenuScene::Start()
     auto createLobbyButton{ new Button{20, 6, Align::Center, Align::Center, Color::DarkGray, Color::Green,
                             14, 3, Color::DarkBlue, Color::White, m_console, m_input, m_selected, "Create Lobby"} };
     createLobbyButton->SetHoverColors(Color::Blue, Color::White);
-    createLobbyButton->SetFunctionOnActivate([this]() { CreateLobby(); });
+    createLobbyButton->SetFunctionOnActivate([this](std::string a) { CreateLobby(); });
     m_objects.emplace_back(createLobbyButton);
     m_selectableObjects.emplace_back(createLobbyButton);
 
@@ -106,7 +106,7 @@ void MenuScene::Start()
     auto joinLobbyButton{ new Button{Align::Center, Align::Center, Color::DarkGray, Color::Green,
                           14, 3, Color::DarkBlue, Color::White, m_console, m_input, m_selected, "Join Lobby"} };
     joinLobbyButton->SetHoverColors(Color::Blue, Color::White);
-    joinLobbyButton->SetFunctionOnActivate([this]() { JoinLobby(); });
+    joinLobbyButton->SetFunctionOnActivate([this](std::string a) { JoinLobby(); });
     Hlayout->AddObject(joinLobbyButton);
     m_selectableObjects.emplace_back(joinLobbyButton);
 
@@ -123,7 +123,7 @@ void MenuScene::Start()
     auto statsButton{ new Button{20, 16, Align::Center, Align::Center, Color::DarkGray, Color::Green,
                             14, 3, Color::DarkBlue, Color::White, m_console, m_input, m_selected, "Stats"} };
     statsButton->SetHoverColors(Color::Blue, Color::White);
-    statsButton->SetFunctionOnActivate([this]() { Stats(); });
+    statsButton->SetFunctionOnActivate([this](std::string a) { Stats(); });
     m_objects.emplace_back(statsButton);
     m_selectableObjects.emplace_back(statsButton);
 
@@ -136,7 +136,7 @@ void MenuScene::Start()
     auto LogoutButton{ new Button{Align::Center, Align::Center, Color::DarkGray, Color::Green,
                           8, 3, Color::DarkBlue, Color::White, m_console, m_input, m_selected, "Logout"} };
     LogoutButton->SetHoverColors(Color::Blue, Color::White);
-    LogoutButton->SetFunctionOnActivate([this]() { Logout(); });
+    LogoutButton->SetFunctionOnActivate([this](std::string a) { Logout(); });
     m_selectableObjects.emplace_back(LogoutButton);
     Vlayout->AddObject(LogoutButton);
 
