@@ -39,17 +39,20 @@ void http::Round::NextDrawer()
 {
 	m_gameStatus = GameStatus::PickingWord;
 
-	auto drawerIt = std::find(m_players.rbegin(), m_players.rend(), m_drawer);
-
-	if (drawerIt == m_players.rbegin())
+	std::string username = m_drawer->GetName();
+	auto isDrawer = [&username](const std::shared_ptr<Player>& player) { return player->GetName() == username; };
+	if (auto drawerIt = std::find_if(m_players.begin(), m_players.end(), isDrawer); drawerIt != m_players.end())
 	{
-		++m_roundNumber;
-		m_drawer = m_players[0];
-	}
-	else
-	{
-		++drawerIt;
-		m_drawer = *drawerIt;
+		if (drawerIt == m_players.begin() + m_players.size() - 1)
+		{
+			++m_roundNumber;
+			m_drawer = m_players[0];
+		}
+		else
+		{
+			++drawerIt;
+			m_drawer = *drawerIt;
+		}
 	}
 
 	m_halfRoundTimer->Stop();
@@ -130,10 +133,10 @@ void http::Round::PickARandomWord()
 {
 	std::random_device				   rd;
 	std::default_random_engine		   engine(rd());
-	std::uniform_int_distribution<int> distribution(0, m_numberOfWordsToChooseFrom);
-	//int randomNumber = distribution(engine);
+	std::uniform_int_distribution<int> distribution(0, m_numberOfWordsToChooseFrom - 1);
+	int randomNumber = distribution(engine);
 
-	m_wordToGuess = m_wordsToChooseFrom[0];
+	m_wordToGuess = m_wordsToChooseFrom[randomNumber];
 	SetWordToDisplay(m_wordToGuess);
 	m_wordsToChooseFrom.clear();
 	m_roundTime->Reset();
