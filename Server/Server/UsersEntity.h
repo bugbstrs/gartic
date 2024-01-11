@@ -7,7 +7,7 @@ namespace http
 	{
 	public:
 		UsersEntity() = default;
-		UsersEntity(int newGamesPlayed, int newPoints, const std::string& newUsername, const std::string& newPassword);
+		UsersEntity(int newPoints, const std::string& newUsername, const std::string& newPassword);
 
 		~UsersEntity() = default;
 
@@ -17,7 +17,6 @@ namespace http
 		void SetPoints(int points);
 		void SetUsername(const std::string& username);
 
-		int			GetGamesPlayed() const;
 		int			GetId()			 const;
 		int			GetPoints()		 const;
 		std::string GetPassword()	 const;
@@ -26,7 +25,6 @@ namespace http
 		bool operator==(const UsersEntity& secondUser) const noexcept;
 
 	private:
-		int			gamesPlayed;
 		int			id;
 		int			points;
 		std::string password;

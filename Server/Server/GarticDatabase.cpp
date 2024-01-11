@@ -168,7 +168,6 @@ void GarticStorage::CreateUser(const String& givenUsername, const String& givenP
 void GarticStorage::PopulateUsersEntity()
 {
 	int						 points;
-	int						 gamesPlayed;
 	std::ifstream			 filename;
 	std::string				 password;
 	std::string				 username;
@@ -176,9 +175,9 @@ void GarticStorage::PopulateUsersEntity()
 
 	filename.open(kUsersFile);
 
-	while (filename >> gamesPlayed >> points >> username >> password)
+	while (filename >> points >> username >> password)
 	{
-		users.push_back(UsersEntity{ gamesPlayed, points, username, password });
+		users.push_back(UsersEntity{ points, username, password });
 	}
 
 	for (const auto& user : users)

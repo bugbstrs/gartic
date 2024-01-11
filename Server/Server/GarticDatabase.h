@@ -37,7 +37,6 @@ namespace http
 				sql::make_column("id", &UsersEntity::SetId, &UsersEntity::GetId, sql::primary_key().autoincrement()),
 				sql::make_column("username", &UsersEntity::SetUsername, &UsersEntity::GetUsername),
 				sql::make_column("password", &UsersEntity::SetPassword, &UsersEntity::GetPassword),
-				sql::make_column("games_played", &UsersEntity::SetGamesPlayed, &UsersEntity::GetGamesPlayed),
 				sql::make_column("points", &UsersEntity::SetPoints, &UsersEntity::GetPoints)
 			),
 			sql::make_table(

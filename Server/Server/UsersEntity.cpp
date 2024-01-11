@@ -2,8 +2,7 @@
 
 using namespace http;
 
-UsersEntity::UsersEntity(int newGamesPlayed, int newPoints, const std::string& newUsername, const std::string& newPassword):
-	gamesPlayed { newGamesPlayed },
+UsersEntity::UsersEntity(int newPoints, const std::string& newUsername, const std::string& newPassword):
 	points		{ newPoints		 },
 	username	{ newUsername	 },
 	password	{ newPassword	 }
@@ -32,11 +31,6 @@ void UsersEntity::SetPoints(int points)
 void UsersEntity::SetUsername(const std::string& username)
 {
 	this->username = username;
-}
-
-int UsersEntity::GetGamesPlayed() const
-{
-	return gamesPlayed;
 }
 
 int UsersEntity::GetId() const
