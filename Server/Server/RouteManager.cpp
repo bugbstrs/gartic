@@ -38,9 +38,8 @@ void http::RouteManager::Run()
 	FetchPlayersRoute();
 	FetchGameStatusRoute();
 	FetchRoundNumberRoute();
-	FetchNWordsRoute();
 	FetchDrawingBoard();
-	FetchWordToGuessRoute();
+    FetchWordsToGuessRoute();
 	FetchWordToDisplayRoute();
 	FetchMessagesRoute();
     FetchTimeRoute();
@@ -1056,50 +1055,6 @@ void http::RouteManager::FetchRoundNumberRoute()
     CROW_ROUTE(m_app, "/fetchroundnumber")(FetchRoundNumberRouteFunction);
 }
 
-void http::RouteManager::FetchNWordsRoute()
-{
-	auto FetchNWordsRouteFunction = [&](const crow::request& request, crow::response& response) {
-        response = IsRequestAuthenticated(request);
-
-        if (response.code != 200)
-        {
-            response.end();
-            return;
-        }
-
-        String username = request.url_params.get("username");
-		std::vector<crow::json::wvalue> wordsJSON;
-
-        if (!m_gartic.GetLobby(username))
-        {
-            response.code = 403;
-            response.body = crow::json::wvalue
-            {
-                {"code", response.code},
-                {"error", "The user is not in a lobby!"}
-            }.dump();
-
-            response.end();
-            return;
-        }
-
-        int numberOfWords = m_gartic.GetLobby(username)->GetSettings().GetWordCount();
-
-		for (int i{ 0 }; i < numberOfWords; ++i)
-			wordsJSON.push_back(m_storage.FetchWord());
-
-        response.body = crow::json::wvalue
-        {
-            {"code", response.code},
-            {"words", wordsJSON}
-        }.dump();
-
-		response.end();
-	};
-
-    CROW_ROUTE(m_app, "/fetchnwords")(FetchNWordsRouteFunction);
-}
-
 void http::RouteManager::FetchDrawingBoard()
 {
 	auto FetchDrawingBoardFunction = [&](const crow::request& request, crow::response& response) {
@@ -1145,9 +1100,9 @@ void http::RouteManager::FetchDrawingBoard()
     CROW_ROUTE(m_app, "/fetchdrawingboard")(FetchDrawingBoardFunction);
 }
 
-void http::RouteManager::FetchWordToGuessRoute()
+void http::RouteManager::FetchWordsToGuessRoute()
 {
-	auto FetchWordToGuessRouteFunction = [&](const crow::request& request, crow::response& response) {
+	auto FetchWordsToGuessRouteFunction = [&](const crow::request& request, crow::response& response) {
         response = IsRequestAuthenticated(request);
 
         if (response.code != 200)
@@ -1185,7 +1140,7 @@ void http::RouteManager::FetchWordToGuessRoute()
 		response.end();
 	};
 
-    CROW_ROUTE(m_app, "/fetchwordtoguess")(FetchWordToGuessRouteFunction);
+    CROW_ROUTE(m_app, "/fetchwordstoguess")(FetchWordsToGuessRouteFunction);
 }
 
 void http::RouteManager::FetchWordToDisplayRoute()
