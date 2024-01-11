@@ -102,11 +102,20 @@ void GameScene::GetGameStatus()
 	{
 		std::string status = std::string(crow::json::load(response.text)["status"]);
 		if (status == "PickingWord")
+		{
 			m_gameStatus = GameStatus::PickingWord;
+			m_gameState->UpdateText("PickingWord");
+		}
 		else if (status == "Drawing")
+		{
 			m_gameStatus = GameStatus::Drawing;
+			m_gameState->UpdateText("Drawing");
+		}
 		else if (status == "Finished")
+		{
 			m_gameStatus = GameStatus::Finished;
+			m_gameState->UpdateText("Finished");
+		}
 	}
 }
 
