@@ -16,7 +16,8 @@ http::Round::Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string
 	m_wordToGuess{ wordToGuess },
 	m_type{ newType },
 	m_storage{ storage },
-	m_gameStatus{ gameStatus } 
+	m_gameStatus{ gameStatus },
+	m_roundNumber { 1 }
 {
 	m_drawer = m_players[0];
 
