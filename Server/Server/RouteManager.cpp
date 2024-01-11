@@ -1497,7 +1497,7 @@ void http::RouteManager::PutEventOnDrawingBoardRoute()
         {
             m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<KeepDraw>(std::stoi(tokens[1]), std::stoi(tokens[2])));
         }
-        else if (tokens[0] == "KeepDraw")
+        else if (tokens[0] == "Fill")
         {
             m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<Fill>(std::stoi(tokens[1]), std::stoi(tokens[2]), std::stoi(tokens[3])));
         }
