@@ -23,18 +23,19 @@ void DrawingBoard::mousePressEvent(QMouseEvent* event)
     if (fillEnabled) {
         QPoint mouseRegisteredPosition = event->pos() + QPoint(-12, 10);
         FloodFill(mouseRegisteredPosition, mouseRegisteredPosition, image.pixelColor(mouseRegisteredPosition), pen.color());
-        /*std::string drawEvent = "Fill";
+       /* std::string drawEvent = "Fill";
         drawEvent += std::to_string(mouseRegisteredPosition.x()) + " ";
         drawEvent += std::to_string(mouseRegisteredPosition.y()) + " ";
-        drawEvent += std::to_string()
+        drawEvent += std::to_string(dr);*/
+
         auto sentFillCoordinatesResponse = cpr::Post(
-            cpr::Url{ "http://localhost:18080/fetchplayers" },
+            cpr::Url{ "http://localhost:18080/putdraweventsindrawingboard" },
             cpr::Parameters{
                 {"password", UserCredentials::GetPassword()},
-                {"username", UserCredentials::GetUsername()},
-                {"event", }
+                {"username", UserCredentials::GetUsername()}
+                
             }
-        );*/
+        );
     }
 }
 

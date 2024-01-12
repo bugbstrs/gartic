@@ -109,7 +109,7 @@ void MainWindow::OnCreateLobbyButtonReleased() noexcept {
     );
     auto usersVector = crow::json::load(users.text);
 
-    if (response.status_code == 200 && code.status_code == 200 && users.status_code == 200) {
+    if (code.status_code == 200 && users.status_code == 200) {
         ui->lobbyFrame->SetLeaderStatus(true);
         ui->stackedWidget->setCurrentWidget(ui->LobbyScene);
         ui->lobbyTable->AddPlayer(std::string(usersVector["users"][0]));

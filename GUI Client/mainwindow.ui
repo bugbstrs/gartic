@@ -1688,6 +1688,9 @@ border-radius: 10px;
 padding: 5px 10px;
 background: white;</string>
                     </property>
+                    <property name="readOnly">
+                     <bool>true</bool>
+                    </property>
                    </widget>
                   </item>
                  </layout>

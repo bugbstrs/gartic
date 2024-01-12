@@ -249,7 +249,7 @@ int GarticStorage::GenerateRandomId(bool isWordsEntity)
 	std::random_device				   rd;
 	std::default_random_engine		   engine(rd());
 	auto							   count = isWordsEntity ? m_db.count<WordsEntity>() : m_db.count<QuotesEntity>();
-	std::uniform_int_distribution<int> distribution(0, count - 1);
+	std::uniform_int_distribution<int> distribution(1, count);
 
 	return distribution(engine);
 }

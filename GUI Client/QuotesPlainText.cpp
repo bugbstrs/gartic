@@ -23,5 +23,5 @@ void QuotesPlainText::showEvent(QShowEvent * event)
 
 	auto quoteText = crow::json::load(quote.text);
 
-	setPlainText(QString::fromUtf8(std::string(quoteText["quote"]));
+	setPlainText(QString::fromUtf8(std::string(quoteText["quote"])));
 }
