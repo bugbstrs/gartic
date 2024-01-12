@@ -29,11 +29,11 @@ void MatchHistoryTable::showEvent(QShowEvent* event)
 	setRowCount(nrOfMatches);
 
 	for (int row = 0; row < nrOfMatches; ++row) {
-		QTableWidgetItem* positionItem = new QTableWidgetItem(QString::fromUtf8(std::string(profileInfoVector["info"][row][0])));
+		QTableWidgetItem* positionItem = new QTableWidgetItem(QString::fromUtf8(std::string(profileInfoVector["info"][row]["rank"])));
 		positionItem->setTextAlignment(Qt::AlignCenter);
 		setItem(row, 0, positionItem);
 
-		QTableWidgetItem* pointsItem = new QTableWidgetItem(QString::fromUtf8(std::string(profileInfoVector["info"][row][1])));
+		QTableWidgetItem* pointsItem = new QTableWidgetItem(QString::fromUtf8(std::string(profileInfoVector["info"][row]["points"])));
 		pointsItem->setTextAlignment(Qt::AlignCenter);
 		setItem(row, 1, pointsItem);
 	}
