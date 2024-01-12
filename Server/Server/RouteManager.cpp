@@ -1007,8 +1007,6 @@ void http::RouteManager::FetchDrawingBoard()
 
         String username = request.url_params.get("username");
 
-		std::vector<crow::json::wvalue> drawingBoardJSON;
-
         if (!m_gartic.GetGame(username))
         {
             response.code = 403;
@@ -1022,15 +1020,15 @@ void http::RouteManager::FetchDrawingBoard()
             return;
         }
 
-		std::vector<std::shared_ptr<DrawEvent>> drawEvents{ m_gartic.GetGame(username)->GetBoard()->GetAndDeleteEvents(username)};
-
-		for (const auto& drawEvent : drawEvents)
-			drawingBoardJSON.push_back(drawEvent->Serialize());
+        std::vector<std::string> events{ m_gartic.GetGame(username)->GetBoard()->GetAndDeleteEvents(username) };
+        std::vector<crow::json::wvalue> eventsJSON;
+        for (const auto& drawEvent : events)
+            eventsJSON.emplace_back(drawEvent);
 
         response.body = crow::json::wvalue
         {
             {"code", response.code},
-            {"board", drawingBoardJSON}
+            {"events", eventsJSON}
         }.dump();
 
 		response.end();
@@ -1391,80 +1389,26 @@ void http::RouteManager::PutEventsOnDrawingBoardRoute()
         }
 
         String username = request.url_params.get("username");
-        auto drawEvents = crow::json::load(request.url_params.get("events"));
 
-        if (!drawEvents)
+        if (!m_gartic.GetGame(username))
         {
-            // todo: log
-            response.code = 400;
+            response.code = 403;
             response.body = crow::json::wvalue
             {
                 {"code", response.code},
-                {"error", "The given draw event is not valid!"}
+                {"error", "The user is not in a game!"}
             }.dump();
 
             response.end();
             return;
         }
-        
-        for (const auto& drawEvent : drawEvents)
-        {
-            std::string drawEventString(drawEvent);
 
-            if (!m_gartic.GetGame(username))
-            {
-                response.code = 403;
-                response.body = crow::json::wvalue
-                {
-                    {"code", response.code},
-                    {"error", "The user is not in a game!"}
-                }.dump();
 
-                response.end();
-                return;
-            }
+        crow::json::rvalue eventsJson = crow::json::load(request.url_params.get("events"));
 
-            std::istringstream iss(drawEventString);
-            std::vector<std::string> tokens;
+        for (const auto& item : eventsJson)
+            m_gartic.GetGame(username)->GetBoard()->Draw(username, std::string(item));
 
-            while(iss >> std::skipws >> drawEventString)
-            {
-                tokens.push_back(drawEventString);
-            }
-
-            if (tokens[0] == "Clear")
-            {
-                m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<Clear>());
-            }
-            else if (tokens[0] == "KeepDraw")
-            {
-                m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<KeepDraw>(std::stoi(tokens[1]), std::stoi(tokens[2])));
-            }
-            else if (tokens[0] == "Fill")
-            {
-                m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<Fill>(std::stoi(tokens[1]), std::stoi(tokens[2]), std::stoi(tokens[3])));
-            }
-            else if (tokens[0] == "StartDraw")
-            {
-                m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<StartDraw>(std::stoi(tokens[1]), std::stoi(tokens[2]), std::stoi(tokens[3]), std::stoi(tokens[4])));
-            }
-            else if (tokens[0] == "Undo")
-            {
-                m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<Undo>());
-            }
-            else
-            {
-                response.code = 403;
-                response.body = crow::json::wvalue
-                {
-                    {"code", response.code},
-                    {"error", "The given event is not valid!"}
-                }.dump();
-
-                response.end();
-                return;
-            }
-        }
         response.body = crow::json::wvalue
         {
             {"code", response.code}

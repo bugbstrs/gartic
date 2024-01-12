@@ -78,14 +78,16 @@ void DrawingBoard::SetDrawColor(Color color)
 	m_color = color;
 }
 
-void DrawingBoard::SendDrawEvent(DrawEvent drawEvent)
+void DrawingBoard::SendDrawEvent(const DrawEvent* drawEvent)
 {
-
+	if(dynamic_cast<StartDrawing>(drawEvent) )
 }
 
-const std::vector<DrawEvent>& DrawingBoard::GetDrawEvents()
+const std::vector<DrawingBoard::DrawEvent*>& DrawingBoard::GetDrawEvents()
 {
-	// TODO: insert return statement here
+	std::vector<DrawEvent*> result{m_drawEvents};
+	m_drawEvents.clear();
+	return result;
 }
 
 void DrawingBoard::FloodFill(COORD startingPoint, COORD pointToExecuteAt, Color startingColor, Color colorToBeFilledWith)

@@ -3,9 +3,8 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
-#include <memory>
 
-#include "DrawEvent.h"
+#include "crow.h"
 #include "Player.h"
 
 namespace http
@@ -17,14 +16,14 @@ namespace http
 
 		~DrawingBoard() = default;
 
-		void Draw(const std::string& username, std::shared_ptr<DrawEvent> currEvent);
+		void Draw(const std::string& username, const std::string& currEvent);
 
-		const std::unordered_map<std::string, std::vector<std::shared_ptr<DrawEvent>>>& GetAllEvents() const noexcept;
+		const std::unordered_map<std::string, std::vector<std::string>>& GetAllEvents() const noexcept;
 		
-		const std::vector<std::shared_ptr<DrawEvent>>& GetAndDeleteEvents(const std::string& username);
+		const std::vector<std::string>& GetAndDeleteEvents(const std::string& username);
 
 	private:
-		std::unordered_map<std::string, std::vector<std::shared_ptr<DrawEvent>>> m_events;
+		std::unordered_map<std::string, std::vector<std::string>> m_events;
 	};
 }
 
