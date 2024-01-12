@@ -5193,6 +5193,9 @@ border-radius: 1px;</string>
                       <property name="sizeAdjustPolicy">
                        <enum>QAbstractScrollArea::AdjustToContents</enum>
                       </property>
+                      <property name="editTriggers">
+                       <set>QAbstractItemView::NoEditTriggers</set>
+                      </property>
                       <property name="horizontalScrollMode">
                        <enum>QAbstractItemView::ScrollPerItem</enum>
                       </property>
@@ -5218,10 +5221,10 @@ border-radius: 1px;</string>
                        <bool>true</bool>
                       </attribute>
                       <attribute name="horizontalHeaderMinimumSectionSize">
-                       <number>150</number>
+                       <number>270</number>
                       </attribute>
                       <attribute name="horizontalHeaderDefaultSectionSize">
-                       <number>180</number>
+                       <number>270</number>
                       </attribute>
                       <attribute name="horizontalHeaderHighlightSections">
                        <bool>true</bool>
@@ -5230,7 +5233,7 @@ border-radius: 1px;</string>
                        <bool>false</bool>
                       </attribute>
                       <attribute name="horizontalHeaderStretchLastSection">
-                       <bool>false</bool>
+                       <bool>true</bool>
                       </attribute>
                       <attribute name="verticalHeaderVisible">
                        <bool>false</bool>
@@ -5247,6 +5250,9 @@ border-radius: 1px;</string>
                       <attribute name="verticalHeaderShowSortIndicator" stdset="0">
                        <bool>false</bool>
                       </attribute>
+                      <attribute name="verticalHeaderStretchLastSection">
+                       <bool>false</bool>
+                      </attribute>
                       <column>
                        <property name="text">
                         <string>Rank</string>
@@ -5261,16 +5267,6 @@ border-radius: 1px;</string>
                       <column>
                        <property name="text">
                         <string>Points</string>
-                       </property>
-                       <property name="font">
-                        <font>
-                         <pointsize>24</pointsize>
-                        </font>
-                       </property>
-                      </column>
-                      <column>
-                       <property name="text">
-                        <string>Date</string>
                        </property>
                        <property name="font">
                         <font>
