@@ -24,15 +24,14 @@ namespace sql = sqlite_orm;
 //import "CannotFetchWordException.h";
 //import "CannotFetchQuoteException.h";
 
-using String = std::string;
 using File = std::ifstream;
 using UserVector = std::vector<http::UsersEntity>;
 using WordEntityVector = std::vector<http::WordsEntity>;
-using WordVector = std::vector<String>;
+using WordVector = std::vector<std::string>;
 
 namespace http
 {
-	static inline auto CreateStorage(const String& filename)
+	static inline auto CreateStorage(const std::string& filename)
 	{
 		return sql::make_storage(
 			filename,
@@ -75,16 +74,16 @@ namespace http
 	public:
 		bool Initialize();
 
-		bool	   CheckCredentials(const String& givenUsername, const String& givenPassword);
-		bool	   CheckUsernameAlreadyExists(const String& givenUsername);
-		bool	   CheckBannedWord(const String& givenWord);
+		bool	   CheckCredentials(const std::string& givenUsername, const std::string& givenPassword);
+		bool	   CheckUsernameAlreadyExists(const std::string& givenUsername);
+		bool	   CheckBannedWord(const std::string& givenWord);
 
-		String	   FetchWord();
-		String	   FetchQuote();
+		std::string	   FetchWord();
+		std::string	   FetchQuote();
 		
-		std::vector<std::pair<int, int>> FetchAllHistoriesOf(const String& givenUsername);
+		std::vector<std::pair<int, int>> FetchAllHistoriesOf(const std::string& givenUsername);
 
-		void	   CreateUser(const String& givenUsername, const String& givenPassword);
+		void	   CreateUser(const std::string& givenUsername, const std::string& givenPassword);
 		void	   PopulateUsersEntity();
 		void	   PopulateWordsEntity();
 		void	   PopulateBannedWordsEntity();

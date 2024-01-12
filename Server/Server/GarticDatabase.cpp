@@ -45,7 +45,7 @@ bool http::GarticStorage::Initialize()
 	return wordsCount != 0 && usersCount != 0 && bannedWordsCount != 0 && quotesCount != 0;
 }
 
-bool GarticStorage::CheckCredentials(const String& givenUsername, const String& givenPassword)
+bool GarticStorage::CheckCredentials(const std::string& givenUsername, const std::string& givenPassword)
 {
 	auto users = m_db.get_all<UsersEntity>(
 		where(
@@ -57,7 +57,7 @@ bool GarticStorage::CheckCredentials(const String& givenUsername, const String& 
 	return !users.empty();
 }
 
-bool GarticStorage::CheckUsernameAlreadyExists(const String& givenUsername)
+bool GarticStorage::CheckUsernameAlreadyExists(const std::string& givenUsername)
 {
 	auto result = m_db.get_all<UsersEntity>(
 		where(
@@ -68,7 +68,7 @@ bool GarticStorage::CheckUsernameAlreadyExists(const String& givenUsername)
 	return !result.empty();
 }
 
-bool http::GarticStorage::CheckBannedWord(const String& givenWord)
+bool http::GarticStorage::CheckBannedWord(const std::string& givenWord)
 {
 	auto result = m_db.select(sqlite_orm::columns(&BannedWordsEntity::GetId),
 		where(
@@ -79,7 +79,7 @@ bool http::GarticStorage::CheckBannedWord(const String& givenWord)
 	return !result.empty();
 }
 
-String GarticStorage::FetchWord()
+std::string GarticStorage::FetchWord()
 {
 	int randomId = GenerateRandomId(true);
 
@@ -97,7 +97,7 @@ String GarticStorage::FetchWord()
 	throw GarticException<CannotFetchWordException>("GarticStorage > FetchWord(): Word could not be fetched!");
 }
 
-String http::GarticStorage::FetchQuote()
+std::string http::GarticStorage::FetchQuote()
 {
 	int randomId = GenerateRandomId(false);
 
@@ -115,7 +115,7 @@ String http::GarticStorage::FetchQuote()
 	throw GarticException<CannotFetchQuoteException>("GarticStorage > FetchQuote(): Quote could not be fetched!");
 }
 
-std::vector<std::pair<int, int>> http::GarticStorage::FetchAllHistoriesOf(const String& givenUsername)
+std::vector<std::pair<int, int>> http::GarticStorage::FetchAllHistoriesOf(const std::string& givenUsername)
 {
 	auto result = 
 	m_db.select(
@@ -133,7 +133,7 @@ std::vector<std::pair<int, int>> http::GarticStorage::FetchAllHistoriesOf(const 
 	return statsForProfile;
 }
 
-void GarticStorage::CreateUser(const String& givenUsername, const String& givenPassword)
+void GarticStorage::CreateUser(const std::string& givenUsername, const std::string& givenPassword)
 {
 	if (CheckUsernameAlreadyExists(givenUsername))
 	{
