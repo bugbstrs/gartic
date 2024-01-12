@@ -21,6 +21,7 @@ public:
 	void StopCheckingForUpdates(bool value);
 	void SetWordToGuess(QString wordToGuess) noexcept;
 	void SetChatConfigurationAccordingToPlayerType(bool isDrawer) noexcept;
+	void ToggleAccessToWritingMessages(bool canWrite);
 
 protected:
 	void showEvent(QShowEvent* event) override;

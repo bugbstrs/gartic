@@ -77,22 +77,6 @@ void GameplayWidget::OnFillButtonReleased() noexcept
 	drawingBoard->ToggleFill(true);
 }
 
-void GameplayWidget::ShowWordDependingOnPlayerType(const QString& word) noexcept
-{
-	if (!m_isDrawer) {
-		QString hiddenWord;
-		for (int index = 0; index < word.size(); index++)
-			hiddenWord += "_";
-		wordToDraw->setText(hiddenWord);
-		
-		chat->SetWordToGuess(word);
-	}
-	else {
-		wordToDraw->setText(word);
-	}
-	chat->SetChatConfigurationAccordingToPlayerType(m_isDrawer);
-}
-
 void GameplayWidget::ShowDrawerInterface()
 {
 	QMetaObject::invokeMethod(this, [this]() {
@@ -102,6 +86,7 @@ void GameplayWidget::ShowDrawerInterface()
 		toolsFrame->show();
 		backgroundForDrawer->show();
 		drawingBoard->SetIsChoosingWord(true);
+		chat->ToggleAccessToWritingMessages(false);
 		cpr::Response response = cpr::Get(
 			cpr::Url{ "http://localhost:18080/fetchwordstoguess" },
 			cpr::Parameters{
@@ -121,7 +106,7 @@ void GameplayWidget::ShowGuesserInterface()
 	QMetaObject::invokeMethod(this, [this]() {
 		if (!backgroundForDrawer->isHidden())
 			backgroundForDrawer->hide();
-		//drawingBoard->setDisabled(true);
+		chat->ToggleAccessToWritingMessages(true);
 		toolsFrame->hide();
 		backgroundForGuesser->show();
 		drawingBoard->SetIsChoosingWord(true);

@@ -55,7 +55,6 @@ private:
 	void CheckForUpdatesInGameScene(std::atomic<bool>& stop);
 	void AddPlayers();
 	void AddWordOption(const std::string& word);
-	void ShowWordDependingOnPlayerType(const QString& word) noexcept;
 
 	void ShowDrawerInterface();
 	void ShowGuesserInterface();

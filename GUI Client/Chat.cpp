@@ -27,7 +27,7 @@ void Chat::AddMessageInChat(const QString& newMessage) noexcept
 			formattedMessage = QString("[%1] <b>%2:</b> <b style='color: blue;'>%3</b><br>").arg(formattedTime, name, messageSent);
 		else {
 			formattedMessage = QString("<b style='color: white; background-color: green; padding: 5px;'> You have guessed the word</b><br>");
-			m_chatWritingBox->setDisabled(true);
+			ToggleAccessToWritingMessages(false);
 		}
 		m_chatConversation->insertHtml(formattedMessage);
 		m_chatConversation->moveCursor(QTextCursor::End);
@@ -49,6 +49,13 @@ void Chat::SetChatConfigurationAccordingToPlayerType(bool isDrawer) noexcept
 	QMetaObject::invokeMethod(this, [this, isDrawer]() {
 		if (isDrawer)
 			m_chatWritingBox->setDisabled(true);
+	}, Qt::QueuedConnection);
+}
+
+void Chat::ToggleAccessToWritingMessages(bool canWrite)
+{
+	QMetaObject::invokeMethod(this, [this, canWrite]() {
+		m_chatWritingBox->setDisabled(!canWrite);
 	}, Qt::QueuedConnection);
 }
 
