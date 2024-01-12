@@ -70,7 +70,7 @@ bool GarticStorage::CheckUsernameAlreadyExists(const String& givenUsername)
 
 bool http::GarticStorage::CheckBannedWord(const String& givenWord)
 {
-	auto result = m_db.get_all<BannedWordsEntity>(
+	auto result = m_db.select(sqlite_orm::columns(&BannedWordsEntity::GetId),
 		where(
 			c(&BannedWordsEntity::GetName) == givenWord
 			)

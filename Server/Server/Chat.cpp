@@ -175,7 +175,6 @@ std::shared_ptr<Player> http::Chat::GetPlayerByName(const std::string& username)
 
 const std::vector<std::string>& http::Chat::SplitIntoWords(const std::string& sentence)
 {
-	std::vector<std::string> words;
 	std::regex wordRegex("\\b\\w+\\b"); 
 
 	auto wordsBegin = std::sregex_iterator(sentence.begin(), sentence.end(), wordRegex);
@@ -184,8 +183,8 @@ const std::vector<std::string>& http::Chat::SplitIntoWords(const std::string& se
 	for (std::sregex_iterator i = wordsBegin; i != wordsEnd; ++i) {
 		std::smatch match = *i;
 		std::string matchStr = match.str();
-		words.push_back(matchStr);
+		m_words.push_back(matchStr);
 	}
 
-	return words;
+	return m_words;
 }

@@ -48,5 +48,7 @@ namespace http
 		std::shared_ptr<Time> m_gameTime;
 
 		GarticStorage& m_storage;
+
+		std::vector<std::string> m_words;
 	};
 }
