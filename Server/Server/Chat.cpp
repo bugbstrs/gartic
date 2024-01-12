@@ -1,16 +1,18 @@
 #include "Chat.h"
 
 #include <format>
+#include <regex>
 
 import GarticExceptions;
 
 using namespace http;
 
-http::Chat::Chat(std::vector<std::shared_ptr<Player>>& players, std::string& wordToGuess, std::shared_ptr<Time> gameTime, GameStatus gameStatus):
+http::Chat::Chat(std::vector<std::shared_ptr<Player>>& players, std::string& wordToGuess, std::shared_ptr<Time> gameTime, GameStatus gameStatus, GarticStorage& storage) :
 	m_players{ players },
 	m_wordToGuess{ wordToGuess },
 	m_gameTime{ gameTime },
-	m_gameStatus{ gameStatus }
+	m_gameStatus{ gameStatus },
+	m_storage{ storage }
 {
 	for (const auto& player : players)
 	{
@@ -30,11 +32,11 @@ void http::Chat::VerifyMessage(const std::string& username, const std::string& m
 			CalculatePoints(username);
 
 			m_messages[username].push_back("You guessed the word!");
-			
+
 			int numberOfPlayersWhoGuessed{ 0 };
 			for (const auto& player : m_players)
 			{
-				if(player->GetGuessed())
+				if (player->GetGuessed())
 					++numberOfPlayersWhoGuessed;
 			}
 			if (numberOfPlayersWhoGuessed == m_players.size() - 1)
@@ -52,11 +54,31 @@ void http::Chat::VerifyMessage(const std::string& username, const std::string& m
 
 void http::Chat::AddMessage(const std::string& username, const std::string& message)
 {
+	std::string stars;
+
+	std::vector<std::string> words = SplitIntoWords(message);
+
+	for (const std::string& word : words)
+	{
+		if (m_storage.CheckBannedWord(word))
+		{
+			stars.append(message.size(), '*');
+			break;
+		}
+	}
+
 	for (auto [currUsername, currMessage] : m_messages)
 	{
 		if (currUsername != username)
 		{
-			m_messages[currUsername].push_back(std::format("{}: {}", username, message));
+			if (stars.size())
+			{
+				m_messages[currUsername].push_back(std::format("{}: {}", username, stars));
+			}
+			else
+			{
+				m_messages[currUsername].push_back(std::format("{}: {}", username, message));
+			}
 		}
 	}
 }
@@ -122,7 +144,7 @@ bool http::Chat::IsCloseEnough(const std::string& currGuess)
 void http::Chat::CalculatePoints(const std::string& username)
 {
 	std::shared_ptr<Player> playerWhoGuessed;
-	
+
 	auto isPlayerWhoGuessed = [&username](const std::shared_ptr<Player>& player) { return player->GetName() == username; };
 	if (auto playerWhoGuessedIt = std::find_if(m_players.begin(), m_players.end(), isPlayerWhoGuessed); playerWhoGuessedIt != m_players.end())
 	{
@@ -149,4 +171,21 @@ std::shared_ptr<Player> http::Chat::GetPlayerByName(const std::string& username)
 	}
 
 	return {};
+}
+
+const std::vector<std::string>& http::Chat::SplitIntoWords(const std::string& sentence)
+{
+	std::vector<std::string> words;
+	std::regex wordRegex("\\b\\w+\\b"); 
+
+	auto wordsBegin = std::sregex_iterator(sentence.begin(), sentence.end(), wordRegex);
+	auto wordsEnd = std::sregex_iterator();
+
+	for (std::sregex_iterator i = wordsBegin; i != wordsEnd; ++i) {
+		std::smatch match = *i;
+		std::string matchStr = match.str();
+		words.push_back(matchStr);
+	}
+
+	return words;
 }

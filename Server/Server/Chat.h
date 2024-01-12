@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include "GameStatusEnum.h"
+#include "GarticDatabase.h"
 #include "Player.h"
 
 namespace http
@@ -13,7 +14,7 @@ namespace http
 	{
 	public:
 		Chat() = delete;
-		Chat(std::vector<std::shared_ptr<Player>>& players, std::string& wordToGuess, std::shared_ptr<Time> gameTime, GameStatus gameStatus);
+		Chat(std::vector<std::shared_ptr<Player>>& players, std::string& wordToGuess, std::shared_ptr<Time> gameTime, GameStatus gameStatus, GarticStorage& storage);
 
 		void VerifyMessage(const std::string& username, const std::string& message);
 		void AddMessage(const std::string& username, const std::string& message);
@@ -30,6 +31,9 @@ namespace http
 		std::shared_ptr<Player> GetPlayerByName(const std::string& username);
 
 	private:
+		const std::vector<std::string>& SplitIntoWords(const std::string& sentence);
+
+	private:
 		static inline double kTreshold = 0.8;
 
 	private:
@@ -42,5 +46,7 @@ namespace http
 		std::string& m_wordToGuess;
 
 		std::shared_ptr<Time> m_gameTime;
+
+		GarticStorage& m_storage;
 	};
 }
