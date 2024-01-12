@@ -282,15 +282,25 @@ void GameplayWidget::AddWordOption(const std::string& word)
 	);
 	wordsToChoose.push_back(wordButton);
 	wordsToChooseLayout->addWidget(wordButton);
-	QObject::connect(wordButton, &QPushButton::released, [this, wordButton]() { 
-		auto wordToGuessPosted = cpr::Post(
-			cpr::Url{ "http://localhost:18080/putwordtoguess" },
-			cpr::Parameters{
-				{"password", UserCredentials::GetPassword()},
-				{"username", UserCredentials::GetUsername()},
-				{"word", wordButton->text().toUtf8().constData()}
+	QObject::connect(wordButton, &QPushButton::released, [this, wordButton]() {
+		bool accepted = false;
+
+		while (!accepted)
+		{
+			auto wordToGuessPosted = cpr::Post(
+				cpr::Url{ "http://localhost:18080/putwordtoguess" },
+				cpr::Parameters{
+					{"password", UserCredentials::GetPassword()},
+					{"username", UserCredentials::GetUsername()},
+					{"word", wordButton->text().toUtf8().constData()}
+				}
+			);
+
+			if (wordToGuessPosted.status_code == 200)
+			{
+				accepted = true;
 			}
-		);
+		}
 	});
 }
 

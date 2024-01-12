@@ -72,13 +72,24 @@ MainWindow::~MainWindow() {}
 
 //Main menu events
 void MainWindow::OnCreateLobbyButtonReleased() noexcept { 
-    auto response = cpr::Post(
-        cpr::Url{ "http://localhost:18080/createlobby" },
-        cpr::Parameters{
-            {"username", UserCredentials::GetUsername()},
-            {"password", UserCredentials::GetPassword()}
+
+    bool accepted = false;
+
+    while (!accepted)
+    {
+        auto response = cpr::Post(
+            cpr::Url{ "http://localhost:18080/createlobby" },
+            cpr::Parameters{
+                {"username", UserCredentials::GetUsername()},
+                {"password", UserCredentials::GetPassword()}
+            }
+        );
+
+        if (response.status_code == 200)
+        {
+            accepted = true;
         }
-    );
+    }
 
     auto code = cpr::Get(
         cpr::Url{ "http://localhost:18080/fetchcode" },
