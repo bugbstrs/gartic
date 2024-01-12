@@ -87,8 +87,8 @@ public:
 	void SetPenWidth (int width);
 	void SetDrawColor(Color color);
 
-	void SendDrawEvent(DrawEvent drawEvent);
-	const std::vector<DrawEvent>& GetDrawEvents();
+	void SendDrawEvent(const DrawEvent* drawEvent);
+	const std::vector<DrawEvent*>& GetDrawEvents();
 
 	void FloodFill(COORD startingPoint, COORD pointToExecuteAt, Color startingColor, Color colorToBeFilledWith);
 	void DrawStartingPixels(COORD startingPoint, COORD pointToExecuteAt, Color startingColor, Color colorToBeFilledWith, Threads& threads);
@@ -100,6 +100,7 @@ public:
 
 private:
 	std::stack<Canvas> m_canvases;
+	std::vector<DrawEvent*> m_drawEvents;
 	Option			   m_option;
 	Color			   m_color;
 	int				   m_penWidth;
