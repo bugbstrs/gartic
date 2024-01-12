@@ -240,14 +240,24 @@ void GameScene::SetWordsToPick()
 			auto words = crow::json::load(response.text);
 			if (words["words"].size() == 1)
 			{
-				cpr::Post(
-					cpr::Url{ "http://localhost:18080/putwordtoguess" },
-					cpr::Parameters{
-							{"password", User::GetPassword()},
-							{"username", User::GetUsername()},
-							{"word", std::string(words["words"][0])}
+				bool accepted = false;
+
+				while (!accepted)
+				{
+					auto response = cpr::Post(
+						cpr::Url{ "http://localhost:18080/putwordtoguess" },
+						cpr::Parameters{
+								{"password", User::GetPassword()},
+								{"username", User::GetUsername()},
+								{"word", std::string(words["words"][0])}
+						}
+					);
+
+					if (response.status_code == 200)
+					{
+						accepted = true;
 					}
-				);
+				}
 				return;
 			}
 			Button* prevButton{ nullptr };
@@ -255,14 +265,24 @@ void GameScene::SetWordsToPick()
 			{
 				std::function<void(std::string)> buttonFunction = [](std::string word)
 				{
-					cpr::Post(
-						cpr::Url{ "http://localhost:18080/putwordtoguess" },
-						cpr::Parameters{
-								{"password", User::GetPassword()},
-								{"username", User::GetUsername()},
-								{"word", word}
+					bool accepted = false;
+					
+					while (!accepted)
+					{
+						auto response = cpr::Post(
+							cpr::Url{ "http://localhost:18080/putwordtoguess" },
+							cpr::Parameters{
+									{"password", User::GetPassword()},
+									{"username", User::GetUsername()},
+									{"word", word}
+							}
+						);
+
+						if (response.status_code == 200)
+						{
+							accepted = true;
 						}
-					);
+					}
 				};
 				auto button{ new Button{ Align::Center, Align::Center, Color::DarkGreen, Color::Black, 5, 5,
 					Color::Green, Color::Black, m_console, m_input, m_selected, std::string(word)} };

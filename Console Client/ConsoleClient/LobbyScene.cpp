@@ -14,13 +14,24 @@ LobbyScene::LobbyScene(ConsoleManager* console, InputManager* inputManager) :
 
 void LobbyScene::StartGame()
 {
-	auto response{ cpr::Post(
-		cpr::Url{ "http://localhost:18080/creategame" },
-		cpr::Parameters{
-			{"password", User::GetPassword()},
-			{"username", User::GetUsername()}
+	bool accepted = false;
+
+	while (!accepted)
+	{
+		auto response{ cpr::Post(
+			cpr::Url{ "http://localhost:18080/creategame" },
+			cpr::Parameters{
+				{"password", User::GetPassword()},
+				{"username", User::GetUsername()}
+			}
+		) };
+
+		if (response.status_code == 200)
+		{
+			accepted = true;
 		}
-	) };
+	}
+
 	m_nextScene = const_cast<std::type_info*>(&typeid(GameScene));
 }
 
@@ -72,16 +83,26 @@ void LobbyScene::GetSettings()
 
 void LobbyScene::SetSettings()
 {
-	auto response = cpr::Post(
-		cpr::Url{ "http://localhost:18080/setsettings" },
-		cpr::Parameters{
-			{"username", User::GetUsername()},
-			{"password", User::GetPassword()},
-			{"roundsnumber", m_rounds->GetOption()},
-			{"wordcount", m_wordCount->GetOption()},
-			{"drawtime", m_drawTime->GetOption()}
+	bool accepted = false;
+
+	while (!accepted)
+	{
+		auto response = cpr::Post(
+			cpr::Url{ "http://localhost:18080/setsettings" },
+			cpr::Parameters{
+				{"username", User::GetUsername()},
+				{"password", User::GetPassword()},
+				{"roundsnumber", m_rounds->GetOption()},
+				{"wordcount", m_wordCount->GetOption()},
+				{"drawtime", m_drawTime->GetOption()}
+			}
+		);
+
+		if (response.status_code == 200)
+		{
+			accepted = true;
 		}
-	);
+	}
 }
 
 void LobbyScene::SetAsLeader()
