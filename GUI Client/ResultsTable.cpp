@@ -21,6 +21,9 @@ ResultsTable::~ResultsTable()
 
 void ResultsTable::SetPlayers(std::vector <std::tuple<QIcon, QString, int, QColor>> players)
 {
+	std::sort(players.begin(), players.end(), [](const std::tuple<QIcon, QString, int, QColor>& a, const std::tuple<QIcon, QString, int, QColor>& b) {
+		return std::get<2>(a) > std::get<2>(b);
+	});
 	for (std::tuple<QIcon, QString, int, QColor>& player : players) {
 		QTableWidgetItem* name = new QTableWidgetItem(std::get<0>(player), std::get<1>(player));
 		QTableWidgetItem* score = new QTableWidgetItem(QString::number(std::get<2>(player)));

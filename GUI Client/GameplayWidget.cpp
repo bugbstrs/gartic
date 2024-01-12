@@ -208,7 +208,18 @@ void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
 					ShowGuesserInterface();
 			}
 			if (std::string(gameStatusText["status"]) == kFinished) {
+				auto response = cpr::Get(
+					cpr::Url{ "http://localhost:18080/fetchplayers" },
+					cpr::Parameters{
+						{"password", UserCredentials::GetPassword()},
+						{"username", UserCredentials::GetUsername()}
+					}
+				);
 				stop.store(true);
+				auto playersResponse = crow::json::load(response.text);
+				for (int index = 0; index < playersResponse["players"].size(); index++) {
+					scoreboardTable->SetPointsToPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])), std::stoi(std::string(playersResponse["players"][index]["points"])));
+				}
 				emit(OnGameFinished());
 			}
 
