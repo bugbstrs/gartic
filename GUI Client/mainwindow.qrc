@@ -46,5 +46,6 @@
     <qresource prefix="/others">
         <file alias="view_password">Resource Files/view_password.png</file>
         <file alias="hide_password">Resource Files/hide_password.png</file>
+        <file alias="coffee">Resource Files/coffee.png</file>
     </qresource>
 </RCC>
