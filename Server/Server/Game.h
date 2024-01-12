@@ -36,6 +36,9 @@ namespace http
 		void RemovePlayer(const std::string& username);
 
 	private:
+		void EndGame();
+
+	private:
 		std::vector<std::shared_ptr<Player>> m_players;
 		
 		GameSettings m_settings;

@@ -128,13 +128,7 @@ void Game::NextRound()
 	// Game is finished
 	if (m_round->GetRoundNumber() == m_settings.GetRoundsNumber() + 1)
 	{
-		m_gameStatus = GameStatus::Finished;
-		m_gameTime->Stop();
-		m_round->StopAllTimers();
-
-		std::sort(m_players.begin(), m_players.end(), GreaterForPlayers);
-
-		m_storage.PopulateGameHistoryEntity(m_players);
+		EndGame();
 	}
 }
 
@@ -149,8 +143,22 @@ void http::Game::RemovePlayer(const std::string& username)
 		}
 
 		m_players.erase(it);
+
+		if (m_players.size() == 1)
+			EndGame();
 		return;
 	}
 
 	throw GarticException<PlayerDoesntExistException>("Game > LeaveGame(const Player&): The player is already not in the game!");
+}
+
+void http::Game::EndGame()
+{
+	m_gameStatus = GameStatus::Finished;
+	m_gameTime->Stop();
+	m_round->StopAllTimers();
+
+	std::sort(m_players.begin(), m_players.end(), GreaterForPlayers);
+
+	m_storage.PopulateGameHistoryEntity(m_players);
 }
