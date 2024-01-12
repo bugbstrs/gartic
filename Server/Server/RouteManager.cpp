@@ -1407,7 +1407,7 @@ void http::RouteManager::PutEventsOnDrawingBoardRoute()
         crow::json::rvalue eventsJson = crow::json::load(request.url_params.get("events"));
 
         for (const auto& item : eventsJson)
-            m_gartic.GetGame(username)->GetBoard()->Draw(username, std::string(item["de"]));
+            m_gartic.GetGame(username)->GetBoard()->Draw(username, std::string(item));
 
         response.body = crow::json::wvalue
         {
