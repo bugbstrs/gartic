@@ -56,7 +56,7 @@ namespace http
 
 		void PutWordToGuessRoute();
 		void PutMessageInChatRoute();
-		void PutEventOnDrawingBoardRoute();
+		void PutEventsOnDrawingBoardRoute();
 
 	private:
 		crow::SimpleApp m_app;

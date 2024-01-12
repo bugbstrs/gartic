@@ -43,7 +43,7 @@ void http::RouteManager::Run()
     FetchTimeRoute();
 	PutWordToGuessRoute();
 	PutMessageInChatRoute();
-    PutEventOnDrawingBoardRoute();
+    PutEventsOnDrawingBoardRoute();
 	SetSettingsRoute();
 
 	m_app
@@ -1379,7 +1379,7 @@ void http::RouteManager::PutMessageInChatRoute()
     CROW_ROUTE(m_app, "/putmessageinchat").methods(crow::HTTPMethod::POST)(PutMessageInChatRouteFunction);
 }
 
-void http::RouteManager::PutEventOnDrawingBoardRoute()
+void http::RouteManager::PutEventsOnDrawingBoardRoute()
 {
     auto PutMessageInChatRouteFunction = [&](const crow::request& request, crow::response& response) {
         response = IsRequestAuthenticated(request);
@@ -1391,9 +1391,9 @@ void http::RouteManager::PutEventOnDrawingBoardRoute()
         }
 
         String username = request.url_params.get("username");
-        char* drawEvent = request.url_params.get("event");
+        auto drawEvents = crow::json::load(request.url_params.get("events"));
 
-        if (drawEvent == nullptr)
+        if (!drawEvents)
         {
             // todo: log
             response.code = 400;
@@ -1406,63 +1406,65 @@ void http::RouteManager::PutEventOnDrawingBoardRoute()
             response.end();
             return;
         }
-           
-        std::string drawEventString(drawEvent);
-
-        if (!m_gartic.GetGame(username))
+        
+        for (const auto& drawEvent : drawEvents)
         {
-            response.code = 403;
-            response.body = crow::json::wvalue
+            std::string drawEventString(drawEvent);
+
+            if (!m_gartic.GetGame(username))
             {
-                {"code", response.code},
-                {"error", "The user is not in a game!"}
-            }.dump();
+                response.code = 403;
+                response.body = crow::json::wvalue
+                {
+                    {"code", response.code},
+                    {"error", "The user is not in a game!"}
+                }.dump();
 
-            response.end();
-            return;
-        }
+                response.end();
+                return;
+            }
 
-        std::istringstream iss(drawEventString);
-        std::vector<std::string> tokens;
+            std::istringstream iss(drawEventString);
+            std::vector<std::string> tokens;
 
-        while(iss >> std::skipws >> drawEventString)
-        {
-            tokens.push_back(drawEventString);
-        }
-
-        if (tokens[0] == "Clear")
-        {
-            m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<Clear>());
-        }
-        else if (tokens[0] == "KeepDraw")
-        {
-            m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<KeepDraw>(std::stoi(tokens[1]), std::stoi(tokens[2])));
-        }
-        else if (tokens[0] == "Fill")
-        {
-            m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<Fill>(std::stoi(tokens[1]), std::stoi(tokens[2]), std::stoi(tokens[3])));
-        }
-        else if (tokens[0] == "StartDraw")
-        {
-            m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<StartDraw>(std::stoi(tokens[1]), std::stoi(tokens[2]), std::stoi(tokens[3]), std::stoi(tokens[4])));
-        }
-        else if (tokens[0] == "Undo")
-        {
-            m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<Undo>());
-        }
-        else
-        {
-            response.code = 403;
-            response.body = crow::json::wvalue
+            while(iss >> std::skipws >> drawEventString)
             {
-                {"code", response.code},
-                {"error", "The given event is not valid!"}
-            }.dump();
+                tokens.push_back(drawEventString);
+            }
 
-            response.end();
-            return;
+            if (tokens[0] == "Clear")
+            {
+                m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<Clear>());
+            }
+            else if (tokens[0] == "KeepDraw")
+            {
+                m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<KeepDraw>(std::stoi(tokens[1]), std::stoi(tokens[2])));
+            }
+            else if (tokens[0] == "Fill")
+            {
+                m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<Fill>(std::stoi(tokens[1]), std::stoi(tokens[2]), std::stoi(tokens[3])));
+            }
+            else if (tokens[0] == "StartDraw")
+            {
+                m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<StartDraw>(std::stoi(tokens[1]), std::stoi(tokens[2]), std::stoi(tokens[3]), std::stoi(tokens[4])));
+            }
+            else if (tokens[0] == "Undo")
+            {
+                m_gartic.GetGame(username)->GetBoard()->Draw(username, std::make_shared<Undo>());
+            }
+            else
+            {
+                response.code = 403;
+                response.body = crow::json::wvalue
+                {
+                    {"code", response.code},
+                    {"error", "The given event is not valid!"}
+                }.dump();
+
+                response.end();
+                return;
+            }
         }
-
         response.body = crow::json::wvalue
         {
             {"code", response.code}
@@ -1471,5 +1473,5 @@ void http::RouteManager::PutEventOnDrawingBoardRoute()
         response.end();
     };
 
-    CROW_ROUTE(m_app, "/putdraweventindrawingboard").methods(crow::HTTPMethod::POST)(PutMessageInChatRouteFunction);
+    CROW_ROUTE(m_app, "/putdraweventsindrawingboard").methods(crow::HTTPMethod::POST)(PutMessageInChatRouteFunction);
 }
