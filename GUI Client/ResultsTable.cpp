@@ -6,13 +6,13 @@ ResultsTable::ResultsTable(QWidget *parent)
 	: QTableWidget(parent)
 {
 	nameFont.setFamily("Consolas");
-	nameFont.setPixelSize(20);
+	nameFont.setPixelSize(32);
 
 	pointsFont.setFamily("Consolas");
-	pointsFont.setPixelSize(20);
+	pointsFont.setPixelSize(42);
 
 	yourNameFont.setFamily("Consolas");
-	yourNameFont.setPixelSize(16);
+	yourNameFont.setPixelSize(36);
 	yourNameFont.setBold(true);
 }
 
