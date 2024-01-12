@@ -18,15 +18,13 @@ protected:
 
 private:
 	struct Row {
-		Row(const std::string& ranking, const std::string& points, const std::string& date) :
+		Row(const std::string& ranking, const std::string& points) :
 			ranking(QString::fromUtf8(ranking)),
-			points(QString::fromUtf8(points)),
-			date(QString::fromUtf8(date))
+			points(QString::fromUtf8(points))
 		{}
 
 		QString ranking;
 		QString points;
-		QString date;
 	};
 
 private:
@@ -34,6 +32,6 @@ private:
 	void GetMatchHistoryFromDatabase() noexcept;
 
 private:
-	bool firstShow{ true };
+	const int m_columnsNumber = 2;
 	std::vector <Row> matches{};
 };

@@ -85,6 +85,9 @@
     <ClCompile Include="ResultsTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QuotesPlainText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DrawingBoard.h">
@@ -127,6 +130,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ResultsTable.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="QuotesPlainText.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
