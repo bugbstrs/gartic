@@ -16,7 +16,7 @@ public:
 	void SetPointsToPlayer(const QString& username, int numberOfPoints);
 	void MarkGuessedForPlayer(const QString& username);
 
-	std::vector <std::pair<QTableWidgetItem*, QTableWidgetItem*>> GetPlayersOrdered();
+	std::vector <std::tuple<QIcon, QString, int, QColor>> GetPlayersOrdered();
 
 	void StopCheckingForPlayers(bool checkForPlayers);
 	void ClearScoreboard();
@@ -34,4 +34,5 @@ private:
 	QFont yourNameFont																		 {};
 	std::vector <std::pair<QTableWidgetItem*, QTableWidgetItem*>> players					 {};
 	std::vector<std::tuple<QIcon, QString, QColor, QIcon>> takenAvatars;
+	std::vector <std::tuple<QIcon, QString, int, QColor>> playersToSendForResultsDisplaying;
 };

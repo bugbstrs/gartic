@@ -45,6 +45,7 @@ void ScoreboardTable::AddPlayersToScoreboard(std::vector <std::tuple<QIcon, QStr
 		setItem(rowPosition, 1, score);
 		
 		players.push_back({name, score});
+		playersToSendForResultsDisplaying.push_back({ name->icon(), name->text(), score->text().toInt(), std::get<2>(avatar)});
 	}
 }
 
@@ -58,6 +59,7 @@ void ScoreboardTable::SetPointsToPlayer(const QString& username, int numberOfPoi
 	for (int index = 0; index < rowCount(); index++) {
 		if (players[index].first->text() == username) {
 			players[index].second->setText(QString::number(numberOfPoints));
+			std::get<2>(playersToSendForResultsDisplaying[index]) = numberOfPoints;
 			break;
 		}
 	}
@@ -73,9 +75,9 @@ void ScoreboardTable::MarkGuessedForPlayer(const QString& username)
 	}
 }
 
-std::vector<std::pair<QTableWidgetItem*, QTableWidgetItem*>> ScoreboardTable::GetPlayersOrdered()
+std::vector <std::tuple<QIcon, QString, int, QColor>> ScoreboardTable::GetPlayersOrdered()
 {
-	return players;
+	return playersToSendForResultsDisplaying;
 }
 
 void ScoreboardTable::StopCheckingForPlayers(bool checkForPlayers)

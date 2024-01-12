@@ -187,6 +187,7 @@ void MainWindow::OnLeaveGameButtonReleased() noexcept {
 void MainWindow::OnGameEnded() noexcept
 {
     ui->stackedWidget->setCurrentWidget(ui->ResultsScene);
+    ui->resultsTable->SetPlayers(ui->scoreboardTable->GetPlayersOrdered());
     /*std::vector <std::pair<QTableWidgetItem*, QTableWidgetItem*>> players = ui->scoreboardTable->GetPlayersOrdered();
     for (auto& player : players) {
         QTableWidgetItem* name = new QTableWidgetItem(std::get<0>(player), std::get<1>(player));
