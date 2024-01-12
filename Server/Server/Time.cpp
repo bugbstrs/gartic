@@ -50,6 +50,13 @@ void http::Time::SetDuration(int newDuration)
 	m_duration = newDuration;
 }
 
+void http::Time::CallFunction()
+{
+	m_functionActivated = true;
+	if (m_toCall)
+		m_toCall();
+}
+
 void http::Time::Start()
 {
 	m_startTimeStamp = GetServerTime() - m_elapsedTime;

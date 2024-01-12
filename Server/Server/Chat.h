@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 
+#include "GameStatusEnum.h"
 #include "Player.h"
 
 namespace http
@@ -12,7 +13,7 @@ namespace http
 	{
 	public:
 		Chat() = delete;
-		Chat(std::vector<std::shared_ptr<Player>>& players, std::string& wordToGuess, std::shared_ptr<Time> gameTime);
+		Chat(std::vector<std::shared_ptr<Player>>& players, std::string& wordToGuess, std::shared_ptr<Time> gameTime, GameStatus gameStatus);
 
 		void VerifyMessage(const std::string& username, const std::string& message);
 		void AddMessage(const std::string& username, const std::string& message);
@@ -33,6 +34,8 @@ namespace http
 
 	private:
 		std::vector<std::shared_ptr<Player>>& m_players;
+
+		GameStatus& m_gameStatus;
 
 		std::unordered_map<std::string, std::vector<std::string>> m_messages;
 

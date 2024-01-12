@@ -31,6 +31,7 @@ namespace http
 			m_toCall = std::bind(methodToCall, std::forward<Args>(args)...);
 		}
 
+		void CallFunction();
 		void Start();
 		void Stop();
 		void Reset();

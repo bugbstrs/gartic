@@ -176,7 +176,7 @@ void http::Round::ActivateRevealLetters()
 		RevealOneLetter();
 	};
 	m_wordToDisplayTimer->SetDuration((m_roundTime->GetDuration() / 2) / (m_wordToDisplay.size() / 2));
-	m_wordToDisplayTimer->Start();
+	m_wordToDisplayTimer->Reset();
 	m_wordToDisplayTimer->SetMethodToCall(wrapper);
 }
 
