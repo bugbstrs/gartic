@@ -78,6 +78,16 @@ void DrawingBoard::SetDrawColor(Color color)
 	m_color = color;
 }
 
+void DrawingBoard::SendDrawEvent(DrawEvent drawEvent)
+{
+
+}
+
+const std::vector<DrawEvent>& DrawingBoard::GetDrawEvents()
+{
+	// TODO: insert return statement here
+}
+
 void DrawingBoard::FloodFill(COORD startingPoint, COORD pointToExecuteAt, Color startingColor, Color colorToBeFilledWith)
 {
 	Threads threads;
