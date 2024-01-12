@@ -11,8 +11,6 @@ QuotesPlainText::~QuotesPlainText()
 
 void QuotesPlainText::showEvent(QShowEvent * event)
 {
-	//De apelat ruta si transformat in QString (cu fromUtf8()) ca altfel plange daca i dai std::string la setPlainText
-
 	auto quote = cpr::Get(
 		cpr::Url{ "http://localhost:18080/fetchquote" },
 		cpr::Parameters{

@@ -1,26 +1,41 @@
 #include "MatchHistoryTable.h"
+#include "UserCredentials.h"
 
-MatchHistoryTable::MatchHistoryTable(QWidget *parent)
+#include<crow.h>
+
+MatchHistoryTable::MatchHistoryTable(QWidget* parent)
 	: QTableWidget{ parent }
 {
-	GetMatchHistoryFromDatabase(); 
+	GetMatchHistoryFromDatabase();
 }
 
 MatchHistoryTable::~MatchHistoryTable()
 {}
 
-void MatchHistoryTable::showEvent(QShowEvent * event)
+void MatchHistoryTable::showEvent(QShowEvent* event)
 {
-	//apelezi ruta si convertesti la fel ca la cafeulta si apelezi ca mai sus
-	int nrOfMatches = 2;
+	auto profileInfo = cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchprofileinfo" },
+		cpr::Parameters{
+			{"username", UserCredentials::GetUsername()},
+			{"password", UserCredentials::GetPassword()}
+		}
+	);
+
+	auto profileInfoVector = crow::json::load(profileInfo.text);
+
+	int nrOfMatches = profileInfoVector["info"].size();
 	setColumnCount(m_columnsNumber);
 	setRowCount(nrOfMatches);
+
 	for (int row = 0; row < nrOfMatches; ++row) {
-		for (int col = 0; col < m_columnsNumber; ++col) {
-			QTableWidgetItem* item = new QTableWidgetItem(GetRowInfoForColumnWithIndex(col, matches[row]));
-			item->setTextAlignment(Qt::AlignCenter);
-			setItem(row, col, item);
-		}
+		QTableWidgetItem* positionItem = new QTableWidgetItem(QString::fromUtf8(std::string(profileInfoVector["info"][row][0])));
+		positionItem->setTextAlignment(Qt::AlignCenter);
+		setItem(row, 0, positionItem);
+
+		QTableWidgetItem* pointsItem = new QTableWidgetItem(QString::fromUtf8(std::string(profileInfoVector["info"][row][1])));
+		pointsItem->setTextAlignment(Qt::AlignCenter);
+		setItem(row, 1, pointsItem);
 	}
 }
 
