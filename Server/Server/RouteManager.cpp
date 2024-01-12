@@ -285,23 +285,17 @@ void http::RouteManager::FetchProfileInfoRoute()
 
             String username = request.url_params.get("username");
 
-            if (!m_gartic.GetLobby(username))
-            {
-                response.code = 403;
-                response.body = crow::json::wvalue
-                {
-                    {"code", response.code},
-                    {"error", "The user is not in a lobby!"}
-                }.dump();
-
-                response.end();
-                return;
-            }
-
             std::vector<std::pair<int, int>> profileInfo;
+            std::vector<crow::json::wvalue> historyJson;
             try
             {
                 profileInfo = m_storage.FetchAllHistoriesOf(username);
+                for (const auto& info : profileInfo) {
+                    crow::json::wvalue currentMatch;
+                    currentMatch["rank"] = info.first;
+                    currentMatch["points"] = info.second;
+                    historyJson.emplace_back(currentMatch);
+                }
             }
             catch (...)
             {
@@ -318,7 +312,7 @@ void http::RouteManager::FetchProfileInfoRoute()
 
             response.body = crow::json::wvalue
             {
-                {"info", profileInfo[0].first}
+                {"info", historyJson}
             }.dump();
 
             response.end();
