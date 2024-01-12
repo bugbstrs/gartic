@@ -6,10 +6,11 @@ import GarticExceptions;
 
 using namespace http;
 
-http::Chat::Chat(std::vector<std::shared_ptr<Player>>& players, std::string& wordToGuess, std::shared_ptr<Time> gameTime):
+http::Chat::Chat(std::vector<std::shared_ptr<Player>>& players, std::string& wordToGuess, std::shared_ptr<Time> gameTime, GameStatus gameStatus):
 	m_players{ players },
 	m_wordToGuess{ wordToGuess },
-	m_gameTime{ gameTime }
+	m_gameTime{ gameTime },
+	m_gameStatus{ gameStatus }
 {
 	for (const auto& player : players)
 	{
@@ -24,11 +25,20 @@ void http::Chat::VerifyMessage(const std::string& username, const std::string& m
 		if (message == m_wordToGuess)
 		{
 			GetPlayerByName(username)->SetGuessed(true);
-			GetPlayerByName(username)->SetTimeWhenGuessed(m_gameTime->GetRemainingTime() / 1000);
-			
+			GetPlayerByName(username)->SetTimeWhenGuessed((m_gameTime->GetDuration() - m_gameTime->GetRemainingTime()) / 1000);
+
 			CalculatePoints(username);
 
 			m_messages[username].push_back("You guessed the word!");
+			
+			int numberOfPlayersWhoGuessed{ 0 };
+			for (const auto& player : m_players)
+			{
+				if(player->GetGuessed())
+					++numberOfPlayersWhoGuessed;
+			}
+			if (numberOfPlayersWhoGuessed == m_players.size() - 1)
+				m_gameTime->CallFunction();
 		}
 		else {
 			m_messages[username].push_back("You are close!");

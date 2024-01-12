@@ -7,7 +7,7 @@ Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers, GarticStorage& sto
 	m_players{ std::move(newPlayers) },
 	m_gameStatus { GameStatus::PickingWord },
 	m_gameTime{ std::shared_ptr<Time>{ new Time(m_settings.GetDrawTime() * 1000, false) } },
-	m_chat { std::shared_ptr<Chat>{ new Chat(m_players, m_wordToGuess, m_gameTime) } },
+	m_chat { std::shared_ptr<Chat>{ new Chat(m_players, m_wordToGuess, m_gameTime, m_gameStatus) } },
 	m_board{ std::shared_ptr<DrawingBoard>{ new DrawingBoard(m_players) } },
 	m_round{ std::shared_ptr<Round>{ new Round(m_players, m_wordToGuess, storage, m_gameTime, m_settings.GetWordCount(), m_gameStatus) } },
 	m_settings{ newGameSettings },
@@ -139,7 +139,7 @@ void http::Game::RemovePlayer(const std::string& username)
 	{
 		if (*it == m_round->GetDrawer())
 		{
-			m_round->NextDrawer();
+			NextRound();
 		}
 
 		m_players.erase(it);

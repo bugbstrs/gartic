@@ -32,7 +32,7 @@ void GameScene::GetPlayers()
 			if (std::stoi(std::string(players["drawer index"])) == i && std::string(player["name"]) == User::GetUsername())
 				SetAsDrawer();
 
-			Color color = std::string(player["guessed"]) == "1" ? Color::Green : 
+			Color color = std::string(player["guessed"]) == "true" ? Color::Green :
 						  std::stoi(std::string(players["drawer index"])) == i ? Color::Red :
 						  lastPlayerColor ? Color::DarkGray : Color::White;
 			lastPlayerColor = !lastPlayerColor;
@@ -238,6 +238,18 @@ void GameScene::SetWordsToPick()
 		if (response.status_code == 200)
 		{
 			auto words = crow::json::load(response.text);
+			if (words["words"].size() == 1)
+			{
+				cpr::Post(
+					cpr::Url{ "http://localhost:18080/putwordtoguess" },
+					cpr::Parameters{
+							{"password", User::GetPassword()},
+							{"username", User::GetUsername()},
+							{"word", std::string(words["words"][0])}
+					}
+				);
+				return;
+			}
 			Button* prevButton{ nullptr };
 			for (const auto& word : words["words"])
 			{
@@ -274,8 +286,13 @@ void GameScene::CreateServerCommunicationThread()
 		{
 			GetGameStatus();
 			GetPlayers();
-			GetRound();
 			GetTimer();
+			if (m_gameStatus == GameStatus::Finished)
+			{
+				m_stopThread = true;
+				break;
+			}
+			GetRound();
 			GetWord();
 			GetChat();
 		}
