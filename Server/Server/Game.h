@@ -39,21 +39,21 @@ namespace http
 		void EndGame();
 
 	private:
+		std::string m_wordToGuess;
+
 		std::vector<std::shared_ptr<Player>> m_players;
 		
-		GameSettings m_settings;
-
 		GameStatus m_gameStatus;
+
+		GameSettings m_settings;
 
 		std::shared_ptr<Time> m_gameTime;
 
 		std::shared_ptr<Chat> m_chat;
 
-		std::shared_ptr<Round> m_round;
-
 		std::shared_ptr<DrawingBoard> m_board;
 
-		std::string m_wordToGuess;
+		std::shared_ptr<Round> m_round;
 
 		GarticStorage& m_storage;
 	};

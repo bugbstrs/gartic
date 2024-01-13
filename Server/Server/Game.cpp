@@ -4,6 +4,7 @@ import GarticExceptions;
 using namespace http;
 
 Game::Game(std::vector<std::shared_ptr<Player>>&& newPlayers, GarticStorage& storage, GameSettings& newGameSettings) :
+	m_wordToGuess{ std::string{} },
 	m_players{ std::move(newPlayers) },
 	m_gameStatus { GameStatus::PickingWord },
 	m_settings{ newGameSettings },

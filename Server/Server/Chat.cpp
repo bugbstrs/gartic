@@ -10,9 +10,9 @@ using namespace http;
 
 http::Chat::Chat(std::vector<std::shared_ptr<Player>>& players, std::string& wordToGuess, std::shared_ptr<Time> gameTime, GameStatus gameStatus, GarticStorage& storage) :
 	m_players{ players },
+	m_gameStatus{ gameStatus },
 	m_wordToGuess{ wordToGuess },
 	m_gameTime{ gameTime },
-	m_gameStatus{ gameStatus },
 	m_storage{ storage }
 {
 	std::transform(m_wordToGuess.begin(), m_wordToGuess.end(), m_wordToGuess.begin(),
