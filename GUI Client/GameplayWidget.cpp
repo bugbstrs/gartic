@@ -87,6 +87,7 @@ void GameplayWidget::ShowDrawerInterface()
 		backgroundForDrawer->show();
 		drawingBoard->SetIsChoosingWord(true);
 		drawingBoard->SetupForDrawer(true);
+		drawingBoard->ClearCanvas();
 		chat->ToggleAccessToWritingMessages(false);
 		cpr::Response response = cpr::Get(
 			cpr::Url{ "http://localhost:18080/fetchwordstoguess" },
@@ -111,6 +112,7 @@ void GameplayWidget::ShowGuesserInterface()
 		toolsFrame->hide();
 		backgroundForGuesser->show();
 		drawingBoard->SetIsChoosingWord(true);
+		drawingBoard->ClearCanvas();
 		drawingBoard->SetupForDrawer(false);
 	}, Qt::QueuedConnection);
 }

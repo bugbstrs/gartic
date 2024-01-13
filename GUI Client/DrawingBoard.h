@@ -50,6 +50,7 @@ private:
 
 	void CheckForNewDrawEvents(std::atomic<bool>& stop);
 	void SendUpdatedPath(std::atomic<bool>& stop);
+	//void SendNewPathStared(std::atomic<bool>& stop);
 	void RunEventTypeAccordingly(const std::string& drawingEvent);
 
 	void FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith);
@@ -62,17 +63,19 @@ private:
 	const int kCircleRadius { 25 };
 	std::atomic<bool>stop;
 
+	std::queue<QPoint> pathPoints;
+	
 	bool isChoosingWord		{ false };
 	bool firstPaint			{ true };
 	bool drawing			{ false };
 	bool fillEnabled		{ false };
+	bool drawBeginningOfPath{ false };
 
 	QColor lastColor	{};
 	QColor eraserColor	{};
 
 	QPen pen										 {};
 	QPainterPath currentPath						 {};
-	std::vector<std::pair<QPainterPath, QPen>> paths {};
 
 	std::vector<QImage>images								  {};
 	QImage image											  {};

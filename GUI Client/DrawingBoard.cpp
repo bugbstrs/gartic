@@ -1,7 +1,7 @@
 #include "DrawingBoard.h"
 #include "UserCredentials.h"
+#include <sstream>
 #include "crow.h"
-#include <sstream>;
 
 DrawingBoard::DrawingBoard(QWidget* parent)
 	: QWidget{ parent },
@@ -10,6 +10,7 @@ DrawingBoard::DrawingBoard(QWidget* parent)
 {
 	setMouseTracking(true);
 	ChangePenPropertiesTo(Qt::black, 4);
+
 }
 
 void DrawingBoard::mousePressEvent(QMouseEvent* event)
@@ -21,6 +22,9 @@ void DrawingBoard::mousePressEvent(QMouseEvent* event)
 		if (!fillEnabled) {
 			drawing = true;
 			currentPath = QPainterPath(event->pos());
+			//pathPoints.push(event->pos());
+			pathPoints.push(event->pos());
+			drawBeginningOfPath = false;
 			update();
 
 		}
@@ -60,15 +64,17 @@ void DrawingBoard::mouseMoveEvent(QMouseEvent* event)
 {
 	if (drawing) {
 		currentPath.lineTo(event->pos());
+		pathPoints.push(event->pos());
 		update();
 	}
 }
 
+//Isi da erase in timp ce parcurge ala
 void DrawingBoard::mouseReleaseEvent(QMouseEvent* event)
 {
 	if (event->button() == Qt::LeftButton && drawing) {
 		drawing = false;
-		paths.push_back({ currentPath, pen });
+		drawBeginningOfPath = false;
 		update();
 	}
 }
@@ -106,9 +112,17 @@ void DrawingBoard::SetIsChoosingWord(bool value)
 
 void DrawingBoard::SetupForDrawer(bool isDrawer)
 {
-	QMetaObject::invokeMethod(this, [this, isDrawer]() {
-		stop.store(isDrawer, std::memory_order_relaxed);
-	}, Qt::QueuedConnection);
+	stop.store(isDrawer);
+
+	//std::thread sendNewPathStared(&DrawingBoard::SendNewPathStared, this, std::ref(stop));
+	std::thread sendUpdatedPath(&DrawingBoard::SendUpdatedPath, this, std::ref(stop));
+	std::thread checkForNewDrawEvents(&DrawingBoard::CheckForNewDrawEvents, this, std::ref(stop));
+
+	//sendNewPathStared.detach();
+	sendUpdatedPath.detach();
+	checkForNewDrawEvents.detach();
+
+
 }
 
 void DrawingBoard::ToggleEraser(bool value) noexcept
@@ -177,7 +191,6 @@ void DrawingBoard::ResetBoard() noexcept
 
 	ChangePenPropertiesTo(kDefaultPenColor, kDefaultPenWidth);
 	currentPath = QPainterPath();
-	paths.clear();
 	image.fill(Qt::white);
 	images.clear();
 }
@@ -202,7 +215,7 @@ void DrawingBoard::ClearAction()
 
 void DrawingBoard::CheckForNewDrawEvents(std::atomic<bool>& stop)
 {
-	while (!stop.load(std::memory_order_relaxed)) {
+	while (!stop.load()) {
 		auto fetchedDrawingEvents = cpr::Get(
 			cpr::Url{ "http://localhost:18080/fetchdrawingboard" },
 			cpr::Parameters{
@@ -213,8 +226,11 @@ void DrawingBoard::CheckForNewDrawEvents(std::atomic<bool>& stop)
 		auto events = crow::json::load(fetchedDrawingEvents.text);
 		for (int index = 0; index < events["events"].size(); index++) {
 			RunEventTypeAccordingly(std::string(events["events"][index]));
+			if (index % 150 == 0)
+				update();
 		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(200));
+		update();
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 	}
 	if (stop.load()) {
 
@@ -224,35 +240,47 @@ void DrawingBoard::CheckForNewDrawEvents(std::atomic<bool>& stop)
 void DrawingBoard::SendUpdatedPath(std::atomic<bool>& stop)
 {
 	std::string drawEvent;
-	while (stop.load(std::memory_order_relaxed)) {
-		if (currentPath.elementCount() == 1)
-			drawEvent = "startDrawing ";
-		else drawEvent = "keepDrawing ";
-		if (currentPath.elementCount() > 4) {
-			int a = 5;
-		}
-		drawEvent += std::to_string(currentPath.elementAt(currentPath.elementCount() - 1).x) + " ";
-		drawEvent += std::to_string(currentPath.elementAt(currentPath.elementCount() - 1).y) + " ";
-		QColor color = pen.color();
-		int red = color.red();
-		int green = color.green();
-		int blue = color.blue();
-		int colorAsInt = (red << 16) | (green << 8) | blue;
-		drawEvent += std::to_string(colorAsInt) + " ";
-		drawEvent += std::to_string(pen.width());
+	std::vector<crow::json::wvalue> drawEventsJSON;
+	while (stop.load()) {
+		if (!pathPoints.empty()) {
+			if (drawBeginningOfPath == false) {
+				drawEvent = "startDrawing ";
+				drawEvent += std::to_string(pathPoints.front().x()) + " ";
+				drawEvent += std::to_string(pathPoints.front().y()) + " ";
+				QColor color = pen.color();
+				int red = color.red();
+				int green = color.green();
+				int blue = color.blue();
+				int colorAsInt = (red << 16) | (green << 8) | blue;
+				drawEvent += std::to_string(colorAsInt) + " ";
+				drawEvent += std::to_string(pen.width());
 
-		std::vector<crow::json::wvalue> drawEventsJSON;
-		drawEventsJSON.push_back(drawEvent);
-		crow::json::wvalue drawEventsParameter = drawEventsJSON;
+				drawEventsJSON.push_back(drawEvent);
+				drawEvent.clear();
+				pathPoints.pop();
 
-		auto sentFillCoordinatesResponse = cpr::Post(
-			cpr::Url{ "http://localhost:18080/putdraweventsindrawingboard" },
-			cpr::Parameters{
-				{"password", UserCredentials::GetPassword()},
-				{"username", UserCredentials::GetUsername()},
-				{"events", drawEventsParameter.dump()}
+				drawBeginningOfPath = true;
 			}
-		);
+			for (int index = 0; index < 200 && !pathPoints.empty(); ++index) {
+				drawEvent = "keepDrawing ";
+				drawEvent += std::to_string(pathPoints.front().x()) + " ";
+				drawEvent += std::to_string(pathPoints.front().y()) + " ";
+
+				drawEventsJSON.push_back(drawEvent);
+				drawEvent.clear();
+				pathPoints.pop();
+			}
+			crow::json::wvalue drawEventsParameter = drawEventsJSON;
+			auto sentFillCoordinatesResponse = cpr::Post(
+				cpr::Url{ "http://localhost:18080/putdraweventsindrawingboard" },
+				cpr::Parameters{
+					{"password", UserCredentials::GetPassword()},
+					{"username", UserCredentials::GetUsername()},
+					{"events", drawEventsParameter.dump()}
+				}
+			);
+			drawEventsJSON.clear();
+		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	}
 	if (!stop.load()) {
@@ -272,6 +300,7 @@ void DrawingBoard::RunEventTypeAccordingly(const std::string& drawingEvent)
 			if (!currentPath.isEmpty()) {
 				update();
 				images.push_back(image);
+				currentPath.clear();
 			}
 			int color, width;
 			drawEventStream >> prevX >> prevY >> color >> width;
@@ -281,11 +310,9 @@ void DrawingBoard::RunEventTypeAccordingly(const std::string& drawingEvent)
 			int green = (color >> 8) & 0xFF;
 			int blue = color & 0xFF;
 
-			QColor colorForDrawing(red, green, blue);
-			pen.setColor(colorForDrawing);
+			pen.setColor(QColor(red, green, blue));
 			pen.setWidth(width);
 			currentPath = QPainterPath(QPoint(prevX, prevY));
-			update();
 		}
 		else if (string == "keepDrawing")
 		{
@@ -303,10 +330,8 @@ void DrawingBoard::RunEventTypeAccordingly(const std::string& drawingEvent)
 			int green = (color >> 8) & 0xFF;
 			int blue = color & 0xFF;
 
-			QColor colorForDrawing(red, green, blue);
-
 			images.push_back(image);
-			FloodFill(QPoint(x, y), QPoint(x, y), image.pixelColor(QPoint(x, y)), colorForDrawing);
+			FloodFill(QPoint(x, y), QPoint(x, y), image.pixelColor(QPoint(x, y)), QColor(red, green, blue));
 		}
 		else if (string == "undo")
 		{
@@ -379,11 +404,6 @@ void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, Q
 
 void DrawingBoard::showEvent(QShowEvent* event)
 {
-	std::thread checkForNewDrawEvents(&DrawingBoard::CheckForNewDrawEvents, this, std::ref(stop));
-	checkForNewDrawEvents.detach();
-
-	std::thread sendUpdatedPath(&DrawingBoard::SendUpdatedPath, this, std::ref(stop));
-	sendUpdatedPath.detach();
 }
 
 void DrawingBoard::paintEvent(QPaintEvent* event)
