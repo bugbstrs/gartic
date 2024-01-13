@@ -35,60 +35,16 @@ public:
 		fill
 	};
 
-	class DrawEvent
-	{
-	public:
-
-	private:
-	};
-	class StartDrawing : public DrawEvent
-	{
-	public:
-
-	private:
-		int x;
-		int y;
-		Color color;
-		int width;
-	};
-	class KeepDrawing : public DrawEvent
-	{
-	public:
-
-	private:
-		int x;
-		int y;
-	};
-	class Fill : public DrawEvent
-	{
-	public:
-
-	private:
-		int x;
-		int y;
-		Color color;
-	};
-	class Undo : public DrawEvent
-	{
-	public:
-
-	private:
-	};
-	class Clear : public DrawEvent
-	{
-	public:
-
-	private:
-	};
-
+	void DrawLine	 (int x1, int y1, int x2, int y2);
+	void Fill		 (int x, int y);
 	void Undo		 ();
 	void Clear		 ();
 	void SetOption	 (Option option);
 	void SetPenWidth (int width);
 	void SetDrawColor(Color color);
 
-	void SendDrawEvent(const DrawEvent* drawEvent);
-	const std::vector<DrawEvent*>& GetDrawEvents();
+	void SendDrawEvent(const std::string& drawEvent);
+	const std::vector<std::string> GetDrawEvents();
 
 	void FloodFill(COORD startingPoint, COORD pointToExecuteAt, Color startingColor, Color colorToBeFilledWith);
 	void DrawStartingPixels(COORD startingPoint, COORD pointToExecuteAt, Color startingColor, Color colorToBeFilledWith, Threads& threads);
@@ -100,7 +56,7 @@ public:
 
 private:
 	std::stack<Canvas> m_canvases;
-	std::vector<DrawEvent*> m_drawEvents;
+	std::vector<std::string> m_drawEvents;
 	Option			   m_option;
 	Color			   m_color;
 	int				   m_penWidth;

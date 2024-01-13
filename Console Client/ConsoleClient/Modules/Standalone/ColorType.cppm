@@ -26,11 +26,20 @@ export enum ColorType
     DarkBrown = 0x001C3363
 };
 
-static ColorType FromIntToConsoleColor(int color)
+export ColorType FromIntToConsoleColor(int color)
 {
     int red = (color >> 16) & 0xFF;
     int green = (color >> 8) & 0xFF;
     int blue = color & 0xFF;
 
     return static_cast<ColorType>((blue << 16) | (green << 8) | red);
+}
+
+export int FromConsoleColorToInt(ColorType color)
+{
+    int red = (static_cast<int>(color) >> 16) & 0xFF;
+    int green = (static_cast<int>(color) >> 8) & 0xFF;
+    int blue = static_cast<int>(color) & 0xFF;
+
+    return (blue << 16) | (green << 8) | red;
 }

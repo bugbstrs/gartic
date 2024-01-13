@@ -1014,7 +1014,7 @@ void http::RouteManager::FetchDrawingBoard()
             return;
         }
 
-        std::vector<std::string> events{ m_gartic.GetGame(username)->GetBoard()->GetAndDeleteEvents(username) };
+        std::vector<std::string> events = m_gartic.GetGame(username)->GetBoard()->GetAndDeleteEvents(username);
         std::vector<crow::json::wvalue> eventsJSON;
         for (const auto& drawEvent : events)
             eventsJSON.emplace_back(drawEvent);

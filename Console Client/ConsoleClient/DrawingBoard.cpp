@@ -1,5 +1,7 @@
 module DrawingBoard;
 
+import <sstream>;
+
 DrawingBoard::DrawingBoard(COORD upLeftCorner,
 			int16_t maxWidth, int16_t maxHeight,
 						   Color backgroungColor, ConsoleManager* cm,
@@ -51,6 +53,20 @@ DrawingBoard::DrawingBoard(int16_t maxWidth,
 	m_canvases.emplace(canvasWidth, canvasHeight, backgroungColor);
 }
 
+void DrawingBoard::DrawLine(int x1, int y1, int x2, int y2)
+{
+	m_canvases.top().DrawLine(m_sectorWidth * (x1 - m_upLeftCorner.X) + m_sectorWidth / 2,
+							  m_sectorHeight * (y1 - m_upLeftCorner.Y) + m_sectorHeight / 2,
+							  m_sectorWidth * (x2 - m_upLeftCorner.X) + m_sectorWidth / 2,
+							  m_sectorHeight * (y2 - m_upLeftCorner.Y) + m_sectorHeight / 2,
+							  m_color, m_penWidth);
+}
+
+void DrawingBoard::Fill(int x, int y)
+{
+	// TODO: Fill
+}
+
 void DrawingBoard::Undo()
 {
 	if (m_canvases.size() > 1)
@@ -78,14 +94,47 @@ void DrawingBoard::SetDrawColor(Color color)
 	m_color = color;
 }
 
-void DrawingBoard::SendDrawEvent(const DrawEvent* drawEvent)
+void DrawingBoard::SendDrawEvent(const std::string& drawEvent)
 {
-	if(dynamic_cast<StartDrawing>(drawEvent) )
+	std::istringstream drawEventStream{ drawEvent };
+	std::string string;
+	drawEventStream >> string;
+	static int prevX, prevY;
+	if (string == "startDrawing")
+	{
+		int color;
+		drawEventStream >> prevX >> prevY >> color >> m_width;
+		m_color = FromIntToConsoleColor(color);
+		m_canvases.emplace(m_canvases.top());
+	}
+	else if (string == "keepDrawing")
+	{
+		int x, y;
+		drawEventStream >> x >> y;
+		DrawLine(prevX, prevY, x, y);
+		prevX = x, prevY = y;
+	}
+	else if (string == "fill")
+	{
+		int x, y;
+		int color;
+		drawEventStream >> x >> y >> color;
+		m_color = FromIntToConsoleColor(color);
+		Fill(x, y);
+	}
+	else if (string == "undo")
+	{
+		Undo();
+	}
+	else if (string == "clear")
+	{
+		Clear();
+	}
 }
 
-const std::vector<DrawingBoard::DrawEvent*>& DrawingBoard::GetDrawEvents()
+const std::vector<std::string> DrawingBoard::GetDrawEvents()
 {
-	std::vector<DrawEvent*> result{m_drawEvents};
+	std::vector<std::string> result{ m_drawEvents };
 	m_drawEvents.clear();
 	return result;
 }
@@ -170,12 +219,20 @@ void DrawingBoard::CheckCursor()
 	if (!m_selectable)
 		return;
 	static bool isWaitingToSave{ true };
-	static COORD prevPoz{ -1,-1 };
+	static COORD prevPos{ -1,-1 };
 	COORD cursorPos{ m_im->GetCurrentCursorPosition() };
 	if (IsPointInside(cursorPos))
 	{
 		if (m_im->GetClickPressed() && m_option == Option::fill)
 		{
+			std::string drawEvent{ "fill " };
+			drawEvent += std::to_string(cursorPos.X);
+			drawEvent += " ";
+			drawEvent += std::to_string(cursorPos.Y);
+			drawEvent += " ";
+			drawEvent += std::to_string(FromConsoleColorToInt(m_color));
+			m_drawEvents.push_back(drawEvent);
+			Fill(cursorPos.X, cursorPos.Y);
 			//m_canvases.emplace(m_canvases.top());
 			//FloodFill({ short(m_sectorWidth * (cursorPos.X - m_upLeftCorner.X) + m_sectorWidth / 2) ,
 			//			short(m_sectorHeight* (cursorPos.Y - m_upLeftCorner.Y) + m_sectorHeight / 2) },
@@ -186,28 +243,39 @@ void DrawingBoard::CheckCursor()
 		}else
 		if (m_im->GetClickHold() && m_option == Option::draw)
 		{
-			if (prevPoz.X != -1)
+			if (prevPos.X != -1)
 			{
 				if (isWaitingToSave)
 				{
 					isWaitingToSave = false;
 					m_canvases.emplace(m_canvases.top());
+
+					std::string drawEvent{ "startDrawing " };
+					drawEvent += std::to_string(cursorPos.X);
+					drawEvent += " ";
+					drawEvent += std::to_string(cursorPos.Y);
+					drawEvent += " ";
+					drawEvent += std::to_string(FromConsoleColorToInt(m_color));
+					drawEvent += " ";
+					drawEvent += std::to_string(m_penWidth);
+					m_drawEvents.push_back(drawEvent);
 				}
-				m_canvases.top().DrawLine(m_sectorWidth * (prevPoz.X - m_upLeftCorner.X) + m_sectorWidth / 2,
-										  m_sectorHeight * (prevPoz.Y - m_upLeftCorner.Y) + m_sectorHeight / 2,
-										  m_sectorWidth * (cursorPos.X - m_upLeftCorner.X) + m_sectorWidth / 2,
-										  m_sectorHeight * (cursorPos.Y - m_upLeftCorner.Y) + m_sectorHeight / 2,
-										  m_color, m_penWidth);
+				std::string drawEvent{ "keepDrawing " };
+				drawEvent += std::to_string(cursorPos.X);
+				drawEvent += " ";
+				drawEvent += std::to_string(cursorPos.Y);
+				m_drawEvents.push_back(drawEvent);
+				DrawLine(prevPos.X, prevPos.Y, cursorPos.X, cursorPos.Y);
 			}
-			prevPoz = cursorPos;
+			prevPos = cursorPos;
 			return;
 		}
 	}
 	
-	if (prevPoz.X != -1)
+	if (prevPos.X != -1)
 		isWaitingToSave = true;
 
-	prevPoz = { -1,-1 };
+	prevPos = { -1,-1 };
 }
 
 void DrawingBoard::DrawContents()

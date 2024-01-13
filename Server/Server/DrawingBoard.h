@@ -20,7 +20,7 @@ namespace http
 
 		const std::unordered_map<std::string, std::vector<std::string>>& GetAllEvents() const noexcept;
 		
-		const std::vector<std::string>& GetAndDeleteEvents(const std::string& username);
+		const std::vector<std::string> GetAndDeleteEvents(const std::string& username);
 
 	private:
 		std::unordered_map<std::string, std::vector<std::string>> m_events;

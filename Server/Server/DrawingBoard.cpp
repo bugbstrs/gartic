@@ -28,7 +28,7 @@ const std::unordered_map<std::string, std::vector<std::string>>& http::DrawingBo
     return m_events;
 }
 
-const std::vector<std::string>& http::DrawingBoard::GetAndDeleteEvents(const std::string& username)
+const std::vector<std::string> http::DrawingBoard::GetAndDeleteEvents(const std::string& username)
 {
 	if (m_events.find(username) != m_events.end())
 	{

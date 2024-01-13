@@ -168,7 +168,19 @@ void GameScene::SendMessageToServer()
 
 void GameScene::GetDrawEvents()
 {
-
+	auto response{ cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchdrawingboard" },
+		cpr::Parameters{
+			{"password", User::GetPassword()},
+			{"username", User::GetUsername()}
+		}
+	) };
+	if (response.status_code == 200)
+	{
+		auto events{ crow::json::load(response.text) };
+		for (const auto& drawEvent : events["events"])
+			m_drawingBoard->SendDrawEvent(std::string(drawEvent));
+	}
 }
 
 void GameScene::Leave()
@@ -186,6 +198,7 @@ void GameScene::Leave()
 
 void GameScene::SetAsDrawer()
 {
+	m_isDrawer = true;
 	m_chatbox->CanBeSelected(false);
 
 	switch (m_gameStatus)
@@ -216,6 +229,7 @@ void GameScene::SetAsDrawer()
 
 void GameScene::SetAsGuesser()
 {
+	m_isDrawer = false;
 	m_drawOptions->SetActive(false);
 	m_colorsOptions->SetActive(false);
 	m_widthOptions->SetActive(false);
@@ -241,7 +255,6 @@ void GameScene::SetWordsToPick()
 			if (words["words"].size() == 1)
 			{
 				bool accepted = false;
-
 				while (!accepted)
 				{
 					auto response = cpr::Post(
@@ -298,6 +311,35 @@ void GameScene::SetWordsToPick()
 	}
 }
 
+void GameScene::SendDrawEvents()
+{
+	std::vector<std::string> drawEventsStrings = m_drawingBoard->GetDrawEvents();
+	if (drawEventsStrings.empty())
+		return;
+	std::vector<crow::json::wvalue> drawEventsJSON;
+	for (const auto& drawEvent : drawEventsStrings)
+		drawEventsJSON.emplace_back(drawEvent);
+	crow::json::wvalue drawEventsParameter = drawEventsJSON;
+	
+	bool accepted = false;
+	while (!accepted)
+	{
+		auto response = cpr::Post(
+			cpr::Url{ "http://localhost:18080/putdraweventsindrawingboard" },
+			cpr::Parameters{
+					{"password", User::GetPassword()},
+					{"username", User::GetUsername()},
+					{"events", drawEventsParameter.dump()}
+			}
+		);
+
+		if (response.status_code == 200)
+		{
+			accepted = true;
+		}
+	}
+}
+
 void GameScene::CreateServerCommunicationThread()
 {
 	std::thread([this]()
@@ -312,6 +354,10 @@ void GameScene::CreateServerCommunicationThread()
 				m_stopThread = true;
 				break;
 			}
+			if (m_isDrawer)
+				SendDrawEvents();
+			else
+				GetDrawEvents();
 			GetRound();
 			GetWord();
 			GetChat();
@@ -334,6 +380,7 @@ void GameScene::Start()
 	m_nextScene = nullptr;
 	m_message = "";
 	m_lastChatColor = false;
+	m_isDrawer = false;
 	m_stopThread = false;
 	CreateServerCommunicationThread();
 	m_gameStatus = GameStatus::PickingWord;

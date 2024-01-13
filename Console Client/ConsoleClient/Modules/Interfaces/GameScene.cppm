@@ -50,6 +50,7 @@ private:
 	Label			 *m_round;
 	GameStatus		  m_gameStatus;
 	bool			  m_lastChatColor;//For alternating colors on chat
+	bool			  m_isDrawer;
 
 	void GetPlayers		();
 	void GetTimer		();
@@ -64,6 +65,7 @@ private:
 	void SetAsDrawer	();
 	void SetAsGuesser	();
 	void SetWordsToPick	();
+	void SendDrawEvents	();
 
 	bool m_stopThread;
 	void CreateServerCommunicationThread();

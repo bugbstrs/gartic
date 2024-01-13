@@ -31,6 +31,8 @@ void http::Lobby::RemoveUser(const std::string& username)
 	if (auto it = std::find_if(m_users.begin(), m_users.end(), isUserToRemove); it != m_users.end()) {
 		if (it == m_users.begin() && m_users.size() > 1)
 			m_leader = m_users[1];
+		else
+			m_leader = {};
 		m_users.erase(it);
 		return;
 	}
