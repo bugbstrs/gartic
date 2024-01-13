@@ -1,6 +1,7 @@
 #include "Round.h"
 
 #include <random>
+#include <algorithm>
 
 using namespace http;
 
@@ -175,7 +176,10 @@ void http::Round::ActivateRevealLetters()
 	{
 		RevealOneLetter();
 	};
-	m_wordToDisplayTimer->SetDuration((m_roundTime->GetDuration() / 2) / (m_wordToDisplay.size() / 2));
+
+	int actualSize = std::count_if(m_wordToGuess.begin(), m_wordToGuess.end(), [](unsigned char c) { return !std::isspace(c); });
+
+	m_wordToDisplayTimer->SetDuration((m_roundTime->GetDuration() / 2) / (actualSize / 2));
 	m_wordToDisplayTimer->Reset();
 	m_wordToDisplayTimer->SetMethodToCall(wrapper);
 }
