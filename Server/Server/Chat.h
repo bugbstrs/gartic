@@ -34,7 +34,7 @@ namespace http
 		const std::vector<std::string>& SplitIntoWords(const std::string& sentence);
 
 	private:
-		static inline double kTreshold = 0.8;
+		static inline double kTreshold = 0.75;
 
 	private:
 		std::vector<std::shared_ptr<Player>>& m_players;

@@ -2,6 +2,7 @@
 
 #include <format>
 #include <regex>
+#include <cctype>
 
 import GarticExceptions;
 
@@ -14,6 +15,9 @@ http::Chat::Chat(std::vector<std::shared_ptr<Player>>& players, std::string& wor
 	m_gameStatus{ gameStatus },
 	m_storage{ storage }
 {
+	std::transform(m_wordToGuess.begin(), m_wordToGuess.end(), m_wordToGuess.begin(),
+		[](unsigned char c) { return std::tolower(c); });
+
 	for (const auto& player : players)
 	{
 		m_messages[player->GetName()] = {};
@@ -22,9 +26,14 @@ http::Chat::Chat(std::vector<std::shared_ptr<Player>>& players, std::string& wor
 
 void http::Chat::VerifyMessage(const std::string& username, const std::string& message)
 {
-	if (IsCloseEnough(message))
+	std::string messageCopy = message;
+
+	std::transform(messageCopy.begin(), messageCopy.end(), messageCopy.begin(),
+		[](unsigned char c) { return std::tolower(c); });
+
+	if (IsCloseEnough(messageCopy))
 	{
-		if (message == m_wordToGuess)
+		if (messageCopy == m_wordToGuess)
 		{
 			GetPlayerByName(username)->SetGuessed(true);
 			GetPlayerByName(username)->SetTimeWhenGuessed((m_gameTime->GetDuration() - m_gameTime->GetRemainingTime()) / 1000);
