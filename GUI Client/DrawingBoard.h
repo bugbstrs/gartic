@@ -25,6 +25,7 @@ public:
 	void ChangePenWidth(int width) noexcept;
 
 	void SetIsChoosingWord(bool value);
+	void SetupForDrawer(bool isDrawer);
 
 	void ToggleEraser(bool value) noexcept;
 	void ToggleFill(bool value) noexcept;
@@ -44,7 +45,12 @@ protected:
 	void resizeEvent(QResizeEvent* event) override;
 
 private:
+	void UndoAction();
+	void ClearAction();
+
 	void CheckForNewDrawEvents(std::atomic<bool>& stop);
+	void SendUpdatedPath(std::atomic<bool>& stop);
+	void RunEventTypeAccordingly(const std::string& drawingEvent);
 
 	void FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith);
 	void GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith);
