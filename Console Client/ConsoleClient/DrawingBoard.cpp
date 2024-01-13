@@ -69,12 +69,18 @@ void DrawingBoard::Fill(int x, int y)
 
 void DrawingBoard::Undo()
 {
+	if (m_selectable)
+		m_drawEvents.push_back("undo");
+
 	if (m_canvases.size() > 1)
 		m_canvases.pop();
 }
 
 void DrawingBoard::Clear()
 {
+	if (m_selectable)
+		m_drawEvents.push_back("clear");
+
 	while (m_canvases.size() > 1)
 		m_canvases.pop();
 }
@@ -103,7 +109,7 @@ void DrawingBoard::SendDrawEvent(const std::string& drawEvent)
 	if (string == "startDrawing")
 	{
 		int color;
-		drawEventStream >> prevX >> prevY >> color >> m_width;
+		drawEventStream >> prevX >> prevY >> color >> m_penWidth;
 		m_color = FromIntToConsoleColor(color);
 		m_canvases.emplace(m_canvases.top());
 	}
@@ -251,9 +257,9 @@ void DrawingBoard::CheckCursor()
 					m_canvases.emplace(m_canvases.top());
 
 					std::string drawEvent{ "startDrawing " };
-					drawEvent += std::to_string(cursorPos.X);
+					drawEvent += std::to_string(prevPos.X);
 					drawEvent += " ";
-					drawEvent += std::to_string(cursorPos.Y);
+					drawEvent += std::to_string(prevPos.Y);
 					drawEvent += " ";
 					drawEvent += std::to_string(FromConsoleColorToInt(m_color));
 					drawEvent += " ";
