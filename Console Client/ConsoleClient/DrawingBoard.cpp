@@ -55,11 +55,7 @@ DrawingBoard::DrawingBoard(int16_t maxWidth,
 
 void DrawingBoard::DrawLine(int x1, int y1, int x2, int y2)
 {
-	m_canvases.top().DrawLine(m_sectorWidth * (x1 - m_upLeftCorner.X) + m_sectorWidth / 2,
-							  m_sectorHeight * (y1 - m_upLeftCorner.Y) + m_sectorHeight / 2,
-							  m_sectorWidth * (x2 - m_upLeftCorner.X) + m_sectorWidth / 2,
-							  m_sectorHeight * (y2 - m_upLeftCorner.Y) + m_sectorHeight / 2,
-							  m_color, m_penWidth);
+	m_canvases.top().DrawLine(x1, y1, x2, y2, m_color, m_penWidth);
 }
 
 void DrawingBoard::Fill(int x, int y)
@@ -229,6 +225,8 @@ void DrawingBoard::CheckCursor()
 	COORD cursorPos{ m_im->GetCurrentCursorPosition() };
 	if (IsPointInside(cursorPos))
 	{
+		cursorPos.X = short(m_sectorWidth * (cursorPos.X - m_upLeftCorner.X) + m_sectorWidth / 2);
+		cursorPos.Y = short(m_sectorHeight * (cursorPos.Y - m_upLeftCorner.Y) + m_sectorHeight / 2);
 		if (m_im->GetClickPressed() && m_option == Option::fill)
 		{
 			std::string drawEvent{ "fill " };
@@ -239,13 +237,6 @@ void DrawingBoard::CheckCursor()
 			drawEvent += std::to_string(FromConsoleColorToInt(m_color));
 			m_drawEvents.push_back(drawEvent);
 			Fill(cursorPos.X, cursorPos.Y);
-			//m_canvases.emplace(m_canvases.top());
-			//FloodFill({ short(m_sectorWidth * (cursorPos.X - m_upLeftCorner.X) + m_sectorWidth / 2) ,
-			//			short(m_sectorHeight* (cursorPos.Y - m_upLeftCorner.Y) + m_sectorHeight / 2) },
-			//		  { short(m_sectorWidth * (cursorPos.X - m_upLeftCorner.X) + m_sectorWidth / 2) ,
-			//			short(m_sectorHeight * (cursorPos.Y - m_upLeftCorner.Y) + m_sectorHeight / 2) },
-			//			m_canvases.top().GetPixelColor(short(m_sectorWidth * (cursorPos.X - m_upLeftCorner.X) + m_sectorWidth / 2),
-			//								short(m_sectorHeight * (cursorPos.Y - m_upLeftCorner.Y) + m_sectorHeight / 2)), m_color);
 		}else
 		if (m_im->GetClickHold() && m_option == Option::draw)
 		{
