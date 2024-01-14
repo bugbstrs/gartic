@@ -11,11 +11,10 @@ public:
 	ResultsTable(QWidget *parent);
 	~ResultsTable();
 
-	void SetPlayers(std::vector <std::tuple<QIcon, QString, int, QColor>> players);
+	void SetPlayers(std::vector <std::tuple<QIcon, QString, int, QColor>> players) noexcept;
 
 private:
 	QFont m_nameFont{};
 	QFont m_pointsFont{};
 	QFont m_yourNameFont{};
-	//std::vector <std::tuple<QIcon, QString, int>> m_players;
 };

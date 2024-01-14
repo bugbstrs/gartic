@@ -29,7 +29,7 @@ LobbyTable::LobbyTable(QWidget *parent)
 LobbyTable::~LobbyTable()
 {}
 
-void LobbyTable::AddPlayer(const std::string & name)
+void LobbyTable::AddPlayer(const std::string & name) noexcept
 {
 	int rowPosition = rowCount();
 	insertRow(rowPosition);
@@ -50,12 +50,12 @@ void LobbyTable::AddPlayer(const std::string & name)
 	}
 }
 
-int LobbyTable::GetPlayersNumber() const
+int LobbyTable::GetPlayersNumber() const noexcept
 {
 	return rowCount();
 }
 
-void LobbyTable::ClearLobby()
+void LobbyTable::ClearLobby() noexcept
 {
 	m_currentIndex = 0;
 	for (auto& avatar : m_avatars)
@@ -65,7 +65,7 @@ void LobbyTable::ClearLobby()
 	setRowCount(0);
 }
 
-std::vector<std::tuple<QIcon, QString, QColor, QIcon>> LobbyTable::GetTakenAvatars()
+std::vector<std::tuple<QIcon, QString, QColor, QIcon>> LobbyTable::GetTakenAvatars() const noexcept
 {
 	return m_takenAvatars;
 }

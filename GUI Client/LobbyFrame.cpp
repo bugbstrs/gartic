@@ -14,7 +14,7 @@ LobbyFrame::LobbyFrame(QWidget *parent)
 LobbyFrame::~LobbyFrame()
 {}
 
-std::tuple<int, int, int> LobbyFrame::GetGameSettings()
+std::tuple<int, int, int> LobbyFrame::GetGameSettings() const noexcept
 {
 	return { m_drawTimeComboBox->currentText().toInt(), m_roundsComboBox->currentText().toInt(), m_wordCountComboBox->currentText().toInt() };
 }

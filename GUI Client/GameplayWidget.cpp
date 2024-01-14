@@ -25,7 +25,7 @@ void GameplayWidget::ChangePenWidth(int width) noexcept
 	m_drawingBoard->ChangePenWidth(width);
 }
 
-void GameplayWidget::SetGameSettings(std::tuple<int, int, int> gameSettings)
+void GameplayWidget::SetGameSettings(std::tuple<int, int, int> gameSettings) noexcept
 {
 	m_drawTime = std::get<0>(gameSettings);
 	m_rounds = std::get<1>(gameSettings);
@@ -328,11 +328,6 @@ void GameplayWidget::CheckForLessNecessaryUpdates(std::atomic<bool>& stop)
 	}
 }
 
-void GameplayWidget::AddPlayers()
-{
-	m_scoreboardTable->model()->sort(1, Qt::DescendingOrder);
-}
-
 void GameplayWidget::AddWordOption(const std::string& word)
 {
 	QPushButton* wordButton = new QPushButton(QString::fromUtf8(word));
@@ -432,8 +427,6 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 
 		m_firstShow = false;
 	}
-
-	AddPlayers();
 
 	bool fetchedPlayersCorrectly = false;
 	while (!fetchedPlayersCorrectly) {

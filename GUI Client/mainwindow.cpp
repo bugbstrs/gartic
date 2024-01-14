@@ -157,7 +157,7 @@ void MainWindow::OnGoToMenuFromJoinLobbyButtonReleased() noexcept { ui->stackedW
 
 //Lobby Scene
 void MainWindow::OnStartGameCommand() noexcept {
-    ui->scoreboardTable->AddPlayersToScoreboard(std::move(ui->lobbyTable->GetTakenAvatars()));
+    ui->scoreboardTable->AddPlayersToScoreboard(ui->lobbyTable->GetTakenAvatars());
     ui->gameplayWidget->SetGameSettings(ui->lobbyFrame->GetGameSettings());
     ui->stackedWidget->setCurrentWidget(ui->GameplayScene);
 }

@@ -34,7 +34,7 @@ public:
 	void ChangePenColor(QColor color) noexcept;
 	void ChangePenWidth(int width) noexcept;
 
-	void SetGameSettings(std::tuple<int, int, int> gameSettings);
+	void SetGameSettings(std::tuple<int, int, int> gameSettings) noexcept;
 	void StopCheckingForUpdates();
 	void Clear() noexcept;
 
@@ -54,7 +54,6 @@ private:
 	void CheckTime(std::atomic<bool>& stop);
 	void CheckForUpdatesInGameScene(std::atomic<bool>& stop);
 	void CheckForLessNecessaryUpdates(std::atomic<bool>& stop);
-	void AddPlayers();
 	void AddWordOption(const std::string& word);
 
 	void ShowDrawerInterface();
@@ -64,16 +63,6 @@ private:
 	void BackgroundChangeForDrawer();
 
 private:
-	struct Player {
-		std::string name;
-		int points;
-	};
-	enum class GameStatus
-	{
-		PickingWord,
-		Drawing,
-		Finished
-	};
 
 private:
 	const std::string kPickingWord = "PickingWord";

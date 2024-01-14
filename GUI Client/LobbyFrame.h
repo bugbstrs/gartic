@@ -17,7 +17,7 @@ public:
 	LobbyFrame(QWidget *parent);
 	~LobbyFrame();
 
-	std::tuple <int, int, int> GetGameSettings();
+	std::tuple <int, int, int> GetGameSettings() const noexcept;
 	void showEvent(QShowEvent* event) override;
 	void SetCode(QString code) noexcept;
 	void SetLeaderStatus(bool isLeader) noexcept;

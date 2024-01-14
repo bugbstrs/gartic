@@ -19,7 +19,7 @@ ResultsTable::ResultsTable(QWidget *parent)
 ResultsTable::~ResultsTable()
 {}
 
-void ResultsTable::SetPlayers(std::vector <std::tuple<QIcon, QString, int, QColor>> players)
+void ResultsTable::SetPlayers(std::vector <std::tuple<QIcon, QString, int, QColor>> players) noexcept
 {
 	std::sort(players.begin(), players.end(), [](const std::tuple<QIcon, QString, int, QColor>& a, const std::tuple<QIcon, QString, int, QColor>& b) {
 		return std::get<2>(a) > std::get<2>(b);

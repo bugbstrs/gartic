@@ -16,12 +16,12 @@ public:
 	~LobbyTable();
 
 	//Getter
-	std::vector<std::tuple<QIcon, QString, QColor, QIcon>> GetTakenAvatars();
+	std::vector<std::tuple<QIcon, QString, QColor, QIcon>> GetTakenAvatars() const noexcept;
 
 	//Functionality
-	void AddPlayer(const std::string& name);
-	int GetPlayersNumber() const;
-	void ClearLobby();
+	void AddPlayer(const std::string& name) noexcept;
+	int GetPlayersNumber() const noexcept;
+	void ClearLobby() noexcept;
 
 private:
 	static constexpr std::size_t kNumberOfIcons = 12;

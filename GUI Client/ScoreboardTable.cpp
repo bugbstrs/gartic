@@ -21,7 +21,7 @@ ScoreboardTable::ScoreboardTable(QWidget *parent)
 ScoreboardTable::~ScoreboardTable()
 {}
 
-void ScoreboardTable::AddPlayersToScoreboard(std::vector <std::tuple<QIcon, QString, QColor, QIcon>> takenAvatarsFromLobby)
+void ScoreboardTable::AddPlayersToScoreboard(std::vector <std::tuple<QIcon, QString, QColor, QIcon>> takenAvatarsFromLobby) noexcept
 {
 	m_takenAvatars = takenAvatarsFromLobby;
 	for (auto& avatar : m_takenAvatars) {
@@ -49,12 +49,7 @@ void ScoreboardTable::AddPlayersToScoreboard(std::vector <std::tuple<QIcon, QStr
 	}
 }
 
-void ScoreboardTable::AddPointsToPlayerWithIndex(uint8_t index)
-{
-	m_players[0].second->setText(QString::number(m_players[0].second->text().toInt() + 10));
-}
-
-void ScoreboardTable::SetPointsToPlayer(const QString& username, int numberOfPoints)
+void ScoreboardTable::SetPointsToPlayer(const QString& username, int numberOfPoints) noexcept
 {
 	for (int index = 0; index < rowCount(); index++) {
 		if (m_players[index].first->text() == username) {
@@ -65,7 +60,7 @@ void ScoreboardTable::SetPointsToPlayer(const QString& username, int numberOfPoi
 	}
 }
 
-void ScoreboardTable::MarkGuessedForPlayer(const QString& username)
+void ScoreboardTable::MarkGuessedForPlayer(const QString& username) noexcept
 {
 	for (int index = 0; index < rowCount(); index++) {
 		if (m_players[index].first->text() == username) {
@@ -75,7 +70,7 @@ void ScoreboardTable::MarkGuessedForPlayer(const QString& username)
 	}
 }
 
-std::vector <std::tuple<QIcon, QString, int, QColor>> ScoreboardTable::GetPlayersOrdered()
+std::vector <std::tuple<QIcon, QString, int, QColor>> ScoreboardTable::GetPlayersOrdered() const noexcept
 {
 	return m_playersToSendForResultsDisplaying;
 }
@@ -85,14 +80,14 @@ void ScoreboardTable::StopCheckingForPlayers()
 	m_stop.store(true);
 }
 
-void ScoreboardTable::ResetGuessedIcons()
+void ScoreboardTable::ResetGuessedIcons() noexcept
 {
 	for (int index = 0; index < rowCount(); index++) {
 		m_players[index].second->setIcon(QIcon());
 	}
 }
 
-void ScoreboardTable::ClearScoreboard()
+void ScoreboardTable::ClearScoreboard() noexcept
 {
 	m_players.clear();
 	clearContents();

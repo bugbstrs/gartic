@@ -50,8 +50,5 @@ private slots:
 
 private:
     std::unique_ptr<Ui::MainWindow> ui;
-    bool isUserLoggedIn{ false };
-    std::string username;
-    std::string password;
 };
 #endif // MAINWINDOW_H

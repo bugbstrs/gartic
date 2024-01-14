@@ -11,16 +11,15 @@ public:
 	ScoreboardTable(QWidget *parent = nullptr);
 	~ScoreboardTable();
 
-	void AddPlayersToScoreboard(std::vector <std::tuple<QIcon, QString, QColor, QIcon>> takenAvatarsFromLobby);
-	void AddPointsToPlayerWithIndex(uint8_t index);
-	void SetPointsToPlayer(const QString& username, int numberOfPoints);
-	void MarkGuessedForPlayer(const QString& username);
+	void AddPlayersToScoreboard(std::vector <std::tuple<QIcon, QString, QColor, QIcon>> takenAvatarsFromLobby) noexcept;
+	void SetPointsToPlayer(const QString& username, int numberOfPoints) noexcept;
+	void MarkGuessedForPlayer(const QString& username) noexcept;
 
-	std::vector <std::tuple<QIcon, QString, int, QColor>> GetPlayersOrdered();
+	std::vector <std::tuple<QIcon, QString, int, QColor>> GetPlayersOrdered() const noexcept;
 
 	void StopCheckingForPlayers();
-	void ResetGuessedIcons();
-	void ClearScoreboard();
+	void ResetGuessedIcons() noexcept;
+	void ClearScoreboard() noexcept;
 	void CheckForScoreboardUpdates(std::atomic<bool>& stop);
 
 	void showEvent(QShowEvent* event) override;
@@ -30,7 +29,7 @@ private:
 private:
 	std::atomic<bool> m_stop;
 	bool m_firstShow																			 { true };
-	int m_currentIndex = 0;
+	int m_currentIndex																			 { 0 };
 	QFont m_nameFont																			 {};
 	QFont m_pointsFont																			 {};
 	QFont m_yourNameFont																		 {};
