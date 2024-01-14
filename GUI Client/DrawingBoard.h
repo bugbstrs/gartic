@@ -31,6 +31,7 @@ public:
 	void ToggleFill(bool value) noexcept;
 	void EnablePencil() noexcept;
 	void UndoLastPath() noexcept;
+	void StopLookingForUpdates() noexcept;
 	void ClearCanvas() noexcept;
 
 	void ResetBoard() noexcept;

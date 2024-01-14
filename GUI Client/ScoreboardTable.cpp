@@ -80,7 +80,7 @@ std::vector <std::tuple<QIcon, QString, int, QColor>> ScoreboardTable::GetPlayer
 	return playersToSendForResultsDisplaying;
 }
 
-void ScoreboardTable::StopCheckingForPlayers(bool checkForPlayers)
+void ScoreboardTable::StopCheckingForPlayers()
 {
 	stop.store(true);
 }

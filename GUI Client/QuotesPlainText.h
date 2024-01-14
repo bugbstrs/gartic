@@ -11,4 +11,7 @@ public:
 	~QuotesPlainText();
 
 	void showEvent(QShowEvent* event) override;
+
+private:
+	bool firstShow{ true };
 };

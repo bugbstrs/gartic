@@ -119,12 +119,6 @@ void LobbyFrame::showEvent(QShowEvent * event)
 			}
 		});
 
-		if (m_isLeader) {
-			SetLeaderSettings();
-		}
-		else {
-			SetNonLeaderSettings();
-		}
 		QObject::connect(leaveLobbyButton, &QPushButton::released, this, [this]() {
 			leaveGame = true;
 			stop.store(true);
@@ -133,6 +127,13 @@ void LobbyFrame::showEvent(QShowEvent * event)
 		firstShow = false;
 	}
 	stop.store(false);
+
+	if (m_isLeader) {
+		SetLeaderSettings();
+	}
+	else {
+		SetNonLeaderSettings();
+	}
 
 	std::thread checkForLobbyUpdates(&LobbyFrame::CheckForLobbyUpdates, this, std::ref(stop));
 	checkForLobbyUpdates.detach();
@@ -146,6 +147,12 @@ void LobbyFrame::SetCode(QString codeText) noexcept
 void LobbyFrame::SetLeaderStatus(bool isLeader) noexcept
 {
 	m_isLeader = isLeader;
+}
+
+void LobbyFrame::Clear()
+{
+	m_isLeader = false;
+	bool leaveGame{ false };
 }
 
 void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)

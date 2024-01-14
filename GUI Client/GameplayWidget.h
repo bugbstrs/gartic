@@ -35,8 +35,7 @@ public:
 	void ChangePenWidth(int width) noexcept;
 
 	void SetGameSettings(std::tuple<int, int, int> gameSettings);
-	//void SetIsDrawer(bool isDrawer);
-	
+	void StopCheckingForUpdates();
 	void Clear() noexcept;
 
 public slots:
@@ -87,6 +86,7 @@ private:
 
 	bool firstShow					 { true };
 	bool m_isDrawer					 { true };
+	QLabel* waitingTextLabel		 { new QLabel() };
 	QLabel* wordToDraw				 { new QLabel{} };
 	QLabel* timerLabel				 { new QLabel{} };
 	QLabel* roundsLabel				 { new QLabel{} };

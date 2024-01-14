@@ -180,20 +180,26 @@ void MainWindow::OnExitLobbyButtonReleased() noexcept {
 
 //Game Scene events
 void MainWindow::OnLeaveGameButtonReleased() noexcept { 
-    auto response{ cpr::Get(
-        cpr::Url{ "http://localhost:18080/leavegame" },
-        cpr::Parameters{
-            {"password", UserCredentials::GetPassword()},
-            {"username", UserCredentials::GetUsername()}
+    bool leavedGame = false;
+    while (!leavedGame) {
+        auto response{ cpr::Get(
+            cpr::Url{ "http://localhost:18080/leavegame" },
+            cpr::Parameters{
+                {"password", UserCredentials::GetPassword()},
+                {"username", UserCredentials::GetUsername()}
+            }
+        )};
+        if (response.status_code == 200) {
+            ui->gameplayWidget->StopCheckingForUpdates();
+            ui->scoreboardTable->StopCheckingForPlayers();
+            ui->chatFrame->StopCheckingForUpdates(true);
+            ui->stackedWidget->setCurrentWidget(ui->MainMenuScene);
+            ui->gameplayWidget->Clear();
+            ui->lobbyTable->ClearLobby();
+            ui->scoreboardTable->clear();
+            ui->lobbyFrame->Clear();
+            leavedGame = true;
         }
-    ) };
-    if (response.status_code == 200) {
-        ui->scoreboardTable->StopCheckingForPlayers(true);
-        ui->chatFrame->StopCheckingForUpdates(true);
-        ui->stackedWidget->setCurrentWidget(ui->MainMenuScene);
-        ui->gameplayWidget->Clear();
-        ui->lobbyTable->ClearLobby();
-        ui->scoreboardTable->clear();
     }
 }
 
@@ -201,29 +207,6 @@ void MainWindow::OnGameEnded() noexcept
 {
     ui->stackedWidget->setCurrentWidget(ui->ResultsScene);
     ui->resultsTable->SetPlayers(ui->scoreboardTable->GetPlayersOrdered());
-    /*std::vector <std::pair<QTableWidgetItem*, QTableWidgetItem*>> players = ui->scoreboardTable->GetPlayersOrdered();
-    for (auto& player : players) {
-        QTableWidgetItem* name = new QTableWidgetItem(std::get<0>(player), std::get<1>(player));
-        QTableWidgetItem* score = new QTableWidgetItem(QIcon(), QString::number(0));
-
-        name->setBackground(std::get<2>(player));
-        if (std::get<1>(player) == QString::fromUtf8(UserCredentials::GetUsername()))
-            name->setFont(yourNameFont);
-        else
-            name->setFont(nameFont);
-        name->setTextAlignment(Qt::AlignVCenter | Qt::AlignLeft);
-
-        score->setBackground(std::get<2>(avatar));
-        score->setFont(pointsFont);
-        score->setTextAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
-
-        int rowPosition = rowCount();
-        insertRow(rowPosition);
-        setItem(rowPosition, 0, name);
-        setItem(rowPosition, 1, score);
-
-        players.push_back({ name, score });
-    }*/
 }
 
 void MainWindow::OnBackToMenuFromGameResults() noexcept

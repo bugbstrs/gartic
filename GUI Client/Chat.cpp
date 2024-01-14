@@ -25,7 +25,9 @@ void Chat::AddMessageInChat(const QString& newMessage) noexcept
 		QString formattedMessage;
 		if (newMessage != kFoundWord)
 			formattedMessage = QString("[%1] <b>%2:</b> <b style='color: blue;'>%3</b><br>").arg(formattedTime, name, messageSent);
-		else formattedMessage = QString("<b style='color: white; background-color: green; padding: 5px;'> %1 </b><br>").arg(newMessage);
+		else {
+			formattedMessage = QString("<b style='color: white; background-color: green; padding: 5px;'> %1 </b><br>").arg(newMessage);
+		}
 		m_chatConversation->insertHtml(formattedMessage);
 		m_chatConversation->moveCursor(QTextCursor::End);
 	}, Qt::QueuedConnection);
@@ -56,6 +58,17 @@ void Chat::ToggleAccessToWritingMessages(bool canWrite)
 	}, Qt::QueuedConnection);
 }
 
+void Chat::StopLookingForUpdates()
+{
+	stop.store(!stop.load());
+}
+
+void Chat::Clear()
+{
+	m_chatConversation->clear();
+	m_chatWritingBox->clear();
+}
+
 void Chat::showEvent(QShowEvent* event)
 {
 	if (firstShow) {
@@ -67,12 +80,7 @@ void Chat::showEvent(QShowEvent* event)
 		QDateTime currentTime = QDateTime::currentDateTime();
 		QString formattedTime = currentTime.toString("hh:mm");
 		QString formattedMessage;
-		if (messageSent != m_wordToGuess)
-			formattedMessage = QString("[%1] <b>You:</b> <b style='color: blue;'>%3</b><br>").arg(formattedTime, messageSent);
-		else {
-			formattedMessage = QString("<b style='color: white; background-color: green; padding: 5px;'> You have guessed the word</b><br>");
-			m_chatWritingBox->setDisabled(true);
-		}
+		formattedMessage = QString("[%1] <b>You:</b> <b style='color: blue;'>%3</b><br>").arg(formattedTime, messageSent);
 		m_chatConversation->insertHtml(formattedMessage);
 		m_chatConversation->moveCursor(QTextCursor::End);
 	});

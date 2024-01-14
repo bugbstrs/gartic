@@ -21,6 +21,7 @@ public:
 	void showEvent(QShowEvent* event) override;
 	void SetCode(QString code) noexcept;
 	void SetLeaderStatus(bool isLeader) noexcept;
+	void Clear();
 
 private:
 	void CheckForLobbyUpdates(std::atomic<bool>& stop);

@@ -18,7 +18,7 @@ public:
 
 	std::vector <std::tuple<QIcon, QString, int, QColor>> GetPlayersOrdered();
 
-	void StopCheckingForPlayers(bool checkForPlayers);
+	void StopCheckingForPlayers();
 	void ResetGuessedIcons();
 	void ClearScoreboard();
 	void CheckForScoreboardUpdates(std::atomic<bool>& stop);

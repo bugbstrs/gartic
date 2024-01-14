@@ -157,6 +157,11 @@ void DrawingBoard::UndoLastPath() noexcept
 
 }
 
+void DrawingBoard::StopLookingForUpdates() noexcept
+{
+	stop.store(!stop.load());
+}
+
 void DrawingBoard::ClearCanvas() noexcept
 {
 	ClearAction();
@@ -224,7 +229,7 @@ void DrawingBoard::CheckForNewDrawEvents(std::atomic<bool>& stop)
 				if (events.has("events")) {
 					for (int index = 0; index < events["events"].size(); ++index) {
 						RunEventTypeAccordingly(std::string(events["events"][index]));
-						if (index % 50 == 0)
+						if (index % 100 == 0)
 							update();
 					}
 				}
