@@ -6,29 +6,43 @@ import GarticExceptions;
 using namespace http;
 
 http::GarticManager::GarticManager(GarticStorage& storage):
-	m_storage{ storage }
-{}
+	m_storage{ storage },
+	m_checkActiveGamesTimer{ std::unique_ptr<Time>(new Time(10000)) }
+{
+	auto checkActiveCallback = [this]()
+	{
+		CheckActiveGames();
+	};
+
+	m_checkActiveGamesTimer->SetMethodToCall(checkActiveCallback);
+}
 
 void http::GarticManager::CreateLobby(const String& username)
 {
-	m_lobby = std::make_shared<Lobby>(username);
+	m_lobbys.push_back(std::make_shared<Lobby>(username));
 }
 
 void http::GarticManager::CreateGame(const String& username)
 {
-	if (m_lobby->GetUsers()[0]->GetUsername() == username)
+	for (const auto& lobby : m_lobbys)
 	{
-		m_game = m_lobby->StartGame(m_storage);
+		if (lobby->GetUsers()[0]->GetUsername() == username)
+		{
+			m_games.push_back(lobby->StartGame(m_storage));
+		}
 	}
 }
 
 void http::GarticManager::AddPlayerInLobby(const String& username, const String& code)
 {
-	if (m_lobby->GetCode() == code)
+	for (const auto& lobby : m_lobbys)
 	{
-		if (m_lobby->GetLobbyStatus() == LobbyStatus::WaitingToStart) {
-			m_lobby->AddUser(std::shared_ptr<User>(new User(username)));
-			return;
+		if (lobby->GetCode() == code)
+		{
+			if (lobby->GetLobbyStatus() == LobbyStatus::WaitingToStart) {
+				lobby->AddUser(std::shared_ptr<User>(new User(username)));
+				return;
+			}
 		}
 	}
 
@@ -47,9 +61,12 @@ std::shared_ptr<Game> http::GarticManager::GetGame(const String& username) const
 		return false;
 	};
 
-	if (auto players{ m_game->GetPlayers() };  std::find_if(players.begin(), players.end(), isInPlayers) != players.end())
+	for (const auto& game : m_games)
 	{
-		return m_game;
+		if (auto players{ game->GetPlayers() };  std::find_if(players.begin(), players.end(), isInPlayers) != players.end())
+		{
+			return game;
+		}
 	}
 
 	return {};
@@ -67,9 +84,33 @@ std::shared_ptr<Lobby> http::GarticManager::GetLobby(const String& username) con
 		return false;
 	};
 
-	if (auto users{ m_lobby->GetUsers() }; std::find_if(users.begin(), users.end(), isInUsers) != users.end())
+	for (const auto& lobby : m_lobbys)
 	{
-		return m_lobby;
+		if (auto users{ lobby->GetUsers() }; std::find_if(users.begin(), users.end(), isInUsers) != users.end())
+		{
+			return lobby;
+		}
 	}
+
 	return {};
+}
+
+void http::GarticManager::CheckActiveGames()
+{
+	for (const auto& lobby : m_lobbys)
+	{
+		if (lobby->GetUsers().empty())
+		{
+			m_lobbys.erase(std::find(m_lobbys.begin(), m_lobbys.end(), lobby));
+		}
+	}
+	for (const auto& game : m_games)
+	{
+		if (game->GetPlayers().empty())
+		{
+			m_games.erase(std::find(m_games.begin(), m_games.end(), game));
+		}
+	}
+
+	m_checkActiveGamesTimer->Reset();
 }

@@ -25,11 +25,14 @@ namespace http
 		std::shared_ptr<Lobby> GetLobby(const String& username) const noexcept;
 
 	private:
-		std::shared_ptr<Game> m_game;
-
-		std::shared_ptr<Lobby> m_lobby;
+		std::vector<std::shared_ptr<Game>> m_games;
+		std::vector<std::shared_ptr<Lobby>> m_lobbys;
 
 		GarticStorage& m_storage;
+
+	private:
+		std::unique_ptr<Time> m_checkActiveGamesTimer;
+		void CheckActiveGames();
 	};
 }
 
