@@ -88,6 +88,8 @@ std::vector<std::string> http::Round::GetWordsToChooseFrom()
 		for (int index{ 0 }; index < m_numberOfWordsToChooseFrom; ++index)
 		{
 			std::string fetchedWord = m_storage.FetchWord();
+			std::transform(fetchedWord.begin(), fetchedWord.end(), fetchedWord.begin(),
+				[](unsigned char c) { return std::tolower(c); });
 			while (m_wordsPicked.contains(fetchedWord))
 			{
 				fetchedWord = m_storage.FetchWord();
