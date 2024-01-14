@@ -363,6 +363,7 @@ void GameScene::CreateServerCommunicationThread()
 			GetRound();
 			GetWord();
 			GetChat();
+			Sleep(150);
 		}
 	}).detach();
 }
