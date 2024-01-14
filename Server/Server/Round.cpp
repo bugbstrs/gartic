@@ -2,6 +2,7 @@
 
 #include <random>
 #include <algorithm>
+#include <ranges>
 
 using namespace http;
 
@@ -43,7 +44,7 @@ void http::Round::NextDrawer()
 
 	std::string username = m_drawer->GetName();
 	auto isDrawer = [&username](const std::shared_ptr<Player>& player) { return player->GetName() == username; };
-	if (auto drawerIt = std::find_if(m_players.begin(), m_players.end(), isDrawer); drawerIt != m_players.end())
+	if (auto drawerIt = std::ranges::find_if(m_players, isDrawer); drawerIt != m_players.end())
 	{
 		if (drawerIt == m_players.begin() + m_players.size() - 1)
 		{
