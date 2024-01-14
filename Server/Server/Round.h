@@ -43,9 +43,9 @@ namespace http
 
 		std::string m_wordToDisplay;
 
-		Time* m_wordToDisplayTimer;
-		Time* m_halfRoundTimer;
-		Time* m_pickWordTimer;
+		std::shared_ptr<Time> m_wordToDisplayTimer;
+		std::shared_ptr<Time> m_halfRoundTimer;
+		std::shared_ptr<Time> m_pickWordTimer;
 
 		std::shared_ptr<Player> m_drawer;
 

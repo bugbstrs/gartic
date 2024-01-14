@@ -9,9 +9,9 @@ http::Round::Round(std::vector<std::shared_ptr<Player>>& newPlayers, std::string
 				   GarticStorage& storage, std::shared_ptr<Time>& roundTime,
 				   int numberOfWordsToChooseFrom, GameStatus& gameStatus, RoundType newType):
 	m_players{ newPlayers },
-	m_halfRoundTimer{ new Time(roundTime->GetDuration() / 2, false) },
-	m_wordToDisplayTimer{ new Time(roundTime->GetDuration() / 6, false) },
-	m_pickWordTimer{ new Time(15000) },
+	m_halfRoundTimer{ std::unique_ptr<Time>(new Time(roundTime->GetDuration() / 2, false)) },
+	m_wordToDisplayTimer{ std::unique_ptr<Time>(new Time(roundTime->GetDuration() / 6, false)) },
+	m_pickWordTimer{ std::unique_ptr<Time>(new Time(15000)) },
 	m_roundTime{ roundTime },
 	m_numberOfWordsToChooseFrom{ numberOfWordsToChooseFrom },
 	m_wordToGuess{ wordToGuess },
