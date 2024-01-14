@@ -67,8 +67,10 @@ void http::Chat::AddMessage(const std::string& username, const std::string& mess
 
 	std::vector<std::string> words = SplitIntoWords(message);
 
-	for (const std::string& word : words)
+	for (std::string& word : words)
 	{
+		std::transform(word.begin(), word.end(), word.begin(),
+			[](unsigned char c) { return std::tolower(c); });
 		if (m_storage.CheckBannedWord(word))
 		{
 			stars.append(message.size(), '*');
@@ -184,6 +186,7 @@ std::shared_ptr<Player> http::Chat::GetPlayerByName(const std::string& username)
 
 const std::vector<std::string>& http::Chat::SplitIntoWords(const std::string& sentence)
 {
+	m_words.clear();
 	std::regex wordRegex("\\b\\w+\\b"); 
 
 	auto wordsBegin = std::sregex_iterator(sentence.begin(), sentence.end(), wordRegex);
