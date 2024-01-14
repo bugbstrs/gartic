@@ -1,5 +1,6 @@
 #include "SignUpManager.h"
 #include "UserCredentials.h"
+#include "picosha2.h"
 
 SignUpManager::SignUpManager(QWidget *parent)
 	: QFrame{ parent }
@@ -25,6 +26,8 @@ void SignUpManager::OnSignUpCredentialsSent() noexcept
 {
 	std::string password = passwordInput->text().toUtf8().constData();
 	std::string username = nameInput->text().toUtf8().constData();
+
+    password = picosha2::hash256_hex_string(password);
 	auto response = cpr::Post(
 		cpr::Url{ "http://localhost:18080/register" },
 		cpr::Parameters{

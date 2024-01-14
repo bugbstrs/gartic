@@ -1,6 +1,7 @@
 #include "LogInManager.h"
 #include <iomanip>
 #include "UserCredentials.h"
+#include "picosha2.h"
 
 LogInManager::LogInManager(QWidget *parent)
 	: QFrame { parent }
@@ -29,6 +30,8 @@ void LogInManager::OnLogInCredentialsSent() noexcept
 {
 	std::string password = passwordInput->text().toUtf8().constData();
 	std::string username = nameInput->text().toUtf8().constData();
+
+    password = picosha2::hash256_hex_string(password);
 	auto response = cpr::Get(
 		cpr::Url{ "http://localhost:18080/login" },
 		cpr::Parameters{

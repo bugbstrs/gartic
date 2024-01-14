@@ -1,9 +1,7 @@
 module StatsScene;
 
 import <Windows.h>;
-
 import MenuScene;
-
 import Button;
 
 using Color = ColorType;
@@ -43,7 +41,7 @@ void StatsScene::Start()
 
     // Back Button
     auto BackButton{ new Button{Align::Center, Align::Center, Color::DarkGray, Color::Green,
-                          8, 3, Color::DarkBlue, Color::White, m_console, m_input, m_selected, "Logout"} };
+                          6, 3, Color::DarkBlue, Color::White, m_console, m_input, m_selected, "Back"} };
     BackButton->SetHoverColors(Color::Blue, Color::White);
     BackButton->SetFunctionOnActivate([this](std::string a) {Back(); });
     m_selectableObjects.emplace_back(BackButton);

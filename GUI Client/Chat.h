@@ -23,7 +23,7 @@ public:
 	void SetChatConfigurationAccordingToPlayerType(bool isDrawer) noexcept;
 	void ToggleAccessToWritingMessages(bool canWrite);
 	void StopLookingForUpdates();
-	void Clear();
+	void Clear() noexcept;
 
 protected:
 	void showEvent(QShowEvent* event) override;

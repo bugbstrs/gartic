@@ -6,6 +6,7 @@ import Label;
 import Button;
 import InputField;
 import HorizontalLayout;
+import "picosha2.h";
 
 using Color = ColorType;
 
@@ -19,12 +20,12 @@ void LoginScene::Login()
 		cpr::Url{ "http://localhost:18080/login" },
 		cpr::Parameters
 		{
-			{"password", m_password},
+			{"password", picosha2::hash256_hex_string(m_password)},
 			{"username", m_username}
 		});
 	if (response.status_code == 200)
 	{
-		User::Initialize(m_username, m_password);
+		User::Initialize(m_username, picosha2::hash256_hex_string(m_password));
 		m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
 	}else
 	{
@@ -37,13 +38,13 @@ void LoginScene::Register()
 	auto response = cpr::Post(
 		cpr::Url{ "http://localhost:18080/register" },
 		cpr::Parameters{
-			{"password", m_password},
+			{"password", picosha2::hash256_hex_string(m_password)},
 			{"username", m_username}
 		}
 	);
 	if (response.status_code == 201)
 	{
-		User::Initialize(m_username, m_password);
+		User::Initialize(m_username, picosha2::hash256_hex_string(m_password));
 		m_nextScene = const_cast<std::type_info*>(&typeid(MenuScene));
 	}else
 	{
