@@ -138,7 +138,7 @@ bool http::Chat::IsCloseEnough(const std::string& currGuess)
 		}
 	}
 
-	return 100 * matchesCounter / currGuess.size() >= kThreshold;
+	return 100.0 * double(matchesCounter) / double(m_wordToGuess.size()) >= kTreshold;
 }
 
 void http::Chat::CalculatePoints(const std::string& username)
