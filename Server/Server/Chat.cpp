@@ -36,7 +36,7 @@ void http::Chat::VerifyMessage(const std::string& username, const std::string& m
 	{
 		if (GetPlayerByName(username)->GetGuessed())
 		{
-			m_messages[username].push_back("[Server]: You allready guessed the word!");
+			m_messages[username].push_back("[Server]: You already guessed the word!");
 			return;
 		}
 
