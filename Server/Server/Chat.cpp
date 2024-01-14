@@ -128,41 +128,17 @@ const std::unordered_map<std::string, std::vector<std::string>>& http::Chat::Get
 
 bool http::Chat::IsCloseEnough(const std::string& currGuess)
 {
-	auto tokenize = [](const std::string& str, std::unordered_map<std::string, int>& wordFrequency) {
-		size_t start = 0, end = 0;
-		while ((end = str.find(' ', start)) != std::string::npos) {
-			std::string word = str.substr(start, end - start);
-			wordFrequency[word]++;
-			start = end + 1;
+	int matchesCounter{ 0 };
+
+	for (int index{ 0 }; index < std::min(currGuess.size(), m_wordToGuess.size()); ++index)
+	{
+		if (currGuess[index] == m_wordToGuess[index])
+		{
+			++matchesCounter;
 		}
-		std::string lastWord = str.substr(start);
-		wordFrequency[lastWord]++;
-		};
-
-	std::unordered_map<std::string, int> freq1, freq2;
-	tokenize(m_wordToGuess, freq1);
-	tokenize(currGuess, freq2);
-
-	double dotProduct = 0.0;
-	for (const auto& entry : freq1)
-	{
-		dotProduct += entry.second * freq2[entry.first];
 	}
 
-	double mag1 = 0.0, mag2 = 0.0;
-	for (const auto& entry : freq1)
-	{
-		mag1 += std::pow(entry.second, 2);
-	}
-
-	for (const auto& entry : freq2)
-	{
-		mag2 += std::pow(entry.second, 2);
-	}
-
-	double similarity = dotProduct / (std::sqrt(mag1) * std::sqrt(mag2));
-
-	return similarity >= Chat::kTreshold;
+	return 100 * matchesCounter / currGuess.size() >= kThreshold;
 }
 
 void http::Chat::CalculatePoints(const std::string& username)
