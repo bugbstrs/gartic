@@ -58,7 +58,8 @@ void LobbyScene::GetUsers()
 			first = false;
 			lastUserColor = !lastUserColor;
 			m_users->AddObject(new Label{ Align::Center, Align::Center, color, Color::Black,
-										  20, 3, m_console, std::string(user) });
+										  20, 3, m_console, std::string(user) != User::GetUsername() ? std::string(user) :
+										  std::string(user) + " (You)"});
 		}
 	}
 }
