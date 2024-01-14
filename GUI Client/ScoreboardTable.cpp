@@ -85,6 +85,13 @@ void ScoreboardTable::StopCheckingForPlayers(bool checkForPlayers)
 	stop.store(true);
 }
 
+void ScoreboardTable::ResetGuessedIcons()
+{
+	for (int index = 0; index < rowCount(); index++) {
+		players[index].second->setIcon(QIcon());
+	}
+}
+
 void ScoreboardTable::ClearScoreboard()
 {
 	players.clear();
