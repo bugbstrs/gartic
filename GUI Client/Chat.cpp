@@ -25,9 +25,7 @@ void Chat::AddMessageInChat(const QString& newMessage) noexcept
 		QString formattedMessage;
 		if (newMessage != kFoundWord)
 			formattedMessage = QString("[%1] <b>%2:</b> <b style='color: blue;'>%3</b><br>").arg(formattedTime, name, messageSent);
-		else if (newMessage != "") {
-			formattedMessage = QString("<b style='color: white; background-color: green; padding: 5px;'> You have guessed the word</b><br>");
-		}
+		else formattedMessage = QString("<b style='color: white; background-color: green; padding: 5px;'> %1 </b><br>").arg(newMessage);
 		m_chatConversation->insertHtml(formattedMessage);
 		m_chatConversation->moveCursor(QTextCursor::End);
 	}, Qt::QueuedConnection);

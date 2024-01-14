@@ -82,6 +82,7 @@ void GameplayWidget::ShowDrawerInterface()
 	QMetaObject::invokeMethod(this, [this]() {
 		if (!backgroundForGuesser->isHidden())
 			backgroundForGuesser->hide();
+		scoreboardTable->ResetGuessedIcons();
 		drawingBoard->SetupForDrawer(true);
 		drawingBoard->setDisabled(false);
 		toolsFrame->show();
@@ -120,7 +121,8 @@ void GameplayWidget::ShowGuesserInterface()
 			}
 			wordsToChoose.clear();
 		}
-		drawingBoard->ResetBoard();
+		drawingBoard->ClearCanvas();
+		scoreboardTable->ResetGuessedIcons();
 		chat->ToggleAccessToWritingMessages(true);
 		toolsFrame->hide();
 		backgroundForGuesser->show();
@@ -144,6 +146,7 @@ void GameplayWidget::BackgroundChangeForDrawer()
 		for (QPushButton* button : wordsToChoose) {
 			delete button;
 		}
+		scoreboardTable->ResetGuessedIcons();
 		wordsToChoose.clear();
 		backgroundForDrawer->hide();
 		drawingBoard->SetIsChoosingWord(false);
