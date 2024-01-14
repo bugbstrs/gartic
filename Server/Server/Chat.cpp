@@ -35,7 +35,7 @@ void http::Chat::VerifyMessage(const std::string& username, const std::string& m
 	{
 		if (GetPlayerByName(username)->GetGuessed())
 		{
-			m_messages[username].push_back("You allready guessed the word!");
+			m_messages[username].push_back("[Server]: You allready guessed the word!");
 			return;
 		}
 
@@ -48,11 +48,11 @@ void http::Chat::VerifyMessage(const std::string& username, const std::string& m
 
 			// Add guessed message to everyone
 			for (auto& messages : m_messages)
-				messages.second.push_back(username + " guessed the word!");
+				messages.second.push_back("[Server]: " + username + " guessed the word!");
 
 			// Remove the default message for player and add a custme one
 			m_messages[username].pop_back();
-			m_messages[username].push_back("You guessed the word!");
+			m_messages[username].push_back("[Server]: You guessed the word!");
 
 			int numberOfPlayersWhoGuessed{ 0 };
 			for (const auto& player : m_players)
@@ -64,7 +64,7 @@ void http::Chat::VerifyMessage(const std::string& username, const std::string& m
 				m_gameTime->CallFunction();
 		}
 		else {
-			m_messages[username].push_back("You are close!");
+			m_messages[username].push_back("[Server]: You are close!");
 		}
 	}
 	else
