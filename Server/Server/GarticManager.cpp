@@ -100,6 +100,9 @@ void http::GarticManager::CheckActiveGames()
 {
 	for (const auto& lobby : m_lobbys)
 	{
+		if (!lobby)
+			continue;
+
 		if (lobby->GetUsers().empty())
 		{
 			m_lobbys.erase(std::find(m_lobbys.begin(), m_lobbys.end(), lobby));
@@ -107,6 +110,9 @@ void http::GarticManager::CheckActiveGames()
 	}
 	for (const auto& game : m_games)
 	{
+		if (!game)
+			continue;
+
 		if (game->GetPlayers().empty())
 		{
 			m_games.erase(std::find(m_games.begin(), m_games.end(), game));
