@@ -237,11 +237,25 @@ void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
 				}
 			}
 			if (std::string(gameStatusText["status"]) == kPickingWord) {
-				wordToDraw->clear();
-				if (m_isDrawer && backgroundForDrawer->isHidden())
-					ShowDrawerInterface();
-				if (!m_isDrawer && backgroundForGuesser->isHidden())
-					ShowGuesserInterface();
+				auto fetchedPlayers = cpr::Get(
+					cpr::Url{ "http://localhost:18080/fetchplayers" },
+					cpr::Parameters{
+						{"password", UserCredentials::GetPassword()},
+						{"username", UserCredentials::GetUsername()}
+					}
+				);
+				if (fetchedPlayers.status_code == 200) {
+					auto playersResponse = crow::json::load(fetchedPlayers.text);
+					for (int index = 0; index < playersResponse["players"].size(); index++) {
+						if (std::string(playersResponse["players"][index]["name"]) == UserCredentials::GetUsername()) {
+						}
+					}
+					wordToDraw->clear();
+					if (m_isDrawer && backgroundForDrawer->isHidden())
+						ShowDrawerInterface();
+					if (!m_isDrawer && backgroundForGuesser->isHidden())
+						ShowGuesserInterface();
+				}
 			}
 			if (std::string(gameStatusText["status"]) == kFinished) {
 				auto finalPlayersFetch = cpr::Get(

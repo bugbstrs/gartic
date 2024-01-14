@@ -5,12 +5,20 @@
 
 MatchHistoryTable::MatchHistoryTable(QWidget* parent)
 	: QTableWidget{ parent }
-{
-	GetMatchHistoryFromDatabase();
-}
+{}
 
 MatchHistoryTable::~MatchHistoryTable()
 {}
+
+int MatchHistoryTable::GetBestScore() const noexcept
+{
+	return m_bestScore;
+}
+
+float MatchHistoryTable::GetAverageScore() const noexcept
+{
+	return m_averageScore;
+}
 
 void MatchHistoryTable::showEvent(QShowEvent* event)
 {
@@ -29,30 +37,25 @@ void MatchHistoryTable::showEvent(QShowEvent* event)
 		setColumnCount(m_columnsNumber);
 		setRowCount(nrOfMatches);
 
+		m_bestScore = std::stoi(std::string(profileInfoVector["info"][0]["points"]));
+		m_averageScore = 0;
+
 		for (int row = 0; row < nrOfMatches; ++row) {
+			int matchPoints = std::stoi(std::string(profileInfoVector["info"][row]["points"]));
+
+			if (matchPoints > m_bestScore)
+				m_bestScore = matchPoints;
+			m_averageScore += matchPoints;
+
 			QTableWidgetItem* positionItem = new QTableWidgetItem(QString::fromUtf8(std::string(profileInfoVector["info"][row]["rank"])));
+			QTableWidgetItem* pointsItem = new QTableWidgetItem(QString::number(matchPoints));
+
 			positionItem->setTextAlignment(Qt::AlignCenter);
 			setItem(row, 0, positionItem);
 
-			QTableWidgetItem* pointsItem = new QTableWidgetItem(QString::fromUtf8(std::string(profileInfoVector["info"][row]["points"])));
 			pointsItem->setTextAlignment(Qt::AlignCenter);
 			setItem(row, 1, pointsItem);
 		}
-	}
-}
-
-QString MatchHistoryTable::GetRowInfoForColumnWithIndex(uint16_t index, const Row& row) const noexcept
-{
-	if (index == 0)
-		return row.ranking;
-	else
-		return row.points;
-}
-
-void MatchHistoryTable::GetMatchHistoryFromDatabase() noexcept
-{
-	for (int row = 0; row < 2; ++row) {
-		matches.push_back(Row("1st", "574"));
-		matches.push_back(Row("4th", "371"));
+		m_averageScore /= nrOfMatches;
 	}
 }

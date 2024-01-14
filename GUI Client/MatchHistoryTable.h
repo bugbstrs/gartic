@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QTableWidget>
+#include <qlineedit.h>
 
 class MatchHistoryTable : public QTableWidget
 {
@@ -13,25 +14,17 @@ public:
 	//Destructor
 	~MatchHistoryTable();
 
+	int GetBestScore() const noexcept;
+	float GetAverageScore() const noexcept;
+
 protected:
 	void showEvent(QShowEvent* event) override;
 
-private:
-	struct Row {
-		Row(const std::string& ranking, const std::string& points) :
-			ranking(QString::fromUtf8(ranking)),
-			points(QString::fromUtf8(points))
-		{}
-
-		QString ranking;
-		QString points;
-	};
-
-private:
-	QString GetRowInfoForColumnWithIndex(uint16_t index, const Row& row) const noexcept;
-	void GetMatchHistoryFromDatabase() noexcept;
+signals:
+	void OnScoresUpdated(int bestScore, float averageScore);
 
 private:
 	const int m_columnsNumber = 2;
-	std::vector <Row> matches{};
+	int m_bestScore;
+	float m_averageScore;
 };

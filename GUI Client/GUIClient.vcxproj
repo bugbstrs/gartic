@@ -122,6 +122,7 @@
     <ClCompile Include="LobbyFrame.cpp" />
     <ClCompile Include="LobbyTable.cpp" />
     <ClCompile Include="LogInManager.cpp" />
+    <ClCompile Include="MatchHistoryFrame.cpp" />
     <ClCompile Include="QuotesPlainText.cpp" />
     <ClCompile Include="ResultsTable.cpp" />
     <ClCompile Include="ScoreboardTable.cpp" />
@@ -180,6 +181,7 @@
     <QtMoc Include="JoinLobbyFrame.h" />
     <QtMoc Include="ResultsTable.h" />
     <QtMoc Include="QuotesPlainText.h" />
+    <QtMoc Include="MatchHistoryFrame.h" />
     <ClInclude Include="UserCredentials.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

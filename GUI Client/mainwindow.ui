@@ -2306,10 +2306,10 @@ QComboBox QAbstractItemView::item:hover {
 </string>
                         </property>
                         <property name="currentText">
-                         <string>5</string>
+                         <string>4</string>
                         </property>
                         <property name="currentIndex">
-                         <number>4</number>
+                         <number>3</number>
                         </property>
                         <item>
                          <property name="text">
@@ -4913,7 +4913,7 @@ QPushButton:hover {
           </property>
           <layout class="QGridLayout" name="gridLayout_14">
            <item row="2" column="1">
-            <widget class="QFrame" name="statsMenuFrame">
+            <widget class="MatchHistoryFrame" name="statsMenuFrame">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                <horstretch>0</horstretch>
@@ -4984,7 +4984,7 @@ border: 2px solid #000000;</string>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_17">
                     <item row="1" column="0">
-                     <widget class="QLineEdit" name="averageScoreValue">
+                     <widget class="QLineEdit" name="averageScoreLineEdit">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                         <horstretch>0</horstretch>
@@ -5096,7 +5096,7 @@ background-color: transparent;</string>
                      </widget>
                     </item>
                     <item row="1" column="0">
-                     <widget class="QLineEdit" name="bestScoreValue">
+                     <widget class="QLineEdit" name="bestScoreLineEdit">
                       <property name="font">
                        <font>
                         <family>Comic Sans MS</family>
@@ -5167,7 +5167,9 @@ background-color: transparent;</string>
                       </property>
                       <property name="font">
                        <font>
-                        <pointsize>9</pointsize>
+                        <family>Comic Sans MS</family>
+                        <pointsize>20</pointsize>
+                        <bold>true</bold>
                        </font>
                       </property>
                       <property name="focusPolicy">
@@ -5198,6 +5200,9 @@ border-radius: 1px;</string>
                       </property>
                       <property name="editTriggers">
                        <set>QAbstractItemView::NoEditTriggers</set>
+                      </property>
+                      <property name="alternatingRowColors">
+                       <bool>true</bool>
                       </property>
                       <property name="horizontalScrollMode">
                        <enum>QAbstractItemView::ScrollPerItem</enum>
@@ -5845,6 +5850,12 @@ padding: 5px 10px;</string>
    <class>QuotesPlainText</class>
    <extends>QPlainTextEdit</extends>
    <header>QuotesPlainText.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MatchHistoryFrame</class>
+   <extends>QFrame</extends>
+   <header>MatchHistoryFrame.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
