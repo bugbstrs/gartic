@@ -5,15 +5,15 @@
 ResultsTable::ResultsTable(QWidget *parent)
 	: QTableWidget(parent)
 {
-	nameFont.setFamily("Consolas");
-	nameFont.setPixelSize(32);
+	m_nameFont.setFamily("Consolas");
+	m_nameFont.setPixelSize(32);
 
-	pointsFont.setFamily("Consolas");
-	pointsFont.setPixelSize(42);
+	m_pointsFont.setFamily("Consolas");
+	m_pointsFont.setPixelSize(42);
 
-	yourNameFont.setFamily("Consolas");
-	yourNameFont.setPixelSize(36);
-	yourNameFont.setBold(true);
+	m_yourNameFont.setFamily("Consolas");
+	m_yourNameFont.setPixelSize(36);
+	m_yourNameFont.setBold(true);
 }
 
 ResultsTable::~ResultsTable()
@@ -30,13 +30,13 @@ void ResultsTable::SetPlayers(std::vector <std::tuple<QIcon, QString, int, QColo
 
 		name->setBackground(std::get<3>(player));
 		if (std::get<1>(player) == QString::fromUtf8(UserCredentials::GetUsername()))
-			name->setFont(yourNameFont);
+			name->setFont(m_yourNameFont);
 		else
-			name->setFont(nameFont);
+			name->setFont(m_nameFont);
 		name->setTextAlignment(Qt::AlignVCenter | Qt::AlignLeft);
 
 		score->setBackground(std::get<3>(player));
-		score->setFont(pointsFont);
+		score->setFont(m_pointsFont);
 		score->setTextAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
 
 		int rowPosition = rowCount();

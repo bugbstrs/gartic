@@ -11,7 +11,7 @@ QuotesPlainText::~QuotesPlainText()
 
 void QuotesPlainText::showEvent(QShowEvent * event)
 {
-	if (firstShow) {
+	if (m_firstShow) {
 		auto quote = cpr::Get(
 			cpr::Url{ "http://localhost:18080/fetchquote" },
 			cpr::Parameters{
@@ -24,6 +24,6 @@ void QuotesPlainText::showEvent(QShowEvent * event)
 
 			setPlainText(QString::fromUtf8(std::string(quoteText["quote"])));
 		}
-		firstShow = true;
+		m_firstShow = true;
 	}
 }

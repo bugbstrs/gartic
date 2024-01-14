@@ -345,9 +345,9 @@ void GameplayWidget::AddWordOption(const std::string& word)
 		"    color: white;"
 		"    border: 2px solid #4CAF50;"
 		"    border-radius: 20px;"
-		"    padding: 5px 10px;"
+		"    padding: 0px 0px;"
 		"    font-family: \"Consolas\";"
-		"    font-size: 20px;"
+		"    font-size: 12px;"
 		"    font-weight: bold;"
 		"}"
 

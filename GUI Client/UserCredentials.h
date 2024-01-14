@@ -19,6 +19,6 @@ private:
     UserCredentials& operator=(const UserCredentials&) = delete;
     static std::string m_username;
     static std::string m_password;
-    static bool credentialsSet;
+    static bool m_credentialsSet;
 };
 

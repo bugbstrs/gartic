@@ -39,8 +39,6 @@ MainWindow::MainWindow(QWidget* parent)
     QObject::connect(ui->joinLobbyButton, &QPushButton::released, this, &MainWindow::OnJoinLobbyButtonReleased);
     QObject::connect(ui->quitButton, &QPushButton::released, this, &MainWindow::OnQuitButtonReleased);
     QObject::connect(ui->statsButton, &QPushButton::released, this, &MainWindow::OnStatsButtonReleased);
-    QObject::connect(ui->goToLogInButton, &QPushButton::released, this, &MainWindow::OnGoToLogInButtonReleased);
-    QObject::connect(ui->goToSignUpButton, &QPushButton::released, this, &MainWindow::OnGoToSignUpButtonReleased);
 
     //Join Lobby scene
     QObject::connect(ui->joinLobbyFrame, &JoinLobbyFrame::OnLobbyCodeAccepted, this, &MainWindow::OnLobbyCodeAccepted);
@@ -119,8 +117,6 @@ void MainWindow::OnCreateLobbyButtonReleased() noexcept {
 void MainWindow::OnJoinLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->JoinLobbyScene); }
 void MainWindow::OnQuitButtonReleased() noexcept { QCoreApplication::quit(); }
 void MainWindow::OnStatsButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->StatsScene); }
-void MainWindow::OnGoToLogInButtonReleased() noexcept{ ui->stackedWidget->setCurrentWidget(ui->LogInScene); }
-void MainWindow::OnGoToSignUpButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->SignUpScene); }
 
 
 //Join Lobby Scene

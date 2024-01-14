@@ -13,5 +13,5 @@ public:
 	void showEvent(QShowEvent* event) override;
 
 private:
-	bool firstShow{ true };
+	bool m_firstShow{ true };
 };

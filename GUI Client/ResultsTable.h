@@ -14,8 +14,8 @@ public:
 	void SetPlayers(std::vector <std::tuple<QIcon, QString, int, QColor>> players);
 
 private:
-	QFont nameFont{};
-	QFont pointsFont{};
-	QFont yourNameFont{};
+	QFont m_nameFont{};
+	QFont m_pointsFont{};
+	QFont m_yourNameFont{};
 	//std::vector <std::tuple<QIcon, QString, int>> m_players;
 };

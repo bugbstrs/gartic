@@ -5,17 +5,17 @@
 
 ScoreboardTable::ScoreboardTable(QWidget *parent)
 	: QTableWidget{ parent },
-	stop(false)
+	m_stop(false)
 {
-	nameFont.setFamily("Consolas");
-	nameFont.setPixelSize(12);
+	m_nameFont.setFamily("Consolas");
+	m_nameFont.setPixelSize(12);
 
-	pointsFont.setFamily("Consolas");
-	pointsFont.setPixelSize(20);
+	m_pointsFont.setFamily("Consolas");
+	m_pointsFont.setPixelSize(20);
 
-	yourNameFont.setFamily("Consolas");
-	yourNameFont.setPixelSize(16);
-	yourNameFont.setBold(true);
+	m_yourNameFont.setFamily("Consolas");
+	m_yourNameFont.setPixelSize(16);
+	m_yourNameFont.setBold(true);
 }
 
 ScoreboardTable::~ScoreboardTable()
@@ -23,20 +23,20 @@ ScoreboardTable::~ScoreboardTable()
 
 void ScoreboardTable::AddPlayersToScoreboard(std::vector <std::tuple<QIcon, QString, QColor, QIcon>> takenAvatarsFromLobby)
 {
-	takenAvatars = takenAvatarsFromLobby;
-	for (auto& avatar : takenAvatars) {
+	m_takenAvatars = takenAvatarsFromLobby;
+	for (auto& avatar : m_takenAvatars) {
 		QTableWidgetItem* name = new QTableWidgetItem(std::get<0>(avatar), std::get<1>(avatar));
 		QTableWidgetItem* score = new QTableWidgetItem(QIcon(), QString::number(0));
 
 		name->setBackground(std::get<2>(avatar));
 		if (std::get<1>(avatar) == QString::fromUtf8(UserCredentials::GetUsername()))
-			name->setFont(yourNameFont);
+			name->setFont(m_yourNameFont);
 		else
-			name->setFont(nameFont);
+			name->setFont(m_nameFont);
 		name->setTextAlignment(Qt::AlignVCenter | Qt::AlignLeft);
 
 		score->setBackground(std::get<2>(avatar));
-		score->setFont(pointsFont);
+		score->setFont(m_pointsFont);
 		score->setTextAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
 
 		int rowPosition = rowCount();
@@ -44,22 +44,22 @@ void ScoreboardTable::AddPlayersToScoreboard(std::vector <std::tuple<QIcon, QStr
 		setItem(rowPosition, 0, name);
 		setItem(rowPosition, 1, score);
 		
-		players.push_back({name, score});
-		playersToSendForResultsDisplaying.push_back({ name->icon(), name->text(), score->text().toInt(), std::get<2>(avatar)});
+		m_players.push_back({name, score});
+		m_playersToSendForResultsDisplaying.push_back({ name->icon(), name->text(), score->text().toInt(), std::get<2>(avatar)});
 	}
 }
 
 void ScoreboardTable::AddPointsToPlayerWithIndex(uint8_t index)
 {
-	players[0].second->setText(QString::number(players[0].second->text().toInt() + 10));
+	m_players[0].second->setText(QString::number(m_players[0].second->text().toInt() + 10));
 }
 
 void ScoreboardTable::SetPointsToPlayer(const QString& username, int numberOfPoints)
 {
 	for (int index = 0; index < rowCount(); index++) {
-		if (players[index].first->text() == username) {
-			players[index].second->setText(QString::number(numberOfPoints));
-			std::get<2>(playersToSendForResultsDisplaying[index]) = numberOfPoints;
+		if (m_players[index].first->text() == username) {
+			m_players[index].second->setText(QString::number(numberOfPoints));
+			std::get<2>(m_playersToSendForResultsDisplaying[index]) = numberOfPoints;
 			break;
 		}
 	}
@@ -68,8 +68,8 @@ void ScoreboardTable::SetPointsToPlayer(const QString& username, int numberOfPoi
 void ScoreboardTable::MarkGuessedForPlayer(const QString& username)
 {
 	for (int index = 0; index < rowCount(); index++) {
-		if (players[index].first->text() == username) {
-			players[index].second->setIcon(std::get<3>(takenAvatars[index]));
+		if (m_players[index].first->text() == username) {
+			m_players[index].second->setIcon(std::get<3>(m_takenAvatars[index]));
 			break;
 		}
 	}
@@ -77,37 +77,37 @@ void ScoreboardTable::MarkGuessedForPlayer(const QString& username)
 
 std::vector <std::tuple<QIcon, QString, int, QColor>> ScoreboardTable::GetPlayersOrdered()
 {
-	return playersToSendForResultsDisplaying;
+	return m_playersToSendForResultsDisplaying;
 }
 
 void ScoreboardTable::StopCheckingForPlayers()
 {
-	stop.store(true);
+	m_stop.store(true);
 }
 
 void ScoreboardTable::ResetGuessedIcons()
 {
 	for (int index = 0; index < rowCount(); index++) {
-		players[index].second->setIcon(QIcon());
+		m_players[index].second->setIcon(QIcon());
 	}
 }
 
 void ScoreboardTable::ClearScoreboard()
 {
-	players.clear();
+	m_players.clear();
 	clearContents();
 }
 
 void ScoreboardTable::showEvent(QShowEvent* event)
 {
-	if (firstShow) {
+	if (m_firstShow) {
 
-		firstShow = false;
+		m_firstShow = false;
 	}
 
-	stop.store(false);
+	m_stop.store(false);
 
-	std::thread checkForScoreboardUpdates(&ScoreboardTable::CheckForScoreboardUpdates, this, std::ref(stop));
+	std::thread checkForScoreboardUpdates(&ScoreboardTable::CheckForScoreboardUpdates, this, std::ref(m_stop));
 	checkForScoreboardUpdates.detach();
 }
 
@@ -125,18 +125,18 @@ void ScoreboardTable::CheckForScoreboardUpdates(std::atomic<bool>& stop)
 		{
 			auto playersResponse = crow::json::load(response.text);
 			if (playersResponse.has("players")) {
-				if (playersResponse["players"].size() != takenAvatars.size()) {
+				if (playersResponse["players"].size() != m_takenAvatars.size()) {
 					int indexToRemove = -1;
 					for (int index = 0; index < playersResponse["players"].size(); index++) {
-						if (std::string(playersResponse["players"][index]["name"]) != std::get<1>(takenAvatars[index]).toUtf8().constData()) {
+						if (std::string(playersResponse["players"][index]["name"]) != std::get<1>(m_takenAvatars[index]).toUtf8().constData()) {
 							indexToRemove = index;
 							break;
 						}
 					}
 					if (indexToRemove == -1) {
-						indexToRemove = takenAvatars.size() - 1;
+						indexToRemove = m_takenAvatars.size() - 1;
 					}
-					takenAvatars.erase(takenAvatars.begin() + indexToRemove);
+					m_takenAvatars.erase(m_takenAvatars.begin() + indexToRemove);
 					removeRow(indexToRemove);
 				}
 			}

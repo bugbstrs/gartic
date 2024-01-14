@@ -7,25 +7,25 @@ SignUpManager::SignUpManager(QWidget *parent)
 {}
 
 void SignUpManager::showEvent(QShowEvent* event) {
-	if (firstShow) {
-		nameInput = findChild<QLineEdit*>("enterNameSignUpInput");
-		passwordInput = findChild<QLineEdit*>("enterPasswordSignUpInput");
-		signUpButton = findChild<QPushButton*>("signUpButton");
-		alreadyExistingAccountLabel = findChild<QLabel*>("alreadyExistingAccountLabel");
-		togglePasswordView = findChild<QPushButton*>("toggleSignUpPasswordViewButton");
-		alreadyExistingAccountLabel->clear();
+	if (m_firstShow) {
+		m_nameInput = findChild<QLineEdit*>("enterNameSignUpInput");
+		m_passwordInput = findChild<QLineEdit*>("enterPasswordSignUpInput");
+		m_signUpButton = findChild<QPushButton*>("signUpButton");
+		m_alreadyExistingAccountLabel = findChild<QLabel*>("alreadyExistingAccountLabel");
+		m_togglePasswordView = findChild<QPushButton*>("toggleSignUpPasswordViewButton");
+		m_alreadyExistingAccountLabel->clear();
 
-		QObject::connect(signUpButton, &QPushButton::released, this, &SignUpManager::OnSignUpCredentialsSent);
-		QObject::connect(togglePasswordView, &QPushButton::released, this, &SignUpManager::OnTogglePasswordView);
+		QObject::connect(m_signUpButton, &QPushButton::released, this, &SignUpManager::OnSignUpCredentialsSent);
+		QObject::connect(m_togglePasswordView, &QPushButton::released, this, &SignUpManager::OnTogglePasswordView);
 
-		firstShow = false;
+		m_firstShow = false;
 	}
 }
 
 void SignUpManager::OnSignUpCredentialsSent() noexcept
 {
-	std::string password = passwordInput->text().toUtf8().constData();
-	std::string username = nameInput->text().toUtf8().constData();
+	std::string password = m_passwordInput->text().toUtf8().constData();
+	std::string username = m_nameInput->text().toUtf8().constData();
 
     password = picosha2::hash256_hex_string(password);
 	auto response = cpr::Post(
@@ -36,24 +36,24 @@ void SignUpManager::OnSignUpCredentialsSent() noexcept
 		}
 	);
 	if (response.status_code == 201) {
-		nameInput->clear();
-		passwordInput->clear();
-		alreadyExistingAccountLabel->clear();
+		m_nameInput->clear();
+		m_passwordInput->clear();
+		m_alreadyExistingAccountLabel->clear();
 		emit OnSignUpCredentialsAccepted();
 	}
 	else {
-		alreadyExistingAccountLabel->setText(incorrectCredentialsText);
+		m_alreadyExistingAccountLabel->setText(m_incorrectCredentialsText);
 	}
 }
 
 void SignUpManager::OnTogglePasswordView() noexcept
 {
-	if (passwordInput->echoMode() == QLineEdit::Password) {
-		togglePasswordView->setIcon(hidePasswordIcon);
-		passwordInput->setEchoMode(QLineEdit::Normal);
+	if (m_passwordInput->echoMode() == QLineEdit::Password) {
+		m_togglePasswordView->setIcon(m_hidePasswordIcon);
+		m_passwordInput->setEchoMode(QLineEdit::Normal);
 	}
 	else {
-		togglePasswordView->setIcon(viewPasswordIcon);
-		passwordInput->setEchoMode(QLineEdit::Password);
+		m_togglePasswordView->setIcon(m_viewPasswordIcon);
+		m_passwordInput->setEchoMode(QLineEdit::Password);
 	}
 }

@@ -21,8 +21,6 @@ private slots:
     void OnJoinLobbyButtonReleased() noexcept;
     void OnQuitButtonReleased() noexcept;
     void OnStatsButtonReleased() noexcept;
-    void OnGoToLogInButtonReleased() noexcept;
-    void OnGoToSignUpButtonReleased() noexcept;
 
     //Join Lobby scene
     void OnLobbyCodeAccepted(std::string codeText) noexcept;
