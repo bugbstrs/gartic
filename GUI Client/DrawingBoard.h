@@ -24,13 +24,14 @@ public:
 	void ChangePenColor(QColor color) noexcept;
 	void ChangePenWidth(int width) noexcept;
 
-	void SetIsChoosingWord(bool value);
-	void SetupForDrawer(bool isDrawer);
+	void SetIsChoosingWord(bool value) noexcept;
+	void SetupForDrawer(bool isDrawer) noexcept;
 
 	void ToggleEraser(bool value) noexcept;
 	void ToggleFill(bool value) noexcept;
 	void EnablePencil() noexcept;
 	void UndoLastPath() noexcept;
+	void StopLookingForUpdates() noexcept;
 	void ClearCanvas() noexcept;
 
 	void ResetBoard() noexcept;
@@ -50,7 +51,6 @@ private:
 
 	void CheckForNewDrawEvents(std::atomic<bool>& stop);
 	void SendUpdatedPath(std::atomic<bool>& stop);
-	//void SendNewPathStared(std::atomic<bool>& stop);
 	void RunEventTypeAccordingly(const std::string& drawingEvent);
 
 	void FloodFill(QPoint startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith);
@@ -58,25 +58,25 @@ private:
 	void DrawStartingPixels(const QPoint& startingPoint, QPoint pointToExecuteAt, QColor startingColor, QColor colorToBeFilledWith, std::vector <std::thread>& threads);
 
 private:
-	const QColor kDefaultPenColor{ Qt::black };
-	const int kDefaultPenWidth { 4 };
-	const int kCircleRadius { 25 };
-	std::atomic<bool>stop;
+	const QColor kDefaultPenColor						{ Qt::black };
+	const int kDefaultPenWidth							{ 4 };
+	const int kCircleRadius								{ 25 };
+	std::atomic<bool>m_stop;
 
-	std::queue<QPoint> pathPoints;
+	std::queue<QPoint> pathPoints						{};
 	
-	bool isChoosingWord		{ false };
-	bool firstPaint			{ true };
-	bool drawing			{ false };
-	bool fillEnabled		{ false };
-	bool drawBeginningOfPath{ false };
+	bool m_isChoosingWord								{ false };
+	bool m_firstPaint									{ true };
+	bool m_drawing										{ false };
+	bool m_fillEnabled									{ false };
+	bool m_drawBeginningOfPath							{ false };
 
-	QColor lastColor	{};
-	QColor eraserColor	{};
+	QColor m_lastColor									{};
+	QColor m_eraserColor								{};
 
-	QPen pen										 {};
-	QPainterPath currentPath						 {};
+	QPen m_pen											{};
+	QPainterPath m_currentPath							{};
 
-	std::vector<QImage>images								  {};
-	QImage image											  {};
+	std::vector<QImage>images			   				{};
+	QImage image										{};
 };

@@ -22,9 +22,9 @@ signals:
 	void OnLobbyCodeAccepted(std::string codeText);
 
 private:
-	bool firstShow	{ true };
+	bool m_firstShow	{ true };
 
-	QLineEdit* codeLineEdit			{ new QLineEdit{} };
-	QPushButton* joinButton			{ new QPushButton{} };
-	QLabel* gameAlreadyStarted		{ new QLabel{} };
+	QLineEdit* m_codeLineEdit			{ new QLineEdit{} };
+	QPushButton* m_joinButton			{ new QPushButton{} };
+	QLabel* m_gameAlreadyStarted		{ new QLabel{} };
 };

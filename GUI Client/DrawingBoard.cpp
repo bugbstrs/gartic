@@ -5,36 +5,35 @@
 
 DrawingBoard::DrawingBoard(QWidget* parent)
 	: QWidget{ parent },
-	eraserColor{ Qt::white },
-	stop(false)
+	m_eraserColor{ Qt::white },
+	m_stop(false)
 {
 	setMouseTracking(true);
 	ChangePenPropertiesTo(Qt::black, 4);
-
 }
 
 void DrawingBoard::mousePressEvent(QMouseEvent* event)
 {
-	if (isChoosingWord)
+	if (m_isChoosingWord)
 		return;
 	images.push_back(image);
 	if (event->button() == Qt::LeftButton) {
-		if (!fillEnabled) {
-			drawing = true;
-			currentPath = QPainterPath(event->pos());
+		if (!m_fillEnabled) {
+			m_drawing = true;
+			m_currentPath = QPainterPath(event->pos());
 			pathPoints.push(event->pos());
-			drawBeginningOfPath = false;
+			m_drawBeginningOfPath = false;
 			update();
 
 		}
 		else {
 			QPoint mouseRegisteredPosition = event->pos() + QPoint(-12, 10);
-			FloodFill(mouseRegisteredPosition, mouseRegisteredPosition, image.pixelColor(mouseRegisteredPosition), pen.color());
+			FloodFill(mouseRegisteredPosition, mouseRegisteredPosition, image.pixelColor(mouseRegisteredPosition), m_pen.color());
 
 			std::string drawEvent = "fill ";
 			drawEvent += std::to_string(mouseRegisteredPosition.x()) + " ";
 			drawEvent += std::to_string(mouseRegisteredPosition.y()) + " ";
-			QColor color = pen.color();
+			QColor color = m_pen.color();
 
 			int red = color.red();
 			int green = color.green();
@@ -61,8 +60,8 @@ void DrawingBoard::mousePressEvent(QMouseEvent* event)
 
 void DrawingBoard::mouseMoveEvent(QMouseEvent* event)
 {
-	if (drawing) {
-		currentPath.lineTo(event->pos());
+	if (m_drawing) {
+		m_currentPath.lineTo(event->pos());
 		pathPoints.push(event->pos());
 		update();
 	}
@@ -70,9 +69,9 @@ void DrawingBoard::mouseMoveEvent(QMouseEvent* event)
 
 void DrawingBoard::mouseReleaseEvent(QMouseEvent* event)
 {
-	if (event->button() == Qt::LeftButton && drawing) {
-		drawing = false;
-		drawBeginningOfPath = false;
+	if (event->button() == Qt::LeftButton && m_drawing) {
+		m_drawing = false;
+		m_drawBeginningOfPath = false;
 		update();
 	}
 }
@@ -86,34 +85,34 @@ void DrawingBoard::resizeEvent(QResizeEvent* event)
 
 void DrawingBoard::ChangePenPropertiesTo(QColor color, int width) noexcept
 {
-	lastColor = color;
-	pen.setColor(color);
-	pen.setWidth(width);
-	pen.setCapStyle(Qt::RoundCap);
+	m_lastColor = color;
+	m_pen.setColor(color);
+	m_pen.setWidth(width);
+	m_pen.setCapStyle(Qt::RoundCap);
 }
 
 void DrawingBoard::ChangePenColor(QColor color) noexcept
 {
-	lastColor = color;
-	pen.setColor(color);
+	m_lastColor = color;
+	m_pen.setColor(color);
 }
 
 void DrawingBoard::ChangePenWidth(int width) noexcept
 {
-	pen.setWidth(width);
+	m_pen.setWidth(width);
 }
 
-void DrawingBoard::SetIsChoosingWord(bool value)
+void DrawingBoard::SetIsChoosingWord(bool value) noexcept
 {
-	isChoosingWord = value;
+	m_isChoosingWord = value;
 }
 
-void DrawingBoard::SetupForDrawer(bool isDrawer)
+void DrawingBoard::SetupForDrawer(bool isDrawer) noexcept
 {
-	stop.store(isDrawer);
+	m_stop.store(isDrawer);
 
-	std::thread sendUpdatedPath(&DrawingBoard::SendUpdatedPath, this, std::ref(stop));
-	std::thread checkForNewDrawEvents(&DrawingBoard::CheckForNewDrawEvents, this, std::ref(stop));
+	std::thread sendUpdatedPath(&DrawingBoard::SendUpdatedPath, this, std::ref(m_stop));
+	std::thread checkForNewDrawEvents(&DrawingBoard::CheckForNewDrawEvents, this, std::ref(m_stop));
 
 	sendUpdatedPath.detach();
 	checkForNewDrawEvents.detach();
@@ -123,18 +122,18 @@ void DrawingBoard::SetupForDrawer(bool isDrawer)
 void DrawingBoard::ToggleEraser(bool value) noexcept
 {
 	if (value)
-		pen.setColor(eraserColor);
-	else pen.setColor(lastColor);
+		m_pen.setColor(m_eraserColor);
+	else m_pen.setColor(m_lastColor);
 }
 
 void DrawingBoard::ToggleFill(bool value) noexcept
 {
-	fillEnabled = value;
+	m_fillEnabled = value;
 }
 
 void DrawingBoard::EnablePencil() noexcept
 {
-	pen.setColor(lastColor);
+	m_pen.setColor(m_lastColor);
 }
 
 void DrawingBoard::UndoLastPath() noexcept
@@ -155,6 +154,11 @@ void DrawingBoard::UndoLastPath() noexcept
 		}
 	);
 
+}
+
+void DrawingBoard::StopLookingForUpdates() noexcept
+{
+	m_stop.store(!m_stop.load());
 }
 
 void DrawingBoard::ClearCanvas() noexcept
@@ -179,13 +183,13 @@ void DrawingBoard::ClearCanvas() noexcept
 
 void DrawingBoard::ResetBoard() noexcept
 {
-	isChoosingWord = false;
-	drawing = false;
-	fillEnabled = false;
-	lastColor = kDefaultPenColor;
+	m_isChoosingWord = false;
+	m_drawing = false;
+	m_fillEnabled = false;
+	m_lastColor = kDefaultPenColor;
 
 	ChangePenPropertiesTo(kDefaultPenColor, kDefaultPenWidth);
-	currentPath = QPainterPath();
+	m_currentPath = QPainterPath();
 	image.fill(Qt::white);
 	images.clear();
 }
@@ -202,7 +206,7 @@ void DrawingBoard::UndoAction()
 
 void DrawingBoard::ClearAction()
 {
-	currentPath = QPainterPath();
+	m_currentPath = QPainterPath();
 	image.fill(Qt::white);
 	images.clear();
 	update();
@@ -224,7 +228,7 @@ void DrawingBoard::CheckForNewDrawEvents(std::atomic<bool>& stop)
 				if (events.has("events")) {
 					for (int index = 0; index < events["events"].size(); ++index) {
 						RunEventTypeAccordingly(std::string(events["events"][index]));
-						if (index % 50 == 0)
+						if (index % 100 == 0)
 							update();
 					}
 				}
@@ -244,23 +248,23 @@ void DrawingBoard::SendUpdatedPath(std::atomic<bool>& stop)
 	std::vector<crow::json::wvalue> drawEventsJSON;
 	while (stop.load()) {
 		if (!pathPoints.empty()) {
-			if (drawBeginningOfPath == false) {
+			if (m_drawBeginningOfPath == false) {
 				drawEvent = "startDrawing ";
 				drawEvent += std::to_string(pathPoints.front().x()) + " ";
 				drawEvent += std::to_string(pathPoints.front().y()) + " ";
-				QColor color = pen.color();
+				QColor color = m_pen.color();
 				int red = color.red();
 				int green = color.green();
 				int blue = color.blue();
 				int colorAsInt = (red << 16) | (green << 8) | blue;
 				drawEvent += std::to_string(colorAsInt) + " ";
-				drawEvent += std::to_string(pen.width());
+				drawEvent += std::to_string(m_pen.width());
 
 				drawEventsJSON.push_back(drawEvent);
 				drawEvent.clear();
 				pathPoints.pop();
 
-				drawBeginningOfPath = true;
+				m_drawBeginningOfPath = true;
 			}
 			for (int index = 0; index < 400 && !pathPoints.empty(); ++index) {
 				drawEvent = "keepDrawing ";
@@ -298,28 +302,28 @@ void DrawingBoard::RunEventTypeAccordingly(const std::string& drawingEvent)
 		static int prevX, prevY;
 		if (string == "startDrawing")
 		{
-			if (!currentPath.isEmpty()) {
+			if (!m_currentPath.isEmpty()) {
 				update();
 				images.push_back(image);
-				currentPath.clear();
+				m_currentPath.clear();
 			}
 			int color, width;
 			drawEventStream >> prevX >> prevY >> color >> width;
 
-			drawing = true;
+			m_drawing = true;
 			int red = (color >> 16) & 0xFF;
 			int green = (color >> 8) & 0xFF;
 			int blue = color & 0xFF;
 
-			pen.setColor(QColor(red, green, blue));
-			pen.setWidth(width);
-			currentPath = QPainterPath(QPoint(prevX, prevY));
+			m_pen.setColor(QColor(red, green, blue));
+			m_pen.setWidth(width);
+			m_currentPath = QPainterPath(QPoint(prevX, prevY));
 		}
 		else if (string == "keepDrawing")
 		{
 			int x, y;
 			drawEventStream >> x >> y;
-			currentPath.lineTo(QPoint(x, y));
+			m_currentPath.lineTo(QPoint(x, y));
 		}
 		else if (string == "fill")
 		{
@@ -409,20 +413,20 @@ void DrawingBoard::showEvent(QShowEvent* event)
 
 void DrawingBoard::paintEvent(QPaintEvent* event)
 {
-	if (firstPaint) {
+	if (m_firstPaint) {
 		setAutoFillBackground(true);
-		firstPaint = false;
+		m_firstPaint = false;
 	}
 	else {
 		QPainter imagePainter(this);
 		imagePainter.drawImage(0, 0, image);
 		QPainter painter(&image);
 
-		if (drawing) {
-			painter.setPen(pen);
-			if (currentPath.elementCount() == 1)
-				painter.drawPoint(currentPath.elementAt(0));
-			else painter.drawPath(currentPath);
+		if (m_drawing) {
+			painter.setPen(m_pen);
+			if (m_currentPath.elementCount() == 1)
+				painter.drawPoint(m_currentPath.elementAt(0));
+			else painter.drawPath(m_currentPath);
 		}
 	}
 }

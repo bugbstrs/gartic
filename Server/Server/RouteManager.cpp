@@ -345,8 +345,8 @@ crow::response http::RouteManager::IsRequestAuthenticated(const crow::request& r
 		return response;
 	}
 
-	// length of SHA256 hash when converted to hex string
-	/*if (std::strlen(password) != 64 || !std::regex_match(password, regexFormatSHA256))
+	 //length of SHA256 hash when converted to hex string
+	if (std::strlen(password) != 64 || !std::regex_match(password, regexFormatSHA256))
 	{
 		response.code = 400;
 		response.body = crow::json::wvalue
@@ -356,7 +356,7 @@ crow::response http::RouteManager::IsRequestAuthenticated(const crow::request& r
 		}.dump();
 
 		return response;
-	}*/
+	}
 
 	if (!std::regex_match(username, regexFormatUsername))
 	{

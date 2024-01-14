@@ -174,7 +174,7 @@ void GarticStorage::PopulateWordsEntity()
 
 	filename.open(kWordsFile);
 
-	while (std::getline(filename, line)) 
+	while (std::getline(filename, word)) 
 	{
 		words.push_back(word);
 	}
@@ -216,10 +216,10 @@ void http::GarticStorage::PopulateQuotesEntity()
 
 	filename.open(kQuotesFile);
 
-	while (std::getline(filename, quote)
+	while (std::getline(filename, quote))
 	{
 		quotes.push_back(quote);
-	})
+	}
 
 	for (const auto& quote : quotes)
 	{

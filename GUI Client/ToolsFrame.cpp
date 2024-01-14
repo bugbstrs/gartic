@@ -9,13 +9,13 @@ ToolsFrame::~ToolsFrame()
 
 void ToolsFrame::ResetCurrentColorView()
 {
-	currentColorView->setStyleSheet("background: black");
+	m_currentColorView->setStyleSheet("background: black");
 }
 
 void ToolsFrame::OnColorChange() noexcept
 {
 	QPushButton* senderButton = qobject_cast<QPushButton*>(sender());
-	currentColorView->setStyleSheet(senderButton->styleSheet());
+	m_currentColorView->setStyleSheet(senderButton->styleSheet());
 	emit OnColorChangedSignal(senderButton->palette().color(QPalette::Button));
 }
 
@@ -60,8 +60,8 @@ void ToolsFrame::OnPencilButtonReleased() noexcept
 
 void ToolsFrame::showEvent(QShowEvent* event) 
 {
-	if (firstShow) {
-		currentColorView = findChild<QWidget*>("currentColor");
+	if (m_firstShow) {
+		m_currentColorView = findChild<QWidget*>("currentColor");
 		QObject::connect(findChild<QPushButton*>("blackColorButton"), &QPushButton::released, this, &ToolsFrame::OnColorChange);
 		QObject::connect(findChild<QPushButton*>("whiteColorButton"), &QPushButton::released, this, &ToolsFrame::OnColorChange);
 
@@ -106,6 +106,6 @@ void ToolsFrame::showEvent(QShowEvent* event)
 		QObject::connect(findChild<QPushButton*>("eraserButton"), &QPushButton::released, this, &ToolsFrame::OnEraserButtonReleased);
 		QObject::connect(findChild<QPushButton*>("pencilButton"), &QPushButton::released, this, &ToolsFrame::OnPencilButtonReleased);
 
-		firstShow = false;
+		m_firstShow = false;
 	}
 }

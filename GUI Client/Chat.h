@@ -22,6 +22,8 @@ public:
 	void SetWordToGuess(QString wordToGuess) noexcept;
 	void SetChatConfigurationAccordingToPlayerType(bool isDrawer) noexcept;
 	void ToggleAccessToWritingMessages(bool canWrite);
+	void StopLookingForUpdates();
+	void Clear() noexcept;
 
 protected:
 	void showEvent(QShowEvent* event) override;
@@ -35,8 +37,8 @@ signals:
 
 private:
 	const QString kFoundWord = "[Server]: You guessed the word!";
-	std::atomic<bool> stop;
-	bool firstShow { true };
+	std::atomic<bool> m_stop;
+	bool m_firstShow { true };
 	QString m_wordToGuess				 {};
 	ChatWritingBox* m_chatWritingBox     { new ChatWritingBox{} };
 	ChatConversation* m_chatConversation { new ChatConversation{} };

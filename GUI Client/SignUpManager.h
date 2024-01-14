@@ -24,14 +24,14 @@ signals:
 	void OnSignUpCredentialsAccepted();
 
 private:
-	bool firstShow{ true };
-	QLineEdit* nameInput{ new QLineEdit{} };
-	QLineEdit* passwordInput{ new QLineEdit{} };
-	QPushButton* signUpButton{ new QPushButton{} };
-	QPushButton* togglePasswordView{ new QPushButton{} };
-	QLabel* alreadyExistingAccountLabel{ new QLabel{} };
-	QString incorrectCredentialsText{ "Credentials match existing account." };
+	bool m_firstShow{ true };
+	QLineEdit* m_nameInput{ new QLineEdit{} };
+	QLineEdit* m_passwordInput{ new QLineEdit{} };
+	QPushButton* m_signUpButton{ new QPushButton{} };
+	QPushButton* m_togglePasswordView{ new QPushButton{} };
+	QLabel* m_alreadyExistingAccountLabel{ new QLabel{} };
+	QString m_incorrectCredentialsText{ "Credentials match existing account." };
 
-	QIcon viewPasswordIcon{ QIcon(QPixmap(":/others/view_password")) };
-	QIcon hidePasswordIcon{ QIcon(QPixmap(":/others/hide_password")) };
+	QIcon m_viewPasswordIcon{ QIcon(QPixmap(":/others/view_password")) };
+	QIcon m_hidePasswordIcon{ QIcon(QPixmap(":/others/hide_password")) };
 };

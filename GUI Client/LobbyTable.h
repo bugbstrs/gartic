@@ -25,9 +25,9 @@ public:
 
 private:
 	static constexpr std::size_t kNumberOfIcons = 12;
-	int currentIndex = 0;
-	QFont nameFont{};
-	QFont yourNameFont{};
-	std::array<std::tuple<QIcon, QColor, bool, QIcon>, kNumberOfIcons> avatars{};
-	std::vector<std::tuple<QIcon, QString, QColor, QIcon>> takenAvatars;
+	int m_currentIndex = 0;
+	QFont m_nameFont{};
+	QFont m_yourNameFont{};
+	std::array<std::tuple<QIcon, QColor, bool, QIcon>, kNumberOfIcons> m_avatars{};
+	std::vector<std::tuple<QIcon, QString, QColor, QIcon>> m_takenAvatars;
 };

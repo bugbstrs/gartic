@@ -14,7 +14,7 @@ public:
 
 	void showEvent(QShowEvent* event) override;
 private:
-	bool firstShow{ true };
+	bool m_firstShow{ true };
 	QLineEdit* m_averageScore;
 	QLineEdit* m_bestScore;
 	MatchHistoryTable* m_matchHistoryTable;

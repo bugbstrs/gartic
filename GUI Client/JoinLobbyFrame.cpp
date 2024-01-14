@@ -9,21 +9,21 @@ JoinLobbyFrame::~JoinLobbyFrame()
 
 void JoinLobbyFrame::showEvent(QShowEvent * event)
 {
-	if (firstShow) {
-		joinButton = findChild<QPushButton*>("joinButton");
-		codeLineEdit = findChild<QLineEdit*>("codeInputLineEdit");
-		gameAlreadyStarted = findChild<QLabel*>("gameAlreadyStartedLabel");
+	if (m_firstShow) {
+		m_joinButton = findChild<QPushButton*>("joinButton");
+		m_codeLineEdit = findChild<QLineEdit*>("codeInputLineEdit");
+		m_gameAlreadyStarted = findChild<QLabel*>("gameAlreadyStartedLabel");
 
-		gameAlreadyStarted->hide();
+		m_gameAlreadyStarted->hide();
 
-		QObject::connect(joinButton, &QPushButton::released, this, &JoinLobbyFrame::OnLobbyCodeSentForVerification);
+		QObject::connect(m_joinButton, &QPushButton::released, this, &JoinLobbyFrame::OnLobbyCodeSentForVerification);
 
-		firstShow = false;
+		m_firstShow = false;
 	}
 }
 
 void JoinLobbyFrame::OnLobbyCodeSentForVerification() noexcept
 {
-	emit OnLobbyCodeAccepted(codeLineEdit->text().toUtf8().constData());
-	codeLineEdit->clear();
+	emit OnLobbyCodeAccepted(m_codeLineEdit->text().toUtf8().constData());
+	m_codeLineEdit->clear();
 }

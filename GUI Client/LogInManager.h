@@ -25,14 +25,14 @@ private:
 	void OnTogglePasswordView() noexcept;
 
 private:
-	bool firstShow					  { true };
-	QLineEdit* nameInput			  { new QLineEdit{} };
-	QLineEdit* passwordInput		  { new QLineEdit{} };
-	QPushButton* logInButton		  { new QPushButton{} };
-	QPushButton* togglePasswordView	  { new QPushButton{} };
-	QLabel* incorrectCredentialsLabel { new QLabel{} };
-	QString incorrectCredentialsText  { "Incorrect username or password. Please try again." };
+	bool m_firstShow					  { true };
+	QLineEdit* m_nameInput			  { new QLineEdit{} };
+	QLineEdit* m_passwordInput		  { new QLineEdit{} };
+	QPushButton* m_logInButton		  { new QPushButton{} };
+	QPushButton* m_togglePasswordView	  { new QPushButton{} };
+	QLabel* m_incorrectCredentialsLabel { new QLabel{} };
+	QString m_incorrectCredentialsText  { "Incorrect username or password. Please try again." };
 
-	QIcon viewPasswordIcon			  { QIcon(QPixmap(":/others/view_password")) };
-	QIcon hidePasswordIcon			  { QIcon(QPixmap(":/others/hide_password")) };
+	QIcon m_viewPasswordIcon			  { QIcon(QPixmap(":/others/view_password")) };
+	QIcon m_hidePasswordIcon			  { QIcon(QPixmap(":/others/hide_password")) };
 };

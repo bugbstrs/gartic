@@ -9,7 +9,7 @@ MatchHistoryFrame::~MatchHistoryFrame()
 
 void MatchHistoryFrame::showEvent(QShowEvent * event)
 {
-	if (firstShow) {
+	if (m_firstShow) {
 		m_bestScore = findChild<QLineEdit*>("bestScoreLineEdit");
 		m_averageScore = findChild<QLineEdit*>("averageScoreLineEdit");
 		m_matchHistoryTable = findChild<MatchHistoryTable*>("historyMatchesTable");
@@ -17,6 +17,6 @@ void MatchHistoryFrame::showEvent(QShowEvent * event)
 		m_bestScore->setText(QString::number(m_matchHistoryTable->GetBestScore()));
 		m_averageScore->setText(QString::number(m_matchHistoryTable->GetAverageScore()));
 
-		firstShow = false;
+		m_firstShow = false;
 	}
 }

@@ -6,7 +6,7 @@
 
 Chat::Chat(QWidget *parent)
 	: QFrame{ parent },
-	stop(false)
+	m_stop(false)
 {}
 
 Chat::~Chat()
@@ -25,7 +25,9 @@ void Chat::AddMessageInChat(const QString& newMessage) noexcept
 		QString formattedMessage;
 		if (newMessage != kFoundWord)
 			formattedMessage = QString("[%1] <b>%2:</b> <b style='color: blue;'>%3</b><br>").arg(formattedTime, name, messageSent);
-		else formattedMessage = QString("<b style='color: white; background-color: green; padding: 5px;'> %1 </b><br>").arg(newMessage);
+		else {
+			formattedMessage = QString("<b style='color: white; background-color: green; padding: 5px;'> %1 </b><br>").arg(newMessage);
+		}
 		m_chatConversation->insertHtml(formattedMessage);
 		m_chatConversation->moveCursor(QTextCursor::End);
 	}, Qt::QueuedConnection);
@@ -33,7 +35,7 @@ void Chat::AddMessageInChat(const QString& newMessage) noexcept
 
 void Chat::StopCheckingForUpdates(bool value)
 {
-	stop.store(true);
+	m_stop.store(true);
 }
 
 void Chat::SetWordToGuess(QString wordToGuess) noexcept
@@ -56,29 +58,35 @@ void Chat::ToggleAccessToWritingMessages(bool canWrite)
 	}, Qt::QueuedConnection);
 }
 
+void Chat::StopLookingForUpdates()
+{
+	m_stop.store(!m_stop.load());
+}
+
+void Chat::Clear() noexcept
+{
+	m_chatConversation->clear();
+	m_chatWritingBox->clear();
+}
+
 void Chat::showEvent(QShowEvent* event)
 {
-	if (firstShow) {
+	if (m_firstShow) {
 		m_chatWritingBox = findChild<ChatWritingBox*>("chatWritingBox");
 		m_chatConversation = findChild<ChatConversation*>("chatConversation");
-		firstShow = false;
+		m_firstShow = false;
 	}
 	QObject::connect(m_chatWritingBox, &ChatWritingBox::OnMessageSentToServer, this, [this](const QString& messageSent) {
 		QDateTime currentTime = QDateTime::currentDateTime();
 		QString formattedTime = currentTime.toString("hh:mm");
 		QString formattedMessage;
-		if (messageSent != m_wordToGuess)
-			formattedMessage = QString("[%1] <b>You:</b> <b style='color: blue;'>%3</b><br>").arg(formattedTime, messageSent);
-		else {
-			formattedMessage = QString("<b style='color: white; background-color: green; padding: 5px;'> You have guessed the word</b><br>");
-			m_chatWritingBox->setDisabled(true);
-		}
+		formattedMessage = QString("[%1] <b>You:</b> <b style='color: blue;'>%3</b><br>").arg(formattedTime, messageSent);
 		m_chatConversation->insertHtml(formattedMessage);
 		m_chatConversation->moveCursor(QTextCursor::End);
 	});
-	stop.store(false);
+	m_stop.store(false);
 
-	std::thread checkForMessagesUpdates(&Chat::CheckForNewMessages, this, std::ref(stop));
+	std::thread checkForMessagesUpdates(&Chat::CheckForNewMessages, this, std::ref(m_stop));
 	checkForMessagesUpdates.detach();
 }
 

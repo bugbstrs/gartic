@@ -35,8 +35,7 @@ public:
 	void ChangePenWidth(int width) noexcept;
 
 	void SetGameSettings(std::tuple<int, int, int> gameSettings);
-	//void SetIsDrawer(bool isDrawer);
-	
+	void StopCheckingForUpdates();
 	void Clear() noexcept;
 
 public slots:
@@ -80,29 +79,30 @@ private:
 	const std::string kPickingWord = "PickingWord";
 	const std::string kDrawing = "Drawing";
 	const std::string kFinished = "Finished";
-	std::atomic<bool> stop;
+	std::atomic<bool> m_stop;
 	int m_drawTime					 {};
 	int m_rounds					 {};
 	int m_wordsCount				 {};
 
-	bool firstShow					 { true };
+	bool m_firstShow				 { true };
 	bool m_isDrawer					 { true };
-	QLabel* wordToDraw				 { new QLabel{} };
-	QLabel* timerLabel				 { new QLabel{} };
-	QLabel* roundsLabel				 { new QLabel{} };
-	DrawingBoard* drawingBoard		 { new DrawingBoard{} };
-	ToolsFrame* toolsFrame			 { new ToolsFrame{} };
-	Chat* chat						 { new Chat{} };
-	ScoreboardTable* scoreboardTable { new ScoreboardTable{} };
+	QLabel* m_waitingTextLabel		 { new QLabel() };
+	QLabel* m_wordToDraw			 { new QLabel{} };
+	QLabel* m_timerLabel				 { new QLabel{} };
+	QLabel* m_roundsLabel				 { new QLabel{} };
+	DrawingBoard* m_drawingBoard		 { new DrawingBoard{} };
+	ToolsFrame* m_toolsFrame			 { new ToolsFrame{} };
+	Chat* m_chat						 { new Chat{} };
+	ScoreboardTable* m_scoreboardTable { new ScoreboardTable{} };
 
-	bool isEraserEnabled			 { false };
-	QCursor eraserCursor			 { QCursor(QPixmap(":/image/eraser_cursor").scaled(25, 25)) };
-	QCursor fillCursor				 { QCursor(QPixmap(":/image/fill_cursor").scaled(25, 25)) };
-	QCursor pencilCursor			 { Qt::CrossCursor };
+	bool m_isEraserEnabled			 { false };
+	QCursor m_eraserCursor			 { QCursor(QPixmap(":/image/eraser_cursor").scaled(25, 25)) };
+	QCursor m_fillCursor				 { QCursor(QPixmap(":/image/fill_cursor").scaled(25, 25)) };
+	QCursor m_pencilCursor			 { Qt::CrossCursor };
 
-	QWidget* backgroundForDrawer					{ new QWidget{} };
-	QWidget* backgroundForGuesser					{ new QWidget{} };
-	QHBoxLayout* wordsToChooseLayout				{ new QHBoxLayout{} };
-	QHBoxLayout* waitingForWordToBepickedLayout		{ new QHBoxLayout{} };
-	std::vector<QPushButton*> wordsToChoose			{};
+	QWidget* m_backgroundForDrawer					{ new QWidget{} };
+	QWidget* m_backgroundForGuesser					{ new QWidget{} };
+	QHBoxLayout* m_wordsToChooseLayout				{ new QHBoxLayout{} };
+	QHBoxLayout* m_waitingForWordToBepickedLayout		{ new QHBoxLayout{} };
+	std::vector<QPushButton*> m_wordsToChoose			{};
 };
