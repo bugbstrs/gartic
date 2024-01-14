@@ -1,1 +1,16 @@
-dadada
+De câți programatori este nevoie pentru a schimba un bec? De niciunul, este o problemă de hardware.
+How many programmers does it take to change a light bulb? None, it's a hardware problem.
+For a healthy life, consume 2L of code each day.
+Pentru o viață sănătoasă, consumați 2L de cod pe zi.
+Knock, knock. Who’s There? Very long pause… “Java.”
+Knock, knock. Who’s There? Very long pause… “Python.”
+Programming is 10% writing code and 90% understanding why it’s not working.
+You are the ; to my statements.
+Why do programmers prefer dark mode? Because light attracts bugs.
+What did the C++ Code say to the C code? You’ve got no class.
+Why did the programmer quit her job? Because she didn’t get arrays.
+Why do Java programmers have to wear glasses? Because they don’t C#
+Programmer: An organism that turns coffee into software.
+There’s no place like 127.0.0.1.
+If at first you don’t succeed, call it version 1.0.
+while (alive) { code ();}

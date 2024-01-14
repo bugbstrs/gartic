@@ -94,7 +94,7 @@ namespace http
 		int GenerateRandomId(bool isWordsEntity);
 
 	private:
-		const std::string kDbFile{ "products.sqlite" };
+		const std::string kDbFile{ "Gartic.sqlite" };
 		const std::string kWordsFile{ "words.txt" };
 		const std::string kUsersFile{ "users.txt" };
 		const std::string kBannedWordsFile{ "banned.txt" };
