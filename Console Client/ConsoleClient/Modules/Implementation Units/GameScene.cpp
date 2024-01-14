@@ -39,7 +39,8 @@ void GameScene::GetPlayers()
 			auto layout = new VerticalLayout{ Align::Left, Align::Up, Color::White, 20, 3, m_console, 0 };
 			m_players->AddObject(layout);
 			layout->AddObject(new Label{ Align::Left, Align::Up, color, Color::Black, 20, 1, m_console,
-										 std::string(player["name"]) });
+										 std::string(player["name"]) != User::GetUsername() ? std::string(player["name"]) :
+										 std::string(player["name"]) + " (You)" });
 			layout->AddObject(new Label{ Align::Left, Align::Up, color, Color::Black, 20, 1, m_console,
 										 std::string(player["points"]) });
 			++i;

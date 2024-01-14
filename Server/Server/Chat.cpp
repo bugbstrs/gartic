@@ -33,6 +33,12 @@ void http::Chat::VerifyMessage(const std::string& username, const std::string& m
 
 	if (IsCloseEnough(messageCopy))
 	{
+		if (GetPlayerByName(username)->GetGuessed())
+		{
+			m_messages[username].push_back("You allready guessed the word!");
+			return;
+		}
+
 		if (messageCopy == m_wordToGuess)
 		{
 			GetPlayerByName(username)->SetGuessed(true);
@@ -40,6 +46,12 @@ void http::Chat::VerifyMessage(const std::string& username, const std::string& m
 
 			CalculatePoints(username);
 
+			// Add guessed message to everyone
+			for (auto& messages : m_messages)
+				messages.second.push_back(username + " guessed the word!");
+
+			// Remove the default message for player and add a custme one
+			m_messages[username].pop_back();
 			m_messages[username].push_back("You guessed the word!");
 
 			int numberOfPlayersWhoGuessed{ 0 };
