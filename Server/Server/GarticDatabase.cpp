@@ -216,10 +216,10 @@ void http::GarticStorage::PopulateQuotesEntity()
 
 	filename.open(kQuotesFile);
 
-	while (filename >> quote)
+	while (std::getline(filename, quote)
 	{
 		quotes.push_back(quote);
-	}
+	})
 
 	for (const auto& quote : quotes)
 	{
