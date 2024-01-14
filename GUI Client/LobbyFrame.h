@@ -33,21 +33,21 @@ signals:
 	void OnLobbyLeft();
 
 private:
-	std::atomic<bool> stop;
-	bool leaveGame	{ false };
-	bool firstShow  { true };
+	std::atomic<bool> m_stop;
+	bool m_leaveGame	{ false };
+	bool m_firstShow  { true };
 	bool m_isLeader { false };
 
 	const std::string kWaitingToStart = "WaitingToStart";
 	const std::string kStartedGame = "StartedGame";
 
-	QComboBox* drawTimeComboBox{ new QComboBox{} };
-	QComboBox* roundsComboBox{ new QComboBox{} };
-	QComboBox* wordCountComboBox{ new QComboBox{} };
+	QComboBox* m_drawTimeComboBox{ new QComboBox{} };
+	QComboBox* m_roundsComboBox{ new QComboBox{} };
+	QComboBox* m_wordCountComboBox{ new QComboBox{} };
 
-	QLineEdit* codeLineEdit { new QLineEdit{} };
-	LobbyTable* lobbyTable{ new LobbyTable{} };
+	QLineEdit* m_codeLineEdit { new QLineEdit{} };
+	LobbyTable* m_lobbyTable{ new LobbyTable{} };
 
-	QPushButton* startGameButton{ new QPushButton{} };
-	QPushButton* leaveLobbyButton{ new QPushButton{} };
+	QPushButton* m_startGameButton{ new QPushButton{} };
+	QPushButton* m_leaveLobbyButton{ new QPushButton{} };
 };

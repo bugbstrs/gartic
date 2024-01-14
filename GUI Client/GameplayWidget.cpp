@@ -5,25 +5,24 @@
 
 GameplayWidget::GameplayWidget(QWidget* parent)
 	: QWidget{ parent },
-	stop(false)
-{
-}
+	m_stop(false)
+{}
 
 GameplayWidget::~GameplayWidget()
 {}
 
 void GameplayWidget::ChangePenColor(QColor color) noexcept
 {
-	if (isEraserEnabled) {
-		drawingBoard->setCursor(pencilCursor);
-		isEraserEnabled = false;
+	if (m_isEraserEnabled) {
+		m_drawingBoard->setCursor(m_pencilCursor);
+		m_isEraserEnabled = false;
 	}
-	drawingBoard->ChangePenColor(color);
+	m_drawingBoard->ChangePenColor(color);
 }
 
 void GameplayWidget::ChangePenWidth(int width) noexcept
 {
-	drawingBoard->ChangePenWidth(width);
+	m_drawingBoard->ChangePenWidth(width);
 }
 
 void GameplayWidget::SetGameSettings(std::tuple<int, int, int> gameSettings)
@@ -35,69 +34,69 @@ void GameplayWidget::SetGameSettings(std::tuple<int, int, int> gameSettings)
 
 void GameplayWidget::StopCheckingForUpdates()
 {
-	chat->StopLookingForUpdates();
-	drawingBoard->StopLookingForUpdates();
-	stop.store(!stop.load());
+	m_chat->StopLookingForUpdates();
+	m_drawingBoard->StopLookingForUpdates();
+	m_stop.store(!m_stop.load());
 }
 
 void GameplayWidget::Clear() noexcept
 {
-	isEraserEnabled = false;
-	wordToDraw->clear();
-	scoreboardTable->ClearScoreboard();
-	drawingBoard->setCursor(pencilCursor);
-	drawingBoard->ResetBoard();
-	toolsFrame->ResetCurrentColorView();
+	m_isEraserEnabled = false;
+	m_wordToDraw->clear();
+	m_scoreboardTable->ClearScoreboard();
+	m_drawingBoard->setCursor(m_pencilCursor);
+	m_drawingBoard->ResetBoard();
+	m_toolsFrame->ResetCurrentColorView();
 }
 
 void GameplayWidget::OnCanvasCleared() noexcept
 {
-	drawingBoard->ClearCanvas();
+	m_drawingBoard->ClearCanvas();
 }
 
 void GameplayWidget::OnPencilButtonReleased() noexcept
 {
-	isEraserEnabled = false;
-	drawingBoard->setCursor(pencilCursor);
-	drawingBoard->ToggleEraser(false);
-	drawingBoard->ToggleFill(false);
-	drawingBoard->EnablePencil();
+	m_isEraserEnabled = false;
+	m_drawingBoard->setCursor(m_pencilCursor);
+	m_drawingBoard->ToggleEraser(false);
+	m_drawingBoard->ToggleFill(false);
+	m_drawingBoard->EnablePencil();
 }
 
 void GameplayWidget::OnEraserButtonReleased() noexcept
 {
-	isEraserEnabled = true;
-	drawingBoard->setCursor(eraserCursor);
-	drawingBoard->ToggleEraser(true);
-	drawingBoard->ToggleFill(false);
+	m_isEraserEnabled = true;
+	m_drawingBoard->setCursor(m_eraserCursor);
+	m_drawingBoard->ToggleEraser(true);
+	m_drawingBoard->ToggleFill(false);
 }
 
 void GameplayWidget::OnUndoButtonReleased() noexcept
 {
-	drawingBoard->UndoLastPath();
+	m_drawingBoard->UndoLastPath();
 }
 
 void GameplayWidget::OnFillButtonReleased() noexcept
 {
-	isEraserEnabled = false;
-	drawingBoard->setCursor(fillCursor);
-	drawingBoard->ToggleEraser(false);
-	drawingBoard->ToggleFill(true);
+	m_isEraserEnabled = false;
+	m_drawingBoard->setCursor(m_fillCursor);
+	m_drawingBoard->ToggleEraser(false);
+	m_drawingBoard->ToggleFill(true);
 }
 
 void GameplayWidget::ShowDrawerInterface()
 {
 	QMetaObject::invokeMethod(this, [this]() {
-		if (!backgroundForGuesser->isHidden())
-			backgroundForGuesser->hide();
-		scoreboardTable->ResetGuessedIcons();
-		drawingBoard->SetupForDrawer(true);
-		drawingBoard->setDisabled(false);
-		toolsFrame->show();
-		drawingBoard->ResetBoard();
-		backgroundForDrawer->show();
-		drawingBoard->SetIsChoosingWord(true);
-		chat->ToggleAccessToWritingMessages(false);
+		if (!m_backgroundForGuesser->isHidden())
+			m_backgroundForGuesser->hide();
+		m_scoreboardTable->ResetGuessedIcons();
+		m_drawingBoard->SetupForDrawer(true);
+		m_drawingBoard->setDisabled(false);
+		m_toolsFrame->show();
+		m_drawingBoard->ResetBoard();
+		m_backgroundForDrawer->show();
+		m_drawingBoard->SetIsChoosingWord(true);
+		m_chat->ToggleAccessToWritingMessages(false);
 		bool responseAccepted = false;
 		while (!responseAccepted) {
 			cpr::Response response = cpr::Get(
@@ -121,45 +120,45 @@ void GameplayWidget::ShowDrawerInterface()
 void GameplayWidget::ShowGuesserInterface()
 {
 	QMetaObject::invokeMethod(this, [this]() {
-		if (!backgroundForDrawer->isHidden())
-			backgroundForDrawer->hide();
-		if (!wordsToChoose.empty()) {
-			for (QPushButton* button : wordsToChoose) {
+		if (!m_backgroundForDrawer->isHidden())
+			m_backgroundForDrawer->hide();
+		if (!m_wordsToChoose.empty()) {
+			for (QPushButton* button : m_wordsToChoose) {
 				delete button;
 			}
-			wordsToChoose.clear();
+			m_wordsToChoose.clear();
 		}
-		drawingBoard->ClearCanvas();
-		backgroundForGuesser->show();
-		waitingTextLabel->show();
-		waitingTextLabel->raise();
-		scoreboardTable->ResetGuessedIcons();
-		chat->ToggleAccessToWritingMessages(true);
-		toolsFrame->hide();
-		drawingBoard->SetIsChoosingWord(true);
-		drawingBoard->SetupForDrawer(false);
+		m_drawingBoard->ClearCanvas();
+		m_backgroundForGuesser->show();
+		m_waitingTextLabel->show();
+		m_waitingTextLabel->raise();
+		m_scoreboardTable->ResetGuessedIcons();
+		m_chat->ToggleAccessToWritingMessages(true);
+		m_toolsFrame->hide();
+		m_drawingBoard->SetIsChoosingWord(true);
+		m_drawingBoard->SetupForDrawer(false);
 	}, Qt::QueuedConnection);
 }
 
 void GameplayWidget::BackgroundChangeForGuessersOnDrawerPickingWord()
 {
 	QMetaObject::invokeMethod(this, [this]() {
-		drawingBoard->SetIsChoosingWord(false);
-		drawingBoard->setDisabled(true);
-		backgroundForGuesser->hide();
+		m_drawingBoard->SetIsChoosingWord(false);
+		m_drawingBoard->setDisabled(true);
+		m_backgroundForGuesser->hide();
 	}, Qt::QueuedConnection);
 }
 
 void GameplayWidget::BackgroundChangeForDrawer()
 {
 	QMetaObject::invokeMethod(this, [this]() {
-		for (QPushButton* button : wordsToChoose) {
+		for (QPushButton* button : m_wordsToChoose) {
 			delete button;
 		}
-		scoreboardTable->ResetGuessedIcons();
-		wordsToChoose.clear();
-		backgroundForDrawer->hide();
-		drawingBoard->SetIsChoosingWord(false);
+		m_scoreboardTable->ResetGuessedIcons();
+		m_wordsToChoose.clear();
+		m_backgroundForDrawer->hide();
+		m_drawingBoard->SetIsChoosingWord(false);
 	}, Qt::QueuedConnection);
 }
 
@@ -176,7 +175,7 @@ void GameplayWidget::CheckTime(std::atomic<bool>& stop)
 		if (fetchedTime.status_code == 200) {
 			auto timeText = crow::json::load(fetchedTime.text);
 			if (timeText.has("time"));
-			timerLabel->setText(QString::fromUtf8(std::string(timeText["time"])));
+			m_timerLabel->setText(QString::fromUtf8(std::string(timeText["time"])));
 		}
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
@@ -212,9 +211,9 @@ void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
 				}
 				for (int index = 0; index < playersResponse["players"].size(); index++) {
 					if (std::string(playersResponse["players"][index]["guessed"]) == "true") {
-						scoreboardTable->MarkGuessedForPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])));
+						m_scoreboardTable->MarkGuessedForPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])));
 					}
-					scoreboardTable->SetPointsToPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])), std::stoi(std::string(playersResponse["players"][index]["points"])));
+					m_scoreboardTable->SetPointsToPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])), std::stoi(std::string(playersResponse["players"][index]["points"])));
 				}
 			}
 		}
@@ -229,10 +228,10 @@ void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
 		if (fetchedGameStatus.status_code == 200) {
 			auto gameStatusText = crow::json::load(fetchedGameStatus.text);
 			if (std::string(gameStatusText["status"]) == kDrawing) {
-				if (!m_isDrawer && !backgroundForGuesser->isHidden()) {
+				if (!m_isDrawer && !m_backgroundForGuesser->isHidden()) {
 					BackgroundChangeForGuessersOnDrawerPickingWord();
 				}
-				if (m_isDrawer && !backgroundForDrawer->isHidden()) {
+				if (m_isDrawer && !m_backgroundForDrawer->isHidden()) {
 					BackgroundChangeForDrawer();
 				}
 				auto randomWordPicked = cpr::Get(
@@ -245,7 +244,7 @@ void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
 				if (randomWordPicked.status_code == 200) {
 					auto pickedWord = crow::json::load(randomWordPicked.text);
 					if (pickedWord.has("word"))
-						wordToDraw->setText(QString::fromUtf8(std::string(pickedWord["word"])));
+						m_wordToDraw->setText(QString::fromUtf8(std::string(pickedWord["word"])));
 				}
 			}
 			if (std::string(gameStatusText["status"]) == kPickingWord) {
@@ -271,10 +270,10 @@ void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
 							}
 						}
 					}
-					wordToDraw->clear();
-					if (m_isDrawer && backgroundForDrawer->isHidden())
+					m_wordToDraw->clear();
+					if (m_isDrawer && m_backgroundForDrawer->isHidden())
 						ShowDrawerInterface();
-					if (!m_isDrawer && backgroundForGuesser->isHidden())
+					if (!m_isDrawer && m_backgroundForGuesser->isHidden())
 						ShowGuesserInterface();
 				}
 			}
@@ -288,16 +287,16 @@ void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
 				);
 				if (finalPlayersFetch.status_code == 200) {
 					auto playersResponse = crow::json::load(finalPlayersFetch.text);
-					drawingBoard->ClearCanvas();
-					scoreboardTable->ClearScoreboard();
+					m_drawingBoard->ClearCanvas();
+					m_scoreboardTable->ClearScoreboard();
 					for (int index = 0; index < playersResponse["players"].size(); index++) {
-						scoreboardTable->SetPointsToPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])), std::stoi(std::string(playersResponse["players"][index]["points"])));
+						m_scoreboardTable->SetPointsToPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])), std::stoi(std::string(playersResponse["players"][index]["points"])));
 					}
 				}
 				stop.store(true);
-				chat->StopLookingForUpdates();
-				drawingBoard->StopLookingForUpdates();
-				scoreboardTable->StopCheckingForPlayers();
+				m_chat->StopLookingForUpdates();
+				m_drawingBoard->StopLookingForUpdates();
+				m_scoreboardTable->StopCheckingForPlayers();
 				m_isDrawer = false;
 				emit(OnGameFinished());
 			}
@@ -323,7 +322,7 @@ void GameplayWidget::CheckForLessNecessaryUpdates(std::atomic<bool>& stop)
 		if (fetchedRoundNumber.status_code == 200) {
 			auto roundText = crow::json::load(fetchedRoundNumber.text);
 			if (roundText.has("round"))
-				roundsLabel->setText(QString("Round %1").arg(QString::fromUtf8(std::string(roundText["round"]))));
+				m_roundsLabel->setText(QString("Round %1").arg(QString::fromUtf8(std::string(roundText["round"]))));
 		}
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
@@ -331,7 +330,7 @@ void GameplayWidget::CheckForLessNecessaryUpdates(std::atomic<bool>& stop)
 
 void GameplayWidget::AddPlayers()
 {
-	scoreboardTable->model()->sort(1, Qt::DescendingOrder);
+	m_scoreboardTable->model()->sort(1, Qt::DescendingOrder);
 }
 
 void GameplayWidget::AddWordOption(const std::string& word)
@@ -366,8 +365,8 @@ void GameplayWidget::AddWordOption(const std::string& word)
 		"    color: white;"
 		"}"
 	);
-	wordsToChoose.push_back(wordButton);
-	wordsToChooseLayout->addWidget(wordButton);
+	m_wordsToChoose.push_back(wordButton);
+	m_wordsToChooseLayout->addWidget(wordButton);
 	QObject::connect(wordButton, &QPushButton::released, [this, wordButton]() {
 		bool accepted = false;
 
@@ -392,46 +391,46 @@ void GameplayWidget::AddWordOption(const std::string& word)
 
 void GameplayWidget::showEvent(QShowEvent* event) {
 
-	if (firstShow) {
-		wordToDraw = findChild<QLabel*>("wordToGuessLabel");
-		timerLabel = findChild<QLabel*>("timerLabel");
-		roundsLabel = findChild<QLabel*>("roundsLabel");
-		drawingBoard = findChild<DrawingBoard*>("drawingBoardCanvas");
-		toolsFrame = findChild<ToolsFrame*>("toolsFrame");
-		chat = findChild<Chat*>("chatFrame");
-		scoreboardTable = findChild<ScoreboardTable*>("scoreboardTable");
-		backgroundForDrawer = new QWidget(drawingBoard);
-		backgroundForGuesser = new QWidget(drawingBoard);
-		wordsToChooseLayout = new QHBoxLayout(backgroundForDrawer);
-		waitingForWordToBepickedLayout = new QHBoxLayout(backgroundForGuesser);
+	if (m_firstShow) {
+		m_wordToDraw = findChild<QLabel*>("wordToGuessLabel");
+		m_timerLabel = findChild<QLabel*>("timerLabel");
+		m_roundsLabel = findChild<QLabel*>("roundsLabel");
+		m_drawingBoard = findChild<DrawingBoard*>("drawingBoardCanvas");
+		m_toolsFrame = findChild<ToolsFrame*>("toolsFrame");
+		m_chat = findChild<Chat*>("chatFrame");
+		m_scoreboardTable = findChild<ScoreboardTable*>("scoreboardTable");
+		m_backgroundForDrawer = new QWidget(m_drawingBoard);
+		m_backgroundForGuesser = new QWidget(m_drawingBoard);
+		m_wordsToChooseLayout = new QHBoxLayout(m_backgroundForDrawer);
+		m_waitingForWordToBepickedLayout = new QHBoxLayout(m_backgroundForGuesser);
 
-		waitingTextLabel->setStyleSheet("QLabel {"
+		m_waitingTextLabel->setStyleSheet("QLabel {"
 			"  text-align: center;"
 			"  font-size: 24px;"
 			"  font-family: Consolas, monospace;"
 			"}");
-		waitingTextLabel->setText(QString("Waiting for ") + QString(scoreboardTable->itemAt(0, 0)->text()) + QString(" to choose a word..."));
-		drawingBoard->SetIsChoosingWord(true);
-		backgroundForGuesser->setStyleSheet(
+		m_waitingTextLabel->setText(QString("Waiting for ") + QString(m_scoreboardTable->itemAt(0, 0)->text()) + QString(" to choose a word..."));
+		m_drawingBoard->SetIsChoosingWord(true);
+		m_backgroundForGuesser->setStyleSheet(
 			"background-color: grey;"
 		);
-		waitingForWordToBepickedLayout->addWidget(waitingTextLabel);
-		waitingTextLabel->raise();
-		waitingForWordToBepickedLayout->setAlignment(Qt::AlignCenter);
-		backgroundForGuesser->setLayout(waitingForWordToBepickedLayout);
+		m_waitingForWordToBepickedLayout->addWidget(m_waitingTextLabel);
+		m_waitingTextLabel->raise();
+		m_waitingForWordToBepickedLayout->setAlignment(Qt::AlignCenter);
+		m_backgroundForGuesser->setLayout(m_waitingForWordToBepickedLayout);
 
-		QObject::connect(toolsFrame, &ToolsFrame::OnColorChangedSignal, this, &GameplayWidget::ChangePenColor);
-		QObject::connect(toolsFrame, &ToolsFrame::OnWidthChangedSignal, this, &GameplayWidget::ChangePenWidth);
-		QObject::connect(toolsFrame, &ToolsFrame::OnEraserButtonReleasedSignal, this, &GameplayWidget::OnEraserButtonReleased);
-		QObject::connect(toolsFrame, &ToolsFrame::OnUndoButtonReleasedSignal, this, &GameplayWidget::OnUndoButtonReleased);
-		QObject::connect(toolsFrame, &ToolsFrame::OnFillButtonReleasedSignal, this, &GameplayWidget::OnFillButtonReleased);
-		QObject::connect(toolsFrame, &ToolsFrame::OnCanvasClearedSignal, this, &GameplayWidget::OnCanvasCleared);
-		QObject::connect(toolsFrame, &ToolsFrame::OnPencilButtonReleasedSignal, this, &GameplayWidget::OnPencilButtonReleased);
+		QObject::connect(m_toolsFrame, &ToolsFrame::OnColorChangedSignal, this, &GameplayWidget::ChangePenColor);
+		QObject::connect(m_toolsFrame, &ToolsFrame::OnWidthChangedSignal, this, &GameplayWidget::ChangePenWidth);
+		QObject::connect(m_toolsFrame, &ToolsFrame::OnEraserButtonReleasedSignal, this, &GameplayWidget::OnEraserButtonReleased);
+		QObject::connect(m_toolsFrame, &ToolsFrame::OnUndoButtonReleasedSignal, this, &GameplayWidget::OnUndoButtonReleased);
+		QObject::connect(m_toolsFrame, &ToolsFrame::OnFillButtonReleasedSignal, this, &GameplayWidget::OnFillButtonReleased);
+		QObject::connect(m_toolsFrame, &ToolsFrame::OnCanvasClearedSignal, this, &GameplayWidget::OnCanvasCleared);
+		QObject::connect(m_toolsFrame, &ToolsFrame::OnPencilButtonReleasedSignal, this, &GameplayWidget::OnPencilButtonReleased);
 
-		backgroundForDrawer->setGeometry(0, 0, drawingBoard->width(), drawingBoard->height());
-		backgroundForGuesser->setGeometry(0, 0, drawingBoard->width(), drawingBoard->height());
+		m_backgroundForDrawer->setGeometry(0, 0, m_drawingBoard->width(), m_drawingBoard->height());
+		m_backgroundForGuesser->setGeometry(0, 0, m_drawingBoard->width(), m_drawingBoard->height());
 
-		firstShow = false;
+		m_firstShow = false;
 	}
 
 	AddPlayers();
@@ -463,7 +462,7 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 			fetchedPlayersCorrectly = true;
 		}
 	}
-	backgroundForDrawer->setStyleSheet(
+	m_backgroundForDrawer->setStyleSheet(
 		"background-image: url(:/settings/WordsBackground);"
 		"background-position: center;"
 		"background-repeat: no-repeat;"
@@ -475,11 +474,11 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 		ShowGuesserInterface();
 	}
 
-	stop.store(false);
+	m_stop.store(false);
 
-	std::thread checkForLobbyUpdates(&GameplayWidget::CheckForUpdatesInGameScene, this, std::ref(stop));
-	std::thread checkFurLessNecessaryUpdates(&GameplayWidget::CheckForLessNecessaryUpdates, this, std::ref(stop));
-	std::thread checkTime(&GameplayWidget::CheckTime, this, std::ref(stop));
+	std::thread checkForLobbyUpdates(&GameplayWidget::CheckForUpdatesInGameScene, this, std::ref(m_stop));
+	std::thread checkFurLessNecessaryUpdates(&GameplayWidget::CheckForLessNecessaryUpdates, this, std::ref(m_stop));
+	std::thread checkTime(&GameplayWidget::CheckTime, this, std::ref(m_stop));
 
 	checkForLobbyUpdates.detach();
 	checkFurLessNecessaryUpdates.detach();

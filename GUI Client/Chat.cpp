@@ -6,7 +6,7 @@
 
 Chat::Chat(QWidget *parent)
 	: QFrame{ parent },
-	stop(false)
+	m_stop(false)
 {}
 
 Chat::~Chat()
@@ -35,7 +35,7 @@ void Chat::AddMessageInChat(const QString& newMessage) noexcept
 
 void Chat::StopCheckingForUpdates(bool value)
 {
-	stop.store(true);
+	m_stop.store(true);
 }
 
 void Chat::SetWordToGuess(QString wordToGuess) noexcept
@@ -60,10 +60,10 @@ void Chat::ToggleAccessToWritingMessages(bool canWrite)
 
 void Chat::StopLookingForUpdates()
 {
-	stop.store(!stop.load());
+	m_stop.store(!m_stop.load());
 }
 
-void Chat::Clear()
+void Chat::Clear() noexcept
 {
 	m_chatConversation->clear();
 	m_chatWritingBox->clear();
@@ -71,10 +71,10 @@ void Chat::Clear()
 
 void Chat::showEvent(QShowEvent* event)
 {
-	if (firstShow) {
+	if (m_firstShow) {
 		m_chatWritingBox = findChild<ChatWritingBox*>("chatWritingBox");
 		m_chatConversation = findChild<ChatConversation*>("chatConversation");
-		firstShow = false;
+		m_firstShow = false;
 	}
 	QObject::connect(m_chatWritingBox, &ChatWritingBox::OnMessageSentToServer, this, [this](const QString& messageSent) {
 		QDateTime currentTime = QDateTime::currentDateTime();
@@ -84,9 +84,9 @@ void Chat::showEvent(QShowEvent* event)
 		m_chatConversation->insertHtml(formattedMessage);
 		m_chatConversation->moveCursor(QTextCursor::End);
 	});
-	stop.store(false);
+	m_stop.store(false);
 
-	std::thread checkForMessagesUpdates(&Chat::CheckForNewMessages, this, std::ref(stop));
+	std::thread checkForMessagesUpdates(&Chat::CheckForNewMessages, this, std::ref(m_stop));
 	checkForMessagesUpdates.detach();
 }
 
