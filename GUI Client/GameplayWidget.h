@@ -52,7 +52,9 @@ signals:
 	void OnGameFinished();
 
 private:
+	void CheckTime(std::atomic<bool>& stop);
 	void CheckForUpdatesInGameScene(std::atomic<bool>& stop);
+	void CheckForLessNecessaryUpdates(std::atomic<bool>& stop);
 	void AddPlayers();
 	void AddWordOption(const std::string& word);
 

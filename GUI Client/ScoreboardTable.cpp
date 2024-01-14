@@ -117,20 +117,21 @@ void ScoreboardTable::CheckForScoreboardUpdates(std::atomic<bool>& stop)
 		if (response.status_code == 200)
 		{
 			auto playersResponse = crow::json::load(response.text);
-			
-			if (playersResponse["players"].size() != takenAvatars.size()) {
-				int indexToRemove = -1;
-				for (int index = 0; index < playersResponse["players"].size(); index++) {
-					if (std::string(playersResponse["players"][index]["name"]) != std::get<1>(takenAvatars[index]).toUtf8().constData()) {
-						indexToRemove = index;
-						break;
+			if (playersResponse.has("players")) {
+				if (playersResponse["players"].size() != takenAvatars.size()) {
+					int indexToRemove = -1;
+					for (int index = 0; index < playersResponse["players"].size(); index++) {
+						if (std::string(playersResponse["players"][index]["name"]) != std::get<1>(takenAvatars[index]).toUtf8().constData()) {
+							indexToRemove = index;
+							break;
+						}
 					}
+					if (indexToRemove == -1) {
+						indexToRemove = takenAvatars.size() - 1;
+					}
+					takenAvatars.erase(takenAvatars.begin() + indexToRemove);
+					removeRow(indexToRemove);
 				}
-				if (indexToRemove == -1) {
-					indexToRemove = takenAvatars.size() - 1;
-				}
-				takenAvatars.erase(takenAvatars.begin() + indexToRemove);
-				removeRow(indexToRemove);
 			}
 		}
 		std::this_thread::sleep_for(std::chrono::seconds(1));

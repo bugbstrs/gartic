@@ -82,23 +82,29 @@ void GameplayWidget::ShowDrawerInterface()
 	QMetaObject::invokeMethod(this, [this]() {
 		if (!backgroundForGuesser->isHidden())
 			backgroundForGuesser->hide();
+		drawingBoard->SetupForDrawer(true);
 		drawingBoard->setDisabled(false);
 		toolsFrame->show();
+		drawingBoard->ResetBoard();
 		backgroundForDrawer->show();
 		drawingBoard->SetIsChoosingWord(true);
-		drawingBoard->SetupForDrawer(true);
-		drawingBoard->ClearCanvas();
 		chat->ToggleAccessToWritingMessages(false);
-		cpr::Response response = cpr::Get(
-			cpr::Url{ "http://localhost:18080/fetchwordstoguess" },
-			cpr::Parameters{
-				{"password", UserCredentials::GetPassword()},
-				{"username", UserCredentials::GetUsername()}
+		bool responseAccepted = false;
+		while (!responseAccepted) {
+			cpr::Response response = cpr::Get(
+				cpr::Url{ "http://localhost:18080/fetchwordstoguess" },
+				cpr::Parameters{
+					{"password", UserCredentials::GetPassword()},
+					{"username", UserCredentials::GetUsername()}
+				}
+			);
+			if (response.status_code == 200) {
+				auto words = crow::json::load(response.text);
+				for (int index = 0; index < words["words"].size(); index++) {
+					AddWordOption(std::string(words["words"][index]));
+				}
+				responseAccepted = true;
 			}
-		);
-		auto words = crow::json::load(response.text);
-		for (int index = 0; index < words["words"].size(); index++) {
-			AddWordOption(std::string(words["words"][index]));
 		}
 	}, Qt::QueuedConnection);
 }
@@ -108,11 +114,17 @@ void GameplayWidget::ShowGuesserInterface()
 	QMetaObject::invokeMethod(this, [this]() {
 		if (!backgroundForDrawer->isHidden())
 			backgroundForDrawer->hide();
+		if (!wordsToChoose.empty()) {
+			for (QPushButton* button : wordsToChoose) {
+				delete button;
+			}
+			wordsToChoose.clear();
+		}
+		drawingBoard->ResetBoard();
 		chat->ToggleAccessToWritingMessages(true);
 		toolsFrame->hide();
 		backgroundForGuesser->show();
 		drawingBoard->SetIsChoosingWord(true);
-		drawingBoard->ClearCanvas();
 		drawingBoard->SetupForDrawer(false);
 	}, Qt::QueuedConnection);
 }
@@ -138,7 +150,7 @@ void GameplayWidget::BackgroundChangeForDrawer()
 	}, Qt::QueuedConnection);
 }
 
-void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
+void GameplayWidget::CheckTime(std::atomic<bool>& stop)
 {
 	while (!stop.load()) {
 		auto fetchedTime = cpr::Get(
@@ -148,34 +160,51 @@ void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
 				{"password", UserCredentials::GetPassword()}
 			}
 		);
-		auto timeText = crow::json::load(fetchedTime.text);
-		timerLabel->setText(QString::fromUtf8(std::string(timeText["time"])));
+		if (fetchedTime.status_code == 200) {
+			auto timeText = crow::json::load(fetchedTime.text);
+			if (timeText.has("time"));
+			timerLabel->setText(QString::fromUtf8(std::string(timeText["time"])));
+		}
 
-		auto response = cpr::Get(
+		std::this_thread::sleep_for(std::chrono::milliseconds(200));
+	}
+	if (stop.load()) {
+
+	}
+}
+
+void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
+{
+	while (!stop.load()) {
+		auto fetchedPlayers = cpr::Get(
 			cpr::Url{ "http://localhost:18080/fetchplayers" },
 			cpr::Parameters{
 				{"password", UserCredentials::GetPassword()},
 				{"username", UserCredentials::GetUsername()}
 			}
 		);
-		auto playersResponse = crow::json::load(response.text);
-		for (int index = 0; index < playersResponse["players"].size(); index++) {
-			if (std::string(playersResponse["players"][index]["name"]) == UserCredentials::GetUsername()) {
-				if (std::stoi(std::string(playersResponse["drawer index"])) == index) {
-					m_isDrawer = true;
+		if (fetchedPlayers.status_code == 200) {
+			auto playersResponse = crow::json::load(fetchedPlayers.text);
+			if (playersResponse.has("players")) {
+				for (int index = 0; index < playersResponse["players"].size(); index++) {
+					if (std::string(playersResponse["players"][index]["name"]) == UserCredentials::GetUsername()) {
+						if (std::stoi(std::string(playersResponse["drawer index"])) == index) {
+							m_isDrawer = true;
+						}
+						else {
+							m_isDrawer = false;
+						}
+						chat->SetChatConfigurationAccordingToPlayerType(m_isDrawer);
+						break;
+					}
 				}
-				else {
-					m_isDrawer = false;
+				for (int index = 0; index < playersResponse["players"].size(); index++) {
+					if (std::string(playersResponse["players"][index]["guessed"]) == "true") {
+						scoreboardTable->MarkGuessedForPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])));
+					}
+					scoreboardTable->SetPointsToPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])), std::stoi(std::string(playersResponse["players"][index]["points"])));
 				}
-				chat->SetChatConfigurationAccordingToPlayerType(m_isDrawer);
-				break;
 			}
-		}
-		for (int index = 0; index < playersResponse["players"].size(); index++) {
-			if (std::string(playersResponse["players"][index]["guessed"]) == "true") {
-				scoreboardTable->MarkGuessedForPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])));
-			}
-			scoreboardTable->SetPointsToPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])), std::stoi(std::string(playersResponse["players"][index]["points"])));
 		}
 
 		auto fetchedGameStatus = cpr::Get(
@@ -201,8 +230,11 @@ void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
 						{"password", UserCredentials::GetPassword()}
 					}
 				);
-				auto pickedWord = crow::json::load(randomWordPicked.text);
-				wordToDraw->setText(QString::fromUtf8(std::string(pickedWord["word"])));
+				if (randomWordPicked.status_code == 200) {
+					auto pickedWord = crow::json::load(randomWordPicked.text);
+					if (pickedWord.has("word"))
+						wordToDraw->setText(QString::fromUtf8(std::string(pickedWord["word"])));
+				}
 			}
 			if (std::string(gameStatusText["status"]) == kPickingWord) {
 				wordToDraw->clear();
@@ -212,7 +244,7 @@ void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
 					ShowGuesserInterface();
 			}
 			if (std::string(gameStatusText["status"]) == kFinished) {
-				auto response = cpr::Get(
+				auto finalPlayersFetch = cpr::Get(
 					cpr::Url{ "http://localhost:18080/fetchplayers" },
 					cpr::Parameters{
 						{"password", UserCredentials::GetPassword()},
@@ -220,30 +252,43 @@ void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
 					}
 				);
 				stop.store(true);
-				auto playersResponse = crow::json::load(response.text);
-				for (int index = 0; index < playersResponse["players"].size(); index++) {
-					scoreboardTable->SetPointsToPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])), std::stoi(std::string(playersResponse["players"][index]["points"])));
+				if (finalPlayersFetch.status_code == 200) {
+					auto playersResponse = crow::json::load(finalPlayersFetch.text);
+					for (int index = 0; index < playersResponse["players"].size(); index++) {
+						scoreboardTable->SetPointsToPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])), std::stoi(std::string(playersResponse["players"][index]["points"])));
+					}
 				}
 				emit(OnGameFinished());
 			}
 
 		}
-
-		auto fetchRoundNumber = cpr::Get(
-			cpr::Url{ "http://localhost:18080/fetchroundnumber" },
-			cpr::Parameters{
-				{"username", UserCredentials::GetUsername()},
-				{"password", UserCredentials::GetPassword()}
-			}
-		);
 		
-		auto roundText = crow::json::load(fetchRoundNumber.text);
-		roundsLabel->setText(QString("Round %1").arg(QString::fromUtf8(std::string(roundText["round"]))));
-
-		std::this_thread::sleep_for(std::chrono::milliseconds(200));
+		std::this_thread::sleep_for(std::chrono::milliseconds(700));
 	}
 	if (stop.load()) {
 
+	}
+}
+
+void GameplayWidget::CheckForLessNecessaryUpdates(std::atomic<bool>& stop)
+{
+	while (!stop.load()) {
+		if (timerLabel->text().toInt() < 5) {
+			auto fetchedRoundNumber = cpr::Get(
+				cpr::Url{ "http://localhost:18080/fetchroundnumber" },
+				cpr::Parameters{
+					{"username", UserCredentials::GetUsername()},
+					{"password", UserCredentials::GetPassword()}
+				}
+			);
+
+			if (fetchedRoundNumber.status_code == 200) {
+				auto roundText = crow::json::load(fetchedRoundNumber.text);
+				if (roundText.has("round"))
+					roundsLabel->setText(QString("Round %1").arg(QString::fromUtf8(std::string(roundText["round"]))));
+			}
+		}
+		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 }
 
@@ -354,23 +399,27 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 
 	AddPlayers();
 
-	auto response = cpr::Get(
+	auto fetchedPlayers = cpr::Get(
 		cpr::Url{ "http://localhost:18080/fetchplayers" },
 		cpr::Parameters{
 			{"password", UserCredentials::GetPassword()},
 			{"username", UserCredentials::GetUsername()}
 		}
 	);
-	auto playersResponse = crow::json::load(response.text);
-	for (int index = 0; index < playersResponse["players"].size(); index++) {
-		if (std::string(playersResponse["players"][index]["name"]) == UserCredentials::GetUsername()) {
-			if (std::stoi(std::string(playersResponse["drawer index"])) == index) {
-				m_isDrawer = true;
+	if (fetchedPlayers.status_code == 200) {
+		auto playersResponse = crow::json::load(fetchedPlayers.text);
+		if (playersResponse.has("players")) {
+			for (int index = 0; index < playersResponse["players"].size(); index++) {
+				if (std::string(playersResponse["players"][index]["name"]) == UserCredentials::GetUsername()) {
+					if (std::stoi(std::string(playersResponse["drawer index"])) == index) {
+						m_isDrawer = true;
+					}
+					else {
+						m_isDrawer = false;
+					}
+					break;
+				}
 			}
-			else {
-				m_isDrawer = false;
-			}
-			break;
 		}
 	}
 	backgroundForDrawer->setStyleSheet(
@@ -389,5 +438,10 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 	stop.store(false);
 
 	std::thread checkForLobbyUpdates(&GameplayWidget::CheckForUpdatesInGameScene, this, std::ref(stop));
+	std::thread checkFurLessNecessaryUpdates(&GameplayWidget::CheckForLessNecessaryUpdates, this, std::ref(stop));
+	std::thread checkTime(&GameplayWidget::CheckTime, this, std::ref(stop));
+
 	checkForLobbyUpdates.detach();
+	checkFurLessNecessaryUpdates.detach();
+	checkTime.detach();
 }

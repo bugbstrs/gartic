@@ -98,7 +98,6 @@ void MainWindow::OnCreateLobbyButtonReleased() noexcept {
             {"password", UserCredentials::GetPassword()}
         }
     );
-    auto codeText = crow::json::load(code.text);
 
     auto users = cpr::Get(
         cpr::Url{ "http://localhost:18080/fetchusers" },
@@ -107,9 +106,10 @@ void MainWindow::OnCreateLobbyButtonReleased() noexcept {
             {"password", UserCredentials::GetPassword()}
         }
     );
-    auto usersVector = crow::json::load(users.text);
 
     if (code.status_code == 200 && users.status_code == 200) {
+        auto codeText = crow::json::load(code.text);
+        auto usersVector = crow::json::load(users.text);
         ui->lobbyFrame->SetLeaderStatus(true);
         ui->stackedWidget->setCurrentWidget(ui->LobbyScene);
         ui->lobbyTable->AddPlayer(std::string(usersVector["users"][0]));
@@ -146,12 +146,14 @@ void MainWindow::OnLobbyCodeAccepted(std::string codeText) noexcept {
                 {"password", UserCredentials::GetPassword()}
             }
         );
-        auto usersVector = crow::json::load(users.text);
-        for (int index = 0; index < usersVector["users"].size(); index++)
-            ui->lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
+        if (users.status_code == 200) {
+            auto usersVector = crow::json::load(users.text);
+            for (int index = 0; index < usersVector["users"].size(); index++)
+                ui->lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
 
-        ui->codeLineEdit->setText(QString::fromUtf8(codeText));
-        ui->stackedWidget->setCurrentWidget(ui->LobbyScene);
+            ui->codeLineEdit->setText(QString::fromUtf8(codeText));
+            ui->stackedWidget->setCurrentWidget(ui->LobbyScene);
+        }
     }
 }
 void MainWindow::OnGoToMenuFromJoinLobbyButtonReleased() noexcept { ui->stackedWidget->setCurrentWidget(ui->MainMenuScene); }

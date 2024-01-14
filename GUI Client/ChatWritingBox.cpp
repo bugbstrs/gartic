@@ -16,6 +16,8 @@ void ChatWritingBox::OnEnterPressed() noexcept {
 			{"message", std::string(text().toUtf8().constData())}
 		}
 	);
-	emit OnMessageSentToServer(text());
-	clear();
+	if (putMessageInChat.status_code == 200) {
+		emit OnMessageSentToServer(text());
+		clear();
+	}
 }

@@ -22,20 +22,22 @@ void MatchHistoryTable::showEvent(QShowEvent* event)
 		}
 	);
 
-	auto profileInfoVector = crow::json::load(profileInfo.text);
+	if (profileInfo.status_code == 200) {
+		auto profileInfoVector = crow::json::load(profileInfo.text);
 
-	int nrOfMatches = profileInfoVector["info"].size();
-	setColumnCount(m_columnsNumber);
-	setRowCount(nrOfMatches);
+		int nrOfMatches = profileInfoVector["info"].size();
+		setColumnCount(m_columnsNumber);
+		setRowCount(nrOfMatches);
 
-	for (int row = 0; row < nrOfMatches; ++row) {
-		QTableWidgetItem* positionItem = new QTableWidgetItem(QString::fromUtf8(std::string(profileInfoVector["info"][row]["rank"])));
-		positionItem->setTextAlignment(Qt::AlignCenter);
-		setItem(row, 0, positionItem);
+		for (int row = 0; row < nrOfMatches; ++row) {
+			QTableWidgetItem* positionItem = new QTableWidgetItem(QString::fromUtf8(std::string(profileInfoVector["info"][row]["rank"])));
+			positionItem->setTextAlignment(Qt::AlignCenter);
+			setItem(row, 0, positionItem);
 
-		QTableWidgetItem* pointsItem = new QTableWidgetItem(QString::fromUtf8(std::string(profileInfoVector["info"][row]["points"])));
-		pointsItem->setTextAlignment(Qt::AlignCenter);
-		setItem(row, 1, pointsItem);
+			QTableWidgetItem* pointsItem = new QTableWidgetItem(QString::fromUtf8(std::string(profileInfoVector["info"][row]["points"])));
+			pointsItem->setTextAlignment(Qt::AlignCenter);
+			setItem(row, 1, pointsItem);
+		}
 	}
 }
 

@@ -158,20 +158,22 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 				{"password", UserCredentials::GetPassword()}
 			}
 		);
-		auto usersVector = crow::json::load(users.text);
-		int playersNumber = lobbyTable->GetPlayersNumber();
-		if (usersVector["users"].size() != lobbyTable->GetPlayersNumber()) {
-			if (usersVector["users"].size() > lobbyTable->GetPlayersNumber()) {
-				for (int index = playersNumber; index < usersVector["users"].size(); index++)
-					lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
-			}
-			else {
-				lobbyTable->ClearLobby();
-				for (int index = 0; index < usersVector["users"].size(); index++)
-					lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
-				if (usersVector["users"][0] == UserCredentials::GetUsername() && !m_isLeader) {
-					m_isLeader = true;
-					SetLeaderSettings();
+		if (users.status_code == 200) {
+			auto usersVector = crow::json::load(users.text);
+			int playersNumber = lobbyTable->GetPlayersNumber();
+			if (usersVector["users"].size() != lobbyTable->GetPlayersNumber()) {
+				if (usersVector["users"].size() > lobbyTable->GetPlayersNumber()) {
+					for (int index = playersNumber; index < usersVector["users"].size(); index++)
+						lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
+				}
+				else {
+					lobbyTable->ClearLobby();
+					for (int index = 0; index < usersVector["users"].size(); index++)
+						lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
+					if (usersVector["users"][0] == UserCredentials::GetUsername() && !m_isLeader) {
+						m_isLeader = true;
+						SetLeaderSettings();
+					}
 				}
 			}
 		}
@@ -184,10 +186,12 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 					{"password", UserCredentials::GetPassword()}
 				}
 			);
-			auto settings = crow::json::load(gameSettings.text);
-			drawTimeComboBox->setCurrentText(QString::fromUtf8(std::string(settings["settings"]["drawTime"])));
-			roundsComboBox->setCurrentText(QString::fromUtf8(std::string(settings["settings"]["roundsNumber"])));
-			wordCountComboBox->setCurrentText(QString::fromUtf8(std::string(settings["settings"]["wordCount"])));
+			if (gameSettings.status_code == 200) {
+				auto settings = crow::json::load(gameSettings.text);
+				drawTimeComboBox->setCurrentText(QString::fromUtf8(std::string(settings["settings"]["drawTime"])));
+				roundsComboBox->setCurrentText(QString::fromUtf8(std::string(settings["settings"]["roundsNumber"])));
+				wordCountComboBox->setCurrentText(QString::fromUtf8(std::string(settings["settings"]["wordCount"])));
+			}
 		}
 
 		auto gameState = cpr::Get(
@@ -197,9 +201,11 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 				{"password", UserCredentials::GetPassword()}
 			}
 		);
-		auto state = crow::json::load(gameState.text);
-		if (std::string(state["status"]) == kStartedGame) {
-			stop.store(true);
+		if (gameState.status_code == 200) {
+			auto state = crow::json::load(gameState.text);
+			if (std::string(state["status"]) == kStartedGame) {
+				stop.store(true);
+			}
 		}
 
 		std::this_thread::sleep_for(std::chrono::seconds(1));

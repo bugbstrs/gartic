@@ -18,8 +18,9 @@ void QuotesPlainText::showEvent(QShowEvent * event)
 			{"password", UserCredentials::GetPassword()}
 		}
 	);
+	if (quote.status_code == 200) {
+		auto quoteText = crow::json::load(quote.text);
 
-	auto quoteText = crow::json::load(quote.text);
-
-	setPlainText(QString::fromUtf8(std::string(quoteText["quote"])));
+		setPlainText(QString::fromUtf8(std::string(quoteText["quote"])));
+	}
 }

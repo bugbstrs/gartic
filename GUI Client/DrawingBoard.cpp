@@ -22,7 +22,6 @@ void DrawingBoard::mousePressEvent(QMouseEvent* event)
 		if (!fillEnabled) {
 			drawing = true;
 			currentPath = QPainterPath(event->pos());
-			//pathPoints.push(event->pos());
 			pathPoints.push(event->pos());
 			drawBeginningOfPath = false;
 			update();
@@ -69,7 +68,6 @@ void DrawingBoard::mouseMoveEvent(QMouseEvent* event)
 	}
 }
 
-//Isi da erase in timp ce parcurge ala
 void DrawingBoard::mouseReleaseEvent(QMouseEvent* event)
 {
 	if (event->button() == Qt::LeftButton && drawing) {
@@ -114,14 +112,11 @@ void DrawingBoard::SetupForDrawer(bool isDrawer)
 {
 	stop.store(isDrawer);
 
-	//std::thread sendNewPathStared(&DrawingBoard::SendNewPathStared, this, std::ref(stop));
 	std::thread sendUpdatedPath(&DrawingBoard::SendUpdatedPath, this, std::ref(stop));
 	std::thread checkForNewDrawEvents(&DrawingBoard::CheckForNewDrawEvents, this, std::ref(stop));
 
-	//sendNewPathStared.detach();
 	sendUpdatedPath.detach();
 	checkForNewDrawEvents.detach();
-
 
 }
 
@@ -223,11 +218,17 @@ void DrawingBoard::CheckForNewDrawEvents(std::atomic<bool>& stop)
 				{"username", UserCredentials::GetUsername()}
 			}
 		);
-		auto events = crow::json::load(fetchedDrawingEvents.text);
-		for (int index = 0; index < events["events"].size(); index++) {
-			RunEventTypeAccordingly(std::string(events["events"][index]));
-			if (index % 150 == 0)
-				update();
+		if (fetchedDrawingEvents.status_code == 200) {
+			auto events = crow::json::load(fetchedDrawingEvents.text);
+			if (fetchedDrawingEvents.status_code == 200) {
+				if (events.has("events")) {
+					for (int index = 0; index < events["events"].size(); ++index) {
+						RunEventTypeAccordingly(std::string(events["events"][index]));
+						if (index % 50 == 0)
+							update();
+					}
+				}
+			}
 		}
 		update();
 		std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -261,7 +262,7 @@ void DrawingBoard::SendUpdatedPath(std::atomic<bool>& stop)
 
 				drawBeginningOfPath = true;
 			}
-			for (int index = 0; index < 200 && !pathPoints.empty(); ++index) {
+			for (int index = 0; index < 400 && !pathPoints.empty(); ++index) {
 				drawEvent = "keepDrawing ";
 				drawEvent += std::to_string(pathPoints.front().x()) + " ";
 				drawEvent += std::to_string(pathPoints.front().y()) + " ";
