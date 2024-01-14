@@ -174,7 +174,7 @@ void GarticStorage::PopulateWordsEntity()
 
 	filename.open(kWordsFile);
 
-	while (filename >> word)
+	while (std::getline(filename, line)) 
 	{
 		words.push_back(word);
 	}
