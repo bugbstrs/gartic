@@ -1,5 +1,7 @@
 #include "Game.h"
 
+#include <ranges>
+
 import GarticExceptions;
 using namespace http;
 
@@ -136,7 +138,7 @@ void Game::NextRound()
 void http::Game::RemovePlayer(const std::string& username)
 {
 	auto isPlayerToRemove = [&username](const std::shared_ptr<Player> player) { return player->GetName() == username; };
-	if (auto it = std::find_if(m_players.begin(), m_players.end(), isPlayerToRemove); it != m_players.end())
+	if (auto it = std::ranges::find_if(m_players, isPlayerToRemove); it != m_players.end())
 	{
 		if (*it == m_round->GetDrawer())
 		{

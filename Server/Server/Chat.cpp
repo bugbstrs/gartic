@@ -3,6 +3,7 @@
 #include <format>
 #include <regex>
 #include <cctype>
+#include <ranges>
 
 import GarticExceptions;
 
@@ -169,7 +170,7 @@ void http::Chat::CalculatePoints(const std::string& username)
 	std::shared_ptr<Player> playerWhoGuessed;
 
 	auto isPlayerWhoGuessed = [&username](const std::shared_ptr<Player>& player) { return player->GetName() == username; };
-	if (auto playerWhoGuessedIt = std::find_if(m_players.begin(), m_players.end(), isPlayerWhoGuessed); playerWhoGuessedIt != m_players.end())
+	if (auto playerWhoGuessedIt = std::ranges::find_if(m_players, isPlayerWhoGuessed); playerWhoGuessedIt != m_players.end())
 	{
 		int remainingTime{ m_gameTime->GetRemainingTime() / 1000 };
 		int totalTime{ m_gameTime->GetDuration() / 1000 };
@@ -188,7 +189,7 @@ void http::Chat::CalculatePoints(const std::string& username)
 std::shared_ptr<Player> http::Chat::GetPlayerByName(const std::string& username)
 {
 	auto getPlayerByName = [&username](const std::shared_ptr<Player> player) { return player->GetName() == username; };
-	if (auto it = std::find_if(m_players.begin(), m_players.end(), getPlayerByName); it != m_players.end())
+	if (auto it = std::ranges::find_if(m_players, getPlayerByName); it != m_players.end())
 	{
 		return *it;
 	}

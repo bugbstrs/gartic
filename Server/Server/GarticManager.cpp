@@ -1,6 +1,7 @@
 #include "GarticManager.h"
 
 #include<algorithm>
+#include<ranges>
 
 import GarticExceptions;
 using namespace http;
@@ -63,7 +64,7 @@ std::shared_ptr<Game> http::GarticManager::GetGame(const String& username) const
 
 	for (const auto& game : m_games)
 	{
-		if (auto players{ game->GetPlayers() };  std::find_if(players.begin(), players.end(), isInPlayers) != players.end())
+		if (auto players{ game->GetPlayers() }; std::ranges::find_if(players, isInPlayers) != players.end())
 		{
 			return game;
 		}
@@ -86,7 +87,7 @@ std::shared_ptr<Lobby> http::GarticManager::GetLobby(const String& username) con
 
 	for (const auto& lobby : m_lobbys)
 	{
-		if (auto users{ lobby->GetUsers() }; std::find_if(users.begin(), users.end(), isInUsers) != users.end())
+		if (auto users{ lobby->GetUsers() }; std::ranges::find_if(users, isInUsers) != users.end())
 		{
 			return lobby;
 		}
