@@ -98,21 +98,16 @@ static inline bool GreaterForPlayers(const std::shared_ptr<Player> player1, cons
 void Game::NextRound()
 {
 	float averageGuessTime = .0;
-	for (auto& player : m_players)
-	{
-		if (m_round->GetDrawer() == player)
-		{
-			continue;
-		}
 
-		if(!player->GetGuessed())
-		{ 
+	for (auto& player : m_players | std::views::filter([&](const auto& p) { return m_round->GetDrawer() != p; }))
+	{
+		if (!player->GetGuessed())
+		{
 			player->AddPoints(-50);
 			player->SetTimeWhenGuessed(m_gameTime->GetDuration() / 1000);
 		}
 
 		averageGuessTime += player->GetTimeWhenGuessed();
-		
 		player->SetGuessed(false);
 	}
 
