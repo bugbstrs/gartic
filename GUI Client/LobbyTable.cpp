@@ -2,7 +2,7 @@
 #include <random>
 #include "UserCredentials.h"
 
-LobbyTable::LobbyTable(QWidget *parent)
+LobbyTable::LobbyTable(QWidget* parent)
 	: QTableWidget(parent)
 {
 	m_avatars[0] = { QIcon(":/image/alien"), QColor("#32CD32"), false, QIcon(":/settings/check_alien") };
@@ -29,7 +29,7 @@ LobbyTable::LobbyTable(QWidget *parent)
 LobbyTable::~LobbyTable()
 {}
 
-void LobbyTable::AddPlayer(const std::string & name) noexcept
+void LobbyTable::AddPlayer(const std::string& name) noexcept
 {
 	int rowPosition = rowCount();
 	insertRow(rowPosition);
@@ -41,7 +41,7 @@ void LobbyTable::AddPlayer(const std::string & name) noexcept
 				item->setFont(m_yourNameFont);
 			else
 				item->setFont(m_nameFont);
-			m_takenAvatars.push_back({ std::get<0>(avatar), QString::fromUtf8(name), std::get<1>(avatar), std::get<3>(avatar)});
+			m_takenAvatars.push_back({ std::get<0>(avatar), QString::fromUtf8(name), std::get<1>(avatar), std::get<3>(avatar) });
 			std::get<2>(avatar) = true;
 			++m_currentIndex;
 			setItem(rowPosition, 0, item);
@@ -52,7 +52,7 @@ void LobbyTable::AddPlayer(const std::string & name) noexcept
 
 int LobbyTable::GetPlayersNumber() const noexcept
 {
-	return rowCount();
+	return m_takenAvatars.size();
 }
 
 void LobbyTable::ClearLobby() noexcept

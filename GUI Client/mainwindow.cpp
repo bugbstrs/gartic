@@ -50,7 +50,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     //Game scene connections
     QObject::connect(ui->leaveGameButton, &QPushButton::released, this, &MainWindow::OnLeaveGameButtonReleased);
-    QObject::connect(ui->gameplayWidget, &GameplayWidget::OnGameFinished, this, &MainWindow::OnGameEnded);
+    QObject::connect(ui->scoreboardTable, &ScoreboardTable::OnGameFinished, this, &MainWindow::OnGameEnded);
     QObject::connect(ui->goToMenuFromResultsButton, &QPushButton::released, this, &MainWindow::OnBackToMenuFromGameResults);
 
     //Stats scene connections
@@ -157,9 +157,11 @@ void MainWindow::OnGoToMenuFromJoinLobbyButtonReleased() noexcept { ui->stackedW
 
 //Lobby Scene
 void MainWindow::OnStartGameCommand() noexcept {
+    ui->gameplayWidget->ResetGameStatus();
     ui->scoreboardTable->AddPlayersToScoreboard(ui->lobbyTable->GetTakenAvatars());
     ui->gameplayWidget->SetGameSettings(ui->lobbyFrame->GetGameSettings());
     ui->stackedWidget->setCurrentWidget(ui->GameplayScene);
+    ui->lobbyFrame->ResetSettings();
 }
 void MainWindow::OnExitLobbyButtonReleased() noexcept { 
     ui->stackedWidget->setCurrentWidget(ui->MainMenuScene);
@@ -186,14 +188,11 @@ void MainWindow::OnLeaveGameButtonReleased() noexcept {
             }
         )};
         if (response.status_code == 200) {
-            ui->gameplayWidget->StopCheckingForUpdates();
-            ui->scoreboardTable->StopCheckingForPlayers();
-            ui->chatFrame->StopCheckingForUpdates(true);
+            ui->gameplayWidget->NotifyEndGame(true);
+            ui->scoreboardTable->ClearScoreboard();
+            ui->resultsTable->clearContents();
             ui->stackedWidget->setCurrentWidget(ui->MainMenuScene);
-            ui->gameplayWidget->Clear();
-            ui->lobbyTable->ClearLobby();
-            ui->scoreboardTable->clear();
-            ui->lobbyFrame->Clear();
+            ui->gameplayWidget->ResetGameStatus();
             leavedGame = true;
         }
     }
@@ -203,11 +202,13 @@ void MainWindow::OnGameEnded() noexcept
 {
     ui->stackedWidget->setCurrentWidget(ui->ResultsScene);
     ui->resultsTable->SetPlayers(ui->scoreboardTable->GetPlayersOrdered());
+    ui->scoreboardTable->ClearScoreboard();
 }
 
 void MainWindow::OnBackToMenuFromGameResults() noexcept
 {
     ui->stackedWidget->setCurrentWidget(ui->MainMenuScene);
+    ui->resultsTable->clearContents();
 }
 
 

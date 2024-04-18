@@ -18,11 +18,10 @@ public:
 	~Chat();
 
 	//Functionality
-	void StopCheckingForUpdates(bool value);
+	void StopCheckingForUpdates();
 	void SetWordToGuess(QString wordToGuess) noexcept;
 	void SetChatConfigurationAccordingToPlayerType(bool isDrawer) noexcept;
 	void ToggleAccessToWritingMessages(bool canWrite);
-	void StopLookingForUpdates();
 	void Clear() noexcept;
 
 protected:

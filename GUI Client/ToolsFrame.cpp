@@ -61,7 +61,9 @@ void ToolsFrame::OnPencilButtonReleased() noexcept
 void ToolsFrame::showEvent(QShowEvent* event) 
 {
 	if (m_firstShow) {
+
 		m_currentColorView = findChild<QWidget*>("currentColor");
+
 		QObject::connect(findChild<QPushButton*>("blackColorButton"), &QPushButton::released, this, &ToolsFrame::OnColorChange);
 		QObject::connect(findChild<QPushButton*>("whiteColorButton"), &QPushButton::released, this, &ToolsFrame::OnColorChange);
 

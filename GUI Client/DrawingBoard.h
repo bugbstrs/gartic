@@ -5,10 +5,11 @@
 #include <QMouseEvent>
 #include <qpainter.h>
 #include <qpainterpath.h>
-#include <queue>
+#include <deque>
 #include <atomic>
 #include <stack>
 #include <thread>
+#include <mutex>
 
 class DrawingBoard : public QWidget
 {
@@ -33,6 +34,7 @@ public:
 	void UndoLastPath() noexcept;
 	void StopLookingForUpdates() noexcept;
 	void ClearCanvas() noexcept;
+	void ClearAction();
 
 	void ResetBoard() noexcept;
 
@@ -47,7 +49,6 @@ protected:
 
 private:
 	void UndoAction();
-	void ClearAction();
 
 	void CheckForNewDrawEvents(std::atomic<bool>& stop);
 	void SendUpdatedPath(std::atomic<bool>& stop);
@@ -63,7 +64,8 @@ private:
 	const int kCircleRadius								{ 25 };
 	std::atomic<bool>m_stop;
 
-	std::queue<QPoint> pathPoints						{};
+	std::deque<std::pair<QPoint, bool>> m_pathPoints	{};
+	std::mutex mtx;
 	
 	bool m_isChoosingWord								{ false };
 	bool m_firstPaint									{ true };

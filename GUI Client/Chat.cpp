@@ -33,7 +33,7 @@ void Chat::AddMessageInChat(const QString& newMessage) noexcept
 	}, Qt::QueuedConnection);
 }
 
-void Chat::StopCheckingForUpdates(bool value)
+void Chat::StopCheckingForUpdates()
 {
 	m_stop.store(true);
 }
@@ -54,13 +54,9 @@ void Chat::SetChatConfigurationAccordingToPlayerType(bool isDrawer) noexcept
 void Chat::ToggleAccessToWritingMessages(bool canWrite)
 {
 	QMetaObject::invokeMethod(this, [this, canWrite]() {
+		m_chatWritingBox->clear();
 		m_chatWritingBox->setDisabled(!canWrite);
 	}, Qt::QueuedConnection);
-}
-
-void Chat::StopLookingForUpdates()
-{
-	m_stop.store(!m_stop.load());
 }
 
 void Chat::Clear() noexcept
@@ -75,15 +71,16 @@ void Chat::showEvent(QShowEvent* event)
 		m_chatWritingBox = findChild<ChatWritingBox*>("chatWritingBox");
 		m_chatConversation = findChild<ChatConversation*>("chatConversation");
 		m_firstShow = false;
+		QObject::connect(m_chatWritingBox, &ChatWritingBox::OnMessageSentToServer, this, [this](const QString& messageSent) {
+			QDateTime currentTime = QDateTime::currentDateTime();
+			QString formattedTime = currentTime.toString("hh:mm");
+			QString formattedMessage;
+			formattedMessage = QString("[%1] <b>You:</b> <b style='color: blue;'>%3</b><br>").arg(formattedTime, messageSent);
+			m_chatConversation->insertHtml(formattedMessage);
+			m_chatConversation->moveCursor(QTextCursor::End);
+		});
 	}
-	QObject::connect(m_chatWritingBox, &ChatWritingBox::OnMessageSentToServer, this, [this](const QString& messageSent) {
-		QDateTime currentTime = QDateTime::currentDateTime();
-		QString formattedTime = currentTime.toString("hh:mm");
-		QString formattedMessage;
-		formattedMessage = QString("[%1] <b>You:</b> <b style='color: blue;'>%3</b><br>").arg(formattedTime, messageSent);
-		m_chatConversation->insertHtml(formattedMessage);
-		m_chatConversation->moveCursor(QTextCursor::End);
-	});
+
 	m_stop.store(false);
 
 	std::thread checkForMessagesUpdates(&Chat::CheckForNewMessages, this, std::ref(m_stop));
@@ -111,5 +108,6 @@ void Chat::CheckForNewMessages(std::atomic<bool>& stop)
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 	if (stop.load()) {
+
 	}
 }

@@ -34,8 +34,10 @@ public:
 	void ChangePenColor(QColor color) noexcept;
 	void ChangePenWidth(int width) noexcept;
 
+	void NotifyEndGame(bool leavedGame);
 	void SetGameSettings(std::tuple<int, int, int> gameSettings) noexcept;
 	void StopCheckingForUpdates();
+	void ResetGameStatus();
 	void Clear() noexcept;
 
 public slots:
@@ -47,11 +49,9 @@ public slots:
 	void OnCanvasCleared()  noexcept;
 	void OnPencilButtonReleased() noexcept;
 
-signals:
-	void OnGameFinished();
-
 private:
 	void CheckTime(std::atomic<bool>& stop);
+	void CheckForGameStatus();
 	void CheckForUpdatesInGameScene(std::atomic<bool>& stop);
 	void CheckForLessNecessaryUpdates(std::atomic<bool>& stop);
 	void AddWordOption(const std::string& word);
@@ -59,8 +59,11 @@ private:
 	void ShowDrawerInterface();
 	void ShowGuesserInterface();
 
-	void BackgroundChangeForGuessersOnDrawerPickingWord();
-	void BackgroundChangeForDrawer();
+	void HideBackgroundForGuesserWhenDrawingStarts();
+	void HideBackgroundForDrawerWhenDrawingStarts();
+
+	void GetCurrentPlayers();
+	void PickingWordActions();
 
 private:
 
@@ -68,6 +71,12 @@ private:
 	const std::string kPickingWord = "PickingWord";
 	const std::string kDrawing = "Drawing";
 	const std::string kFinished = "Finished";
+
+	std::string m_gameStatus;
+	
+	QString m_drawerName;
+	//QTimer m_timer;
+
 	std::atomic<bool> m_stop;
 	int m_drawTime					 {};
 	int m_rounds					 {};

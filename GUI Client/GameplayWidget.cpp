@@ -34,9 +34,14 @@ void GameplayWidget::SetGameSettings(std::tuple<int, int, int> gameSettings) noe
 
 void GameplayWidget::StopCheckingForUpdates()
 {
-	m_chat->StopLookingForUpdates();
+	m_chat->StopCheckingForUpdates();
 	m_drawingBoard->StopLookingForUpdates();
 	m_stop.store(!m_stop.load());
+}
+
+void GameplayWidget::ResetGameStatus()
+{
+	m_gameStatus = kPickingWord;
 }
 
 void GameplayWidget::Clear() noexcept
@@ -120,27 +125,29 @@ void GameplayWidget::ShowDrawerInterface()
 void GameplayWidget::ShowGuesserInterface()
 {
 	QMetaObject::invokeMethod(this, [this]() {
-		if (!m_backgroundForDrawer->isHidden())
+		m_drawingBoard->setDisabled(false);
+		if (!m_backgroundForDrawer->isHidden()) {
 			m_backgroundForDrawer->hide();
-		if (!m_wordsToChoose.empty()) {
-			for (QPushButton* button : m_wordsToChoose) {
-				delete button;
+			if (!m_wordsToChoose.empty()) {
+				for (QPushButton* button : m_wordsToChoose) {
+					delete button;
+				}
+				m_wordsToChoose.clear();
 			}
-			m_wordsToChoose.clear();
 		}
-		m_drawingBoard->ClearCanvas();
+		m_drawingBoard->ClearAction();
+		m_drawingBoard->SetupForDrawer(false);
+		m_drawingBoard->SetIsChoosingWord(true);
 		m_backgroundForGuesser->show();
-		m_waitingTextLabel->show();
 		m_waitingTextLabel->raise();
 		m_scoreboardTable->ResetGuessedIcons();
 		m_chat->ToggleAccessToWritingMessages(true);
+		m_toolsFrame->ResetCurrentColorView();
 		m_toolsFrame->hide();
-		m_drawingBoard->SetIsChoosingWord(true);
-		m_drawingBoard->SetupForDrawer(false);
 	}, Qt::QueuedConnection);
 }
 
-void GameplayWidget::BackgroundChangeForGuessersOnDrawerPickingWord()
+void GameplayWidget::HideBackgroundForGuesserWhenDrawingStarts()
 {
 	QMetaObject::invokeMethod(this, [this]() {
 		m_drawingBoard->SetIsChoosingWord(false);
@@ -149,45 +156,22 @@ void GameplayWidget::BackgroundChangeForGuessersOnDrawerPickingWord()
 	}, Qt::QueuedConnection);
 }
 
-void GameplayWidget::BackgroundChangeForDrawer()
+void GameplayWidget::HideBackgroundForDrawerWhenDrawingStarts()
 {
 	QMetaObject::invokeMethod(this, [this]() {
 		for (QPushButton* button : m_wordsToChoose) {
 			delete button;
 		}
+		m_drawingBoard->SetIsChoosingWord(false);
 		m_scoreboardTable->ResetGuessedIcons();
 		m_wordsToChoose.clear();
 		m_backgroundForDrawer->hide();
-		m_drawingBoard->SetIsChoosingWord(false);
 	}, Qt::QueuedConnection);
 }
 
-void GameplayWidget::CheckTime(std::atomic<bool>& stop)
+void GameplayWidget::GetCurrentPlayers()
 {
-	while (!stop.load()) {
-		auto fetchedTime = cpr::Get(
-			cpr::Url{ "http://localhost:18080/fetchtime" },
-			cpr::Parameters{
-				{"username", UserCredentials::GetUsername()},
-				{"password", UserCredentials::GetPassword()}
-			}
-		);
-		if (fetchedTime.status_code == 200) {
-			auto timeText = crow::json::load(fetchedTime.text);
-			if (timeText.has("time"));
-			m_timerLabel->setText(QString::fromUtf8(std::string(timeText["time"])));
-		}
-
-		std::this_thread::sleep_for(std::chrono::milliseconds(200));
-	}
-	if (stop.load()) {
-
-	}
-}
-
-void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
-{
-	while (!stop.load()) {
+	QMetaObject::invokeMethod(this, [this]() {
 		auto fetchedPlayers = cpr::Get(
 			cpr::Url{ "http://localhost:18080/fetchplayers" },
 			cpr::Parameters{
@@ -209,99 +193,131 @@ void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
 						break;
 					}
 				}
-				for (int index = 0; index < playersResponse["players"].size(); index++) {
-					if (std::string(playersResponse["players"][index]["guessed"]) == "true") {
-						m_scoreboardTable->MarkGuessedForPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])));
-					}
-					m_scoreboardTable->SetPointsToPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])), std::stoi(std::string(playersResponse["players"][index]["points"])));
-				}
 			}
 		}
+	}, Qt::DirectConnection);
+}
 
-		auto fetchedGameStatus = cpr::Get(
-			cpr::Url{ "http://localhost:18080/fetchgamestatus" },
+void GameplayWidget::NotifyEndGame(bool leavedGame)
+{
+	m_stop.store(true);
+	m_isDrawer = false;
+	m_chat->StopCheckingForUpdates();
+	m_drawingBoard->StopLookingForUpdates();
+	m_drawingBoard->ClearAction();
+	m_scoreboardTable->StopCheckingForPlayers(leavedGame);
+}
+
+void GameplayWidget::PickingWordActions()
+{
+	auto fetchedPlayers = cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchplayers" },
+		cpr::Parameters{
+			{"password", UserCredentials::GetPassword()},
+			{"username", UserCredentials::GetUsername()}
+		}
+	);
+	if (fetchedPlayers.status_code == 200) {
+		auto playersResponse = crow::json::load(fetchedPlayers.text);
+		for (int index = 0; index < playersResponse["players"].size(); index++) {
+			if (std::string(playersResponse["players"][index]["name"]) == UserCredentials::GetUsername()) {
+				if (std::stoi(std::string(playersResponse["drawer index"])) == index) {
+					m_isDrawer = true;
+				}
+				else {
+					m_isDrawer = false;
+				}
+			}
+			if (std::stoi(std::string(playersResponse["drawer index"])) == index &&
+				m_drawerName != QString::fromUtf8(std::string(playersResponse["players"][index]["name"])))
+			{
+				m_drawerName = QString::fromUtf8(std::string(playersResponse["players"][index]["name"]));
+				QMetaObject::invokeMethod(m_waitingTextLabel, "setText", Qt::QueuedConnection,
+					Q_ARG(QString, QString("Waiting for ") + m_drawerName + QString(" to choose a word...")));
+			}
+		}
+		m_wordToDraw->clear();
+		if (m_isDrawer && m_backgroundForDrawer->isHidden())
+			ShowDrawerInterface();
+		if (!m_isDrawer && m_backgroundForGuesser->isHidden())
+			ShowGuesserInterface();
+	}
+}
+
+void GameplayWidget::CheckTime(std::atomic<bool>& stop)
+{
+	while (!stop.load()) {
+		auto fetchedTime = cpr::Get(
+			cpr::Url{ "http://localhost:18080/fetchtime" },
 			cpr::Parameters{
 				{"username", UserCredentials::GetUsername()},
 				{"password", UserCredentials::GetPassword()}
 			}
 		);
-		if (fetchedGameStatus.status_code == 200) {
-			auto gameStatusText = crow::json::load(fetchedGameStatus.text);
-			if (std::string(gameStatusText["status"]) == kDrawing) {
-				if (!m_isDrawer && !m_backgroundForGuesser->isHidden()) {
-					BackgroundChangeForGuessersOnDrawerPickingWord();
-				}
-				if (m_isDrawer && !m_backgroundForDrawer->isHidden()) {
-					BackgroundChangeForDrawer();
-				}
-				auto randomWordPicked = cpr::Get(
-					cpr::Url{ "http://localhost:18080/fetchwordtodisplay" },
-					cpr::Parameters{
-						{"username", UserCredentials::GetUsername()},
-						{"password", UserCredentials::GetPassword()}
-					}
-				);
-				if (randomWordPicked.status_code == 200) {
-					auto pickedWord = crow::json::load(randomWordPicked.text);
-					if (pickedWord.has("word"))
-						m_wordToDraw->setText(QString::fromUtf8(std::string(pickedWord["word"])));
-				}
+		if (fetchedTime.status_code == 200) {
+			QMetaObject::invokeMethod(m_timerLabel, "setText", Qt::DirectConnection,
+				Q_ARG(QString, QString::fromUtf8(std::string(crow::json::load(fetchedTime.text)["time"]))));
+		}
+		std::this_thread::sleep_for(std::chrono::milliseconds(400));
+	}
+	if (stop.load()) {
+
+	}
+}
+
+void GameplayWidget::CheckForGameStatus()
+{
+	auto fetchedGameStatus = cpr::Get(
+		cpr::Url{ "http://localhost:18080/fetchgamestatus" },
+		cpr::Parameters{
+			{"username", UserCredentials::GetUsername()},
+			{"password", UserCredentials::GetPassword()}
+		}
+	);
+	if (fetchedGameStatus.status_code == 200) {
+		auto gameStatusText = crow::json::load(fetchedGameStatus.text);
+		if (std::string(gameStatusText["status"]) == kPickingWord) {
+			m_gameStatus = kPickingWord;
+		}
+		else if (std::string(gameStatusText["status"]) == kDrawing) {
+			m_gameStatus = kDrawing;
+		}
+		else if (std::string(gameStatusText["status"]) == kFinished) {
+			m_gameStatus = kFinished;
+		}
+	}
+}
+
+void GameplayWidget::CheckForUpdatesInGameScene(std::atomic<bool>& stop)
+{
+	while (!stop.load()) {
+		CheckForGameStatus();
+		GetCurrentPlayers();
+		if (m_gameStatus == kPickingWord) {
+			PickingWordActions();
+		}
+		else if (m_gameStatus == kDrawing) {
+			if (!m_isDrawer && !m_backgroundForGuesser->isHidden()) {
+				HideBackgroundForGuesserWhenDrawingStarts();
 			}
-			if (std::string(gameStatusText["status"]) == kPickingWord) {
-				auto fetchedPlayers = cpr::Get(
-					cpr::Url{ "http://localhost:18080/fetchplayers" },
-					cpr::Parameters{
-						{"password", UserCredentials::GetPassword()},
-						{"username", UserCredentials::GetUsername()}
-					}
-				);
-				if (fetchedPlayers.status_code == 200) {
-					auto playersResponse = crow::json::load(fetchedPlayers.text);
-					if (playersResponse.has("players")) {
-						for (int index = 0; index < playersResponse["players"].size(); index++) {
-							if (std::string(playersResponse["players"][index]["name"]) == UserCredentials::GetUsername()) {
-								if (std::stoi(std::string(playersResponse["drawer index"])) == index) {
-									m_isDrawer = true;
-								}
-								else {
-									m_isDrawer = false;
-								}
-								break;
-							}
-						}
-					}
-					m_wordToDraw->clear();
-					if (m_isDrawer && m_backgroundForDrawer->isHidden())
-						ShowDrawerInterface();
-					if (!m_isDrawer && m_backgroundForGuesser->isHidden())
-						ShowGuesserInterface();
-				}
+			if (m_isDrawer && !m_backgroundForDrawer->isHidden()) {
+				HideBackgroundForDrawerWhenDrawingStarts();
 			}
-			if (std::string(gameStatusText["status"]) == kFinished) {
-				auto finalPlayersFetch = cpr::Get(
-					cpr::Url{ "http://localhost:18080/fetchplayers" },
-					cpr::Parameters{
-						{"password", UserCredentials::GetPassword()},
-						{"username", UserCredentials::GetUsername()}
-					}
-				);
-				if (finalPlayersFetch.status_code == 200) {
-					auto playersResponse = crow::json::load(finalPlayersFetch.text);
-					m_drawingBoard->ClearCanvas();
-					m_scoreboardTable->ClearScoreboard();
-					for (int index = 0; index < playersResponse["players"].size(); index++) {
-						m_scoreboardTable->SetPointsToPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])), std::stoi(std::string(playersResponse["players"][index]["points"])));
-					}
+			auto randomWordPicked = cpr::Get(
+				cpr::Url{ "http://localhost:18080/fetchwordtodisplay" },
+				cpr::Parameters{
+					{"username", UserCredentials::GetUsername()},
+					{"password", UserCredentials::GetPassword()}
 				}
-				stop.store(true);
-				m_chat->StopLookingForUpdates();
-				m_drawingBoard->StopLookingForUpdates();
-				m_scoreboardTable->StopCheckingForPlayers();
-				m_isDrawer = false;
-				emit(OnGameFinished());
+			);
+			if (randomWordPicked.status_code == 200) {
+				QMetaObject::invokeMethod(m_wordToDraw, "setText", Qt::QueuedConnection,
+					Q_ARG(QString, QString::fromUtf8(std::string(crow::json::load(randomWordPicked.text)["word"]))));
 			}
 		}
-
+		else if (m_gameStatus == kFinished) {
+			NotifyEndGame(false);
+		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(700));
 	}
 	if (stop.load()) {
@@ -320,9 +336,8 @@ void GameplayWidget::CheckForLessNecessaryUpdates(std::atomic<bool>& stop)
 			}
 		);
 		if (fetchedRoundNumber.status_code == 200) {
-			auto roundText = crow::json::load(fetchedRoundNumber.text);
-			if (roundText.has("round"))
-				m_roundsLabel->setText(QString("Round %1").arg(QString::fromUtf8(std::string(roundText["round"]))));
+			QMetaObject::invokeMethod(m_roundsLabel, "setText", Qt::QueuedConnection,
+				Q_ARG(QString, QString("Round %1").arg(QString::fromUtf8(std::string(crow::json::load(fetchedRoundNumber.text)["round"])))));
 		}
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
@@ -362,7 +377,7 @@ void GameplayWidget::AddWordOption(const std::string& word)
 	);
 	m_wordsToChoose.push_back(wordButton);
 	m_wordsToChooseLayout->addWidget(wordButton);
-	QObject::connect(wordButton, &QPushButton::released, [this, wordButton]() {
+	QObject::connect(wordButton, &QPushButton::released, [wordButton]() {
 		bool accepted = false;
 
 		while (!accepted)
@@ -399,13 +414,16 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 		m_wordsToChooseLayout = new QHBoxLayout(m_backgroundForDrawer);
 		m_waitingForWordToBepickedLayout = new QHBoxLayout(m_backgroundForGuesser);
 
+		m_backgroundForDrawer->setStyleSheet(
+			"background-image: url(:/settings/WordsBackground);"
+			"background-position: center;"
+			"background-repeat: no-repeat;"
+		);
 		m_waitingTextLabel->setStyleSheet("QLabel {"
 			"  text-align: center;"
 			"  font-size: 24px;"
 			"  font-family: Consolas, monospace;"
 			"}");
-		m_waitingTextLabel->setText(QString("Waiting for ") + QString(m_scoreboardTable->itemAt(0, 0)->text()) + QString(" to choose a word..."));
-		m_drawingBoard->SetIsChoosingWord(true);
 		m_backgroundForGuesser->setStyleSheet(
 			"background-color: grey;"
 		);
@@ -428,52 +446,29 @@ void GameplayWidget::showEvent(QShowEvent* event) {
 		m_firstShow = false;
 	}
 
-	bool fetchedPlayersCorrectly = false;
-	while (!fetchedPlayersCorrectly) {
-		auto fetchedPlayers = cpr::Get(
-			cpr::Url{ "http://localhost:18080/fetchplayers" },
-			cpr::Parameters{
-				{"password", UserCredentials::GetPassword()},
-				{"username", UserCredentials::GetUsername()}
-			}
-		);
-		if (fetchedPlayers.status_code == 200) {
-			auto playersResponse = crow::json::load(fetchedPlayers.text);
-			if (playersResponse.has("players")) {
-				for (int index = 0; index < playersResponse["players"].size(); index++) {
-					if (std::string(playersResponse["players"][index]["name"]) == UserCredentials::GetUsername()) {
-						if (std::stoi(std::string(playersResponse["drawer index"])) == index) {
-							m_isDrawer = true;
-						}
-						else {
-							m_isDrawer = false;
-						}
-						break;
-					}
-				}
-			}
-			fetchedPlayersCorrectly = true;
+	m_gameStatus = kPickingWord;
+
+	m_chat->Clear();
+
+	m_drawerName = m_scoreboardTable->itemAt(0, 0)->text();
+	m_waitingTextLabel->setText(QString("Waiting for ") + m_drawerName + QString(" to choose a word..."));
+
+	m_drawingBoard->SetIsChoosingWord(true);
+
+	if (!m_wordsToChoose.empty()) {
+		for (QPushButton* button : m_wordsToChoose) {
+			delete button;
 		}
-	}
-	m_backgroundForDrawer->setStyleSheet(
-		"background-image: url(:/settings/WordsBackground);"
-		"background-position: center;"
-		"background-repeat: no-repeat;"
-	);
-	if (m_isDrawer) {
-		ShowDrawerInterface();
-	}
-	else {
-		ShowGuesserInterface();
+		m_wordsToChoose.clear();
 	}
 
 	m_stop.store(false);
 
+	std::thread checkTime(&GameplayWidget::CheckTime, this, std::ref(m_stop));
 	std::thread checkForLobbyUpdates(&GameplayWidget::CheckForUpdatesInGameScene, this, std::ref(m_stop));
 	std::thread checkFurLessNecessaryUpdates(&GameplayWidget::CheckForLessNecessaryUpdates, this, std::ref(m_stop));
-	std::thread checkTime(&GameplayWidget::CheckTime, this, std::ref(m_stop));
 
-	checkForLobbyUpdates.detach();
-	checkFurLessNecessaryUpdates.detach();
 	checkTime.detach();
+	checkFurLessNecessaryUpdates.detach();
+	checkForLobbyUpdates.detach();
 }

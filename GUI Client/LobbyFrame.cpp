@@ -33,7 +33,7 @@ void LobbyFrame::showEvent(QShowEvent * event)
 		QObject::connect(m_startGameButton, &QPushButton::released, this, [this]() {
 			bool accepted = false;
 			
-			while (!accepted)
+			while (!accepted && m_lobbyTable->GetPlayersNumber() > 1)
 			{
 				auto createGame = cpr::Post(
 					cpr::Url{ "http://localhost:18080/creategame" },
@@ -126,6 +126,7 @@ void LobbyFrame::showEvent(QShowEvent * event)
 
 		m_firstShow = false;
 	}
+	
 	m_stop.store(false);
 
 	if (m_isLeader) {
@@ -147,6 +148,16 @@ void LobbyFrame::SetCode(QString codeText) noexcept
 void LobbyFrame::SetLeaderStatus(bool isLeader) noexcept
 {
 	m_isLeader = isLeader;
+}
+
+void LobbyFrame::ResetSettings() noexcept
+{
+	m_leaveGame = false;
+	m_isLeader = false;
+	m_drawTimeComboBox->setCurrentIndex(5);
+	m_roundsComboBox->setCurrentIndex(3);
+	m_wordCountComboBox->setCurrentIndex(0);
+	m_lobbyTable->ClearLobby();
 }
 
 void LobbyFrame::Clear()
@@ -195,9 +206,12 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 			);
 			if (gameSettings.status_code == 200) {
 				auto settings = crow::json::load(gameSettings.text);
-				m_drawTimeComboBox->setCurrentText(QString::fromUtf8(std::string(settings["settings"]["drawTime"])));
-				m_roundsComboBox->setCurrentText(QString::fromUtf8(std::string(settings["settings"]["roundsNumber"])));
-				m_wordCountComboBox->setCurrentText(QString::fromUtf8(std::string(settings["settings"]["wordCount"])));
+				QMetaObject::invokeMethod(m_drawTimeComboBox, "setCurrentText", Qt::QueuedConnection,
+					Q_ARG(QString, QString::fromUtf8(std::string(settings["settings"]["drawTime"]))));
+				QMetaObject::invokeMethod(m_roundsComboBox, "setCurrentText", Qt::QueuedConnection,
+					Q_ARG(QString, QString::fromUtf8(std::string(settings["settings"]["roundsNumber"]))));
+				QMetaObject::invokeMethod(m_wordCountComboBox, "setCurrentText", Qt::QueuedConnection,
+					Q_ARG(QString, QString::fromUtf8(std::string(settings["settings"]["wordCount"]))));
 			}
 		}
 
@@ -215,7 +229,7 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 			}
 		}
 
-		std::this_thread::sleep_for(std::chrono::seconds(1));
+		std::this_thread::sleep_for(std::chrono::milliseconds(700));
 	}
 	if (stop.load()) {
 		if (m_leaveGame)

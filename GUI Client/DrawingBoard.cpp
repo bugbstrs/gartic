@@ -21,7 +21,7 @@ void DrawingBoard::mousePressEvent(QMouseEvent* event)
 		if (!m_fillEnabled) {
 			m_drawing = true;
 			m_currentPath = QPainterPath(event->pos());
-			pathPoints.push(event->pos());
+			m_pathPoints.push_back({ event->pos(), true });
 			m_drawBeginningOfPath = false;
 			update();
 
@@ -62,7 +62,7 @@ void DrawingBoard::mouseMoveEvent(QMouseEvent* event)
 {
 	if (m_drawing) {
 		m_currentPath.lineTo(event->pos());
-		pathPoints.push(event->pos());
+		m_pathPoints.push_back({ event->pos(), false });
 		update();
 	}
 }
@@ -186,11 +186,12 @@ void DrawingBoard::ResetBoard() noexcept
 	m_isChoosingWord = false;
 	m_drawing = false;
 	m_fillEnabled = false;
-	m_lastColor = kDefaultPenColor;
+	m_drawBeginningOfPath = false;
 
 	ChangePenPropertiesTo(kDefaultPenColor, kDefaultPenWidth);
 	m_currentPath = QPainterPath();
 	image.fill(Qt::white);
+
 	images.clear();
 }
 
@@ -206,10 +207,12 @@ void DrawingBoard::UndoAction()
 
 void DrawingBoard::ClearAction()
 {
-	m_currentPath = QPainterPath();
-	image.fill(Qt::white);
-	images.clear();
-	update();
+	QMetaObject::invokeMethod(this, [this]() {
+		m_currentPath = QPainterPath();
+		image.fill(Qt::white);
+		images.clear();
+		update();
+	}, Qt::QueuedConnection);
 }
 
 void DrawingBoard::CheckForNewDrawEvents(std::atomic<bool>& stop)
@@ -224,18 +227,14 @@ void DrawingBoard::CheckForNewDrawEvents(std::atomic<bool>& stop)
 		);
 		if (fetchedDrawingEvents.status_code == 200) {
 			auto events = crow::json::load(fetchedDrawingEvents.text);
-			if (fetchedDrawingEvents.status_code == 200) {
-				if (events.has("events")) {
-					for (int index = 0; index < events["events"].size(); ++index) {
-						RunEventTypeAccordingly(std::string(events["events"][index]));
-						if (index % 100 == 0)
-							update();
-					}
-				}
+			for (int index = 0; index < events["events"].size(); ++index) {
+				RunEventTypeAccordingly(std::string(events["events"][index]));
+				if (index % 100 == 0)
+					update();
 			}
 		}
 		update();
-		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		std::this_thread::sleep_for(std::chrono::milliseconds(150));
 	}
 	if (stop.load()) {
 
@@ -245,13 +244,21 @@ void DrawingBoard::CheckForNewDrawEvents(std::atomic<bool>& stop)
 void DrawingBoard::SendUpdatedPath(std::atomic<bool>& stop)
 {
 	std::string drawEvent;
+	std::deque <std::pair<QPoint, bool>> pathPoints;
 	std::vector<crow::json::wvalue> drawEventsJSON;
 	while (stop.load()) {
-		if (!pathPoints.empty()) {
-			if (m_drawBeginningOfPath == false) {
+		{
+			std::lock_guard<std::mutex> lock(mtx);
+			pathPoints = m_pathPoints;
+			while (!m_pathPoints.empty()) {
+				m_pathPoints.pop_front();
+			}
+		}
+		while (!pathPoints.empty()) {
+			if (pathPoints.front().second) {
 				drawEvent = "startDrawing ";
-				drawEvent += std::to_string(pathPoints.front().x()) + " ";
-				drawEvent += std::to_string(pathPoints.front().y()) + " ";
+				drawEvent += std::to_string(pathPoints.front().first.x()) + " ";
+				drawEvent += std::to_string(pathPoints.front().first.y()) + " ";
 				QColor color = m_pen.color();
 				int red = color.red();
 				int green = color.green();
@@ -262,19 +269,19 @@ void DrawingBoard::SendUpdatedPath(std::atomic<bool>& stop)
 
 				drawEventsJSON.push_back(drawEvent);
 				drawEvent.clear();
-				pathPoints.pop();
-
-				m_drawBeginningOfPath = true;
+				pathPoints.pop_front();
 			}
-			for (int index = 0; index < 400 && !pathPoints.empty(); ++index) {
+			else {
 				drawEvent = "keepDrawing ";
-				drawEvent += std::to_string(pathPoints.front().x()) + " ";
-				drawEvent += std::to_string(pathPoints.front().y()) + " ";
+				drawEvent += std::to_string(pathPoints.front().first.x()) + " ";
+				drawEvent += std::to_string(pathPoints.front().first.y());
 
 				drawEventsJSON.push_back(drawEvent);
 				drawEvent.clear();
-				pathPoints.pop();
+				pathPoints.pop_front();
 			}
+		}
+		if (!drawEventsJSON.empty()) {
 			crow::json::wvalue drawEventsParameter = drawEventsJSON;
 			auto sentFillCoordinatesResponse = cpr::Post(
 				cpr::Url{ "http://localhost:18080/putdraweventsindrawingboard" },
@@ -286,7 +293,7 @@ void DrawingBoard::SendUpdatedPath(std::atomic<bool>& stop)
 			);
 			drawEventsJSON.clear();
 		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		std::this_thread::sleep_for(std::chrono::milliseconds(150));
 	}
 	if (!stop.load()) {
 
@@ -409,6 +416,7 @@ void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, Q
 
 void DrawingBoard::showEvent(QShowEvent* event)
 {
+	//AICI TREBUIE MODIFICAT CEVA
 }
 
 void DrawingBoard::paintEvent(QPaintEvent* event)
