@@ -255,7 +255,7 @@ void GameScene::SetWordsToPick()
 		if (response.status_code == 200)
 		{
 			auto words = crow::json::load(response.text);
-			if (words["words"].size() == 1)
+			/*if (words["words"].size() == 1)
 			{
 				bool accepted = false;
 				while (!accepted)
@@ -275,7 +275,7 @@ void GameScene::SetWordsToPick()
 					}
 				}
 				return;
-			}
+			}*/
 			Button* prevButton{ nullptr };
 			for (const auto& word : words["words"])
 			{
