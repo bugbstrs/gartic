@@ -25,14 +25,14 @@ void LobbyScene::StartGame()
 				{"username", User::GetUsername()}
 			}
 		) };
-
+		if (response.status_code == 403)
+			accepted = true;
 		if (response.status_code == 200)
 		{
 			accepted = true;
+			m_nextScene = const_cast<std::type_info*>(&typeid(GameScene));
 		}
 	}
-
-	m_nextScene = const_cast<std::type_info*>(&typeid(GameScene));
 }
 
 void LobbyScene::GetUsers()

@@ -428,8 +428,6 @@ void http::RouteManager::CreateGameRoute()
 
         String username = request.url_params.get("username");
 
-		m_gartic.CreateGame(std::string(username));
-
         if (!m_gartic.GetLobby(username))
         {
             response.code = 403;
@@ -442,6 +440,21 @@ void http::RouteManager::CreateGameRoute()
             response.end();
             return;
         }
+
+        if (m_gartic.GetLobby(std::string(username))->GetUsers().size() == 1)
+        {
+            response.code = 403;
+            response.body = crow::json::wvalue
+            {
+                {"code", response.code},
+                {"error", "Only one user in lobby!"}
+            }.dump();
+
+            response.end();
+            return;
+        }
+
+		m_gartic.CreateGame(std::string(username));
 
     	m_gartic.GetLobby(std::string(username))->SetLobbyStatus(LobbyStatus::StartedGame);
 
