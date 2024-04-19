@@ -145,14 +145,20 @@ void DrawingBoard::UndoLastPath() noexcept
 	std::vector<crow::json::wvalue> drawEventsJSON;
 	drawEventsJSON.push_back(drawEvent);
 	crow::json::wvalue drawEventsParameter = drawEventsJSON;
-	auto sentFillCoordinatesResponse = cpr::Post(
-		cpr::Url{ "http://localhost:18080/putdraweventsindrawingboard" },
-		cpr::Parameters{
-			{"password", UserCredentials::GetPassword()},
-			{"username", UserCredentials::GetUsername()},
-			{"events", drawEventsParameter.dump()}
-		}
-	);
+
+	bool eventSent = false;
+	while (!eventSent) {
+		auto sentUndoCoordinates = cpr::Post(
+			cpr::Url{ "http://localhost:18080/putdraweventsindrawingboard" },
+			cpr::Parameters{
+				{"password", UserCredentials::GetPassword()},
+				{"username", UserCredentials::GetUsername()},
+				{"events", drawEventsParameter.dump()}
+			}
+		);
+		if (sentUndoCoordinates.status_code == 200)
+			eventSent = true;
+	}
 
 }
 
@@ -170,14 +176,20 @@ void DrawingBoard::ClearCanvas() noexcept
 	std::vector<crow::json::wvalue> drawEventsJSON;
 	drawEventsJSON.push_back(drawEvent);
 	crow::json::wvalue drawEventsParameter = drawEventsJSON;
-	auto sentFillCoordinatesResponse = cpr::Post(
-		cpr::Url{ "http://localhost:18080/putdraweventsindrawingboard" },
-		cpr::Parameters{
-			{"password", UserCredentials::GetPassword()},
-			{"username", UserCredentials::GetUsername()},
-			{"events", drawEventsParameter.dump()}
-		}
-	);
+
+	bool eventSent = false;
+	while (!eventSent) {
+		auto sentClearCoordinates = cpr::Post(
+			cpr::Url{ "http://localhost:18080/putdraweventsindrawingboard" },
+			cpr::Parameters{
+				{"password", UserCredentials::GetPassword()},
+				{"username", UserCredentials::GetUsername()},
+				{"events", drawEventsParameter.dump()}
+			}
+		);
+		if (sentClearCoordinates.status_code == 200)
+			eventSent = true;
+	}
 
 }
 
@@ -208,6 +220,7 @@ void DrawingBoard::UndoAction()
 void DrawingBoard::ClearAction()
 {
 	QMetaObject::invokeMethod(this, [this]() {
+		m_pathPoints.clear();
 		m_currentPath = QPainterPath();
 		image.fill(Qt::white);
 		images.clear();
@@ -234,7 +247,7 @@ void DrawingBoard::CheckForNewDrawEvents(std::atomic<bool>& stop)
 			}
 		}
 		update();
-		std::this_thread::sleep_for(std::chrono::milliseconds(150));
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	}
 	if (stop.load()) {
 
@@ -248,7 +261,7 @@ void DrawingBoard::SendUpdatedPath(std::atomic<bool>& stop)
 	std::vector<crow::json::wvalue> drawEventsJSON;
 	while (stop.load()) {
 		{
-			std::lock_guard<std::mutex> lock(mtx);
+			std::lock_guard<std::mutex> lock(m_mtx);
 			pathPoints = m_pathPoints;
 			while (!m_pathPoints.empty()) {
 				m_pathPoints.pop_front();
@@ -283,14 +296,19 @@ void DrawingBoard::SendUpdatedPath(std::atomic<bool>& stop)
 		}
 		if (!drawEventsJSON.empty()) {
 			crow::json::wvalue drawEventsParameter = drawEventsJSON;
-			auto sentFillCoordinatesResponse = cpr::Post(
-				cpr::Url{ "http://localhost:18080/putdraweventsindrawingboard" },
-				cpr::Parameters{
-					{"password", UserCredentials::GetPassword()},
-					{"username", UserCredentials::GetUsername()},
-					{"events", drawEventsParameter.dump()}
-				}
-			);
+			bool drawingSent = false;
+			while (!drawingSent) {
+				auto sentFillCoordinatesResponse = cpr::Post(
+					cpr::Url{ "http://localhost:18080/putdraweventsindrawingboard" },
+					cpr::Parameters{
+						{"password", UserCredentials::GetPassword()},
+						{"username", UserCredentials::GetUsername()},
+						{"events", drawEventsParameter.dump()}
+					}
+				);
+				if (sentFillCoordinatesResponse.status_code == 200)
+					drawingSent = true;
+			}
 			drawEventsJSON.clear();
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(150));
@@ -416,7 +434,7 @@ void DrawingBoard::GenericFill(QPoint startingPoint, QPoint& pointToExecuteAt, Q
 
 void DrawingBoard::showEvent(QShowEvent* event)
 {
-	//AICI TREBUIE MODIFICAT CEVA
+	
 }
 
 void DrawingBoard::paintEvent(QPaintEvent* event)

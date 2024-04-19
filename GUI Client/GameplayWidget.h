@@ -36,7 +36,6 @@ public:
 
 	void NotifyEndGame(bool leavedGame);
 	void SetGameSettings(std::tuple<int, int, int> gameSettings) noexcept;
-	void StopCheckingForUpdates();
 	void ResetGameStatus();
 	void Clear() noexcept;
 
@@ -83,7 +82,7 @@ private:
 	int m_wordsCount				 {};
 
 	bool m_firstShow				 { true };
-	bool m_isDrawer					 { true };
+	bool m_isDrawer					 { false };
 	QLabel* m_waitingTextLabel		 { new QLabel() };
 	QLabel* m_wordToDraw			 { new QLabel{} };
 	QLabel* m_timerLabel				 { new QLabel{} };

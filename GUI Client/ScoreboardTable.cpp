@@ -55,7 +55,7 @@ void ScoreboardTable::AddPlayersToScoreboard(std::vector <std::tuple<QIcon, QStr
 void ScoreboardTable::SetPointsToPlayer(const QString& username, int numberOfPoints) noexcept
 {
 	QMetaObject::invokeMethod(this, [this, username, numberOfPoints]() {
-		for (int index = 0; index < m_players.size(); index++) {
+		for (int index{ 0 }; index < m_players.size(); index++) {
 			if (m_players[index].first->text() == username) {
 				m_players[index].second->setText(QString::number(numberOfPoints));
 				std::get<2>(m_playersToSendForResultsDisplaying[index]) = numberOfPoints;
@@ -68,7 +68,7 @@ void ScoreboardTable::SetPointsToPlayer(const QString& username, int numberOfPoi
 void ScoreboardTable::MarkGuessedForPlayer(const QString& username) noexcept
 {
 	QMetaObject::invokeMethod(this, [this, username]() {
-		for (int index = 0; index < m_players.size(); index++) {
+		for (int index{ 0 }; index < m_players.size(); index++) {
 			if (m_players[index].first) {
 				if (m_players[index].first->text() == username) {
 					m_players[index].second->setIcon(std::get<3>(m_takenAvatars[index]));
@@ -92,10 +92,9 @@ void ScoreboardTable::StopCheckingForPlayers(bool leavedGame)
 
 void ScoreboardTable::ResetGuessedIcons() noexcept
 {
-	for (int index = 0; index < m_players.size(); index++) {
-		if (!m_players[index].second->icon().isNull()) { //De testat si cu isNull
+	for (int index{ 0 }; index < m_players.size(); index++) {
+		if (!m_players[index].second->icon().isNull()) {
 			m_players[index].second->setIcon(QIcon());
-			//Aici e o problema
 		}
 	}
 }
@@ -105,6 +104,7 @@ void ScoreboardTable::ClearScoreboard() noexcept
 	QMetaObject::invokeMethod(this, [this]() {
 		m_players.clear();
 		m_playersToSendForResultsDisplaying.clear();
+		m_takenAvatars.clear();
 		clearContents();
 	}, Qt::QueuedConnection);
 }
@@ -125,7 +125,7 @@ void ScoreboardTable::showEvent(QShowEvent* event)
 void ScoreboardTable::MarkDrawer(const QString& username)
 {
 	QMetaObject::invokeMethod(this, [this, username]() {
-		for (int index = 0; index < m_players.size(); index++) {
+		for (int index{ 0 }; index < m_players.size(); index++) {
 			if (m_players[index].first) {
 				if (m_players[index].first->text() == username && m_players[index].second->icon().isNull()) {
 					m_players[index].second->setIcon(m_drawerIcon);
@@ -149,9 +149,9 @@ void ScoreboardTable::CheckForScoreboardUpdates(std::atomic<bool>& stop)
 		if (response.status_code == 200)
 		{
 			auto playersResponse = crow::json::load(response.text);
-			if (playersResponse["players"].size() != m_takenAvatars.size()) {
+			if (playersResponse["players"].size() != m_players.size()) {
 				int indexToRemove = -1;
-				for (int index = 0; index < playersResponse["players"].size(); index++) {
+				for (int index{ 0 }; index < playersResponse["players"].size(); index++) {
 					if (std::string(playersResponse["players"][index]["name"]) != std::get<1>(m_takenAvatars[index]).toUtf8().constData()) {
 						indexToRemove = index;
 						break;
@@ -201,7 +201,7 @@ void ScoreboardTable::CheckForScoreboardUpdates(std::atomic<bool>& stop)
 				}
 			}
 		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		std::this_thread::sleep_for(std::chrono::milliseconds(700));
 		emit OnGameFinished();
 	}
 }

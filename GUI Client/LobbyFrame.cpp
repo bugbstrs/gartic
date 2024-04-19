@@ -229,7 +229,7 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 			}
 		}
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(700));
+		std::this_thread::sleep_for(std::chrono::milliseconds(400));
 	}
 	if (stop.load()) {
 		if (m_leaveGame)

@@ -12,17 +12,20 @@ QuotesPlainText::~QuotesPlainText()
 void QuotesPlainText::showEvent(QShowEvent * event)
 {
 	if (m_firstShow) {
-		auto quote = cpr::Get(
-			cpr::Url{ "http://localhost:18080/fetchquote" },
-			cpr::Parameters{
-				{"username", UserCredentials::GetUsername()},
-				{"password", UserCredentials::GetPassword()}
+		bool fetchedQuote = false;
+		while (!fetchedQuote) {
+			auto quote = cpr::Get(
+				cpr::Url{ "http://localhost:18080/fetchquote" },
+				cpr::Parameters{
+					{"username", UserCredentials::GetUsername()},
+					{"password", UserCredentials::GetPassword()}
+				}
+			);
+			if (quote.status_code == 200) {
+				auto quoteText = crow::json::load(quote.text);
+				setPlainText(QString::fromUtf8(std::string(quoteText["quote"])));
+				fetchedQuote = true;
 			}
-		);
-		if (quote.status_code == 200) {
-			auto quoteText = crow::json::load(quote.text);
-
-			setPlainText(QString::fromUtf8(std::string(quoteText["quote"])));
 		}
 		m_firstShow = true;
 	}

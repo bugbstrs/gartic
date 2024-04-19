@@ -17,13 +17,13 @@ void LogInManager::showEvent(QShowEvent* event) {
 		m_logInButton = findChild<QPushButton*>("logInButton");
 		m_incorrectCredentialsLabel = findChild<QLabel*>("incorrectCredentialsLabel");
 		m_togglePasswordView = findChild<QPushButton*>("toggleLogInPasswordViewButton");
-		m_incorrectCredentialsLabel->clear();
 
 		QObject::connect(m_logInButton, &QPushButton::released, this, &LogInManager::OnLogInCredentialsSent);
 		QObject::connect(m_togglePasswordView, &QPushButton::released, this, &LogInManager::OnTogglePasswordView);
 
 		m_firstShow = false;
 	}
+	m_incorrectCredentialsLabel->clear();
 }
 
 void LogInManager::OnLogInCredentialsSent() noexcept  

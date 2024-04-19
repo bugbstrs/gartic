@@ -65,7 +65,7 @@ private:
 	std::atomic<bool>m_stop;
 
 	std::deque<std::pair<QPoint, bool>> m_pathPoints	{};
-	std::mutex mtx;
+	std::mutex m_mtx;
 	
 	bool m_isChoosingWord								{ false };
 	bool m_firstPaint									{ true };

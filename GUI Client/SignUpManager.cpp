@@ -13,13 +13,13 @@ void SignUpManager::showEvent(QShowEvent* event) {
 		m_signUpButton = findChild<QPushButton*>("signUpButton");
 		m_alreadyExistingAccountLabel = findChild<QLabel*>("alreadyExistingAccountLabel");
 		m_togglePasswordView = findChild<QPushButton*>("toggleSignUpPasswordViewButton");
-		m_alreadyExistingAccountLabel->clear();
 
 		QObject::connect(m_signUpButton, &QPushButton::released, this, &SignUpManager::OnSignUpCredentialsSent);
 		QObject::connect(m_togglePasswordView, &QPushButton::released, this, &SignUpManager::OnTogglePasswordView);
 
 		m_firstShow = false;
 	}
+	m_alreadyExistingAccountLabel->clear();
 }
 
 void SignUpManager::OnSignUpCredentialsSent() noexcept

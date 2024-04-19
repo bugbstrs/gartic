@@ -2903,7 +2903,7 @@ background: transparent;</string>
                     <string notr="true">color: red;</string>
                    </property>
                    <property name="text">
-                    <string>Game already running</string>
+                    <string>Invalid code</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>

@@ -130,25 +130,29 @@ void MainWindow::OnLobbyCodeAccepted(std::string codeText) noexcept {
 
         }
     );
-    if (joinLobby.status_code == 404) {
+    if (joinLobby.status_code != 200) {
         ui->gameAlreadyStartedLabel->show();
     }
     else {
+        bool fetchedUsersCorrectly = false;
+        while (!fetchedUsersCorrectly) {
+            auto users = cpr::Get(
+                cpr::Url{ "http://localhost:18080/fetchusers" },
+                cpr::Parameters{
+                    {"username", UserCredentials::GetUsername()},
+                    {"password", UserCredentials::GetPassword()}
+                }
+            );
+            if (users.status_code == 200) {
+                fetchedUsersCorrectly = true;
+                auto usersVector = crow::json::load(users.text);
+                for (int index = 0; index < usersVector["users"].size(); index++)
+                    ui->lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
 
-        auto users = cpr::Get(
-            cpr::Url{ "http://localhost:18080/fetchusers" },
-            cpr::Parameters{
-                {"username", UserCredentials::GetUsername()},
-                {"password", UserCredentials::GetPassword()}
+                ui->codeLineEdit->setText(QString::fromUtf8(codeText));
+                ui->stackedWidget->setCurrentWidget(ui->LobbyScene);
+                ui->gameplayWidget->ResetGameStatus();
             }
-        );
-        if (users.status_code == 200) {
-            auto usersVector = crow::json::load(users.text);
-            for (int index = 0; index < usersVector["users"].size(); index++)
-                ui->lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
-
-            ui->codeLineEdit->setText(QString::fromUtf8(codeText));
-            ui->stackedWidget->setCurrentWidget(ui->LobbyScene);
         }
     }
 }
@@ -157,15 +161,14 @@ void MainWindow::OnGoToMenuFromJoinLobbyButtonReleased() noexcept { ui->stackedW
 
 //Lobby Scene
 void MainWindow::OnStartGameCommand() noexcept {
-    ui->gameplayWidget->ResetGameStatus();
     ui->scoreboardTable->AddPlayersToScoreboard(ui->lobbyTable->GetTakenAvatars());
     ui->gameplayWidget->SetGameSettings(ui->lobbyFrame->GetGameSettings());
     ui->stackedWidget->setCurrentWidget(ui->GameplayScene);
     ui->lobbyFrame->ResetSettings();
 }
 void MainWindow::OnExitLobbyButtonReleased() noexcept { 
+    ui->lobbyFrame->ResetSettings();
     ui->stackedWidget->setCurrentWidget(ui->MainMenuScene);
-    ui->lobbyTable->ClearLobby();
     auto users = cpr::Get(
         cpr::Url{ "http://localhost:18080/leavelobby" },
         cpr::Parameters{
