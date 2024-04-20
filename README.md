@@ -17,7 +17,7 @@
     - `sqlite-orm`
 - `MSVC 2022`([link](https://visualstudio.microsoft.com/vs/features/cplusplus/))
 
-Everything besides `vcpkg` and `MSVC 2022` will be automatically installed when building the projects but make sure vcpkg is on the latest commit! (go into the vcpkg folder and run `git pull`)
+Everything besides `vcpkg` and `MSVC 2022` will be automatically installed when building the projects (little exception: GUI) but make sure vcpkg is on the latest commit! (go into the vcpkg folder and run `git pull`)
 
 ## Installing `vcpkg`
 
@@ -36,7 +36,9 @@ Everything besides `vcpkg` and `MSVC 2022` will be automatically installed when 
 - At first it will fail to build
 - Open a terminal
     - `cd` into the root repo directory (the one where this readme is)
-    - enter the following command: `mklink /J "x64-windows\tools\Qt6\mkspecs" "x64-windows\share\Qt6\mkspecs"`
+    - enter the following commands:
+        - `vcpkg install --x-feature guiclient`
+        - `mklink /J "x64-windows\tools\Qt6\mkspecs" "x64-windows\share\Qt6\mkspecs"`
 - Build again
 
 # Project info
