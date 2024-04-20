@@ -9,12 +9,35 @@
 
 # Build requirements
 
-- `vcpkg` ([link](https://vcpkg.io/en/getting-started))
-    - `picosha2` - `vkpkg install picosha2`
-    - `crow` - `vcpkg install crow`
-    - `cpr` - `vcpkg install cpr`
-- `QT 6.5.3` ([link](https://www.qt.io/))
+- `vcpkg` ([link](https://vcpkg.io/en/getting-started)) + the following packages:
+    - `picosha2`
+    - `crow` v1.0-5
+    - `cpr` 
+    - `qtbase` v6.5.3
+    - `sqlite-orm`
 - `MSVC 2022`([link](https://visualstudio.microsoft.com/vs/features/cplusplus/))
+
+Everything besides `vcpkg` and `MSVC 2022` will be automatically installed when building the projects but make sure vcpkg is on the latest commit! (go into the vcpkg folder and run `git pull`)
+
+## Installing `vcpkg`
+
+- Clone [this](https://github.com/microsoft/vcpkg.git) repository wherever you would like to have vcpkg installed
+- Open a terminal
+  - `cd` into the vcpkg folder
+  - run the bootstrap script (`bootstrap-vcpkg.bat`)
+- Set the following environment variables
+  - `VCPKG_ROOT` to wherever your vcpkg folder is located
+  - Change `Path` and add `%VCPKG_ROOT%` to it
+- Close all of your Visual Studio instances and also any opened terminals
+- Open a terminal and run `vcpkg integrate install`
+
+## Building the GUI Client
+- Build the client (it will take a long time)
+- At first it will fail to build
+- Open a terminal
+    - `cd` into the root repo directory (the one where this readme is)
+    - enter the following command: `mklink /J "x64-windows\tools\Qt6\mkspecs" "x64-windows\share\Qt6\mkspecs"`
+- Build again
 
 # Project info
 - Duration: 10 weeks, 23rd of October -> 14th of January
