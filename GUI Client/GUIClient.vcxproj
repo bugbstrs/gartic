@@ -37,7 +37,7 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>$(ProjectDir)..\x64-windows\tools\Qt6</QtInstall>
+    <QtInstall>$(SolutionDir)..\x64-windows\tools\Qt6</QtInstall>
     <QtModules>core;gui;widgets</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
     <QtPathBinaries>bin</QtPathBinaries>
@@ -50,7 +50,7 @@
     <QtPlugin>false</QtPlugin>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
-    <QtInstall>$(ProjectDir)..\x64-windows\tools\Qt6</QtInstall>
+    <QtInstall>$(SolutionDir)..\x64-windows\tools\Qt6</QtInstall>
     <QtModules>core;gui;widgets</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
