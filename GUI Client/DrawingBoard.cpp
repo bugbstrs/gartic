@@ -311,7 +311,7 @@ void DrawingBoard::SendUpdatedPath(std::atomic<bool>& stop)
 			}
 			drawEventsJSON.clear();
 		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(150));
+		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 	if (!stop.load()) {
 
