@@ -401,3 +401,8 @@ FodyWeavers.xsd
 GUI Client/out/*
 *CMakeUserPresets.json
 *.sqlite
+
+vcpkg/*
+x64-windows/*
+*.stamp
+.vscode/*
