@@ -1,9 +1,9 @@
 #pragma once
 
-#include <QWidget>
-#include <qlabel.h>
-#include <qlistwidget.h>
-#include <qboxlayout.h>
+#include <Qt6/QtWidgets/QWidget>
+#include <Qt6/QtWidgets/QLabel>
+#include <Qt6/QtWidgets/QListWidget>
+#include <Qt6/QtWidgets/QBoxLayout>
 #include "DrawingBoard.h"
 #include "ToolsFrame.h"
 #include "Chat.h"

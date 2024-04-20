@@ -143,9 +143,6 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <None Include="cpp.hint" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="UserCredentials.h">
       <Filter>Header Files</Filter>
     </ClInclude>

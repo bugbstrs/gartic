@@ -1,6 +1,6 @@
 #include "GameplayWidget.h"
-#include <qthread.h>
-#include <QPropertyAnimation>
+#include <Qt6/QtCore/QThread>
+#include <Qt6/QtCore/QPropertyAnimation>
 #include "UserCredentials.h"
 
 GameplayWidget::GameplayWidget(QWidget* parent)

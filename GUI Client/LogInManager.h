@@ -1,9 +1,9 @@
 #pragma once
 
-#include <QFrame>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
+#include <Qt6/QtWidgets/QFrame>
+#include <Qt6/QtWidgets/QLabel>
+#include <Qt6/QtWidgets/QLineEdit>
+#include <Qt6/QtWidgets/QPushButton>
 #include <string>
 
 class LogInManager  : public QFrame

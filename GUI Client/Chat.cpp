@@ -1,7 +1,7 @@
 #include "Chat.h"
 #include <thread>
 #include <crow.h>
-#include <qdatetime.h>
+#include <Qt6/QtCore/QDateTime>
 #include "UserCredentials.h"
 
 Chat::Chat(QWidget *parent)

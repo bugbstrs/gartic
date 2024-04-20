@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QFrame>
-#include <qpushbutton.h>
+#include <Qt6/QtWidgets/QFrame>
+#include <Qt6/QtWidgets/QPushButton>
 #include <unordered_map>
 
 class ToolsFrame  : public QFrame

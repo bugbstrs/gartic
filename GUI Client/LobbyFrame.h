@@ -1,12 +1,12 @@
 #pragma once
 
-#include <QFrame>
+#include <Qt6/QtWidgets/QFrame>
 #include <thread>
 #include <atomic>
 #include <chrono>
-#include <qpushbutton.h>
-#include <qcombobox.h>
-#include <qlineedit.h>
+#include <Qt6/QtWidgets/QPushButton>
+#include <Qt6/QtWidgets/QComboBox>
+#include <Qt6/QtWidgets/QLineEdit>
 #include "LobbyTable.h"
 
 class LobbyFrame  : public QFrame

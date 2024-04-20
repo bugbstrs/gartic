@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QPlainTextEdit>
+#include <Qt6/QtWidgets/QPlainTextEdit>
 
 class QuotesPlainText  : public QPlainTextEdit
 {

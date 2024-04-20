@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QTextBrowser>
+#include <Qt6/QtWidgets/QTextBrowser>
 
 class ChatConversation  : public QTextBrowser
 {

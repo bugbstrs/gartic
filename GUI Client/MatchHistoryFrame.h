@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QFrame>
-#include <qlineedit.h>
+#include <Qt6/QtWidgets/QFrame>
+#include <Qt6/QtWidgets/QLineEdit>
 #include "MatchHistoryTable.h"
 
 class MatchHistoryFrame  : public QFrame

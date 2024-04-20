@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QLineEdit>
+#include <Qt6/QtWidgets/QLineEdit>
 
 class ChatWritingBox : public QLineEdit
 {

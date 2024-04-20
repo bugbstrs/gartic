@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QTableWidget>
-#include <qlineedit.h>
+#include <Qt6/QtWidgets/QTableWidget>
+#include <Qt6/QtWidgets/QLineEdit>
 
 class MatchHistoryTable : public QTableWidget
 {

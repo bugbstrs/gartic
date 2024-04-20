@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QTableWidget>
+#include <Qt6/QtWidgets/QTableWidget>
 
 class ResultsTable  : public QTableWidget
 {

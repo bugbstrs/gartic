@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QFrame>
+#include <Qt6/QtWidgets/QFrame>
 #include <atomic>
 #include "ChatWritingBox.h"
 #include "ChatConversation.h"

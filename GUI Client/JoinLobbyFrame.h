@@ -1,9 +1,9 @@
 #pragma once
 
-#include <QFrame>
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
+#include <Qt6/QtWidgets/QFrame>
+#include <Qt6/QtWidgets/QLineEdit>
+#include <Qt6/QtWidgets/QPushButton>
+#include <Qt6/QtWidgets/QLabel>
 
 class JoinLobbyFrame  : public QFrame
 {

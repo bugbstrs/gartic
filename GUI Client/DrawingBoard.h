@@ -1,10 +1,10 @@
 #pragma once
 
-#include <QWidget>
-#include <qimage.h>
-#include <QMouseEvent>
-#include <qpainter.h>
-#include <qpainterpath.h>
+#include <Qt6/QtWidgets/QWidget>
+#include <Qt6/QtGui/QImage>
+#include <Qt6/QtGui/QMouseEvent>
+#include <Qt6/QtGui/QPainter>
+#include <Qt6/QtGui/QPainterPath>
 #include <deque>
 #include <atomic>
 #include <stack>
