@@ -50,75 +50,6 @@ void LobbyFrame::showEvent(QShowEvent * event)
 			}
 		});
 
-		QObject::connect(m_roundsComboBox, &QComboBox::currentTextChanged, this, [this](const QString& newText) {
-			bool accepted = false;
-
-			while (!accepted)
-			{
-				auto modifySettings = cpr::Post(
-					cpr::Url{ "http://localhost:18080/setsettings" },
-					cpr::Parameters{
-						{"username", UserCredentials::GetUsername()},
-						{"password", UserCredentials::GetPassword()},
-						{"roundsnumber", newText.toUtf8().constData()},
-						{"wordcount", m_wordCountComboBox->currentText().toUtf8().constData()},
-						{"drawtime", m_drawTimeComboBox->currentText().toUtf8().constData()}
-					}
-				);
-
-				if (modifySettings.status_code == 200)
-				{
-					accepted = true;
-				}
-			}
-		});
-		
-		QObject::connect(m_wordCountComboBox, &QComboBox::currentTextChanged, this, [this](const QString& newText) {
-			bool accepted = false;
-
-			while (!accepted)
-			{
-				auto modifySettings = cpr::Post(
-					cpr::Url{ "http://localhost:18080/setsettings" },
-					cpr::Parameters{
-						{"username", UserCredentials::GetUsername()},
-						{"password", UserCredentials::GetPassword()},
-						{"roundsnumber", m_roundsComboBox->currentText().toUtf8().constData()},
-						{"wordcount", newText.toUtf8().constData()},
-						{"drawtime",  m_drawTimeComboBox->currentText().toUtf8().constData()}
-					}
-				);
-
-				if (modifySettings.status_code == 200)
-				{
-					accepted = true;
-				}
-			}
-		});
-
-		QObject::connect(m_drawTimeComboBox, &QComboBox::currentTextChanged, this, [this](const QString& newText) {
-			bool accepted = false;
-
-			while (!accepted)
-			{
-				auto modifySettings = cpr::Post(
-					cpr::Url{ "http://localhost:18080/setsettings" },
-					cpr::Parameters{
-						{"username", UserCredentials::GetUsername()},
-						{"password", UserCredentials::GetPassword()},
-						{"roundsnumber", m_roundsComboBox->currentText().toUtf8().constData()},
-						{"wordcount", m_wordCountComboBox->currentText().toUtf8().constData()},
-						{"drawtime", newText.toUtf8().constData()}
-					}
-				);
-
-				if (modifySettings.status_code == 200)
-				{
-					accepted = true;
-				}
-			}
-		});
-
 		QObject::connect(m_leaveLobbyButton, &QPushButton::released, this, [this]() {
 			m_leaveGame = true;
 			m_stop.store(true);
@@ -136,8 +67,9 @@ void LobbyFrame::showEvent(QShowEvent * event)
 		SetNonLeaderSettings();
 	}
 
-	std::thread checkForLobbyUpdates(&LobbyFrame::CheckForLobbyUpdates, this, std::ref(m_stop));
-	checkForLobbyUpdates.detach();
+	std::thread lobbyUpdates(&LobbyFrame::SendOrCheckForLobbyUpdates, this, std::ref(m_stop));
+	
+	lobbyUpdates.detach();
 }
 
 void LobbyFrame::SetCode(QString codeText) noexcept
@@ -166,7 +98,7 @@ void LobbyFrame::Clear()
 	bool leaveGame{ false };
 }
 
-void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
+void LobbyFrame::SendOrCheckForLobbyUpdates(std::atomic<bool>& stop)
 {
 	while (!stop.load()) {
 		auto users = cpr::Get(
@@ -213,6 +145,18 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 				QMetaObject::invokeMethod(m_wordCountComboBox, "setCurrentText", Qt::QueuedConnection,
 					Q_ARG(QString, QString::fromUtf8(std::string(settings["settings"]["wordCount"]))));
 			}
+		}
+		else {
+			auto modifySettings = cpr::Post(
+				cpr::Url{ "http://localhost:18080/setsettings" },
+				cpr::Parameters{
+					{"username", UserCredentials::GetUsername()},
+					{"password", UserCredentials::GetPassword()},
+					{"roundsnumber", m_roundsComboBox->currentText().toUtf8().constData()},
+					{"wordcount", m_wordCountComboBox->currentText().toUtf8().constData()},
+					{"drawtime", m_drawTimeComboBox->currentText().toUtf8().constData()}
+				}
+			);
 		}
 
 		auto gameState = cpr::Get(

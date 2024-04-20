@@ -25,7 +25,7 @@ public:
 	void Clear();
 
 private:
-	void CheckForLobbyUpdates(std::atomic<bool>& stop);
+	void SendOrCheckForLobbyUpdates(std::atomic<bool>& stop);
 	void SetLeaderSettings();
 	void SetNonLeaderSettings();
 
