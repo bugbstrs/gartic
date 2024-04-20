@@ -37,7 +37,7 @@ Everything besides `vcpkg` and `MSVC 2022` will be automatically installed when 
 - Open a terminal
     - `cd` into the root repo directory (the one where this readme is)
     - enter the following commands:
-        - `vcpkg install --x-feature guiclient`
+        - `vcpkg install --x-feature guiclient --x-install-root "."`
         - `mklink /J "x64-windows\tools\Qt6\mkspecs" "x64-windows\share\Qt6\mkspecs"`
 - Build again
 
