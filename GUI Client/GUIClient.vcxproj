@@ -41,7 +41,7 @@
     <QtModules>core;gui;widgets</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
     <QtPathBinaries>bin</QtPathBinaries>
-    <QtPathLibraryExecutables>$(ProjectDir)..\x64-windows\debug\lib</QtPathLibraryExecutables>
+    <QtPathLibraryExecutables>$(SolutionDir)..\x64-windows\debug\lib</QtPathLibraryExecutables>
     <QtHeaderSearchPath>
     </QtHeaderSearchPath>
     <QtLibrarySearchPath>
