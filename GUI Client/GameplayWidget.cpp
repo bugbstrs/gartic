@@ -106,7 +106,7 @@ void GameplayWidget::ShowDrawerInterface()
 			);
 			if (response.status_code == 200) {
 				auto words = crow::json::load(response.text);
-				for (int index = 0; index < words["words"].size(); index++) {
+				for (int index{ 0 }; index < words["words"].size(); index++) {
 					AddWordOption(std::string(words["words"][index]));
 				}
 				responseAccepted = true;
@@ -128,9 +128,9 @@ void GameplayWidget::ShowGuesserInterface()
 				m_wordsToChoose.clear();
 			}
 		}
-		m_drawingBoard->ResetBoard();
 		m_drawingBoard->SetupForDrawer(false);
 		m_drawingBoard->SetIsChoosingWord(true);
+		m_drawingBoard->ResetBoard();
 		m_backgroundForGuesser->show();
 		m_waitingTextLabel->raise();
 		m_scoreboardTable->ResetGuessedIcons();
@@ -203,7 +203,7 @@ void GameplayWidget::GetCurrentPlayers()
 		if (fetchedPlayers.status_code == 200) {
 			auto playersResponse = crow::json::load(fetchedPlayers.text);
 			if (playersResponse.has("players")) {
-				for (int index = 0; index < playersResponse["players"].size(); index++) {
+				for (int index{ 0 }; index < playersResponse["players"].size(); index++) {
 					if (std::string(playersResponse["players"][index]["name"]) == UserCredentials::GetUsername()) {
 						if (std::stoi(std::string(playersResponse["drawer index"])) == index) {
 							m_isDrawer = true;
@@ -240,7 +240,7 @@ void GameplayWidget::PickingWordActions()
 	);
 	if (fetchedPlayers.status_code == 200) {
 		auto playersResponse = crow::json::load(fetchedPlayers.text);
-		for (int index = 0; index < playersResponse["players"].size(); index++) {
+		for (int index{ 0 }; index < playersResponse["players"].size(); index++) {
 			if (std::string(playersResponse["players"][index]["name"]) == UserCredentials::GetUsername()) {
 				if (std::stoi(std::string(playersResponse["drawer index"])) == index) {
 					m_isDrawer = true;

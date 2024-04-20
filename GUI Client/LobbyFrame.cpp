@@ -186,7 +186,7 @@ void LobbyFrame::CheckForLobbyUpdates(std::atomic<bool>& stop)
 				}
 				else {
                     m_lobbyTable->ClearLobby();
-					for (int index = 0; index < usersVector["users"].size(); index++)
+					for (int index{ 0 }; index < usersVector["users"].size(); index++)
                         m_lobbyTable->AddPlayer(std::string(usersVector["users"][index]));
 					if (usersVector["users"][0] == UserCredentials::GetUsername() && !m_isLeader) {
 						m_isLeader = true;

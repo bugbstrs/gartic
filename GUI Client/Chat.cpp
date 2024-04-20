@@ -100,7 +100,7 @@ void Chat::CheckForNewMessages(std::atomic<bool>& stop)
 		if (newMessages.status_code == 200) {
 			auto messages = crow::json::load(newMessages.text);
 			if (messages.has("messages")) {
-				for (int index = 0; index < messages["messages"].size(); index++) {
+				for (int index{ 0 }; index < messages["messages"].size(); index++) {
 					AddMessageInChat(QString::fromUtf8(std::string(messages["messages"][index])));
 				}
 			}

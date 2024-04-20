@@ -240,7 +240,7 @@ void DrawingBoard::CheckForNewDrawEvents(std::atomic<bool>& stop)
 		);
 		if (fetchedDrawingEvents.status_code == 200) {
 			auto events = crow::json::load(fetchedDrawingEvents.text);
-			for (int index = 0; index < events["events"].size(); ++index) {
+			for (int index{ 0 }; index < events["events"].size(); ++index) {
 				RunEventTypeAccordingly(std::string(events["events"][index]));
 				if (index % 100 == 0)
 					update();
@@ -327,14 +327,9 @@ void DrawingBoard::RunEventTypeAccordingly(const std::string& drawingEvent)
 		static int prevX, prevY;
 		if (string == "startDrawing")
 		{
-			if (!m_currentPath.isEmpty()) {
-				update();
-				images.push_back(image);
-				m_currentPath.clear();
-			}
+			images.push_back(image);
 			int color, width;
 			drawEventStream >> prevX >> prevY >> color >> width;
-
 			m_drawing = true;
 			int red = (color >> 16) & 0xFF;
 			int green = (color >> 8) & 0xFF;
@@ -365,6 +360,7 @@ void DrawingBoard::RunEventTypeAccordingly(const std::string& drawingEvent)
 		}
 		else if (string == "undo")
 		{
+			m_currentPath.clear();
 			UndoAction();
 		}
 		else if (string == "clear")

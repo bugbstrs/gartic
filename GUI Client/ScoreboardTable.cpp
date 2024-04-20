@@ -165,7 +165,7 @@ void ScoreboardTable::CheckForScoreboardUpdates(std::atomic<bool>& stop)
 				removeRow(indexToRemove);
 			}
 			else {
-				for (int index = 0; index < playersResponse["players"].size(); index++) {
+				for (int index{ 0 }; index < playersResponse["players"].size(); index++) {
 					if (std::stoi(std::string(playersResponse["drawer index"])) == index) {
 						MarkDrawer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])));
 					}
@@ -196,7 +196,7 @@ void ScoreboardTable::CheckForScoreboardUpdates(std::atomic<bool>& stop)
 			{
 				gotFinalScores = true;
 				auto playersResponse = crow::json::load(response.text);
-				for (int index = 0; index < playersResponse["players"].size(); index++) {
+				for (int index{ 0 }; index < playersResponse["players"].size(); index++) {
 					SetPointsToPlayer(QString::fromUtf8(std::string(playersResponse["players"][index]["name"])), std::stoi(std::string(playersResponse["players"][index]["points"])));
 				}
 			}
