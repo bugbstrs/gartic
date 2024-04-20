@@ -32,7 +32,7 @@
     "server": {
         "description": "Server",
         "dependencies": [
-            "sqlite-orm"
+          "sqlite-orm"
         ]
     }
   },
