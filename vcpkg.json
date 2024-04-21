@@ -1,7 +1,11 @@
 {
   "name": "gartic",
   "dependencies": [
-    "crow"
+    "crow",
+    "qtbase",
+    "cpr",
+    "picosha2",
+    "sqlite-orm"
   ],
   "overrides": [
     {
@@ -13,28 +17,5 @@
       "version": "6.5.3"
     }
   ],
-  "features": {
-    "guiclient": {
-      "description": "GUI client",
-      "dependencies": [
-        "picosha2",
-        "qtbase",
-        "cpr"
-      ]
-    },
-    "consoleclient": {
-      "description": "Console client",
-      "dependencies": [
-        "picosha2",
-        "cpr"
-      ]
-    },
-    "server": {
-        "description": "Server",
-        "dependencies": [
-          "sqlite-orm"
-        ]
-    }
-  },
   "builtin-baseline": "b346ee32f13f3bf2ef19ac02f982f6938f7a84ea"
 }
