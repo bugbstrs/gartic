@@ -147,7 +147,7 @@ void http::Game::RemovePlayer(const std::string& username)
 		return;
 	}
 
-	throw GarticException<PlayerDoesntExistException>("Game > LeaveGame(const Player&): The player is already not in the game!");
+	//throw GarticException<PlayerDoesntExistException>("Game > LeaveGame(const Player&): The player is already not in the game!");
 }
 
 void http::Game::EndGame()
